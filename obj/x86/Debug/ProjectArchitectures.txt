@@ -1,0 +1,1 @@
+C:\Users\edgar\Documents\Personal Programming\Maplestory Cal\Incomplete C# Version\MSEACalculator\MSEACalculator.csproj;x86

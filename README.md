@@ -1,5 +1,7 @@
 ###Features of this calculator
+
 Data stored locally using sqlite
+
 Implemented Features
 
 Not Implemented Yet

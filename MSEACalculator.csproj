@@ -120,9 +120,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BossRes\Boss.cs" />
+    <Compile Include="BossRes\MesoProgressxaml.xaml.cs">
+      <DependentUpon>MesoProgressxaml.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CommonFunc.cs" />
     <Compile Include="DatabaseAccess.cs" />
-    <Compile Include="Event.xaml.cs">
+    <Compile Include="EventRes\Event.xaml.cs">
       <DependentUpon>Event.xaml</DependentUpon>
     </Compile>
     <Compile Include="EventRes\EventRecords.cs" />
@@ -153,7 +156,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Event.xaml">
+    <Page Include="BossRes\MesoProgressxaml.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EventRes\Event.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,6 +181,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.12</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.core">
       <Version>2.0.4</Version>

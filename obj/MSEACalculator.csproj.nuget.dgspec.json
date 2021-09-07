@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\edgar\\Documents\\Personal Programming\\Maplestory Cal\\Incomplete C# Version\\MSEACalculator\\MSEACalculator.csproj": {}
+    "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\edgar\\Documents\\Personal Programming\\Maplestory Cal\\Incomplete C# Version\\MSEACalculator\\MSEACalculator.csproj": {
+    "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\edgar\\Documents\\Personal Programming\\Maplestory Cal\\Incomplete C# Version\\MSEACalculator\\MSEACalculator.csproj",
+        "projectUniqueName": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj",
         "projectName": "MSEACalculator",
-        "projectPath": "C:\\Users\\edgar\\Documents\\Personal Programming\\Maplestory Cal\\Incomplete C# Version\\MSEACalculator\\MSEACalculator.csproj",
+        "projectPath": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj",
         "packagesPath": "C:\\Users\\edgar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\edgar\\Documents\\Personal Programming\\Maplestory Cal\\Incomplete C# Version\\MSEACalculator\\obj\\",
+        "outputPath": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -54,6 +54,10 @@
             "Microsoft.NETCore.UniversalWindowsPlatform": {
               "target": "Package",
               "version": "[6.2.12, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
             },
             "SQLitePCLRaw.core": {
               "target": "Package",

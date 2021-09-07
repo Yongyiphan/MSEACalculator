@@ -14,14 +14,12 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using MSEACalculator.EventRes;
-
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace MSEACalculator
+namespace MSEACalculator.EventRes
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -29,8 +27,6 @@ namespace MSEACalculator
     public sealed partial class Event : Page
     {
         EventRecords eRec = new EventRecords();
-        
-
         public Event()
         {
             this.InitializeComponent();
@@ -77,19 +73,10 @@ namespace MSEACalculator
         private void testButton_Click(object sender, RoutedEventArgs e)
         {
 
-            List<EventRecords> result = CommonFunc.retrieveEventJson().Result;
-
-            
-
-            TestBlock.Text = String.Format("{0}", result.ToString() );
         }
 
         private void updateEventRecords_Click(object sender, RoutedEventArgs e)
         {
-            //Validate fields are filled
-
-            
-
 
         }
     }

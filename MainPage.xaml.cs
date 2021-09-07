@@ -12,6 +12,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using MSEACalculator.BossRes;
+using MSEACalculator.EventRes;
+using MSEACalculator.StarforceRes;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -26,6 +29,26 @@ namespace MSEACalculator
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void toHomeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private void toScrollBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void toMesoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MesoProgress));
+        }
+
+        private void toEventBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Event));
         }
     }
 }

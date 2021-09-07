@@ -14,7 +14,7 @@
       <RootMethod Name="GetColumn" />
       <RootMethod Name="SetColumn" />
     </RootType>
-    <RootType FullName="MSEACalculator.BossRes.MesoProgressxaml" />
+    <RootType FullName="MSEACalculator.BossRes.MesoProgress" />
     <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
       <RootProperty Name="Width" />
     </RootType>

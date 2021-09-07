@@ -9,6 +9,20 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="Navigation" Width="1*"/>
+            <ColumnDefinition x:Name="MainBod" Width="6*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+
+            <Button Margin="20,50,0,0" MinWidth="100" x:Name="toHomeBtn"  Click="toHomeBtn_Click" Content="Home Page"/>
+            <Button Margin="20" MinWidth="100" x:Name="toScrollBtn"  Click="toScrollBtn_Click" Content="Scrolling"/>
+            <Button Margin="20,0,0,0" MinWidth="100" x:Name="toMesoBtn"  Click="toMesoBtn_Click" Content="Meso"/>
+            <Button Margin="20" MinWidth="100" x:Name="toEventBtn"  Click="toEventBtn_Click" Content="Event"/>
+
+
+        </StackPanel>
 
     </Grid>
 </Page>

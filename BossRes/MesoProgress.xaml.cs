@@ -20,16 +20,11 @@ namespace MSEACalculator.BossRes
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MesoProgressxaml : Page
+    public sealed partial class MesoProgress : Page
     {
-        public MesoProgressxaml()
+        public MesoProgress()
         {
             this.InitializeComponent();
-        }
-
-        private void toMesoBtn_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

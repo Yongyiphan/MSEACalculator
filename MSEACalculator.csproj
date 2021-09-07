@@ -120,8 +120,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BossRes\Boss.cs" />
-    <Compile Include="BossRes\MesoProgressxaml.xaml.cs">
-      <DependentUpon>MesoProgressxaml.xaml</DependentUpon>
+    <Compile Include="BossRes\MesoProgress.xaml.cs">
+      <DependentUpon>MesoProgress.xaml</DependentUpon>
     </Compile>
     <Compile Include="CommonFunc.cs" />
     <Compile Include="DatabaseAccess.cs" />
@@ -156,7 +156,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="BossRes\MesoProgressxaml.xaml">
+    <Page Include="BossRes\MesoProgress.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

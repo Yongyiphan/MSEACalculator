@@ -17,6 +17,8 @@ using Windows.UI.Xaml.Navigation;
 using MSEACalculator.BossRes;
 using MSEACalculator.StarforceRes;
 using MSEACalculator.EventRes;
+using MSEACalculator.CharacterRes;
+using MSEACalculator.CharacterRes.MesoRes;
 
 namespace MSEACalculator
 {

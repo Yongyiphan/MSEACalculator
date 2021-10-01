@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using MSEACalculator.BossRes;
 using MSEACalculator.EventRes;
 using MSEACalculator.StarforceRes;
+using MSEACalculator.CharacterRes.MesoRes;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -50,5 +51,14 @@ namespace MSEACalculator
         {
             this.Frame.Navigate(typeof(Event));
         }
+
+        private void ResetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var resetDB = DatabaseAccess.databaseInit();
+
+
+        }
+
+
     }
 }

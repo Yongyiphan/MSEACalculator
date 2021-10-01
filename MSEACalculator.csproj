@@ -120,9 +120,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BossRes\Boss.cs" />
-    <Compile Include="BossRes\MesoProgress.xaml.cs">
+    <Compile Include="CharacterRes\MesoRes\CustomItem.cs" />
+    <Compile Include="CharacterRes\MesoRes\MesoProgress.xaml.cs">
       <DependentUpon>MesoProgress.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CharacterRes\MesoRes\BossMesoList.cs" />
+    <Compile Include="CharacterRes\Character.cs" />
     <Compile Include="CommonFunc.cs" />
     <Compile Include="DatabaseAccess.cs" />
     <Compile Include="EventRes\Event.xaml.cs">
@@ -156,7 +159,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="BossRes\MesoProgress.xaml">
+    <Page Include="CharacterRes\MesoRes\MesoProgress.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,10 +177,10 @@
       <Version>4.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Data.Sqlite">
-      <Version>5.0.8</Version>
+      <Version>5.0.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Data.Sqlite.Core">
-      <Version>5.0.8</Version>
+      <Version>5.0.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.12</Version>

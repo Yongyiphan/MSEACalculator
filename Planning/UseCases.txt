@@ -1,0 +1,40 @@
+
+Event
+- I want to track event
+- I want to track event duration
+- I want to create event item wishlist
+- I want to add custom item to wish list
+- I want to get sunday maple 
+- I want to see how much my mules earn
+- I want to track event currencies
+- I want to see TLDR of event
+- I want to modify event data/ stats
+- I want to assign event items to be bought by mules
+
+
+
+Meso Earnings
+- I want to view TLDR of Meso gains by N days 
+- I want to view TLDR of Meso gains by Week
+- I want to track mule meso earnings
+- I want to add and remove custom earnings
+- I want to track EB earnings
+
+Inventory
+- I want to track equipment for characters
+- I want to record stats of equipment
+
+
+Simulations/ Calculator
+- I want to create hypothetical situations
+E.g Starforce, Cubing, Range, Damage, Equipment Stats
+- I want to calculate damange or range
+- I want to calculate IED
+- I want to calcualte Crit Rate
+- I want to optimize legion
+- I want to rank equipments
+- I want to see what I need to improve my stat/ damage
+- I want to see theorectical exp gains/ how long it takes
+- Exp Needed for v matrix
+- I want to compare equipment. 
+

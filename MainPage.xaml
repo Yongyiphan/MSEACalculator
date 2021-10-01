@@ -23,6 +23,6 @@
 
 
         </StackPanel>
-
+        <Button x:Name="ResetBtn" Content="Reset" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="40" Click="ResetBtn_Click" />
     </Grid>
 </Page>

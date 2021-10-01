@@ -1,0 +1,106 @@
+Data Flow
+Database first init
+Json first init
+
+Character
+Meso
+Equipment
+
+
+### COMMUNICATING WITH DATABASE/JSON??
+YES
+MESOPROGRESS
+
+
+NO
+
+
+
+#####Main Page#####
+Hard Reset Button <- Default Data Folder
+Backup Button <- Backup folder
+
+
+Inputs
+0 Daily or Weekly Gains (Daily -> No. of Days / Weekly -> 1)
+1 Meso / SGD / ACash (SGD and ACash modifier)
+2 Starforce (Equip Lvl, SF level)
+
+Outputs
+0 Display Total Daily/ Weekly Meso Gains
+1 Currency Conversion (In Meso, In Billion, In SGD, In ACash)
+2 TLDR Default Stats At certain SF Lvl (Main Stat, WAtk/MAtk)
+
+
+
+First Init (DefaultData) <- Hard Reset Button
+Upload Data to DB
+-BossList
+-Starforce && additional Starforce stats
+Create JSON with Blank obj
+-Character.Json
+
+Save Button
+-Character.Json
+-Event.json
+
+#####Track Meso Gains#####
+
+Inputs
+1 Mule Name <- DropDown List
+1 Add from available boss <- increase doable bosses <- update database (JSON)
+1 Custom Input (Name, Meso Value, No. Runs)
+1 Update Button
+
+2 EB Drop Prices
+2 EB Drops (Item Name <- Select from dropdown)
+2 EB Drop quantity <- default 1
+2 Date <- default Date.today
+2 EB Save button
+
+Outputs
+1 Doable Boss, Boss Crystal Values, Total Value <- Show Weekly or Daily
+1 Custom Meso Source
+
+2 Probabilty of each EB Drop
+2 Current EB Drops
+2 Total Earn 0
+
+Retrieval 
+BossList <- Maplestory.db
+CharacterMesoGains <- Characters.Json <- List<Character> (Deserialize)
+
+Uploads
+IF, changes -> CharacterMesoGains -> Characters.Json
+
+
+#####Track Ongoing Event#####
+
+Modify Event Stats Page
+Input
+Add Currencies Name
+Add Event Items to to "Cart"
+Add Custom items <- Modify Event Stats page
+Refresh Button
+Assign item to mules <- can be blank
+Daily limit per currencies, Sunday Multiplier x2/x3 Duration. 
+Days available to farm coins <- ?Sunday
+
+Output
+TLDR of event (Total Coins Needed for each currencies)
+Display List of items not obtained. <- delete accordingly.
+Sort by Event Shop
+
+Retrieval
+Event Items to .DB table (Event Name, Shop, Name, Cost, Currency, Quantity Left, Status, Mules Name) sort by Event and shop name
+
+
+Uploads
+Event Items to .DB
+
+
+#####Calculate SF and Probability#####
+
+#####Inventory#####
+#####Track Stats#####
+

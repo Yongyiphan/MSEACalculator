@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "FPxAD+UNEl5CK72+Ts+9l9thRmVuuVRaSr0+CjQ2dJC1s4RClkHHGLCNycUFRftLoEPCEVTLb23EwHFGCVr4gw==",
+  "dgSpecHash": "XAYuKA71rUBy6SED+fu67cl/9nExz65ZpQR++zOCPg28niL0rZ1jGlo3QInwQ/YnAs0x9cYWTBv/sebH5CmyhQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\edgar\\.nuget\\packages\\asyncenumerator\\4.0.2\\asyncenumerator.4.0.2.nupkg.sha512",
     "C:\\Users\\edgar\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
-    "C:\\Users\\edgar\\.nuget\\packages\\microsoft.data.sqlite\\5.0.8\\microsoft.data.sqlite.5.0.8.nupkg.sha512",
-    "C:\\Users\\edgar\\.nuget\\packages\\microsoft.data.sqlite.core\\5.0.8\\microsoft.data.sqlite.core.5.0.8.nupkg.sha512",
+    "C:\\Users\\edgar\\.nuget\\packages\\microsoft.data.sqlite\\5.0.10\\microsoft.data.sqlite.5.0.10.nupkg.sha512",
+    "C:\\Users\\edgar\\.nuget\\packages\\microsoft.data.sqlite.core\\5.0.10\\microsoft.data.sqlite.core.5.0.10.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\microsoft.net.native.compiler\\2.2.10-rel-29722-00\\microsoft.net.native.compiler.2.2.10-rel-29722-00.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\microsoft.net.uwpcoreruntimesdk\\2.2.12\\microsoft.net.uwpcoreruntimesdk.2.2.12.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\microsoft.netcore.platforms\\2.1.0\\microsoft.netcore.platforms.2.1.0.nupkg.sha512",

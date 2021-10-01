@@ -14,11 +14,17 @@ using Dasync.Collections;
 using MSEACalculator.StarforceRes;
 using MSEACalculator.BossRes;
 using MSEACalculator.EventRes;
+using MSEACalculator.CharacterRes;
+using MSEACalculator.CharacterRes.MesoRes;
 
 namespace MSEACalculator
 {
-    public static class DatabaseAccess
+    class DatabaseAccess
     {
+
+        
+        //Codes for First initialising of Data
+        //From CSV (DefaultData folder) to Sqlite Database (Maplestory.db)
         public async static Task databaseInit()
         {
             //string dbName = "Maplestory.db";
@@ -29,7 +35,7 @@ namespace MSEACalculator
                 dbConnection.Open();
 
                 List<TableStats> staticTables = new List<TableStats>();
-                List<TableStats> foreignTables = new List<TableStats>();
+                List<TableStats> blankTables = new List<TableStats>();
 
                 //TABLE FOR BOSS DETAILS
 
@@ -48,7 +54,7 @@ namespace MSEACalculator
 
 
                 //TABLE FOR STARFORCE STATS
-                string sftableSpec = "(" +
+                string sfTableSpec = "(" +
                     "SFID int NOT NULL, " +
                     "MainStat int," +
                     "NonWeaponDef int NOT NULL," +
@@ -62,7 +68,7 @@ namespace MSEACalculator
                     "GlovesATK int NOT NULL," +
                     "PRIMARY KEY(SFID));";
                 string tableNameSF = "StarforceList";
-                TableStats SFTable = new TableStats(tableNameSF, sftableSpec, "StarForce");
+                TableStats SFTable = new TableStats(tableNameSF, sfTableSpec, "StarForce");
                 staticTables.Add(SFTable);
 
                 //TABLE FOR STARFORCE STATS ADDONS
@@ -78,17 +84,34 @@ namespace MSEACalculator
                 TableStats AddSFtable = new TableStats(tableNameAddSFtable, addSFstatSpec, "AddStarForce");
                 staticTables.Add(AddSFtable);
 
-                //TABLE FOR EVENTS
-                //string eventMspecs = "(" +
-                //    "StartDate  text, " +
-                //    "EndDate text);";
+
+                //TABLE FOR DEFAULT CHARACTER LIST
+                string characterTableSpec = "(" +
+                    "ClassName string," +
+                    "ClassType string," +
+                    "Faction string," +
+                    "PRIMARY KEY (className));";
+
+                string tableNameChar = "DefaultCharacter";
+                TableStats CharacterTable = new TableStats(tableNameChar, characterTableSpec, "Character");
+                staticTables.Add(CharacterTable);
+
+                //TABLE FOR UNION
+
+                //BLANK TABLES
+                //TABLE FOR CHARACTER INIT 
+                
 
 
 
-                //For table without foreign key reference
+
                 staticTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection));
 
                 await Task.WhenAll(staticTables.ParallelForEachAsync(item => Task.Run(() => InitCSVData(item.initMode, item.tableName, dbConnection))));
+
+
+                 
+                //EMPTY TABLES
 
 
 
@@ -115,12 +138,12 @@ namespace MSEACalculator
 
         }
 
-        private async static Task InitCSVData(string type, string tableName, SqliteConnection connection)
+        public static async Task InitCSVData(string type, string tableName, SqliteConnection connection)
         {
             switch (type)
             {
                 case "Boss":
-                    Dictionary<int, Boss> bosstable = await CommonFunc.GetBossListAsync();
+                    Dictionary<int, Boss> bosstable = await GetBossCSVAsync();
                     // update to table
 
                     if (connection.State == ConnectionState.Open)
@@ -144,7 +167,7 @@ namespace MSEACalculator
                     break;
                 case "StarForce":
 
-                    Dictionary<int, SFGain> SFtable = await CommonFunc.GetSFListAsync();
+                    Dictionary<int, SFGain> SFtable = await GetSFCSVAsync();
 
                     if (connection.State == ConnectionState.Open)
                     {
@@ -192,7 +215,7 @@ namespace MSEACalculator
                     break;
                 case "AddStarForce":
 
-                    Dictionary<int, SFGain> AddSFtable = await CommonFunc.GetSFListAsync();
+                    Dictionary<int, SFGain> AddSFtable = await GetSFCSVAsync();
 
                     if (connection.State == ConnectionState.Open)
                     {
@@ -231,39 +254,392 @@ namespace MSEACalculator
 
                     }
                     break;
+                case "Character":
+
+                    Dictionary<int, Character> charTable = await GetCharCSVAsync();
+
+                    if(connection.State == ConnectionState.Open)
+                    {
+                        foreach(Character charItem in charTable.Values)
+                        {
+                            string insertChar = "INSERT INTO " + tableName + "(ClassName, ClassType, Faction)" +
+                                " VALUES (@CN, @CT, @Fac)";
+
+                            SqliteCommand insertCharCmd = new SqliteCommand(insertChar, connection);
+
+                            insertCharCmd.Parameters.AddWithValue("@CN", charItem.className);
+                            insertCharCmd.Parameters.AddWithValue("@CT", charItem.classType);
+                            insertCharCmd.Parameters.AddWithValue("@Fac", charItem.faction);
+
+                            insertCharCmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    break;
                 default:
                     break;
             }
 
         }
 
-        //Dont use async <= need results on the same thread
-        public async static Task writetoEventJson(string m, List<EventRecords> eventRecords)
+        public static async Task<Dictionary<int, Boss>> GetBossCSVAsync()
         {
-            string jsonFP = Path.Combine(ApplicationData.Current.LocalFolder.Path, @"Data\");
 
-            string filename = "Event.json";
-            switch (m)
+            Dictionary<int, Boss> AllBossList = new Dictionary<int, Boss>();
+
+
+
+            //string filePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName) + @"\Data\statGains.csv";
+            StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
+            StorageFile statTable = await storageFolder.GetFileAsync(@"\DefaultData\BossListData.csv");
+
+            var stream = await statTable.OpenAsync(Windows.Storage.FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
             {
-                case "init":
+                using (var dataReader = new Windows.Storage.Streams.DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
 
-                    string jsonString = JsonSerializer.Serialize<List<EventRecords>>(eventRecords);
-                    using (FileStream createStream = File.Create(filename))
+                    var result = text.Split("\r\n");
+                    int counter = 0;
+                    foreach (string bossEntry in result.Skip(1))
                     {
-                        await JsonSerializer.SerializeAsync(createStream, eventRecords);
+                        if (bossEntry == "")
+                        {
+                            return AllBossList;
+                        }
+
+                        var temp = bossEntry.Split(",");
+                        counter += 1;
+                        Boss tempboss = new Boss();
+
+                        tempboss.BossID = counter;
+                        tempboss.name = temp[0];
+                        tempboss.difficulty = temp[1];
+                        tempboss.entryType = temp[2];
+                        tempboss.entryLimit = Convert.ToInt32(temp[3]);
+                        tempboss.bossCrystalCount = Convert.ToInt32(temp[4]);
+                        tempboss.meso = Convert.ToInt32(temp[5]);
+                        AllBossList.Add(counter, tempboss);
+
 
                     }
 
-                    File.WriteAllText(jsonFP,filename);
-
-                        break;
-
-                case "update":
-                    break;
+                }
             }
 
 
 
+            return AllBossList;
+        }
+
+        public static async Task<Dictionary<int, SFGain>> GetSFCSVAsync()
+        {
+            Dictionary<int, SFGain> SFList = new Dictionary<int, SFGain>();
+
+            StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
+            StorageFile statTable = await storageFolder.GetFileAsync(@"\DefaultData\statGains.csv");
+
+            var stream = await statTable.OpenAsync(Windows.Storage.FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new Windows.Storage.Streams.DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    var result = text.Split("\r\n");
+                    int counter = 0;
+                    foreach (string SFEntry in result.Skip(1))
+                    {
+                        if (SFEntry == "")
+                        {
+                            return SFList;
+                        }
+
+                        var sfitem = SFEntry.Split(",");
+                        if (counter >= 15)
+                        {
+                            counter += 1;
+                            SFGain tempSFitem2 = new SFGain();
+
+                            tempSFitem2.StarForceLevel = counter;
+                            tempSFitem2.MainStatL = sfitem[1].Split(";").ToList().Select(s => int.Parse(s)).ToList();
+                            tempSFitem2.NonWeapDef = Convert.ToInt32(sfitem[2]);
+                            tempSFitem2.OverallDef = Convert.ToInt32(sfitem[3]);
+                            tempSFitem2.MaxHP = Convert.ToInt32(sfitem[4]);
+                            tempSFitem2.MaxMP = Convert.ToInt32(sfitem[5]);
+                            tempSFitem2.WATKL = sfitem[6].Split(";").ToList().Select(s => int.Parse(s)).ToList();
+                            tempSFitem2.NonWATKL = sfitem[7].Split(";").ToList().Select(s => int.Parse(s)).ToList();
+                            tempSFitem2.Speed = Convert.ToInt32(sfitem[8]);
+                            tempSFitem2.Jump = Convert.ToInt32(sfitem[9]);
+                            tempSFitem2.GloveAtk = Convert.ToInt32(sfitem[10]);
+
+
+                            SFList.Add(counter, tempSFitem2);
+                        }
+                        else
+                        {
+                            counter += 1;
+                            SFGain tempSFitem1 = new SFGain();
+                            tempSFitem1.StarForceLevel = counter;
+                            tempSFitem1.MainStat = Convert.ToInt32(sfitem[1]);
+                            tempSFitem1.NonWeapDef = Convert.ToInt32(sfitem[2]);
+                            tempSFitem1.OverallDef = Convert.ToInt32(sfitem[3]);
+                            tempSFitem1.MaxHP = Convert.ToInt32(sfitem[4]);
+                            tempSFitem1.MaxMP = Convert.ToInt32(sfitem[5]);
+                            tempSFitem1.WATK = Convert.ToInt32(sfitem[6]);
+                            tempSFitem1.NonWATK = Convert.ToInt32(sfitem[7]);
+                            tempSFitem1.Speed = Convert.ToInt32(sfitem[8]);
+                            tempSFitem1.Jump = Convert.ToInt32(sfitem[9]);
+                            tempSFitem1.GloveAtk = Convert.ToInt32(sfitem[10]);
+
+                            SFList.Add(counter, tempSFitem1);
+
+                        }
+
+                    }
+
+                }
+            }
+
+
+
+            return SFList;
+        }
+        
+        public static async Task<Dictionary<int, Character>> GetCharCSVAsync()
+        {
+            Dictionary<int, Character> characterList = new Dictionary<int, Character>();
+
+            StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
+            StorageFile charTable = await storageFolder.GetFileAsync(@"\DefaultData\CharacterList.csv");
+
+            var stream = await charTable.OpenAsync(FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new Windows.Storage.Streams.DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    var result = text.Split("\r\n");
+                    int counter = 0;
+                    foreach (string characterItem in result)
+                    {
+                        if (characterItem == "")
+                        {
+                            return characterList;
+                        }
+
+                        var temp = characterItem.Split(",");
+                        counter += 1;
+                        Character tempChar = new Character(temp[0], temp[1], temp[2]);
+                        characterList.Add(counter, tempChar);
+
+                    }
+                }
+            }
+
+
+                return characterList;
+        }
+
+        //Code for First initialisation of Data
+        //From CSV to Json
+
+
+
+
+
+        //Retrieving Data from Maplestory.db
+
+        public static Dictionary<int, Boss> GetBossDB()
+        {
+            Dictionary<int, Boss> bossDict = new Dictionary<int, Boss>();
+
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
+
+            using (SqliteConnection dbConnection = new SqliteConnection($"Filename = {dbpath}"))
+            {
+                dbConnection.Open();
+                string getBossCmd = "SELECT * FROM BossList";
+
+                SqliteCommand selectCmd = new SqliteCommand(getBossCmd, dbConnection);
+
+                SqliteDataReader query = selectCmd.ExecuteReader();
+
+                
+                while (query.Read())
+                {
+                    Boss tempBoss = new Boss();
+                    tempBoss.BossID = query.GetInt16(0);
+                    tempBoss.name= query.GetString(1);
+                    tempBoss.difficulty = query.GetString(2);
+                    tempBoss.entryType = query.GetString(3);
+                    tempBoss.entryLimit = query.GetInt16(4);
+                    tempBoss.bossCrystalCount = query.GetInt16(5);
+                    tempBoss.meso = query.GetInt32(6);
+
+                    bossDict.Add(query.GetInt32(0), tempBoss);
+                }
+
+
+
+                dbConnection.Close();
+
+            }
+
+
+            return bossDict;
+        }
+
+
+        public static Dictionary<string, Character> GetAllCharDB()
+        {
+            Dictionary<string, Character> charDict = new Dictionary<string, Character>();
+
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
+
+            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={dbpath}"))
+            {
+                dbConnection.Open();
+                string getCharCmd = "SELECT * FROM DefaultCharacter";
+
+                SqliteCommand selectCmd = new SqliteCommand(getCharCmd, dbConnection);
+
+                SqliteDataReader query = selectCmd.ExecuteReader();
+
+
+                while (query.Read())
+                {
+                    Character tempChar = new Character();
+                    tempChar.className = query.GetString(0);
+                    tempChar.classType = query.GetString(1);
+                    tempChar.faction = query.GetString(2);
+
+
+                    charDict.Add(query.GetString(0),tempChar);
+                }
+
+                dbConnection.Close();
+
+            }
+            return charDict;
+        }
+
+        public static Dictionary<string, Character> getCharTrackDict()
+        {
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
+
+            Dictionary<string, Character> charTrackList = new Dictionary<string, Character>(); 
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename ={dbpath}"))
+            {
+                dbCon.Open();
+
+                string getCharTrackQuery = "SELECT * FROM Character";
+
+                SqliteCommand selectCharsCmd = new SqliteCommand(getCharTrackQuery, dbCon);
+
+                SqliteDataReader queryResult = selectCharsCmd.ExecuteReader();
+
+                while (queryResult.Read())
+                {
+                    Character tempChar = new Character();
+                    tempChar.className = queryResult.GetString(0);
+                    tempChar.classType = queryResult.GetString(1);
+                    tempChar.faction = queryResult.GetString(2);
+
+                    charTrackList.Add(tempChar.className, tempChar);
+                }
+
+
+                dbCon.Close();
+
+            }
+
+
+
+            return charTrackList;
+        }
+
+
+        public static Dictionary<string, Character> getCharTrackMeso(Dictionary<string, Character> charTrackDict)
+        {
+
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
+
+            using(SqliteConnection dbCon = new SqliteConnection($"Filename = {dbpath}"))
+            {
+                dbCon.Open();
+
+                foreach(Character character in charTrackDict.Values)
+                {
+
+                    string getMesoTrackQuery = "SELECT * FROM BossMesoGains WHERE charName = '" + character.className + "'";
+
+                    SqliteCommand selectCMD = new SqliteCommand(getMesoTrackQuery, dbCon);
+
+                    SqliteDataReader result = selectCMD.ExecuteReader();
+
+                    List<string> bossList = new List<string>(); 
+
+                    while (result.Read())
+                    {
+                        bossList.Add(result.GetString(1));
+                    }
+                    character.bossList = bossList;
+
+                }
+
+
+                dbCon.Close();
+            }
+
+
+            return charTrackDict;
         }
     }
 }
+
+//public async static Task writetoEventJson(string m, List<EventRecords> eventRecords)
+//{
+//    string jsonFP = Path.Combine(ApplicationData.Current.LocalFolder.Path, @"Data\");
+
+//    string filename = "Event.json";
+//    switch (m)
+//    {
+//        case "init":
+
+//            string jsonString = JsonSerializer.Serialize<List<EventRecords>>(eventRecords);
+//            using (FileStream createStream = File.Create(filename))
+//            {
+//                await JsonSerializer.SerializeAsync(createStream, eventRecords);
+
+//            }
+
+//            File.WriteAllText(jsonFP,filename);
+
+//                break;
+
+//        case "update":
+//            break;
+//    }
+
+
+
+//}

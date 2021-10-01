@@ -19,7 +19,7 @@
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
     <LayoutDir>C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\AppX</LayoutDir>
-    <RegisteredManifestChecksum>FBC7E9762177FBD9EEF0AD7040275CF648EE2AD2FE5C0126CF048E0CB243984D</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>166327349EF8A497816512F4F1C0F436DA2581504ADDF6FC2E38C55259C7AEE7</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>MSEA-000f7318-a33f-4024-b59c-7eafe27b8831_1.0.0.0_x86__h8rqv0gxgvjbt</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>MSEA-000f7318-a33f-4024-b59c-7eafe27b8831_h8rqv0gxgvjbt!App</RegisteredUserModeAppID>
     <RegisteredPackageID>MSEA-000f7318-a33f-4024-b59c-7eafe27b8831</RegisteredPackageID>
@@ -30,13 +30,13 @@
     <AppXManifest Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2021-09-07T05:38:59.771</Modified>
+      <Modified>2021-09-26T10:52:25.027</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MSEACalculator.exe">
       <PackagePath>entrypoint\MSEACalculator.exe</PackagePath>
-      <Modified>2021-09-07T05:38:59.249</Modified>
+      <Modified>2021-09-26T10:52:24.757</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\asyncenumerator\4.0.2\lib\netstandard2.0\AsyncEnumerable.dll">
       <PackagePath>AsyncEnumerable.dll</PackagePath>
@@ -46,9 +46,9 @@
       <PackagePath>Microsoft.Bcl.AsyncInterfaces.dll</PackagePath>
       <Modified>2020-10-19T18:40:26.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.data.sqlite.core\5.0.8\lib\netstandard2.0\Microsoft.Data.Sqlite.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.data.sqlite.core\5.0.10\lib\netstandard2.0\Microsoft.Data.Sqlite.dll">
       <PackagePath>Microsoft.Data.Sqlite.dll</PackagePath>
-      <Modified>2021-06-15T22:04:36.000</Modified>
+      <Modified>2021-08-10T23:33:10.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\newtonsoft.json\13.0.1\lib\netstandard2.0\Newtonsoft.Json.dll">
       <PackagePath>Newtonsoft.Json.dll</PackagePath>
@@ -130,23 +130,23 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MSEACalculator.xr.xml">
       <PackagePath>MSEACalculator.xr.xml</PackagePath>
-      <Modified>2021-09-07T05:38:59.166</Modified>
+      <Modified>2021-09-26T10:47:58.892</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2021-09-07T05:38:59.179</Modified>
+      <Modified>2021-09-26T10:52:24.691</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\BossRes\MesoProgress.xbf">
-      <PackagePath>BossRes\MesoProgress.xbf</PackagePath>
-      <Modified>2021-09-07T05:38:59.179</Modified>
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\CharacterRes\MesoRes\MesoProgress.xbf">
+      <PackagePath>CharacterRes\MesoRes\MesoProgress.xbf</PackagePath>
+      <Modified>2021-09-26T10:52:24.690</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\EventRes\Event.xbf">
       <PackagePath>EventRes\Event.xbf</PackagePath>
-      <Modified>2021-09-07T05:38:59.179</Modified>
+      <Modified>2021-09-26T10:52:24.692</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2021-09-07T05:38:59.179</Modified>
+      <Modified>2021-09-26T10:52:24.692</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.19041.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -154,11 +154,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2021-09-07T05:38:59.460</Modified>
+      <Modified>2021-09-26T07:24:05.029</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\Core\MSEACalculator.exe">
       <PackagePath>MSEACalculator.exe</PackagePath>
-      <Modified>2021-09-07T05:38:59.767</Modified>
+      <Modified>2021-09-26T10:52:25.024</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

@@ -7,21 +7,22 @@ using MSEACalculator.BossRes;
 
 namespace MSEACalculator.CharacterRes.MesoRes
 {
-    class BossMesoList
+    class BossMesoGain
     {
-
         public string charName { get; set; }
 
-        public Dictionary<string, Boss> bossNameLDict { get; set; }
 
 
-        public BossMesoList() { }
 
-        public BossMesoList(string cName, Dictionary<string, Boss> bossList)
+        public List<BossRes.Boss> bossList { get; set; }
+
+        public BossMesoGain() { }
+        public BossMesoGain(string charName, List<Boss> bossList) 
         {
-            this.charName = cName;
-            this.bossNameLDict = bossList;
+            this.charName = charName;
+            this.bossList = bossList;
         }
+
 
     }
 }

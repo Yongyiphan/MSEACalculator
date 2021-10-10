@@ -17,25 +17,43 @@ namespace MSEACalculator.CharacterRes
 
         public string classType { get; set; }
 
-        public List<string> bossList { get; set; }
+        public List<Boss> bossList { get; set; }
+
+        public string unionEffect { get; set; }
+
+        public string unionEffectType { get; set; }
+
 
         public Character() { }
 
-        public Character(string CN, string CT, string Faction)
+        //FOR RETREIVING W/O UNION
+        public Character(string cn, string ct, string faction)
         {
-            this.className = CN;
-            this.faction = Faction;
-            this.classType = CT;
+            this.className = cn;
+            this.classType = ct;
+            this.faction = faction;
         }
-        
-        public Character(string CN, string CT, string Faction, List<string> bossList)
+
+            //FOR INIT OR RETRIEVE ALL
+            public Character(string CN, string CT, string Faction, string uEffect, string uEffectType)
         {
             this.className = CN;
             this.faction = Faction;
             this.classType = CT;
+            this.unionEffect = uEffect;
+            this.unionEffectType = uEffectType;
+        }
+
+        //FOR BOSSING
+        public Character(string CN,  List<Boss> bossList)
+        {
+            this.className = CN;
 
             this.bossList = bossList;
         }
 
+
+        
+        
     }
 }

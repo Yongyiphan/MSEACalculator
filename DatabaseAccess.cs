@@ -16,13 +16,13 @@ using MSEACalculator.BossRes;
 using MSEACalculator.EventRes;
 using MSEACalculator.CharacterRes;
 using MSEACalculator.CharacterRes.MesoRes;
+using MSEACalculator.OtherRes;
 
 namespace MSEACalculator
 {
     class DatabaseAccess
     {
 
-        
         //Codes for First initialising of Data
         //From CSV (DefaultData folder) to Sqlite Database (Maplestory.db)
         public async static Task databaseInit()
@@ -47,7 +47,8 @@ namespace MSEACalculator
                     "EntryLimit int NOT NULL," +
                     "BossCrystal int NOT NULL," +
                     "Meso int NOT NULL," +
-                    "PRIMARY KEY(BossID));";
+                    "PRIMARY KEY(BossID)" +
+                    ");";
                 string tableNameBOss = "BossList";
                 TableStats BossTable = new TableStats(tableNameBOss, bossListSpec, "Boss");
                 staticTables.Add(BossTable);
@@ -66,7 +67,8 @@ namespace MSEACalculator
                     "ShoeSpeed int NOT NULL," +
                     "ShoeJump int NOT NULL," +
                     "GlovesATK int NOT NULL," +
-                    "PRIMARY KEY(SFID));";
+                    "PRIMARY KEY(SFID)" +
+                    ");";
                 string tableNameSF = "StarforceList";
                 TableStats SFTable = new TableStats(tableNameSF, sfTableSpec, "StarForce");
                 staticTables.Add(SFTable);
@@ -79,38 +81,56 @@ namespace MSEACalculator
                     "'138~149' int NOT NULL," +
                     "'150~159' int NOT NULL," +
                     "'160~199' int NOT NULL," +
-                    "'200' int NOT NULL);";
+                    "'200' int NOT NULL" +
+                    ");";
                 string tableNameAddSFtable = "AddSFStat";
                 TableStats AddSFtable = new TableStats(tableNameAddSFtable, addSFstatSpec, "AddStarForce");
                 staticTables.Add(AddSFtable);
 
 
                 //TABLE FOR DEFAULT CHARACTER LIST
-                string characterTableSpec = "(" +
+                string CharacterTableSpec = "(" +
                     "ClassName string," +
                     "ClassType string," +
                     "Faction string," +
-                    "PRIMARY KEY (className));";
+                    "UnionEffect string," +
+                    "UnionEffectType string," +
+                    "PRIMARY KEY (className)" +
+                    ");";
 
-                string tableNameChar = "DefaultCharacter";
-                TableStats CharacterTable = new TableStats(tableNameChar, characterTableSpec, "Character");
-                staticTables.Add(CharacterTable);
+                string tableNameChar = "Character";
+                TableStats defaultCharacterTable = new TableStats(tableNameChar, CharacterTableSpec, "Character");
+                staticTables.Add(defaultCharacterTable);
 
                 //TABLE FOR UNION
 
+
+
                 //BLANK TABLES
                 //TABLE FOR CHARACTER INIT 
-                
 
+                string bossMesoGainsTableSpec = "(" +
+                    "charName string," +
+                    "BossName string," +
+                    "BossID int," +
+                    "PRIMARY KEY(charName, BossID)," +
+                    "FOREIGN KEY (charName) REFERENCES Character(ClassName)," +
+                    "FOREIGN KEY (BossID) REFERENCES BossList(BossID)" +
+                    ");";
 
+                string bossMesoTableName = "BossMesoGains";
+                TableStats bossMesoGainsTable = new TableStats(bossMesoTableName, bossMesoGainsTableSpec);
+                blankTables.Add(bossMesoGainsTable);
 
+                //INIT Blank Tables <- Tables with foreign key FIRST
+                blankTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection));
 
                 staticTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection));
 
                 await Task.WhenAll(staticTables.ParallelForEachAsync(item => Task.Run(() => InitCSVData(item.initMode, item.tableName, dbConnection))));
 
 
-                 
+
                 //EMPTY TABLES
 
 
@@ -262,14 +282,16 @@ namespace MSEACalculator
                     {
                         foreach(Character charItem in charTable.Values)
                         {
-                            string insertChar = "INSERT INTO " + tableName + "(ClassName, ClassType, Faction)" +
-                                " VALUES (@CN, @CT, @Fac)";
+                            string insertChar = "INSERT INTO " + tableName + "(ClassName, ClassType, Faction, UnionEffect, UnionEffectType)" +
+                                " VALUES (@CN, @CT, @Fac, @UE, @UET)";
 
                             SqliteCommand insertCharCmd = new SqliteCommand(insertChar, connection);
 
                             insertCharCmd.Parameters.AddWithValue("@CN", charItem.className);
                             insertCharCmd.Parameters.AddWithValue("@CT", charItem.classType);
                             insertCharCmd.Parameters.AddWithValue("@Fac", charItem.faction);
+                            insertCharCmd.Parameters.AddWithValue("@UE", charItem.unionEffect);
+                            insertCharCmd.Parameters.AddWithValue("@UET", charItem.unionEffectType);
 
                             insertCharCmd.ExecuteNonQuery();
                         }
@@ -447,7 +469,7 @@ namespace MSEACalculator
 
                         var temp = characterItem.Split(",");
                         counter += 1;
-                        Character tempChar = new Character(temp[0], temp[1], temp[2]);
+                        Character tempChar = new Character(temp[0], temp[1], temp[2], temp[3], temp[4]);
                         characterList.Add(counter, tempChar);
 
                     }
@@ -457,6 +479,8 @@ namespace MSEACalculator
 
                 return characterList;
         }
+
+
 
         //Code for First initialisation of Data
         //From CSV to Json
@@ -517,7 +541,7 @@ namespace MSEACalculator
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={dbpath}"))
             {
                 dbConnection.Open();
-                string getCharCmd = "SELECT * FROM DefaultCharacter";
+                string getCharCmd = "SELECT * FROM Character";
 
                 SqliteCommand selectCmd = new SqliteCommand(getCharCmd, dbConnection);
 
@@ -530,6 +554,8 @@ namespace MSEACalculator
                     tempChar.className = query.GetString(0);
                     tempChar.classType = query.GetString(1);
                     tempChar.faction = query.GetString(2);
+                    tempChar.unionEffect = query.GetString(3);
+                    tempChar.unionEffectType = query.GetString(4);
 
 
                     charDict.Add(query.GetString(0),tempChar);
@@ -541,80 +567,140 @@ namespace MSEACalculator
             return charDict;
         }
 
-        public static Dictionary<string, Character> getCharTrackDict()
-        {
-            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
-
-            Dictionary<string, Character> charTrackList = new Dictionary<string, Character>(); 
-
-            using (SqliteConnection dbCon = new SqliteConnection($"Filename ={dbpath}"))
-            {
-                dbCon.Open();
-
-                string getCharTrackQuery = "SELECT * FROM Character";
-
-                SqliteCommand selectCharsCmd = new SqliteCommand(getCharTrackQuery, dbCon);
-
-                SqliteDataReader queryResult = selectCharsCmd.ExecuteReader();
-
-                while (queryResult.Read())
-                {
-                    Character tempChar = new Character();
-                    tempChar.className = queryResult.GetString(0);
-                    tempChar.classType = queryResult.GetString(1);
-                    tempChar.faction = queryResult.GetString(2);
-
-                    charTrackList.Add(tempChar.className, tempChar);
-                }
-
-
-                dbCon.Close();
-
-            }
 
 
 
-            return charTrackList;
-        }
-
-
-        public static Dictionary<string, Character> getCharTrackMeso(Dictionary<string, Character> charTrackDict)
+        public static Character getCharBossList(string character)
         {
 
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
 
-            using(SqliteConnection dbCon = new SqliteConnection($"Filename = {dbpath}"))
+            List<Boss> bossList = new List<Boss>();
+            Character charTrack = new Character() { className = character, bossList = bossList };
+
+            string getMesoTrackQuery = @"SELECT " +
+                "BossList.BossID," +
+                "BossList.BossName, " +
+                "BossList.Difficulty," +
+                "BossList.EntryType," +
+                "BossList.EntryLimit," +
+                "BossList.BossCrystal, " +
+                "BossList.Meso " +
+                "FROM BossList " +
+                "INNER JOIN BossMesoGains ON BossMesoGains.BossID = BossList.BossID " +
+                "WHERE BossMesoGains.charName = @charName";
+
+ 
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {dbpath}"))
             {
                 dbCon.Open();
-
-                foreach(Character character in charTrackDict.Values)
+                using (SqliteCommand selectCMD = new SqliteCommand())
                 {
+                    selectCMD.CommandText = getMesoTrackQuery;
+                    selectCMD.Connection = dbCon;
+                    selectCMD.Parameters.AddWithValue("@charName", character);
 
-                    string getMesoTrackQuery = "SELECT * FROM BossMesoGains WHERE charName = '" + character.className + "'";
-
-                    SqliteCommand selectCMD = new SqliteCommand(getMesoTrackQuery, dbCon);
-
-                    SqliteDataReader result = selectCMD.ExecuteReader();
-
-                    List<string> bossList = new List<string>(); 
-
-                    while (result.Read())
+                    using (SqliteDataReader result = selectCMD.ExecuteReader())
                     {
-                        bossList.Add(result.GetString(1));
+                        while (result.Read())
+                        {
+
+                            Boss tempBoss = new Boss()
+                            {
+                                BossID = result.GetInt16(0),
+                                name = result.GetString(1),
+                                difficulty = result.GetString(2),
+                                entryType = result.GetString(3),
+                                entryLimit = result.GetInt16(4),
+                                bossCrystalCount = result.GetInt16(5),
+                                meso = result.GetInt32(6)
+
+                            };
+                            charTrack.bossList.Add(tempBoss);
+                        }
                     }
-                    character.bossList = bossList;
-
+                    dbCon.Close();
                 }
+            }
+            
+            return charTrack;
+        }
+
+        public static bool insertCharBossList(string charName, string bossName, int bossID)
+        {
+            bool insertPassed = false;
+
+            string insertQueryStr = "INSERT INTO BossMesoGains (charName, BossName, BossID) VALUES (@charName, @bossName, @bossID)";
+
+            using(SqliteConnection dbCon =  new SqliteConnection($"Filename={GlobalVars.databasePath}"))
+            {
+                try
+                {
+                    using (SqliteCommand insertCMD =  new SqliteCommand(insertQueryStr, dbCon))
+                    {
+                        insertCMD.Parameters.AddWithValue("@charName", charName);
+                        insertCMD.Parameters.AddWithValue("@bossName", bossName);
+                        insertCMD.Parameters.AddWithValue("@bossID", bossID);
+
+                        insertCMD.ExecuteNonQuery();
+                    }
 
 
-                dbCon.Close();
+                    insertPassed = true;
+                    return insertPassed;
+                }
+                catch (SqliteException)
+                {
+                    insertPassed = false;
+                    return insertPassed;
+                }
             }
 
-
-            return charTrackDict;
         }
+
+        public static void insertDB(Dictionary<string, Character> charList)
+        {
+
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
+
+            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={dbpath}"))
+            {
+                string insertQuery = "INSERT INTO BossMesoGains VALUES (@charName, 'BlackMage', 51)";
+                string insertQuery2 = "INSERT INTO BossMesoGains VALUES (@charName, 'Crimson Queen', 28)";
+
+
+                dbConnection.Open();
+                foreach(Character item in charList.Values)
+                {
+                    SqliteCommand insertCMD = new SqliteCommand();
+                    insertCMD.Connection = dbConnection;
+                    insertCMD.Parameters.Clear();
+                    insertCMD.CommandText = insertQuery;
+                    insertCMD.Parameters.AddWithValue("@charName", item.className);
+
+                    insertCMD.ExecuteNonQuery();
+
+                    insertCMD.Parameters.Clear();
+                    insertCMD.CommandText = insertQuery2;
+                    insertCMD.Parameters.AddWithValue("@charName", item.className);
+
+
+                    insertCMD.ExecuteNonQuery();
+                }
+
+            }
+        }
+
+
+
+
+
     }
+
+    
 }
+
+
 
 //public async static Task writetoEventJson(string m, List<EventRecords> eventRecords)
 //{

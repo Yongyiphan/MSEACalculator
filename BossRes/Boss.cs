@@ -21,6 +21,14 @@ namespace MSEACalculator.BossRes
 
 
         public Boss() { }
+
+        public Boss(string name, string D, int M)
+        {
+            this.name = name;
+            this.difficulty = D;
+            this.meso = M;
+        }
+
         public Boss(int ID, string name, string D, string ET, int EL, int M, int BCC)
         {
             this.BossID = ID;
@@ -33,5 +41,7 @@ namespace MSEACalculator.BossRes
 
 
         }
+
+        
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -15,7 +16,9 @@ using Windows.UI.Xaml.Navigation;
 using MSEACalculator.BossRes;
 using MSEACalculator.EventRes;
 using MSEACalculator.StarforceRes;
+using MSEACalculator.CharacterRes;
 using MSEACalculator.CharacterRes.MesoRes;
+using MSEACalculator.ViewPages;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -27,38 +30,51 @@ namespace MSEACalculator
     /// </summary>
     public sealed partial class MainPage : Page
     {
+
+
         public MainPage()
         {
             this.InitializeComponent();
+
+
         }
 
-        private void toHomeBtn_Click(object sender, RoutedEventArgs e)
+        private void navBar_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage));
+            ContentFrame.Navigate(typeof(HomePage));
+
         }
 
-        private void toScrollBtn_Click(object sender, RoutedEventArgs e)
+        private void navBar_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            
+            NavigationViewItem navItem = args.SelectedItem as NavigationViewItem;
+
+            if (args.IsSettingsSelected)
+            {
+                ContentFrame.Navigate(typeof(SettingsPage));
+            }
+            else
+            {
+                switch (navItem.Tag.ToString())
+                {
+                    case "Home_Page":
+                        ContentFrame.Navigate(typeof(HomePage));
+                        break;
+                    case "Meso_Page":
+                        ContentFrame.Navigate(typeof(MesoPage));
+                        break;
+                    case "Character_Page":
+                        ContentFrame.Navigate(typeof(CharacterPage));
+                        break;
+
+                }
+            }
+
         }
 
-        private void toMesoBtn_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(MesoProgress));
-        }
-
-        private void toEventBtn_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(Event));
-        }
-
-        private void ResetBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var resetDB = DatabaseAccess.databaseInit();
-
-
-        }
-
-
+        
     }
 }
+
+
+

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSEACalculator
+namespace MSEACalculator.OtherRes
 {
     class TableStats
     {
@@ -13,6 +13,14 @@ namespace MSEACalculator
         public string initMode { get; set; }
 
         public TableStats() { }
+
+
+        public TableStats(string TN, string TS)
+        {
+            this.tableName = TN;
+            this.tableSpecs = TS;
+
+        }
         public TableStats(string TN, string TS, string mode)
         {
             this.tableName = TN;

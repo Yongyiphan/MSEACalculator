@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XAYuKA71rUBy6SED+fu67cl/9nExz65ZpQR++zOCPg28niL0rZ1jGlo3QInwQ/YnAs0x9cYWTBv/sebH5CmyhQ==",
+  "dgSpecHash": "j/Wd1NvGjTV8wHcHbgFVpuFYqqejwf1hbBKcuafsZGq23846PiVjsjsnkv/OOejg/ZSR18M1pM19XYoUFmiSeg==",
   "success": true,
   "projectFilePath": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj",
   "expectedPackageFiles": [
@@ -10,9 +10,11 @@
     "C:\\Users\\edgar\\.nuget\\packages\\microsoft.data.sqlite.core\\5.0.10\\microsoft.data.sqlite.core.5.0.10.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\microsoft.net.native.compiler\\2.2.10-rel-29722-00\\microsoft.net.native.compiler.2.2.10-rel-29722-00.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\microsoft.net.uwpcoreruntimesdk\\2.2.12\\microsoft.net.uwpcoreruntimesdk.2.2.12.nupkg.sha512",
-    "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\microsoft.netcore.platforms\\2.1.0\\microsoft.netcore.platforms.2.1.0.nupkg.sha512",
+    "C:\\Users\\edgar\\.nuget\\packages\\microsoft.netcore.platforms\\2.1.0\\microsoft.netcore.platforms.2.1.0.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\microsoft.netcore.universalwindowsplatform\\6.2.12\\microsoft.netcore.universalwindowsplatform.6.2.12.nupkg.sha512",
-    "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\edgar\\.nuget\\packages\\microsoft.toolkit.uwp.ui.controls\\7.1.0\\microsoft.toolkit.uwp.ui.controls.7.1.0.nupkg.sha512",
+    "C:\\Users\\edgar\\.nuget\\packages\\microsoft.toolkit.uwp.ui.controls.datagrid\\6.1.1\\microsoft.toolkit.uwp.ui.controls.datagrid.6.1.1.nupkg.sha512",
+    "C:\\Users\\edgar\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
     "C:\\Users\\edgar\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\runtime.win10-arm-aot.microsoft.netcore.universalwindowsplatform\\6.2.12\\runtime.win10-arm-aot.microsoft.netcore.universalwindowsplatform.6.2.12.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\runtime.win10-arm.microsoft.net.native.compiler\\2.2.10-rel-29722-00\\runtime.win10-arm.microsoft.net.native.compiler.2.2.10-rel-29722-00.nupkg.sha512",

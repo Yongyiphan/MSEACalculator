@@ -9,21 +9,27 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:ConnectionId='2' x:Name="Navigation" Width="1*"/>
-            <ColumnDefinition x:ConnectionId='3' x:Name="MainBod" Width="6*"/>
-        </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0">
+        <NavigationView x:ConnectionId='2' Name="navBar"
+                                              
+                                                                   OpenPaneLength="180"
+                        >
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:ConnectionId='3' Icon="Home" Name="Home" Content="Home" Tag="Home_Page"/>
+                <NavigationViewItem x:ConnectionId='4' Name="Meso" Content="Meso" Tag="Meso_Page"/>
+                <NavigationViewItem x:ConnectionId='5' Name="Character" Content="Character" Tag="Character_Page"/>
+                <NavigationViewItem x:ConnectionId='6' Name="Event" Content="Event" Tag="Event_Page"/>
+            </NavigationView.MenuItems>
+            
+        
 
-            <Button x:ConnectionId='5' Margin="20,50,0,0" MinWidth="100" x:Name="toHomeBtn"                          Content="Home Page"/>
-            <Button x:ConnectionId='6' Margin="20" MinWidth="100" x:Name="toScrollBtn"                            Content="Scrolling"/>
-            <Button x:ConnectionId='7' Margin="20,0,0,0" MinWidth="100" x:Name="toMesoBtn"                          Content="Meso"/>
-            <Button x:ConnectionId='8' Margin="20" MinWidth="100" x:Name="toEventBtn"                           Content="Event"/>
+            <ScrollViewer>
+                <Frame x:ConnectionId='7' x:Name="ContentFrame" Padding="20" ></Frame>
+            </ScrollViewer>
 
-
-        </StackPanel>
-        <Button x:ConnectionId='4' x:Name="ResetBtn" Content="Reset" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="40"                        />
+        </NavigationView>
     </Grid>
+
+    
 </Page>
 

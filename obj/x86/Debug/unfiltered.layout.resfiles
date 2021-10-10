@@ -7,8 +7,11 @@ Assets\Square44x44Logo.targetsize-24_altform-unplated.png
 Assets\StoreLogo.png
 Assets\Wide310x150Logo.scale-200.png
 App.xbf
-CharacterRes\MesoRes\MesoProgress.xbf
+CharacterRes\CharacterPage.xbf
+CharacterRes\MesoRes\MesoPage.xbf
 EventRes\Event.xbf
 MainPage.xbf
 MSEACalculator.xr.xml
+ViewPages\HomePage.xbf
+ViewPages\SettingsPage.xbf
 Properties\Default.rd.xml

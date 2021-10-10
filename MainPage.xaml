@@ -9,20 +9,26 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="Navigation" Width="1*"/>
-            <ColumnDefinition x:Name="MainBod" Width="6*"/>
-        </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0">
+        <NavigationView Name="navBar"
+                        Loaded="navBar_Loaded"
+                        SelectionChanged="navBar_SelectionChanged" OpenPaneLength="180"
+                        >
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Home" Name="Home" Content="Home" Tag="Home_Page"/>
+                <NavigationViewItem Name="Meso" Content="Meso" Tag="Meso_Page"/>
+                <NavigationViewItem Name="Character" Content="Character" Tag="Character_Page"/>
+                <NavigationViewItem Name="Event" Content="Event" Tag="Event_Page"/>
+            </NavigationView.MenuItems>
+            
+        
 
-            <Button Margin="20,50,0,0" MinWidth="100" x:Name="toHomeBtn"  Click="toHomeBtn_Click" Content="Home Page"/>
-            <Button Margin="20" MinWidth="100" x:Name="toScrollBtn"  Click="toScrollBtn_Click" Content="Scrolling"/>
-            <Button Margin="20,0,0,0" MinWidth="100" x:Name="toMesoBtn"  Click="toMesoBtn_Click" Content="Meso"/>
-            <Button Margin="20" MinWidth="100" x:Name="toEventBtn"  Click="toEventBtn_Click" Content="Event"/>
+            <ScrollViewer>
+                <Frame x:Name="ContentFrame" Padding="20" ></Frame>
+            </ScrollViewer>
 
-
-        </StackPanel>
-        <Button x:Name="ResetBtn" Content="Reset" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="40" Click="ResetBtn_Click" />
+        </NavigationView>
     </Grid>
+
+    
 </Page>

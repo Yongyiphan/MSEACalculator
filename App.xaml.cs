@@ -19,6 +19,7 @@ using MSEACalculator.StarforceRes;
 using MSEACalculator.EventRes;
 using MSEACalculator.CharacterRes;
 using MSEACalculator.CharacterRes.MesoRes;
+using Windows.Storage;
 
 namespace MSEACalculator
 {
@@ -27,6 +28,11 @@ namespace MSEACalculator
     /// </summary>
     sealed partial class App : Application
     {
+
+        public string dpPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
+
+
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -35,6 +41,7 @@ namespace MSEACalculator
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
         }
 
         /// <summary>
@@ -71,7 +78,7 @@ namespace MSEACalculator
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(MesoProgress), e.Arguments);
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();

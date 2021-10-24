@@ -8,6 +8,9 @@ namespace MSEACalculator.OtherRes
 {
     public class CustomCommand
     {
+
+        //Testing Testing
+
         //Action<object> _execute;
 
         //Func<object, bool> _canExecute;

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj": {}
+    "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj": {
+    "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj",
+        "projectUniqueName": "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj",
         "projectName": "MSEACalculator",
-        "projectPath": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj",
+        "projectPath": "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj",
         "packagesPath": "C:\\Users\\edgar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\obj\\",
+        "outputPath": "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [

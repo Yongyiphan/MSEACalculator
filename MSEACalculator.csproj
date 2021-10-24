@@ -123,7 +123,7 @@
     <Compile Include="CharacterRes\CharacterPage.xaml.cs">
       <DependentUpon>CharacterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CharacterRes\MesoRes\BossMesoGain.cs" />
+    <Compile Include="CharacterRes\MesoRes\BossMeso.cs" />
     <Compile Include="CharacterRes\MesoRes\CustomItem.cs" />
     <Compile Include="CharacterRes\MesoRes\MesoPage.xaml.cs">
       <DependentUpon>MesoPage.xaml</DependentUpon>

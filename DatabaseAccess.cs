@@ -304,7 +304,7 @@ namespace MSEACalculator
 
         }
 
-        public static async Task<Dictionary<int, Boss>> GetBossCSVAsync()
+        private static async Task<Dictionary<int, Boss>> GetBossCSVAsync()
         {
 
             Dictionary<int, Boss> AllBossList = new Dictionary<int, Boss>();
@@ -360,7 +360,7 @@ namespace MSEACalculator
             return AllBossList;
         }
 
-        public static async Task<Dictionary<int, SFGain>> GetSFCSVAsync()
+        private static async Task<Dictionary<int, SFGain>> GetSFCSVAsync()
         {
             Dictionary<int, SFGain> SFList = new Dictionary<int, SFGain>();
 
@@ -439,7 +439,7 @@ namespace MSEACalculator
             return SFList;
         }
         
-        public static async Task<Dictionary<int, Character>> GetCharCSVAsync()
+        private static async Task<Dictionary<int, Character>> GetCharCSVAsync()
         {
             Dictionary<int, Character> characterList = new Dictionary<int, Character>();
 

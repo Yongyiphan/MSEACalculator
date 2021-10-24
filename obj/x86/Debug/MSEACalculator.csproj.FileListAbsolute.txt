@@ -95,7 +95,6 @@ C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\App.xb
 C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\MainPage.xbf
 C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\XamlSaveStateFile.xml
 C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\MSEACalculator.csproj.CoreCompileInputs.cache
-C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\MSEACalculator.csproj.CopyComplete
 C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\MSEACalculator.exe
 C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\MSEACalculator.pdb
 C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\ResourceHandlingTask.state

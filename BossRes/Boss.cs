@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSEACalculator.BossRes
 {
-    class Boss
+    public class Boss
     {
         public int BossID { get; set; }
         public string name { get; set; }

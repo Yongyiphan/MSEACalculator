@@ -84,7 +84,7 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                         <ComboBox x:Name="BossSelectorCBox" PlaceholderText="Select Boss or Custom" ItemsSource="{Binding bossNameList, Mode=TwoWay}" Width="200" 
                                   ></ComboBox>
-                        <ComboBox x:Name="BossDifficulty" IsTextSearchEnabled="True" PlaceholderText="Difficulty" ItemsSource="{Binding difficultyList, Mode=TwoWay}" MaxHeight="300" Width="100" 
+                        <ComboBox x:Name="BossDifficulty" IsTextSearchEnabled="True" PlaceholderText="Difficulty" ItemsSource="{Binding difficultyList, Mode=TwoWay}" MaxHeight="300" Width="110" 
                                   ></ComboBox>
 
                         <Button Name="AddBossItem">Add Boss</Button>

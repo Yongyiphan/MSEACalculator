@@ -9,7 +9,7 @@ using MSEACalculator.CharacterRes.MesoRes;
 
 namespace MSEACalculator.CharacterRes
 {
-    class Character
+    public class Character
     {
         public string className { get; set; }
 
@@ -17,7 +17,7 @@ namespace MSEACalculator.CharacterRes
 
         public string classType { get; set; }
 
-        public List<Boss> bossList { get; set; }
+        public List<Boss> bossList { get; set; } = new List<Boss>();
 
         public string unionEffect { get; set; }
 

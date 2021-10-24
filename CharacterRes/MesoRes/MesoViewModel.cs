@@ -28,31 +28,36 @@ namespace MSEACalculator.CharacterRes.MesoRes
     public class MesoViewModel
     {
 
-        Dictionary<int, Boss> bossDict = DatabaseAccess.GetBossDB();
 
-        Dictionary<string, Character> charDict = DatabaseAccess.GetAllCharDB();
+        //Init Variables
+        public List<string> bossNameList { get; set; } = new List<string>();
+        public List<string> difficultyList { get; set; } = new List<string>();
+        public List<string> charNameList { get; set; } = new List<string>();
 
+        private string _selectedMule;
 
-        //Blank List
-        public List<string> bossNameList { get; set; }
-        public List<string> difficultyList { get; set; }
-        public List<string> charNameList { get; set; }
-
-
+        public string selectedMule
+        {
+            get
+            {
+                return _selectedMule;
+            }
+            set
+            {
+                _selectedMule = value;
+            }
+        }
 
         public MesoViewModel()
         {
-            initloadFields();
-
-           
+            BossMeso bossMeso = new BossMeso();
             
+            initloadFields(bossMeso.bossDict, bossMeso.charDict);
+
         }
 
-        private void initloadFields()
+        private void initloadFields(Dictionary<int,Boss> bossDict, Dictionary<string, Character> charDict)
         {
-            bossNameList = new List<string>();
-            difficultyList = new List<string>();
-            charNameList = new List<string>();
 
             foreach (Boss bossItem in bossDict.Values)
             {
@@ -74,12 +79,10 @@ namespace MSEACalculator.CharacterRes.MesoRes
                 };
             }
             bossNameList.Add("Custom");
-            charNameList.Add("Custom");
         }
 
-        //public event PropertyChangedEventHandler PropertyChanged;
 
-        //CustomCommand AddBoss_Click = new CustomCommand();
+
 
     }
 

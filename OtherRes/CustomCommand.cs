@@ -4,45 +4,58 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
 namespace MSEACalculator.OtherRes
 {
-    public class CustomCommand
+    public class CustomCommand : ICommand
     {
 
-        //Testing Testing
+        readonly Action _execute = null;
+        readonly Func<bool> _canExecute = null;
 
-        //Action<object> _execute;
+        public event EventHandler CanExecuteChanged;
 
-        //Func<object, bool> _canExecute;
+        public CustomCommand()
+        {
 
-        //public CustomCommand()
-        //{
+        }
 
-        //}
+        public CustomCommand(Action execute)
+        {
+            this._execute = execute;
+        }
+        
+        public CustomCommand(Action execute, Func<bool> canExcute)
+        {
+            if (execute == null)
+                throw new ArgumentNullException("execute");
 
-        //public CustomCommand(Action<object> execute, Func<object, bool> canExecute)
-        //{
-        //    this._execute = execute;
-        //    this._canExecute = canExecute;
-        //}
+            this._execute = execute;
+            this._canExecute = canExcute;
+        }
 
-        //public event EventHandler CanExecuteChanged;
 
-        //public bool CanExecute(object parameter)
-        //{
-        //    if (this._canExecute != null)
-        //    {
-        //        return _canExecute(parameter);
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute == null ? true : _canExecute();
+        }
 
-        //public void Execute(object parameter)
-        //{
-        //    this._execute(parameter);
-        //}
+        public void Execute(object parameter)
+        {
+            _execute();
+
+        }
+
+
+        public void RaiseCanExecuteChanged()
+        {
+            var handler = CanExecuteChanged;
+            if(handler!= null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+
+            //CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

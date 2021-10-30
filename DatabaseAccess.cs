@@ -29,8 +29,7 @@ namespace MSEACalculator
         {
             //string dbName = "Maplestory.db";
             await ApplicationData.Current.LocalFolder.CreateFileAsync("Maplestory.db", CreationCollisionOption.OpenIfExists);
-            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
-            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={dbpath}"))
+            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GlobalVars.databasePath}"))
             {
                 dbConnection.Open();
 
@@ -495,9 +494,7 @@ namespace MSEACalculator
         {
             Dictionary<int, Boss> bossDict = new Dictionary<int, Boss>();
 
-            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
-
-            using (SqliteConnection dbConnection = new SqliteConnection($"Filename = {dbpath}"))
+            using (SqliteConnection dbConnection = new SqliteConnection($"Filename = {GlobalVars.databasePath}"))
             {
                 dbConnection.Open();
                 string getBossCmd = "SELECT * FROM BossList";
@@ -536,9 +533,7 @@ namespace MSEACalculator
         {
             Dictionary<string, Character> charDict = new Dictionary<string, Character>();
 
-            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
-
-            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={dbpath}"))
+            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GlobalVars.databasePath}"))
             {
                 dbConnection.Open();
                 string getCharCmd = "SELECT * FROM Character";
@@ -570,13 +565,11 @@ namespace MSEACalculator
 
 
 
-        public static Character getCharBossList(string character)
+        public static List<Boss> getCharBossList(string character)
         {
 
-            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
 
             List<Boss> bossList = new List<Boss>();
-            Character charTrack = new Character() { className = character, bossList = bossList };
 
             string getMesoTrackQuery = @"SELECT " +
                 "BossList.BossID," +
@@ -591,7 +584,7 @@ namespace MSEACalculator
                 "WHERE BossMesoGains.charName = @charName";
 
  
-            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {dbpath}"))
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GlobalVars.databasePath}"))
             {
                 dbCon.Open();
                 using (SqliteCommand selectCMD = new SqliteCommand())
@@ -616,14 +609,14 @@ namespace MSEACalculator
                                 meso = result.GetInt32(6)
 
                             };
-                            charTrack.bossList.Add(tempBoss);
+                            bossList.Add(tempBoss);
                         }
                     }
-                    dbCon.Close();
+
                 }
             }
             
-            return charTrack;
+            return bossList;
         }
 
         public static bool insertCharBossList(string charName, string bossName, int bossID)
@@ -634,6 +627,7 @@ namespace MSEACalculator
 
             using(SqliteConnection dbCon =  new SqliteConnection($"Filename={GlobalVars.databasePath}"))
             {
+                dbCon.Open();
                 try
                 {
                     using (SqliteCommand insertCMD =  new SqliteCommand(insertQueryStr, dbCon))
@@ -661,9 +655,7 @@ namespace MSEACalculator
         public static void insertDB(Dictionary<string, Character> charList)
         {
 
-            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
-
-            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={dbpath}"))
+            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GlobalVars.databasePath}"))
             {
                 string insertQuery = "INSERT INTO BossMesoGains VALUES (@charName, 'BlackMage', 51)";
                 string insertQuery2 = "INSERT INTO BossMesoGains VALUES (@charName, 'Crimson Queen', 28)";

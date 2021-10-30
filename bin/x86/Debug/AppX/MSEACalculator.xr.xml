@@ -1,9 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Roots >
   <Roots.PropertyPathNames>
-    <RootPropertyPathName Name="difficultyList" />
+    <RootPropertyPathName Name="TestVar" />
+    <RootPropertyPathName Name="BossList" />
+    <RootPropertyPathName Name="meso" />
+    <RootPropertyPathName Name="entryType" />
+    <RootPropertyPathName Name="difficulty" />
+    <RootPropertyPathName Name="name" />
+    <RootPropertyPathName Name="ErrorMessage" />
+    <RootPropertyPathName Name="addBossCMD" />
+    <RootPropertyPathName Name="DifficultyList" />
+    <RootPropertyPathName Name="SelectedDifficulty" />
     <RootPropertyPathName Name="bossNameList" />
+    <RootPropertyPathName Name="SelectedBoss" />
+    <RootPropertyPathName Name="TotalMeso" />
+    <RootPropertyPathName Name="displayType" />
+    <RootPropertyPathName Name="MesoViewBy" />
+    <RootPropertyPathName Name="daysList" />
+    <RootPropertyPathName Name="DaysMultiplier" />
     <RootPropertyPathName Name="charNameList" />
+    <RootPropertyPathName Name="SelectedMule" />
   </Roots.PropertyPathNames>
   <Roots.RootTypes>
     <RootType FullName="Windows.UI.Xaml.Application" />
@@ -16,6 +32,7 @@
       <RootProperty Name="RowDefinitions" />
       <RootProperty Name="Resources" />
       <RootProperty Name="Children" />
+      <RootProperty Name="Name" />
       <RootProperty Name="ColumnDefinitions" />
       <RootProperty Name="Margin" />
       <RootProperty Name="Background" />
@@ -49,24 +66,23 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
       <RootProperty Name="TextAlignment" />
-      <RootProperty Name="PlaceholderText" />
-      <RootProperty Name="VerticalAlignment" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
       <RootProperty Name="FontSize" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ComboBox">
       <RootProperty Name="PlaceholderText" />
-      <RootProperty Name="Width" />
       <RootProperty Name="ItemsSource" />
+      <RootProperty Name="SelectedItem" />
+      <RootProperty Name="Width" />
       <RootProperty Name="IsTextSearchEnabled" />
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Name" />
-      <RootProperty Name="Items" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
       <RootProperty Name="Name" />
+      <RootProperty Name="Command" />
       <RootProperty Name="Content" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Margin" />
@@ -86,23 +102,33 @@
       <RootProperty Name="Property" />
       <RootProperty Name="Value" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Data.Binding">
+      <RootProperty Name="UpdateSourceTrigger" />
+      <RootProperty Name="Mode" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ScrollViewer">
+      <RootProperty Name="Content" />
+    </RootType>
+    <RootType FullName="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
+      <RootProperty Name="Name" />
+      <RootProperty Name="AreRowDetailsFrozen" />
+      <RootProperty Name="AutoGenerateColumns" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="ItemsSource" />
+      <RootProperty Name="VerticalScrollBarVisibility" />
+      <RootProperty Name="Columns" />
+    </RootType>
+    <RootType FullName="Microsoft.Toolkit.Uwp.UI.Controls.DataGridTextColumn">
+      <RootProperty Name="Header" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="Binding" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.StackPanel">
       <RootProperty Name="Orientation" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Spacing" />
       <RootProperty Name="Children" />
-      <RootProperty Name="Resources" />
       <RootProperty Name="HorizontalAlignment" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Primitives.Popup">
-      <RootProperty Name="Child" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Data.Binding">
-      <RootProperty Name="Mode" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.ComboBoxItem">
-      <RootProperty Name="Content" />
-      <RootProperty Name="IsSelected" />
     </RootType>
     <RootType FullName="MSEACalculator.CharacterRes.MesoRes.MesoPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
@@ -123,9 +149,6 @@
       <RootProperty Name="Icon" />
       <RootProperty Name="Content" />
       <RootProperty Name="Tag" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.ScrollViewer">
-      <RootProperty Name="Content" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Frame">
       <RootProperty Name="Padding" />

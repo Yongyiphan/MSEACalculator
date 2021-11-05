@@ -50,11 +50,11 @@
         
         <!--First Portion for Boss Crsytal Tracking-->
         <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid x:ConnectionId='4' Grid.Row="0" Name="BossingGrid">
+            </Grid.RowDefinitions>-->
+            <Grid x:ConnectionId='4' Name="BossingGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
@@ -62,34 +62,35 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <ComboBox x:ConnectionId='11' x:Name="MulesNameSelector"  PlaceholderText="Select Mule" 
-                                  ItemsSource="{Binding charNameList, Mode=TwoWay}" 
+                        <ComboBox x:ConnectionId='10' x:Name="MulesNameSelector"  PlaceholderText="Select Mule" 
+                                  ItemsSource ="{Binding charNameList, Mode=TwoWay}" 
                                   SelectedItem="{Binding SelectedMule, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                   Width="200" VerticalAlignment="Center" ></ComboBox>
                         <TextBlock>Weekdays:</TextBlock>
-                        <ComboBox x:ConnectionId='12' Name="daysMultiplier" 
-                                  ItemsSource="{Binding daysList}" 
+                        <ComboBox x:ConnectionId='11' Name="daysMultiplier" 
+                                  ItemsSource ="{Binding daysList}" 
                                   SelectedItem="{Binding DaysMultiplier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <TextBlock>Weekends:</TextBlock>
-                        <ComboBox x:ConnectionId='13' Name="weekEndsMultiplier" 
-                                  ItemsSource="{Binding displayType}" 
+                        <ComboBox x:ConnectionId='12' Name="weekEndsMultiplier" 
+                                  ItemsSource ="{Binding displayType}" 
                                   SelectedItem="{Binding MesoViewBy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <TextBlock>Total Meso:</TextBlock>
-                        <TextBlock x:ConnectionId='14' Name="TotalMeso" MaxWidth="180" HorizontalAlignment="Left" Text="{Binding TotalMeso}"></TextBlock>
+                        <TextBlock x:ConnectionId='13' Name="TotalMeso" MaxWidth="180" HorizontalAlignment="Left" Text="{Binding TotalMeso}"></TextBlock>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="1">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                        <ComboBox x:ConnectionId='8' x:Name="BossSelectorCBox" PlaceholderText="Select Boss or Custom" 
+                        <ComboBox x:ConnectionId='6' x:Name="BossSelectorCBox" PlaceholderText="Select Boss or Custom" 
                                   ItemsSource="{Binding bossNameList, Mode=TwoWay}" 
                                   SelectedItem="{Binding SelectedBoss, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                   Width="200" />
-                        <ComboBox x:ConnectionId='9' x:Name="BossDifficulty" IsTextSearchEnabled="True" PlaceholderText="Difficulty" 
+                        <ComboBox x:ConnectionId='7' x:Name="BossDifficulty" IsTextSearchEnabled="True" PlaceholderText="Difficulty" 
                                   ItemsSource="{Binding DifficultyList}" 
                                   SelectedItem="{Binding SelectedDifficulty, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                   MaxHeight="300" Width="110" />
 
-                        <Button x:ConnectionId='10' Name="AddBossItem" Command="{Binding addBossCMD}" Content="Add Boss"></Button>
+                        <Button x:ConnectionId='8' Name="AddBossItem" Command="{Binding addBossCMD}" Content="Add Boss"></Button>
+                        <Button x:ConnectionId='9' Name="DeleteBossItem" Command="{Binding deleteBossCMD}" Content="Delete Boss"></Button>
                         <TextBlock Text="{Binding ErrorMessage}"/>
 
 
@@ -97,56 +98,39 @@
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
-                    <ScrollViewer>
                         <!--<ListView x:Name="bossListDisplay" ItemsSource="{Binding BossList}"></ListView>-->
-                        <controls:DataGrid x:ConnectionId='7' Name="bossDisplay" AreRowDetailsFrozen="True" AutoGenerateColumns="False" FontSize="14" ItemsSource="{Binding BossList}" VerticalScrollBarVisibility="Visible">
-                            <controls:DataGrid.Columns>
-                                <controls:DataGridTextColumn 
+                    <controls:DataGrid x:ConnectionId='5' Name="bossDisplay" AreRowDetailsFrozen="True" AutoGenerateColumns="False" FontSize="14" 
+                                       ItemsSource="{Binding BossList}"
+                                       SelectedItem="{Binding SelectedBossItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <controls:DataGrid.Columns>
+                            <controls:DataGridTextColumn 
                             Header="Boss Name" 
                             Width="180"
                             Binding="{Binding name}"/>
-                                <controls:DataGridTextColumn 
+                            <controls:DataGridTextColumn 
                             Header="Difficulty" 
                             Width="SizeToHeader"
                             Binding="{Binding difficulty}"/>
-                                <controls:DataGridTextColumn 
+                            <controls:DataGridTextColumn 
                             Header="Entry Type" 
                             Width="SizeToHeader"
                             Binding="{Binding entryType}"/>
-                                <controls:DataGridTextColumn 
+                            <controls:DataGridTextColumn 
                             Header="Meso" 
                             Width="150"
                             Binding="{Binding meso}"/>
-                            </controls:DataGrid.Columns>
-                        </controls:DataGrid>
-                    </ScrollViewer>
-                    
+                        </controls:DataGrid.Columns>
+                    </controls:DataGrid>
                 </Grid>
             </Grid>
 
 
-            <!-- Second Portion for EB Tracking-->
-            <Grid x:ConnectionId='5' Grid.Row="1" x:Name="EBGrid">
+            <!-- Second Portion for EB Tracking--><!--
+            <Grid Grid.Row="1" x:Name="EBGrid">
 
-                <TextBlock x:ConnectionId='6' x:Name="displayTxt" Text="{Binding TestVar}"/>
-                <!--<Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="6*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+                <TextBlock x:Name="displayTxt" Text="{Binding TestVar}"/>
 
-                    --><!--Record EB Drops--><!--
-
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                        <ComboBox x:Name="EBItemSelector" PlaceholderText="Select Item" Width="180"></ComboBox>
-                        <TextBlock Text="Price: "/>
-                        <TextBox x:Name="mesoValue" PlaceholderText="100,000,000" VerticalAlignment="Center"/>
-                        <TextBlock Text="Select Date: "/>
-                        <CalendarDatePicker Name="EBItemDateSelector"></CalendarDatePicker>
-                        <Button Name="AddEBItem">Add Item</Button>
-                    </StackPanel>
-                </Grid>-->
-            </Grid>
+            </Grid>-->
 
 
 

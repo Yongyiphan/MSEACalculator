@@ -1,22 +1,15 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using System.Collections;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Dasync.Collections;
 using Microsoft.Data.Sqlite;
-using Windows.Storage;
-using Dasync.Collections;
-using MSEACalculator.StarforceRes;
 using MSEACalculator.BossRes;
-using MSEACalculator.EventRes;
 using MSEACalculator.CharacterRes;
-using MSEACalculator.CharacterRes.MesoRes;
 using MSEACalculator.OtherRes;
+using MSEACalculator.StarforceRes;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace MSEACalculator
 {
@@ -97,8 +90,8 @@ namespace MSEACalculator
                     "PRIMARY KEY (className)" +
                     ");";
 
-                string tableNameChar = "Character";
-                TableStats defaultCharacterTable = new TableStats(tableNameChar, CharacterTableSpec, "Character");
+                string tableNameChar = "AllCharacter";
+                TableStats defaultCharacterTable = new TableStats(tableNameChar, CharacterTableSpec, "AllCharacter");
                 staticTables.Add(defaultCharacterTable);
 
                 //TABLE FOR UNION
@@ -106,8 +99,21 @@ namespace MSEACalculator
 
 
                 //BLANK TABLES
-                //TABLE FOR CHARACTER INIT 
+                //TABLE FOR CHARACTER TO TRACK
+                string charTrackSpec = "(" +
+                    "charName string," +
+                    "classType string," +
+                    "faction string," +
+                    "unionEffect string," +
+                    "unionEffectType string," +
+                    "PRIMARY KEY(charName)" +
+                    ");";
 
+                string charTrackTableName = "CharacterTrack";
+                TableStats charTrackTable = new TableStats(charTrackTableName, charTrackSpec);
+                blankTables.Add(charTrackTable);
+
+                //TABLE FOR CHAR'S BOSS TRACKING
                 string bossMesoGainsTableSpec = "(" +
                     "charName string," +
                     "BossName string," +
@@ -120,6 +126,9 @@ namespace MSEACalculator
                 string bossMesoTableName = "BossMesoGains";
                 TableStats bossMesoGainsTable = new TableStats(bossMesoTableName, bossMesoGainsTableSpec);
                 blankTables.Add(bossMesoGainsTable);
+
+                
+
 
                 //INIT Blank Tables <- Tables with foreign key FIRST
                 blankTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection));
@@ -273,7 +282,7 @@ namespace MSEACalculator
 
                     }
                     break;
-                case "Character":
+                case "AllCharacter":
 
                     Dictionary<int, Character> charTable = await GetCharCSVAsync();
 
@@ -481,11 +490,6 @@ namespace MSEACalculator
 
 
 
-        //Code for First initialisation of Data
-        //From CSV to Json
-
-
-
 
 
         //Retrieving Data from Maplestory.db
@@ -562,8 +566,75 @@ namespace MSEACalculator
             return charDict;
         }
 
+        public static Dictionary<string, Character> GetAllCharTrackDB()
+        {
+            Dictionary<string, Character> charDict = new Dictionary<string, Character>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GlobalVars.databasePath}"))
+            {
+                dbCon.Open();
+
+                string getCharCMD = "SELECT * FROM CharacterTrack";
+
+                using (SqliteCommand selectCMD = new SqliteCommand())
+                {
+                    selectCMD.CommandText = getCharCMD;
+                    selectCMD.Connection = dbCon;
+                    using (SqliteDataReader result = selectCMD.ExecuteReader())
+                    {
+                        while (result.Read())
+                        {
+                            Character tempChar = new Character();
+                            tempChar.className = result.GetString(0);
+                            tempChar.classType = result.GetString(1);
+                            tempChar.faction = result.GetString(2);
+                            tempChar.unionEffect = result.GetString(3);
+                            tempChar.unionEffectType = result.GetString(4);
 
 
+                            charDict.Add(result.GetString(0), tempChar);
+                        }
+                    }
+                }
+
+
+            }
+
+
+            return charDict;
+        }
+
+        public static bool insertCharTrack(Character character)
+        {
+
+            string insertQueryStr = "INSERT INTO CharacterTrack (charName, classType, faction, unionEffect, unionEffectType) VALUES (@CN, @CT, @Faction, @UE, @UET)";
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GlobalVars.databasePath}"))
+            {
+                dbCon.Open();
+
+                try
+                {
+                    using(SqliteCommand insertCMD = new SqliteCommand(insertQueryStr, dbCon))
+                    {
+                        insertCMD.Parameters.AddWithValue("@CN", character.className);
+                        insertCMD.Parameters.AddWithValue("@CT", character.classType);
+                        insertCMD.Parameters.AddWithValue("@Faction", character.faction);
+                        insertCMD.Parameters.AddWithValue("@UE", character.unionEffect);
+                        insertCMD.Parameters.AddWithValue("@UET", character.unionEffectType);
+
+                        insertCMD.ExecuteNonQuery();
+                    }
+
+                    
+                    return true;
+                }
+                catch (SqliteException)
+                {
+                    return false;
+                }
+            }
+        }
 
         public static List<Boss> getCharBossList(string character)
         {
@@ -652,35 +723,34 @@ namespace MSEACalculator
 
         }
 
-        public static void insertDB(Dictionary<string, Character> charList)
+        public static bool deleteCharBossList(string charName, int bossID)
         {
+            bool deletePassed = false;
+            string deleteQuery = "DELETE FROM BossMesoGains WHERE charName =  @CN AND BossID = @BID";
 
-            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GlobalVars.databasePath}"))
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename ={GlobalVars.databasePath}"))
             {
-                string insertQuery = "INSERT INTO BossMesoGains VALUES (@charName, 'BlackMage', 51)";
-                string insertQuery2 = "INSERT INTO BossMesoGains VALUES (@charName, 'Crimson Queen', 28)";
-
-
-                dbConnection.Open();
-                foreach(Character item in charList.Values)
+                dbCon.Open();
+                try
                 {
-                    SqliteCommand insertCMD = new SqliteCommand();
-                    insertCMD.Connection = dbConnection;
-                    insertCMD.Parameters.Clear();
-                    insertCMD.CommandText = insertQuery;
-                    insertCMD.Parameters.AddWithValue("@charName", item.className);
+                    using (SqliteCommand deleteCMD = new SqliteCommand(deleteQuery, dbCon))
+                    {
+                        deleteCMD.Parameters.AddWithValue("@CN", charName);
+                        deleteCMD.Parameters.AddWithValue("@BID", bossID);
 
-                    insertCMD.ExecuteNonQuery();
+                        deleteCMD.ExecuteNonQuery();
+                    }
 
-                    insertCMD.Parameters.Clear();
-                    insertCMD.CommandText = insertQuery2;
-                    insertCMD.Parameters.AddWithValue("@charName", item.className);
-
-
-                    insertCMD.ExecuteNonQuery();
+                    deletePassed = true;
+                    return deletePassed;
                 }
-
+                catch (SqliteException)
+                {
+                    deletePassed = false;
+                    return deletePassed;
+                }
             }
+
         }
 
 

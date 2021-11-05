@@ -24,20 +24,20 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "uap10.0.16299"
+          "uap10.0.17763"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "uap10.0.16299": {
+          "uap10.0.17763": {
             "projectReferences": {}
           }
         }
       },
       "frameworks": {
-        "uap10.0.16299": {
+        "uap10.0.17763": {
           "dependencies": {
             "AsyncEnumerator": {
               "target": "Package",
@@ -61,7 +61,7 @@
             },
             "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": {
               "target": "Package",
-              "version": "[6.1.1, )"
+              "version": "[7.1.1, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

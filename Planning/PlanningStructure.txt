@@ -44,7 +44,7 @@ Save Button
 -Character.Json
 -Event.json
 
-#####Track Meso Gains#####
+#####Track Meso Gains##### <- Basically Completed. 
 
 Inputs
 1 Mule Name <- DropDown List
@@ -52,26 +52,17 @@ Inputs
 1 Custom Input (Name, Meso Value, No. Runs)
 1 Update Button
 
-2 EB Drop Prices
-2 EB Drops (Item Name <- Select from dropdown)
-2 EB Drop quantity <- default 1
-2 Date <- default Date.today
-2 EB Save button
-
 Outputs
 1 Doable Boss, Boss Crystal Values, Total Value <- Show Weekly or Daily
 1 Custom Meso Source
 
-2 Probabilty of each EB Drop
-2 Current EB Drops
-2 Total Earn 0
-
 Retrieval 
 BossList <- Maplestory.db
-CharacterMesoGains <- Characters.Json <- List<Character> (Deserialize)
+BossMesoGains <- Maplestory.db
+AllCharTrack <- Maplestory.db
 
 Uploads
-IF, changes -> CharacterMesoGains -> Characters.Json
+BossList, BossMesoGains
 
 
 #####Track Ongoing Event#####

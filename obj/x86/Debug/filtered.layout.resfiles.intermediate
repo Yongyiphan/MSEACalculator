@@ -10,8 +10,9 @@ App.xbf
 CharacterRes\CharacterPage.xbf
 CharacterRes\MesoRes\MesoPage.xbf
 EventRes\Event.xbf
+MainAppRes\Settings\AddCharTrackPage.xbf
+MainAppRes\Settings\SettingsPage.xbf
 MainPage.xbf
 MSEACalculator.xr.xml
 ViewPages\HomePage.xbf
-ViewPages\SettingsPage.xbf
 Properties\Default.rd.xml

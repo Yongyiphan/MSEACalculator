@@ -1,64 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.ComponentModel;
-using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using System.Threading;
-using Windows.Graphics.Display;
-using Windows.UI.ViewManagement;
-using MSEACalculator.BossRes;
+﻿using MSEACalculator.BossRes;
 using MSEACalculator.OtherRes;
-using System.Runtime.CompilerServices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MSEACalculator.CharacterRes.MesoRes
 {
-    public class MesoViewModel : INotifyPropertyChanged
+    public class MesoViewModel : INPCObject
     {
+        readonly BossMeso bossMeso;
 
 
         //Init Variables
-        public List<string> bossNameList { get; set; } = new List<string>();
-        public List<string> charNameList { get; set; } = new List<string>();
-        public List<int> daysList { get; set; } = new List<int>() { 1, 2, 3, 4, 5, 6, 7};
+        public List<int> daysList { get; set; } = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
         public List<string> displayType { get; set; } = new List<string>() { "Daily", "Weekly", "Monthly" };
 
+        public List<string> bossNameList { get; private set; }
+        public List<string> charNameList { get; private set; }
+
         private string selectedMule;
-        private List<string> difficultyList;
-        private List<Boss> bossList;
-        private string totalMeso;
-        private int daysMultiplier;
-        private string mesoViewBy;
-        private string selectedBoss;
-        private string selectedDifficulty;
-        private string errorMessage;
-
-        //private ICommand addBossCMD;
-
-
-        public List<string> DifficultyList
-        {
-            get { return difficultyList; }
-            set { difficultyList = value;
-                OnPropertyChanged("DifficultyList");
-            }
-        }
-            
-        readonly BossMeso bossMeso = new BossMeso();
-
         public string SelectedMule
         {
             get
@@ -70,10 +30,22 @@ namespace MSEACalculator.CharacterRes.MesoRes
                 selectedMule = value;
                 OnPropertyChanged("SelectedMule");
                 displayBossResult();
-                
+
             }
         }
 
+        private List<string> difficultyList;
+        public List<string> DifficultyList
+        {
+            get { return difficultyList; }
+            set
+            {
+                difficultyList = value;
+                OnPropertyChanged("DifficultyList");
+            }
+        }
+
+        private List<Boss> bossList;
         public List<Boss> BossList
         {
             get { return bossList; }
@@ -84,6 +56,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
             }
         }
 
+        private string totalMeso;
         public string TotalMeso
         {
             get { return totalMeso; }
@@ -94,36 +67,46 @@ namespace MSEACalculator.CharacterRes.MesoRes
             }
         }
 
+        private int daysMultiplier;
         public int DaysMultiplier
         {
-            get { return daysMultiplier; }
-            set { daysMultiplier = value;
+            get
+            {
+                return daysMultiplier;
+            }
+            set
+            {
+                daysMultiplier = value;
                 OnPropertyChanged("DaysMultiplier");
                 displayBossResult();
             }
         }
 
+        private string mesoViewBy;
         public string MesoViewBy
         {
             get { return mesoViewBy; }
-            set {
+            set
+            {
                 mesoViewBy = value;
                 OnPropertyChanged("MesoViewBy");
                 displayBossResult();
             }
         }
 
+        private string selectedBoss;
         public string SelectedBoss
         {
             get { return selectedBoss; }
-            set 
-            { 
-                selectedBoss = value; 
-                OnPropertyChanged("SelectedBoss"); 
-                showDifficulty(); 
+            set
+            {
+                selectedBoss = value;
+                OnPropertyChanged("SelectedBoss");
+                showDifficulty();
             }
         }
 
+        private string selectedDifficulty;
         public string SelectedDifficulty
         {
             get { return selectedDifficulty; }
@@ -138,53 +121,46 @@ namespace MSEACalculator.CharacterRes.MesoRes
             }
         }
 
+        private string errorMessage;
         public string ErrorMessage
         {
             get { return errorMessage; }
             set { errorMessage = value; OnPropertyChanged("ErrorMessage"); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private Boss selectedBossItem;
+        public Boss SelectedBossItem
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get
+            {
+                return selectedBossItem;
+            }
+            set
+            {
+                selectedBossItem = value;
+                OnPropertyChanged("SelectedBossItem");
+                deleteBossCMD.RaiseCanExecuteChanged();
+            }
+
         }
 
         public CustomCommand addBossCMD { get; private set; }
+        public CustomCommand deleteBossCMD { get; private set; }
 
         public MesoViewModel()
         {
-            
-            initloadFields(bossMeso.bossDict, bossMeso.charDict);
+            bossMeso = new BossMeso();
+            bossNameList = bossMeso.bossNameList;
+            charNameList = bossMeso.charNameList;
+            daysMultiplier = bossMeso.DayMultiplier;
+            mesoViewBy = bossMeso.MesoViewBy;
+
 
             addBossCMD = new CustomCommand(new Action(addBoss), canAddBoss);
-
+            deleteBossCMD = new CustomCommand(new Action(deleteBoss), canDeleteBoss);
             
         }
 
-        private void initloadFields(Dictionary<int,Boss> bossDict, Dictionary<string, Character> charDict)
-        {
-
-            foreach (Boss bossItem in bossDict.Values)
-            {
-
-                if (!bossNameList.Contains(bossItem.name))
-                {
-                    bossNameList.Add(bossItem.name);
-                };
-            }
-            foreach (Character charItem in charDict.Values)
-            {
-                if (!charNameList.Contains(charItem.className))
-                {
-                    charNameList.Add(charItem.className);
-                };
-            }
-            
-            DaysMultiplier = daysList[0];
-            MesoViewBy = displayType[1];
-        }
 
 
         public void displayBossResult()
@@ -224,7 +200,6 @@ namespace MSEACalculator.CharacterRes.MesoRes
             SelectedBoss = null;
             SelectedDifficulty = null;
         }
-
 
         public void showDifficulty()
         {
@@ -279,6 +254,32 @@ namespace MSEACalculator.CharacterRes.MesoRes
 
             displayBossResult();
             addBossCMD.RaiseCanExecuteChanged();
+        }
+
+        public bool canDeleteBoss()
+        {
+            if(SelectedBossItem != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void deleteBoss() 
+        {
+
+            bool deleteResult = DatabaseAccess.deleteCharBossList(SelectedMule, SelectedBossItem.BossID);
+
+            if(deleteResult == true)
+            {
+                displayBossResult();
+            }
+            else
+            {
+                ErrorMessage = "Unable to delete boss.";
+            }
+            SelectedBossItem = null;
+            deleteBossCMD.RaiseCanExecuteChanged();
         }
 
         private string testvar;

@@ -31,14 +31,47 @@
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\asyncenumerator\4.0.2\lib\netstandard2.0\AsyncEnumerable.dll">
       <PackagePath>AsyncEnumerable.dll</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\colorcode.core\2.0.6\lib\netstandard1.4\ColorCode.Core.dll">
+      <PackagePath>ColorCode.Core.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\colorcode.uwp\2.0.6\lib\uap10.0\ColorCode.UWP.dll">
+      <PackagePath>ColorCode.UWP.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.bcl.asyncinterfaces\5.0.0\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll">
       <PackagePath>Microsoft.Bcl.AsyncInterfaces.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.data.sqlite.core\5.0.10\lib\netstandard2.0\Microsoft.Data.Sqlite.dll">
       <PackagePath>Microsoft.Data.Sqlite.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.datagrid\6.1.1\lib\uap10.0.16299\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit\7.1.0\lib\netstandard2.0\Microsoft.Toolkit.dll">
+      <PackagePath>Microsoft.Toolkit.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Core.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.datagrid\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Input.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Media.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.primitives\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Primitives.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Primitives.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\newtonsoft.json\13.0.1\lib\netstandard2.0\Newtonsoft.Json.dll">
       <PackagePath>Newtonsoft.Json.dll</PackagePath>
@@ -67,11 +100,32 @@
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\system.text.json\5.0.2\lib\netstandard2.0\System.Text.Json.dll">
       <PackagePath>System.Text.Json.dll</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\win2d.uwp\1.25.0\runtimes\win10-x86\native\Microsoft.Graphics.Canvas.dll">
+      <PackagePath>Microsoft.Graphics.Canvas.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\win2d.uwp\1.25.0\lib\uap10.0\Microsoft.Graphics.Canvas.winmd">
+      <PackagePath>Microsoft.Graphics.Canvas.winmd</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\bin\10.0.19041.0\XamlCompiler\Microsoft.UI.Xaml.Markup.winmd">
       <PackagePath>Microsoft.UI.Xaml.Markup.winmd</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.datagrid\6.1.1\lib\uap10.0.16299\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core\Microsoft.Toolkit.Uwp.UI.Controls.Core.xr.xml">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Core\Microsoft.Toolkit.Uwp.UI.Controls.Core.xr.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.datagrid\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.DataGrid\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.xr.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input\Microsoft.Toolkit.Uwp.UI.Controls.Input.xr.xml">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Input\Microsoft.Toolkit.Uwp.UI.Controls.Input.xr.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout\Microsoft.Toolkit.Uwp.UI.Controls.Layout.xr.xml">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Layout\Microsoft.Toolkit.Uwp.UI.Controls.Layout.xr.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xr.xml">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Markdown\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xr.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media\Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Media\Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
@@ -118,14 +172,20 @@
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\EventRes\Event.xbf">
       <PackagePath>EventRes\Event.xbf</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainAppRes\Settings\AddCharTrackPage.xbf">
+      <PackagePath>MainAppRes\Settings\AddCharTrackPage.xbf</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\ViewPages\HomePage.xbf">
       <PackagePath>ViewPages\HomePage.xbf</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\ViewPages\SettingsPage.xbf">
-      <PackagePath>ViewPages\SettingsPage.xbf</PackagePath>
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainAppRes\Settings\SettingsPage.xbf">
+      <PackagePath>MainAppRes\Settings\SettingsPage.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.UniversalCRT.Debug\10.0.19041.0\\redist\Debug\x86\ucrtbased.dll">
+      <PackagePath>ucrtbased.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.19041.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -136,8 +196,51 @@
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\Core\MSEACalculator.exe">
       <PackagePath>MSEACalculator.exe</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\lib\uap10.0\Microsoft.UI.Xaml.winmd">
+      <PackagePath>Microsoft.UI.Xaml.winmd</PackagePath>
+    </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
+    <ResolvedSDKReference Include="C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\tools\AppX\x86\Release\Microsoft.UI.Xaml.2.7.appx">
+      <Name>Microsoft.UI.Xaml.2.7</Name>
+      <Version>7.2109.13004.0</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name = Microsoft.UI.Xaml.2.7, MinVersion = 7.2109.13004.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\tools\AppX\x86\Release\Microsoft.UI.Xaml.2.7.appx</AppxLocation>
+      <MoreInfo></MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\tools\AppX\x86\Release\Microsoft.UI.Xaml.2.7.appx">
+      <Name>Microsoft.UI.Xaml.2.7</Name>
+      <Version>7.2109.13004.0</Version>
+      <Architecture>Win32</Architecture>
+      <FrameworkIdentity>Name = Microsoft.UI.Xaml.2.7, MinVersion = 7.2109.13004.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\tools\AppX\x86\Release\Microsoft.UI.Xaml.2.7.appx</AppxLocation>
+      <MoreInfo></MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx">
+      <Name>Microsoft.UI.Xaml.2.7</Name>
+      <Version>7.2109.13004.0</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.UI.Xaml.2.7, MinVersion = 7.2109.13004.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx</AppxLocation>
+      <MoreInfo></MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\tools\AppX\arm\Release\Microsoft.UI.Xaml.2.7.appx">
+      <Name>Microsoft.UI.Xaml.2.7</Name>
+      <Version>7.2109.13004.0</Version>
+      <Architecture>arm</Architecture>
+      <FrameworkIdentity>Name = Microsoft.UI.Xaml.2.7, MinVersion = 7.2109.13004.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\tools\AppX\arm\Release\Microsoft.UI.Xaml.2.7.appx</AppxLocation>
+      <MoreInfo></MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\tools\AppX\arm64\Release\Microsoft.UI.Xaml.2.7.appx">
+      <Name>Microsoft.UI.Xaml.2.7</Name>
+      <Version>7.2109.13004.0</Version>
+      <Architecture>arm64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.UI.Xaml.2.7, MinVersion = 7.2109.13004.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\tools\AppX\arm64\Release\Microsoft.UI.Xaml.2.7.appx</AppxLocation>
+      <MoreInfo></MoreInfo>
+    </ResolvedSDKReference>
     <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx">
       <Name>Microsoft.NET.CoreRuntime.2.2</Name>
       <Version>2.2.29713.2</Version>

@@ -35,11 +35,8 @@ namespace MSEACalculator.CharacterRes.MesoRes
             this.InitializeComponent();
             //initloadFields();
             BossingGrid.DataContext = new MesoViewModel();
-            EBGrid.DataContext = BossingGrid.DataContext;
 
         }
-
-
 
     }
 

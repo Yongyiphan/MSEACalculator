@@ -50,11 +50,11 @@
         
         <!--First Portion for Boss Crsytal Tracking-->
         <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Name="BossingGrid">
+            </Grid.RowDefinitions>-->
+            <Grid Name="BossingGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
@@ -63,16 +63,16 @@
                 <Grid Grid.Row="0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <ComboBox x:Name="MulesNameSelector"  PlaceholderText="Select Mule" 
-                                  ItemsSource="{Binding charNameList, Mode=TwoWay}" 
+                                  ItemsSource ="{Binding charNameList, Mode=TwoWay}" 
                                   SelectedItem="{Binding SelectedMule, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                   Width="200" VerticalAlignment="Center" ></ComboBox>
                         <TextBlock>Weekdays:</TextBlock>
                         <ComboBox Name="daysMultiplier" 
-                                  ItemsSource="{Binding daysList}" 
+                                  ItemsSource ="{Binding daysList}" 
                                   SelectedItem="{Binding DaysMultiplier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <TextBlock>Weekends:</TextBlock>
                         <ComboBox Name="weekEndsMultiplier" 
-                                  ItemsSource="{Binding displayType}" 
+                                  ItemsSource ="{Binding displayType}" 
                                   SelectedItem="{Binding MesoViewBy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <TextBlock>Total Meso:</TextBlock>
                         <TextBlock Name="TotalMeso" MaxWidth="180" HorizontalAlignment="Left" Text="{Binding TotalMeso}"></TextBlock>
@@ -90,6 +90,7 @@
                                   MaxHeight="300" Width="110" />
 
                         <Button Name="AddBossItem" Command="{Binding addBossCMD}" Content="Add Boss"></Button>
+                        <Button Name="DeleteBossItem" Command="{Binding deleteBossCMD}" Content="Delete Boss"></Button>
                         <TextBlock Text="{Binding ErrorMessage}"/>
 
 
@@ -98,7 +99,9 @@
                 </Grid>
                 <Grid Grid.Row="2">
                         <!--<ListView x:Name="bossListDisplay" ItemsSource="{Binding BossList}"></ListView>-->
-                    <controls:DataGrid Name="bossDisplay" AreRowDetailsFrozen="True" AutoGenerateColumns="False" FontSize="14" ItemsSource="{Binding BossList}" VerticalScrollBarVisibility="Visible">
+                    <controls:DataGrid Name="bossDisplay" AreRowDetailsFrozen="True" AutoGenerateColumns="False" FontSize="14" 
+                                       ItemsSource="{Binding BossList}"
+                                       SelectedItem="{Binding SelectedBossItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <controls:DataGrid.Columns>
                             <controls:DataGridTextColumn 
                             Header="Boss Name" 
@@ -122,28 +125,12 @@
             </Grid>
 
 
-            <!-- Second Portion for EB Tracking-->
+            <!-- Second Portion for EB Tracking--><!--
             <Grid Grid.Row="1" x:Name="EBGrid">
 
                 <TextBlock x:Name="displayTxt" Text="{Binding TestVar}"/>
-                <!--<Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="6*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
 
-                    --><!--Record EB Drops--><!--
-
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                        <ComboBox x:Name="EBItemSelector" PlaceholderText="Select Item" Width="180"></ComboBox>
-                        <TextBlock Text="Price: "/>
-                        <TextBox x:Name="mesoValue" PlaceholderText="100,000,000" VerticalAlignment="Center"/>
-                        <TextBlock Text="Select Date: "/>
-                        <CalendarDatePicker Name="EBItemDateSelector"></CalendarDatePicker>
-                        <Button Name="AddEBItem">Add Item</Button>
-                    </StackPanel>
-                </Grid>-->
-            </Grid>
+            </Grid>-->
 
 
 

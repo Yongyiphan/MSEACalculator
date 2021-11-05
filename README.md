@@ -5,7 +5,7 @@ Data stored locally using sqlite
 Implemented Features
 
 Basic Implementation Done (In FeatureDev Branch)
-1: Display Meso Gains for Characters
+1. Display Meso Gains for Characters
 
 Not Implemented Yet
 1. Calculate Starforce Cost and Probability

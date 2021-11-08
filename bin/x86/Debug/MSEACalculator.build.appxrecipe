@@ -43,34 +43,34 @@
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.data.sqlite.core\5.0.10\lib\netstandard2.0\Microsoft.Data.Sqlite.dll">
       <PackagePath>Microsoft.Data.Sqlite.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit\7.1.0\lib\netstandard2.0\Microsoft.Toolkit.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit\7.1.1\lib\netstandard2.0\Microsoft.Toolkit.dll">
       <PackagePath>Microsoft.Toolkit.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Core.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.datagrid\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Input.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Media.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.primitives\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Primitives.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.primitives\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Primitives.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Primitives.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\newtonsoft.json\13.0.1\lib\netstandard2.0\Newtonsoft.Json.dll">
@@ -109,22 +109,22 @@
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\bin\10.0.19041.0\XamlCompiler\Microsoft.UI.Xaml.Markup.winmd">
       <PackagePath>Microsoft.UI.Xaml.Markup.winmd</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core\Microsoft.Toolkit.Uwp.UI.Controls.Core.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core\Microsoft.Toolkit.Uwp.UI.Controls.Core.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Core\Microsoft.Toolkit.Uwp.UI.Controls.Core.xr.xml</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.datagrid\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.DataGrid\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.xr.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input\Microsoft.Toolkit.Uwp.UI.Controls.Input.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input\Microsoft.Toolkit.Uwp.UI.Controls.Input.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Input\Microsoft.Toolkit.Uwp.UI.Controls.Input.xr.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout\Microsoft.Toolkit.Uwp.UI.Controls.Layout.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout\Microsoft.Toolkit.Uwp.UI.Controls.Layout.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Layout\Microsoft.Toolkit.Uwp.UI.Controls.Layout.xr.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Markdown\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xr.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media\Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media\Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Media\Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\Properties\Default.rd.xml">

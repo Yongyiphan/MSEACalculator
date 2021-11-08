@@ -13,7 +13,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
     {
 
         public Dictionary<int, Boss> bossDict { get { return DatabaseAccess.GetBossDB(); } }
-        public Dictionary<string, Character> charDict { get { return DatabaseAccess.GetAllCharDB(); } }
+        public Dictionary<string, Character> charDict { get { return DatabaseAccess.GetAllCharTrackDB(); } }
 
         public List<string> bossNameList { get; set; } = new List<string>();
         public List<string> charNameList { get; set; } = new List<string>();

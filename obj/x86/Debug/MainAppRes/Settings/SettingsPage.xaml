@@ -16,18 +16,16 @@
         <Grid Grid.Row="0" >
             <NavigationView x:ConnectionId='3' Name="SettingsNav" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" SelectionFollowsFocus="Enabled" IsSettingsVisible="False"                                                >
                 <NavigationView.MenuItems>
-                    <NavigationViewItem x:ConnectionId='5' Name="AddCharTrack" Content="Add Char to Track" Tag="AddCharTrack_Page"/>
-                    <NavigationViewItem x:ConnectionId='6' Name="ModifyDB" Content="Modify Database" Tag="ModifyDB_Page"/>
+                    <NavigationViewItem x:ConnectionId='4' Name="AddCharTrack" Content="Add Char to Track" Tag="AddCharTrack_Page"/>
+                    <NavigationViewItem x:ConnectionId='5' Name="ModifyDB" Content="Modify Database" Tag="ModifyDB_Page"/>
                 </NavigationView.MenuItems>
-            </NavigationView>
-            
-                
 
-            <Frame x:ConnectionId='4' Name="SettingsContentFrame"/>
+                <Frame x:ConnectionId='6' Name="SettingsContentFrame"/>
+            </NavigationView>
         </Grid>
 
         <Grid Grid.Row="1">
-            <TextBlock Text="{Binding TimeElapsed}" VerticalAlignment="Top" HorizontalAlignment="Left" Height="100"/>
+            <TextBlock Text="{Binding TimeElapsed}" VerticalAlignment="Center" HorizontalAlignment="Left" Height="100"/>
             <Button Content="Reset" VerticalAlignment="Bottom" HorizontalAlignment="Right" Command="{Binding resetDBCMD}" />
         </Grid>
         <!--<Button x:Name="uploadDb" Content="Upload" VerticalAlignment="Center" HorizontalAlignment="Center" Click="uploadDb_Click"></Button>-->

@@ -4,12 +4,14 @@ using MSEACalculator.BossRes;
 using MSEACalculator.CharacterRes;
 using MSEACalculator.OtherRes;
 using MSEACalculator.StarforceRes;
+using MSEACalculator.UnionRes;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace MSEACalculator
 {
@@ -94,19 +96,28 @@ namespace MSEACalculator
                 TableStats defaultCharacterTable = new TableStats(tableNameChar, CharacterTableSpec, "AllCharacter");
                 staticTables.Add(defaultCharacterTable);
 
-                //TABLE FOR UNION
-
-
+                //TABLE FOR UNION EFFECTS
+                string unionETableSpecs = "(" +
+                    "Stat string," +
+                    "StatType string," +
+                    "B int," +
+                    "A int," +
+                    "S int," +
+                    "SS int," +
+                    "SSS int," +
+                    "PRIMARY KEY(Stat, StatType)" +
+                    ");";
+                string unionETableName = "UnionEffects";
+                TableStats unionTable = new TableStats(unionETableName, unionETableSpecs, "UnionEffect");
+                staticTables.Add(unionTable);
 
                 //BLANK TABLES
                 //TABLE FOR CHARACTER TO TRACK
                 string charTrackSpec = "(" +
                     "charName string," +
-                    "classType string," +
-                    "faction string," +
-                    "unionEffect string," +
-                    "unionEffectType string," +
-                    "PRIMARY KEY(charName)" +
+                    "unionRank string," +
+                    "level int," +
+                    "PRIMARY KEY(charName)"+
                     ");";
 
                 string charTrackTableName = "CharacterTrack";
@@ -119,7 +130,7 @@ namespace MSEACalculator
                     "BossName string," +
                     "BossID int," +
                     "PRIMARY KEY(charName, BossID)," +
-                    "FOREIGN KEY (charName) REFERENCES Character(ClassName)," +
+                    "FOREIGN KEY (charName) REFERENCES CharacterTrack(charName) ON DELETE CASCADE," +
                     "FOREIGN KEY (BossID) REFERENCES BossList(BossID)" +
                     ");";
 
@@ -155,51 +166,59 @@ namespace MSEACalculator
             {
                 //delete table if exist
                 string dropT = "DROP TABLE IF EXISTS " + tableName;
-                SqliteCommand dropCmd = new SqliteCommand(dropT, connection);
-                dropCmd.ExecuteReader();
+                using (SqliteCommand dropCmd = new SqliteCommand(dropT, connection))
+                {
+                    dropCmd.ExecuteNonQuery();
+                };
                 // create table if not exist
 
                 string createTable = "CREATE TABLE IF NOT EXISTS " + tableName + tableParameters;
-                SqliteCommand createCmd = new SqliteCommand(createTable, connection);
-                createCmd.ExecuteReader();
+                using (SqliteCommand createCmd = new SqliteCommand(createTable, connection))
+                {
+                    createCmd.ExecuteNonQuery();
+                };
             }
 
         }
 
-        public static async Task InitCSVData(string type, string tableName, SqliteConnection connection)
+        public static async Task InitCSVData(string insertType, string tableName, SqliteConnection connection)
         {
-            switch (type)
+            switch (insertType)
             {
                 case "Boss":
-                    Dictionary<int, Boss> bosstable = await GetBossCSVAsync();
+                    List<Boss> bosstable = await GetBossCSVAsync();
                     // update to table
 
                     if (connection.State == ConnectionState.Open)
                     {
-                        foreach (Boss bossItem in bosstable.Values)
+                        foreach (Boss bossItem in bosstable)
                         {
                             string insertBoss = "INSERT INTO " + tableName + " (BossID, BossName, Difficulty, EntryType, EntryLimit, BossCrystal, Meso)" +
                             " VALUES (@BossID,@BossName,@Difficulty,@EntryType,@EntryLimit,@BossCrystal,@Meso)";
-                            SqliteCommand insertBosscmd = new SqliteCommand(insertBoss, connection);
-                            insertBosscmd.Parameters.AddWithValue("@BossID", bossItem.BossID);
-                            insertBosscmd.Parameters.AddWithValue("@BossName", bossItem.name);
-                            insertBosscmd.Parameters.AddWithValue("@Difficulty", bossItem.difficulty);
-                            insertBosscmd.Parameters.AddWithValue("@EntryType", bossItem.entryType);
-                            insertBosscmd.Parameters.AddWithValue("@EntryLimit", bossItem.entryLimit);
-                            insertBosscmd.Parameters.AddWithValue("@BossCrystal", bossItem.bossCrystalCount);
-                            insertBosscmd.Parameters.AddWithValue("@Meso", bossItem.meso);
-                            insertBosscmd.ExecuteNonQuery();
+                            using (SqliteCommand insertBosscmd = new SqliteCommand(insertBoss, connection))
+                            {
+                                insertBosscmd.Parameters.AddWithValue("@BossID", bossItem.BossID);
+                                insertBosscmd.Parameters.AddWithValue("@BossName", bossItem.name);
+                                insertBosscmd.Parameters.AddWithValue("@Difficulty", bossItem.difficulty);
+                                insertBosscmd.Parameters.AddWithValue("@EntryType", bossItem.entryType);
+                                insertBosscmd.Parameters.AddWithValue("@EntryLimit", bossItem.entryLimit);
+                                insertBosscmd.Parameters.AddWithValue("@BossCrystal", bossItem.bossCrystalCount);
+                                insertBosscmd.Parameters.AddWithValue("@Meso", bossItem.meso);
+
+                                insertBosscmd.ExecuteNonQuery();
+
+                            }
 
                         }
                     }
                     break;
                 case "StarForce":
 
-                    Dictionary<int, SFGain> SFtable = await GetSFCSVAsync();
+                    List<SFGain> SFtable = await GetSFCSVAsync();
 
                     if (connection.State == ConnectionState.Open)
                     {
-                        foreach (SFGain sfitem in SFtable.Values)
+                        foreach (SFGain sfitem in SFtable)
                         {
                             if (sfitem.StarForceLevel < 16)
                             {
@@ -243,11 +262,11 @@ namespace MSEACalculator
                     break;
                 case "AddStarForce":
 
-                    Dictionary<int, SFGain> AddSFtable = await GetSFCSVAsync();
+                    List<SFGain> AddSFtable = await GetSFCSVAsync();
 
                     if (connection.State == ConnectionState.Open)
                     {
-                        int startCount = 16, endCount = AddSFtable.Values.Count() + 1;
+                        int startCount = 15, endCount = AddSFtable.Count() + 1;
 
                         while (startCount < endCount)
                         {
@@ -268,12 +287,18 @@ namespace MSEACalculator
                                 insertRowCmd.Parameters.AddWithValue("@four", templist[4]);
                                 insertRowCmd.ExecuteNonQuery();
                             };
-                            if (startCount < 23)
+                            if (tempSFI.StarForceLevel < 23)
                             {
                                 addRow(tempSFI, nameof(tempSFI.MainStat), tempSFI.MainStatL);
+                                addRow(tempSFI, nameof(tempSFI.NonWATK), tempSFI.NonWATKL);
+                                addRow(tempSFI, nameof(tempSFI.WATK), tempSFI.WATKL);
                             }
-                            addRow(tempSFI, nameof(tempSFI.NonWATK), tempSFI.NonWATKL);
-                            addRow(tempSFI, nameof(tempSFI.WATK), tempSFI.WATKL);
+                            if(tempSFI.StarForceLevel > 22)
+                            {
+                                addRow(tempSFI, nameof(tempSFI.NonWATK), tempSFI.NonWATKL);
+                                addRow(tempSFI, nameof(tempSFI.WATK), tempSFI.WATKL);
+                            }
+                            
 
 
                             startCount += 1;
@@ -284,11 +309,11 @@ namespace MSEACalculator
                     break;
                 case "AllCharacter":
 
-                    Dictionary<int, Character> charTable = await GetCharCSVAsync();
+                    List<Character> charTable = await GetCharCSVAsync();
 
                     if(connection.State == ConnectionState.Open)
                     {
-                        foreach(Character charItem in charTable.Values)
+                        foreach(Character charItem in charTable)
                         {
                             string insertChar = "INSERT INTO " + tableName + "(ClassName, ClassType, Faction, UnionEffect, UnionEffectType)" +
                                 " VALUES (@CN, @CT, @Fac, @UE, @UET)";
@@ -306,31 +331,52 @@ namespace MSEACalculator
                     }
 
                     break;
+                case "UnionEffect":
+                    List<UnionModel> unionList = await GetUnionECSVAsync();
+                    if(connection.State == ConnectionState.Open)
+                    {
+                        foreach(UnionModel unionItem in unionList)
+                        {
+
+                            string insertUnion = "INSERT INTO " + tableName + " (Stat, StatType, B, A, S, SS, SSS)" +
+                                " VALUES (@Stat, @ST, @B, @A, @S, @SS, @SSS);";
+                            using (SqliteCommand insertCMD = new SqliteCommand(insertUnion, connection))
+                            {
+                                insertCMD.Parameters.AddWithValue("@Stat", unionItem.Stat);
+                                insertCMD.Parameters.AddWithValue("@ST", unionItem.StatType);
+                                insertCMD.Parameters.AddWithValue("@B", unionItem.RankB);
+                                insertCMD.Parameters.AddWithValue("@A", unionItem.RankA);
+                                insertCMD.Parameters.AddWithValue("@S", unionItem.RankS);
+                                insertCMD.Parameters.AddWithValue("@SS", unionItem.RankSS);
+                                insertCMD.Parameters.AddWithValue("@SSS", unionItem.RankSSS);
+
+                                insertCMD.ExecuteNonQuery();
+                            }
+                        }
+                    }
+
+
+                    break;
                 default:
                     break;
             }
 
         }
 
-        private static async Task<Dictionary<int, Boss>> GetBossCSVAsync()
+        private static async Task<List<Boss>> GetBossCSVAsync()
         {
 
-            Dictionary<int, Boss> AllBossList = new Dictionary<int, Boss>();
+            List<Boss> AllBossList = new List<Boss>();
 
+            StorageFile statTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\BossListData.csv");
 
-
-            //string filePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName) + @"\Data\statGains.csv";
-            StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-
-            StorageFile statTable = await storageFolder.GetFileAsync(@"\DefaultData\BossListData.csv");
-
-            var stream = await statTable.OpenAsync(Windows.Storage.FileAccessMode.Read);
+            var stream = await statTable.OpenAsync(FileAccessMode.Read);
 
             ulong size = stream.Size;
 
             using (var inputStream = stream.GetInputStreamAt(0))
             {
-                using (var dataReader = new Windows.Storage.Streams.DataReader(inputStream))
+                using (var dataReader = new DataReader(inputStream))
                 {
                     uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
                     string text = dataReader.ReadString(numBytesLoaded);
@@ -346,16 +392,11 @@ namespace MSEACalculator
 
                         var temp = bossEntry.Split(",");
                         counter += 1;
-                        Boss tempboss = new Boss();
+                        Boss tempboss = new Boss(counter, temp[0], temp[1], temp[2], Convert.ToInt32(temp[3]), Convert.ToInt32(temp[4]), Convert.ToInt32(temp[5]));
+                        //Boss Contructor BossID | Name | Difficulty | Entry Type | Entry Limit | BossCrystalCount | Meso
+                       
 
-                        tempboss.BossID = counter;
-                        tempboss.name = temp[0];
-                        tempboss.difficulty = temp[1];
-                        tempboss.entryType = temp[2];
-                        tempboss.entryLimit = Convert.ToInt32(temp[3]);
-                        tempboss.bossCrystalCount = Convert.ToInt32(temp[4]);
-                        tempboss.meso = Convert.ToInt32(temp[5]);
-                        AllBossList.Add(counter, tempboss);
+                        AllBossList.Add(tempboss);
 
 
                     }
@@ -368,21 +409,19 @@ namespace MSEACalculator
             return AllBossList;
         }
 
-        private static async Task<Dictionary<int, SFGain>> GetSFCSVAsync()
+        private static async Task<List<SFGain>> GetSFCSVAsync()
         {
-            Dictionary<int, SFGain> SFList = new Dictionary<int, SFGain>();
+           List<SFGain> SFList = new List<SFGain>();
 
-            StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            StorageFile statTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\statGains.csv");
 
-            StorageFile statTable = await storageFolder.GetFileAsync(@"\DefaultData\statGains.csv");
-
-            var stream = await statTable.OpenAsync(Windows.Storage.FileAccessMode.Read);
+            var stream = await statTable.OpenAsync(FileAccessMode.Read);
 
             ulong size = stream.Size;
 
             using (var inputStream = stream.GetInputStreamAt(0))
             {
-                using (var dataReader = new Windows.Storage.Streams.DataReader(inputStream))
+                using (var dataReader = new DataReader(inputStream))
                 {
                     uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
                     string text = dataReader.ReadString(numBytesLoaded);
@@ -415,7 +454,7 @@ namespace MSEACalculator
                             tempSFitem2.GloveAtk = Convert.ToInt32(sfitem[10]);
 
 
-                            SFList.Add(counter, tempSFitem2);
+                            SFList.Add(tempSFitem2);
                         }
                         else
                         {
@@ -433,7 +472,7 @@ namespace MSEACalculator
                             tempSFitem1.Jump = Convert.ToInt32(sfitem[9]);
                             tempSFitem1.GloveAtk = Convert.ToInt32(sfitem[10]);
 
-                            SFList.Add(counter, tempSFitem1);
+                            SFList.Add(tempSFitem1);
 
                         }
 
@@ -447,13 +486,12 @@ namespace MSEACalculator
             return SFList;
         }
         
-        private static async Task<Dictionary<int, Character>> GetCharCSVAsync()
+        private static async Task<List<Character>> GetCharCSVAsync()
         {
-            Dictionary<int, Character> characterList = new Dictionary<int, Character>();
+            List<Character> characterList = new List<Character>();
 
-            StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
-            StorageFile charTable = await storageFolder.GetFileAsync(@"\DefaultData\CharacterList.csv");
+            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\CharacterData.csv");
 
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
 
@@ -461,14 +499,14 @@ namespace MSEACalculator
 
             using (var inputStream = stream.GetInputStreamAt(0))
             {
-                using (var dataReader = new Windows.Storage.Streams.DataReader(inputStream))
+                using (var dataReader = new DataReader(inputStream))
                 {
                     uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
                     string text = dataReader.ReadString(numBytesLoaded);
 
                     var result = text.Split("\r\n");
                     int counter = 0;
-                    foreach (string characterItem in result)
+                    foreach (string characterItem in result.Skip(1))
                     {
                         if (characterItem == "")
                         {
@@ -478,7 +516,7 @@ namespace MSEACalculator
                         var temp = characterItem.Split(",");
                         counter += 1;
                         Character tempChar = new Character(temp[0], temp[1], temp[2], temp[3], temp[4]);
-                        characterList.Add(counter, tempChar);
+                        characterList.Add(tempChar);
 
                     }
                 }
@@ -488,7 +526,55 @@ namespace MSEACalculator
                 return characterList;
         }
 
+        private static async Task<List<UnionModel>> GetUnionECSVAsync()
+        {
+            List<UnionModel> unionList = new List<UnionModel>();
 
+            StorageFile UnionTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\UnionEffect.csv");
+
+            var stream = await UnionTable.OpenAsync(FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    var result = text.Split("\r\n");
+                    int counter = 0;
+                    foreach(string unionItems in result.Skip(1))
+                    {
+                        if(unionItems == "")
+                        {
+                            return unionList;
+                        }
+                        var temp = unionItems.Split(",");
+                        counter += 1;
+                        UnionModel tempUnion = new UnionModel(temp[0],
+                            temp[1],
+                            Convert.ToInt32(temp[2]),
+                            Convert.ToInt32(temp[3]),
+                            Convert.ToInt32(temp[4]),
+                            Convert.ToInt32(temp[5]),
+                            Convert.ToInt32(temp[6]));
+
+                        //Stat = temp[0],
+                        //    StatType = temp[1],
+                        //    RankB = Convert.ToInt32(temp[2]),
+                        //    RankA = Convert.ToInt32(temp[3]),
+                        //    RankS = Convert.ToInt32(temp[4]),
+                        //    RankSS = Convert.ToInt32(temp[5]),
+                        //    RankSSS = Convert.ToInt32(temp[6])
+                        unionList.Add(tempUnion);
+                    }
+                }
+            }
+
+                return unionList;
+        }
 
 
 
@@ -532,7 +618,6 @@ namespace MSEACalculator
             return bossDict;
         }
 
-
         public static Dictionary<string, Character> GetAllCharDB()
         {
             Dictionary<string, Character> charDict = new Dictionary<string, Character>();
@@ -540,28 +625,26 @@ namespace MSEACalculator
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GlobalVars.databasePath}"))
             {
                 dbConnection.Open();
-                string getCharCmd = "SELECT * FROM Character";
+                string getCharCmd = "SELECT * FROM AllCharacter";
 
-                SqliteCommand selectCmd = new SqliteCommand(getCharCmd, dbConnection);
-
-                SqliteDataReader query = selectCmd.ExecuteReader();
-
-
-                while (query.Read())
+                using (SqliteCommand selectCmd = new SqliteCommand(getCharCmd, dbConnection))
                 {
-                    Character tempChar = new Character();
-                    tempChar.className = query.GetString(0);
-                    tempChar.classType = query.GetString(1);
-                    tempChar.faction = query.GetString(2);
-                    tempChar.unionEffect = query.GetString(3);
-                    tempChar.unionEffectType = query.GetString(4);
+                    using (SqliteDataReader query = selectCmd.ExecuteReader())
+                    {
+                        while(query.Read())
+                        {
+                            Character tempChar = new Character();
+                            tempChar.className = query.GetString(0);
+                            tempChar.classType = query.GetString(1);
+                            tempChar.faction = query.GetString(2);
+                            tempChar.unionEffect = query.GetString(3);
+                            tempChar.unionEffectType = query.GetString(4);
 
 
-                    charDict.Add(query.GetString(0),tempChar);
+                            charDict.Add(query.GetString(0), tempChar);
+                        }
+                    }
                 }
-
-                dbConnection.Close();
-
             }
             return charDict;
         }
@@ -576,10 +659,8 @@ namespace MSEACalculator
 
                 string getCharCMD = "SELECT * FROM CharacterTrack";
 
-                using (SqliteCommand selectCMD = new SqliteCommand())
+                using (SqliteCommand selectCMD = new SqliteCommand(getCharCMD, dbCon))
                 {
-                    selectCMD.CommandText = getCharCMD;
-                    selectCMD.Connection = dbCon;
                     using (SqliteDataReader result = selectCMD.ExecuteReader())
                     {
                         while (result.Read())
@@ -590,17 +671,14 @@ namespace MSEACalculator
                             tempChar.faction = result.GetString(2);
                             tempChar.unionEffect = result.GetString(3);
                             tempChar.unionEffectType = result.GetString(4);
-
+                            tempChar.unionRank = result.GetString(5);
+                            tempChar.level = result.GetInt32(6);
 
                             charDict.Add(result.GetString(0), tempChar);
                         }
                     }
                 }
-
-
             }
-
-
             return charDict;
         }
 

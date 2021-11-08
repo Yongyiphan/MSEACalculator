@@ -19,15 +19,13 @@
                     <NavigationViewItem Name="AddCharTrack" Content="Add Char to Track" Tag="AddCharTrack_Page"/>
                     <NavigationViewItem Name="ModifyDB" Content="Modify Database" Tag="ModifyDB_Page"/>
                 </NavigationView.MenuItems>
-            </NavigationView>
-            
-                
 
-            <Frame Name="SettingsContentFrame"/>
+                <Frame Name="SettingsContentFrame"/>
+            </NavigationView>
         </Grid>
 
         <Grid Grid.Row="1">
-            <TextBlock Text="{Binding TimeElapsed}" VerticalAlignment="Top" HorizontalAlignment="Left" Height="100"/>
+            <TextBlock Text="{Binding TimeElapsed}" VerticalAlignment="Center" HorizontalAlignment="Left" Height="100"/>
             <Button Content="Reset" VerticalAlignment="Bottom" HorizontalAlignment="Right" Command="{Binding resetDBCMD}" />
         </Grid>
         <!--<Button x:Name="uploadDb" Content="Upload" VerticalAlignment="Center" HorizontalAlignment="Center" Click="uploadDb_Click"></Button>-->

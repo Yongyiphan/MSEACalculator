@@ -123,6 +123,7 @@
     <Compile Include="CharacterRes\CharacterPage.xaml.cs">
       <DependentUpon>CharacterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CharacterRes\EquipmentRes\EquipModel.cs" />
     <Compile Include="CharacterRes\MesoRes\BossMeso.cs" />
     <Compile Include="CharacterRes\MesoRes\CustomItem.cs" />
     <Compile Include="CharacterRes\MesoRes\MesoPage.xaml.cs">
@@ -143,6 +144,7 @@
     <Compile Include="GlobalVars.cs" />
     <Compile Include="OtherRes\CustomCommand.cs" />
     <Compile Include="OtherRes\INPCObject.cs" />
+    <Compile Include="UnionRes\UnionModel.cs" />
     <Compile Include="ViewPages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -220,7 +222,7 @@
       <Version>6.2.12</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>7.1.0</Version>
+      <Version>7.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
       <Version>7.1.1</Version>

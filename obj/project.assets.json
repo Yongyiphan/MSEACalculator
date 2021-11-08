@@ -277,7 +277,7 @@
           "build/Microsoft.NetCore.UniversalWindowsPlatform.targets": {}
         }
       },
-      "Microsoft.Toolkit/7.1.0": {
+      "Microsoft.Toolkit/7.1.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
@@ -286,10 +286,10 @@
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp/7.1.0": {
+      "Microsoft.Toolkit.Uwp/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit": "7.1.0"
+          "Microsoft.Toolkit": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
@@ -298,10 +298,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0"
+          "Microsoft.Toolkit.Uwp": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -310,23 +310,23 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0"
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1"
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -348,10 +348,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -361,10 +361,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Input.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -374,12 +374,12 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.1": {
         "type": "package",
         "dependencies": {
           "ColorCode.UWP": "2.0.6",
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -389,10 +389,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0",
           "System.Text.Json": "5.0.2",
           "Win2D.uwp": "1.25.0"
@@ -404,10 +404,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Media.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -1028,7 +1028,7 @@
           "build/Microsoft.NetCore.UniversalWindowsPlatform.targets": {}
         }
       },
-      "Microsoft.Toolkit/7.1.0": {
+      "Microsoft.Toolkit/7.1.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
@@ -1037,10 +1037,10 @@
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp/7.1.0": {
+      "Microsoft.Toolkit.Uwp/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit": "7.1.0"
+          "Microsoft.Toolkit": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
@@ -1049,10 +1049,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0"
+          "Microsoft.Toolkit.Uwp": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -1061,23 +1061,23 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0"
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1"
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -1099,10 +1099,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -1112,10 +1112,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Input.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -1125,12 +1125,12 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.1": {
         "type": "package",
         "dependencies": {
           "ColorCode.UWP": "2.0.6",
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -1140,10 +1140,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0",
           "System.Text.Json": "5.0.2",
           "Win2D.uwp": "1.25.0"
@@ -1155,10 +1155,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Media.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -1875,7 +1875,7 @@
           "build/Microsoft.NetCore.UniversalWindowsPlatform.targets": {}
         }
       },
-      "Microsoft.Toolkit/7.1.0": {
+      "Microsoft.Toolkit/7.1.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
@@ -1884,10 +1884,10 @@
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp/7.1.0": {
+      "Microsoft.Toolkit.Uwp/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit": "7.1.0"
+          "Microsoft.Toolkit": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
@@ -1896,10 +1896,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0"
+          "Microsoft.Toolkit.Uwp": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -1908,23 +1908,23 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0"
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1"
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -1946,10 +1946,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -1959,10 +1959,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Input.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -1972,12 +1972,12 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.1": {
         "type": "package",
         "dependencies": {
           "ColorCode.UWP": "2.0.6",
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -1987,10 +1987,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0",
           "System.Text.Json": "5.0.2",
           "Win2D.uwp": "1.25.0"
@@ -2002,10 +2002,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Media.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -2723,7 +2723,7 @@
           "build/Microsoft.NetCore.UniversalWindowsPlatform.targets": {}
         }
       },
-      "Microsoft.Toolkit/7.1.0": {
+      "Microsoft.Toolkit/7.1.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
@@ -2732,10 +2732,10 @@
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp/7.1.0": {
+      "Microsoft.Toolkit.Uwp/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit": "7.1.0"
+          "Microsoft.Toolkit": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
@@ -2744,10 +2744,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0"
+          "Microsoft.Toolkit.Uwp": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -2756,23 +2756,23 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0"
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1"
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -2794,10 +2794,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -2807,10 +2807,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Input.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -2820,12 +2820,12 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.1": {
         "type": "package",
         "dependencies": {
           "ColorCode.UWP": "2.0.6",
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -2835,10 +2835,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0",
           "System.Text.Json": "5.0.2",
           "Win2D.uwp": "1.25.0"
@@ -2850,10 +2850,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Media.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -3571,7 +3571,7 @@
           "build/Microsoft.NetCore.UniversalWindowsPlatform.targets": {}
         }
       },
-      "Microsoft.Toolkit/7.1.0": {
+      "Microsoft.Toolkit/7.1.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
@@ -3580,10 +3580,10 @@
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp/7.1.0": {
+      "Microsoft.Toolkit.Uwp/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit": "7.1.0"
+          "Microsoft.Toolkit": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
@@ -3592,10 +3592,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0"
+          "Microsoft.Toolkit.Uwp": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -3604,23 +3604,23 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0"
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1"
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -3642,10 +3642,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -3655,10 +3655,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Input.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -3668,12 +3668,12 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.1": {
         "type": "package",
         "dependencies": {
           "ColorCode.UWP": "2.0.6",
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -3683,10 +3683,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0",
           "System.Text.Json": "5.0.2",
           "Win2D.uwp": "1.25.0"
@@ -3698,10 +3698,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Media.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -4418,7 +4418,7 @@
           "build/Microsoft.NetCore.UniversalWindowsPlatform.targets": {}
         }
       },
-      "Microsoft.Toolkit/7.1.0": {
+      "Microsoft.Toolkit/7.1.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
@@ -4427,10 +4427,10 @@
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp/7.1.0": {
+      "Microsoft.Toolkit.Uwp/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit": "7.1.0"
+          "Microsoft.Toolkit": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
@@ -4439,10 +4439,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0"
+          "Microsoft.Toolkit.Uwp": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -4451,23 +4451,23 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0"
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1"
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -4489,10 +4489,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -4502,10 +4502,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Input.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -4515,12 +4515,12 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.1": {
         "type": "package",
         "dependencies": {
           "ColorCode.UWP": "2.0.6",
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -4530,10 +4530,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0",
           "System.Text.Json": "5.0.2",
           "Win2D.uwp": "1.25.0"
@@ -4545,10 +4545,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Media.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -5266,7 +5266,7 @@
           "build/Microsoft.NetCore.UniversalWindowsPlatform.targets": {}
         }
       },
-      "Microsoft.Toolkit/7.1.0": {
+      "Microsoft.Toolkit/7.1.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
@@ -5275,10 +5275,10 @@
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp/7.1.0": {
+      "Microsoft.Toolkit.Uwp/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit": "7.1.0"
+          "Microsoft.Toolkit": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
@@ -5287,10 +5287,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0"
+          "Microsoft.Toolkit.Uwp": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -5299,23 +5299,23 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0"
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1"
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -5337,10 +5337,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -5350,10 +5350,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Input.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -5363,12 +5363,12 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.1": {
         "type": "package",
         "dependencies": {
           "ColorCode.UWP": "2.0.6",
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -5378,10 +5378,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0",
           "System.Text.Json": "5.0.2",
           "Win2D.uwp": "1.25.0"
@@ -5393,10 +5393,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Media.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -6113,7 +6113,7 @@
           "build/Microsoft.NetCore.UniversalWindowsPlatform.targets": {}
         }
       },
-      "Microsoft.Toolkit/7.1.0": {
+      "Microsoft.Toolkit/7.1.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
@@ -6122,10 +6122,10 @@
           "lib/netstandard2.0/Microsoft.Toolkit.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp/7.1.0": {
+      "Microsoft.Toolkit.Uwp/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit": "7.1.0"
+          "Microsoft.Toolkit": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
@@ -6134,10 +6134,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0"
+          "Microsoft.Toolkit.Uwp": "7.1.1"
         },
         "compile": {
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -6146,23 +6146,23 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0"
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Input": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Layout": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Markdown": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Media": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1"
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -6184,10 +6184,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Primitives": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -6197,10 +6197,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Input.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -6210,12 +6210,12 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.1": {
         "type": "package",
         "dependencies": {
           "ColorCode.UWP": "2.0.6",
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
-          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
+          "Microsoft.Toolkit.Uwp.UI.Controls.Core": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -6225,10 +6225,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0",
           "System.Text.Json": "5.0.2",
           "Win2D.uwp": "1.25.0"
@@ -6240,10 +6240,10 @@
           "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Media.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Toolkit.Uwp.UI": "7.1.0",
+          "Microsoft.Toolkit.Uwp.UI": "7.1.1",
           "Microsoft.UI.Xaml": "2.7.0"
         },
         "compile": {
@@ -7164,10 +7164,10 @@
         "runtime.json"
       ]
     },
-    "Microsoft.Toolkit/7.1.0": {
-      "sha512": "Vq56gGFb7DWQwZyR1yL90a8VDwpfyVjo8Av2Inm+WDqjzwfQfUZpePDRVJpzRgSTpENQPoPVpsTGwUZtDN46LQ==",
+    "Microsoft.Toolkit/7.1.1": {
+      "sha512": "3Aw6RgGTaUAWW6otFXGItE08Q+Xnp+DNeKfZ28uObOgG+fYvrYpDgmoH1qUKoJopkXsYyUD6uz1JMDqsEj6Y7w==",
       "type": "package",
-      "path": "microsoft.toolkit/7.1.0",
+      "path": "microsoft.toolkit/7.1.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7186,14 +7186,14 @@
         "lib/netstandard2.1/Microsoft.Toolkit.dll",
         "lib/netstandard2.1/Microsoft.Toolkit.pdb",
         "lib/netstandard2.1/Microsoft.Toolkit.xml",
-        "microsoft.toolkit.7.1.0.nupkg.sha512",
+        "microsoft.toolkit.7.1.1.nupkg.sha512",
         "microsoft.toolkit.nuspec"
       ]
     },
-    "Microsoft.Toolkit.Uwp/7.1.0": {
-      "sha512": "i7YxmD7zuxIEr1uoFV/zwQt7LfBfY+oY/uc0R2WSzp/C4wGYDyOVgkLe4xmj1wKdwqgVr4zFYCCzo1XeXJYBfQ==",
+    "Microsoft.Toolkit.Uwp/7.1.1": {
+      "sha512": "AI2N/GSzdcjWC6jSv9nYn4CzaD/UUtq/nQpT+Pm8Gw1Gi1c0LwsnM4isc5iJFgZN1mE3AVDdvYWKOz3+ORVJJw==",
       "type": "package",
-      "path": "microsoft.toolkit.uwp/7.1.0",
+      "path": "microsoft.toolkit.uwp/7.1.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7204,14 +7204,14 @@
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.pdb",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.pri",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.xml",
-        "microsoft.toolkit.uwp.7.1.0.nupkg.sha512",
+        "microsoft.toolkit.uwp.7.1.1.nupkg.sha512",
         "microsoft.toolkit.uwp.nuspec"
       ]
     },
-    "Microsoft.Toolkit.Uwp.UI/7.1.0": {
-      "sha512": "Hy+wfrBQ6LC0esmOoz7NbINK57/vIGTMbYYjbx6MxVT1EzwuPzKbCcpeDIlhPtxDnB+HLQ5cthoqJkuc2zvbMw==",
+    "Microsoft.Toolkit.Uwp.UI/7.1.1": {
+      "sha512": "nACuxtVQufBI2i4UIvUc4qyJX96R64VbuWEbEXWznpWWd0dzT/T3zJtcj8TLvQoSPO5lrZB8sZIeQDFtsm2QPw==",
       "type": "package",
-      "path": "microsoft.toolkit.uwp.ui/7.1.0",
+      "path": "microsoft.toolkit.uwp.ui/7.1.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7222,14 +7222,14 @@
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.pdb",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.pri",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.xml",
-        "microsoft.toolkit.uwp.ui.7.1.0.nupkg.sha512",
+        "microsoft.toolkit.uwp.ui.7.1.1.nupkg.sha512",
         "microsoft.toolkit.uwp.ui.nuspec"
       ]
     },
-    "Microsoft.Toolkit.Uwp.UI.Controls/7.1.0": {
-      "sha512": "OMRMaXPtZBMcx67Y9E16ftnXeGsubkrm3Ncyn0exx3ME5bwWsGPTiEocNYkchmXBVgh00lUC/j4dNsuSK1hN+Q==",
+    "Microsoft.Toolkit.Uwp.UI.Controls/7.1.1": {
+      "sha512": "K17GNrr2heUqUtTKmtflKFFBpwbAaJKk9lCo/G7RrmQkThJP6xO5c45XV/dFsikVyZI7MDm0HIqGSTEA5gGGhA==",
       "type": "package",
-      "path": "microsoft.toolkit.uwp.ui.controls/7.1.0",
+      "path": "microsoft.toolkit.uwp.ui.controls/7.1.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7237,14 +7237,14 @@
         "License.md",
         "ReadMe.txt",
         "ThirdPartyNotices.txt",
-        "microsoft.toolkit.uwp.ui.controls.7.1.0.nupkg.sha512",
+        "microsoft.toolkit.uwp.ui.controls.7.1.1.nupkg.sha512",
         "microsoft.toolkit.uwp.ui.controls.nuspec"
       ]
     },
-    "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.0": {
-      "sha512": "mswf4q2LJnZovYUGzPlMmllx9dQ1iZQgucWIrNyR3dXOa2SQzMRTBAwOwkbW+v+b6g3oePXGKnqx9mjEyRAImQ==",
+    "Microsoft.Toolkit.Uwp.UI.Controls.Core/7.1.1": {
+      "sha512": "mr846YrxCDrqnmIK+zt841+qvcvKYVX6+RGKGhJk8BKUo2Er0SSQATDU28NJ1kFF5acNg+j/KJNL9DKooaMYOA==",
       "type": "package",
-      "path": "microsoft.toolkit.uwp.ui.controls.core/7.1.0",
+      "path": "microsoft.toolkit.uwp.ui.controls.core/7.1.1",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -7259,7 +7259,7 @@
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Core.pri",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Core.xml",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Core/Microsoft.Toolkit.Uwp.UI.Controls.Core.xr.xml",
-        "microsoft.toolkit.uwp.ui.controls.core.7.1.0.nupkg.sha512",
+        "microsoft.toolkit.uwp.ui.controls.core.7.1.1.nupkg.sha512",
         "microsoft.toolkit.uwp.ui.controls.core.nuspec",
         "tools/VisualStudioToolsManifest.xml"
       ]
@@ -7287,10 +7287,10 @@
         "tools/VisualStudioToolsManifest.xml"
       ]
     },
-    "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.0": {
-      "sha512": "i+27B8j6zlMWjLB8SKO7qyLsuez0M2QFQuqhzB7pR+WWtimbee9fg8h4uAZ6RNdqs0hzaTXJxgz+sSAi5Z9XRg==",
+    "Microsoft.Toolkit.Uwp.UI.Controls.Input/7.1.1": {
+      "sha512": "92zE3E5suGWHXJWJ/iGtbkU2EtB9zPV25C8KxnMReEh2S8Y80JFvV2UP5qpgLp6viILVWDLhWMz9K6cUDM2NyA==",
       "type": "package",
-      "path": "microsoft.toolkit.uwp.ui.controls.input/7.1.0",
+      "path": "microsoft.toolkit.uwp.ui.controls.input/7.1.1",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -7305,15 +7305,15 @@
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Input.pri",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Input.xml",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Input/Microsoft.Toolkit.Uwp.UI.Controls.Input.xr.xml",
-        "microsoft.toolkit.uwp.ui.controls.input.7.1.0.nupkg.sha512",
+        "microsoft.toolkit.uwp.ui.controls.input.7.1.1.nupkg.sha512",
         "microsoft.toolkit.uwp.ui.controls.input.nuspec",
         "tools/VisualStudioToolsManifest.xml"
       ]
     },
-    "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.0": {
-      "sha512": "4xO7Tu5Sdd4HzDiDrJOOK0+tN4vxsBb83zhpJg3kIn8euOKoVszf/v5vKbIvPXKm3jor5ZK6X+T5kqi8K6o5jw==",
+    "Microsoft.Toolkit.Uwp.UI.Controls.Layout/7.1.1": {
+      "sha512": "Z7jSiHm19sARvxcec01+8MUBB4QbgsCIVPMeT0/0hEmCfEjYRkkw7AFhCDxPjMhGa/6tiwXCjXHAHy9TQ9EqqA==",
       "type": "package",
-      "path": "microsoft.toolkit.uwp.ui.controls.layout/7.1.0",
+      "path": "microsoft.toolkit.uwp.ui.controls.layout/7.1.1",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -7328,15 +7328,15 @@
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Layout.pri",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Layout.xml",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Layout/Microsoft.Toolkit.Uwp.UI.Controls.Layout.xr.xml",
-        "microsoft.toolkit.uwp.ui.controls.layout.7.1.0.nupkg.sha512",
+        "microsoft.toolkit.uwp.ui.controls.layout.7.1.1.nupkg.sha512",
         "microsoft.toolkit.uwp.ui.controls.layout.nuspec",
         "tools/VisualStudioToolsManifest.xml"
       ]
     },
-    "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.0": {
-      "sha512": "x6ch+LocdgKkBYgNqFtFoanKVETpO7++GMxZFSv2FAoJFwCfHmoJ4WmLssiFVYaW4ePgAGYCvJ/yX75mm0j8dA==",
+    "Microsoft.Toolkit.Uwp.UI.Controls.Markdown/7.1.1": {
+      "sha512": "m+0YIVkdmbljlWDxVwHC2jgzgauULovZk2UW4+AypfNCzej8OrFtmLBf+6GNuO9pv6Ui8VYQOQZaXVUfMCY3qw==",
       "type": "package",
-      "path": "microsoft.toolkit.uwp.ui.controls.markdown/7.1.0",
+      "path": "microsoft.toolkit.uwp.ui.controls.markdown/7.1.1",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -7351,15 +7351,15 @@
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Markdown.pri",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xml",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Markdown/Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xr.xml",
-        "microsoft.toolkit.uwp.ui.controls.markdown.7.1.0.nupkg.sha512",
+        "microsoft.toolkit.uwp.ui.controls.markdown.7.1.1.nupkg.sha512",
         "microsoft.toolkit.uwp.ui.controls.markdown.nuspec",
         "tools/VisualStudioToolsManifest.xml"
       ]
     },
-    "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.0": {
-      "sha512": "kMcAYFzdWdaXKWHDObysfA0ljyb1O2bHYhiULEUWJiPK+OEHJQoWvn+pDjkYIzD7L2tcZIklJUiICUWoOwY0xg==",
+    "Microsoft.Toolkit.Uwp.UI.Controls.Media/7.1.1": {
+      "sha512": "i4F2rIvAK+QQublXZ+0M9/4nrO2tDoZKvLcnk88Lul3sjhcjx8BDzHNWO77u9T9Tl2Zg0XfU31fqjsvq/5yM8A==",
       "type": "package",
-      "path": "microsoft.toolkit.uwp.ui.controls.media/7.1.0",
+      "path": "microsoft.toolkit.uwp.ui.controls.media/7.1.1",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -7374,15 +7374,15 @@
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Media.pri",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Media.xml",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Media/Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml",
-        "microsoft.toolkit.uwp.ui.controls.media.7.1.0.nupkg.sha512",
+        "microsoft.toolkit.uwp.ui.controls.media.7.1.1.nupkg.sha512",
         "microsoft.toolkit.uwp.ui.controls.media.nuspec",
         "tools/VisualStudioToolsManifest.xml"
       ]
     },
-    "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.0": {
-      "sha512": "xsYbHlUn5Yn8U+TDrOlDImHzle00Dih4/nS+zV52B3NRfc3dlpbnGifUh5ZSvpNqp/bJy+I1dnYou13aNT/RIA==",
+    "Microsoft.Toolkit.Uwp.UI.Controls.Primitives/7.1.1": {
+      "sha512": "uuYCKxCGmuHj04fsKg4aABO0VyEAs1qKkMwASVNr+oZEn7dEHEjCEFR/VvTCBdlsXUYR/1dNBwAMUgxCJZPYcg==",
       "type": "package",
-      "path": "microsoft.toolkit.uwp.ui.controls.primitives/7.1.0",
+      "path": "microsoft.toolkit.uwp.ui.controls.primitives/7.1.1",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -7396,7 +7396,7 @@
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Primitives.pdb",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Primitives.pri",
         "lib/uap10.0.17763/Microsoft.Toolkit.Uwp.UI.Controls.Primitives.xml",
-        "microsoft.toolkit.uwp.ui.controls.primitives.7.1.0.nupkg.sha512",
+        "microsoft.toolkit.uwp.ui.controls.primitives.7.1.1.nupkg.sha512",
         "microsoft.toolkit.uwp.ui.controls.primitives.nuspec",
         "tools/VisualStudioToolsManifest.xml"
       ]
@@ -11763,7 +11763,7 @@
       "Microsoft.Data.Sqlite >= 5.0.10",
       "Microsoft.Data.Sqlite.Core >= 5.0.10",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 6.2.12",
-      "Microsoft.Toolkit.Uwp.UI.Controls >= 7.1.0",
+      "Microsoft.Toolkit.Uwp.UI.Controls >= 7.1.1",
       "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid >= 7.1.1",
       "Newtonsoft.Json >= 13.0.1",
       "SQLitePCLRaw.core >= 2.0.4",
@@ -11828,7 +11828,7 @@
           },
           "Microsoft.Toolkit.Uwp.UI.Controls": {
             "target": "Package",
-            "version": "[7.1.0, )"
+            "version": "[7.1.1, )"
           },
           "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": {
             "target": "Package",

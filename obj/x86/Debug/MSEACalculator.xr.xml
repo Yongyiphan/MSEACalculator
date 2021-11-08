@@ -21,7 +21,14 @@
     <RootPropertyPathName Name="DaysMultiplier" />
     <RootPropertyPathName Name="charNameList" />
     <RootPropertyPathName Name="SelectedMule" />
-    <RootPropertyPathName Name="allCharTrackList" />
+    <RootPropertyPathName Name="IsVisible" />
+    <RootPropertyPathName Name="CharTrackList" />
+    <RootPropertyPathName Name="TestVar" />
+    <RootPropertyPathName Name="equipSlots" />
+    <RootPropertyPathName Name="ChkBoxSelected" />
+    <RootPropertyPathName Name="addCharTrackCMD" />
+    <RootPropertyPathName Name="allCharList" />
+    <RootPropertyPathName Name="SelectedAllChar" />
     <RootPropertyPathName Name="resetDBCMD" />
     <RootPropertyPathName Name="TimeElapsed" />
   </Roots.PropertyPathNames>
@@ -30,6 +37,7 @@
     <RootType FullName="Windows.UI.Xaml.Controls.Page">
       <RootProperty Name="Background" />
       <RootProperty Name="Content" />
+      <RootProperty Name="Resources" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
     <RootType FullName="Windows.UI.Xaml.Controls.Grid">
@@ -45,6 +53,8 @@
       <RootMethod Name="SetRow" />
       <RootMethod Name="GetColumn" />
       <RootMethod Name="SetColumn" />
+      <RootMethod Name="GetRowSpan" />
+      <RootMethod Name="SetRowSpan" />
     </RootType>
     <RootType FullName="MSEACalculator.CharacterRes.CharacterPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.RowDefinition">
@@ -60,7 +70,9 @@
       <RootProperty Name="Height" />
       <RootProperty Name="Width" />
       <RootProperty Name="Margin" />
+      <RootProperty Name="Visibility" />
       <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="TextAlignment" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.FrameworkElement">
       <RootProperty Name="Margin" />
@@ -131,15 +143,27 @@
       <RootProperty Name="Spacing" />
       <RootProperty Name="Children" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Style" />
+      <RootProperty Name="Visibility" />
     </RootType>
     <RootType FullName="MSEACalculator.CharacterRes.MesoRes.MesoPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
       <RootProperty Name="Width" />
     </RootType>
     <RootType FullName="MSEACalculator.EventRes.Event" />
+    <RootType FullName="Windows.UI.Xaml.UIElement">
+      <RootProperty Name="Visibility" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ListView">
       <RootProperty Name="ItemsSource" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.CheckBox">
+      <RootProperty Name="Content" />
+      <RootProperty Name="IsChecked" />
+      <RootProperty Name="FlowDirection" />
+      <RootProperty Name="Margin" />
+    </RootType>
+    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
     <RootType FullName="MSEACalculator.MainAppRes.Settings.AddCharTrackPage" />
     <RootType FullName="MSEACalculator.HomePage" />
     <RootType FullName="Windows.UI.Xaml.Controls.NavigationView">

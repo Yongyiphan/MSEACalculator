@@ -30,13 +30,13 @@
     <AppXManifest Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2021-11-05T16:19:16.094</Modified>
+      <Modified>2021-11-08T08:48:08.839</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MSEACalculator.exe">
       <PackagePath>entrypoint\MSEACalculator.exe</PackagePath>
-      <Modified>2021-11-05T16:19:15.380</Modified>
+      <Modified>2021-11-08T08:48:08.308</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\asyncenumerator\4.0.2\lib\netstandard2.0\AsyncEnumerable.dll">
       <PackagePath>AsyncEnumerable.dll</PackagePath>
@@ -58,45 +58,45 @@
       <PackagePath>Microsoft.Data.Sqlite.dll</PackagePath>
       <Modified>2021-08-10T23:33:10.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit\7.1.0\lib\netstandard2.0\Microsoft.Toolkit.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit\7.1.1\lib\netstandard2.0\Microsoft.Toolkit.dll">
       <PackagePath>Microsoft.Toolkit.dll</PackagePath>
-      <Modified>2021-09-23T01:17:24.000</Modified>
+      <Modified>2021-10-18T23:42:34.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.dll</PackagePath>
-      <Modified>2021-09-23T01:17:34.000</Modified>
+      <Modified>2021-10-18T23:42:48.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.dll</PackagePath>
-      <Modified>2021-09-23T01:17:46.000</Modified>
+      <Modified>2021-10-18T23:43:00.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Core.dll</PackagePath>
-      <Modified>2021-09-23T01:17:56.000</Modified>
+      <Modified>2021-10-18T23:43:10.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.datagrid\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll</PackagePath>
       <Modified>2021-10-18T23:43:12.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Input.dll</PackagePath>
-      <Modified>2021-09-23T01:18:00.000</Modified>
+      <Modified>2021-10-18T23:43:16.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll</PackagePath>
-      <Modified>2021-09-23T01:18:02.000</Modified>
+      <Modified>2021-10-18T23:43:18.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll</PackagePath>
-      <Modified>2021-09-23T01:18:04.000</Modified>
+      <Modified>2021-10-18T23:43:20.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Media.dll</PackagePath>
-      <Modified>2021-09-23T01:18:06.000</Modified>
+      <Modified>2021-10-18T23:43:22.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.primitives\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Primitives.dll">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.primitives\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Primitives.dll">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Primitives.dll</PackagePath>
-      <Modified>2021-09-23T01:18:08.000</Modified>
+      <Modified>2021-10-18T23:43:26.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\newtonsoft.json\13.0.1\lib\netstandard2.0\Newtonsoft.Json.dll">
       <PackagePath>Newtonsoft.Json.dll</PackagePath>
@@ -146,29 +146,29 @@
       <PackagePath>Microsoft.UI.Xaml.Markup.winmd</PackagePath>
       <Modified>2020-12-01T20:52:00.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core\Microsoft.Toolkit.Uwp.UI.Controls.Core.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core\Microsoft.Toolkit.Uwp.UI.Controls.Core.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Core\Microsoft.Toolkit.Uwp.UI.Controls.Core.xr.xml</PackagePath>
-      <Modified>2021-09-23T00:54:54.000</Modified>
+      <Modified>2021-10-18T23:19:06.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.datagrid\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.DataGrid\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.xr.xml</PackagePath>
       <Modified>2021-10-18T23:13:04.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input\Microsoft.Toolkit.Uwp.UI.Controls.Input.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input\Microsoft.Toolkit.Uwp.UI.Controls.Input.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Input\Microsoft.Toolkit.Uwp.UI.Controls.Input.xr.xml</PackagePath>
-      <Modified>2021-09-23T00:54:56.000</Modified>
+      <Modified>2021-10-18T23:19:04.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout\Microsoft.Toolkit.Uwp.UI.Controls.Layout.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout\Microsoft.Toolkit.Uwp.UI.Controls.Layout.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Layout\Microsoft.Toolkit.Uwp.UI.Controls.Layout.xr.xml</PackagePath>
-      <Modified>2021-09-23T00:55:10.000</Modified>
+      <Modified>2021-10-18T23:19:26.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Markdown\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xr.xml</PackagePath>
-      <Modified>2021-09-23T00:55:06.000</Modified>
+      <Modified>2021-10-18T23:19:36.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.0\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media\Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.1\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media\Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml">
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Media\Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml</PackagePath>
-      <Modified>2021-09-23T00:55:18.000</Modified>
+      <Modified>2021-10-18T23:19:18.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
@@ -210,39 +210,39 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MSEACalculator.xr.xml">
       <PackagePath>MSEACalculator.xr.xml</PackagePath>
-      <Modified>2021-11-05T15:41:21.204</Modified>
+      <Modified>2021-11-08T03:13:29.620</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2021-11-05T16:19:15.289</Modified>
+      <Modified>2021-11-08T08:30:31.576</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\CharacterRes\CharacterPage.xbf">
       <PackagePath>CharacterRes\CharacterPage.xbf</PackagePath>
-      <Modified>2021-11-05T16:19:15.289</Modified>
+      <Modified>2021-11-08T08:30:31.576</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\CharacterRes\MesoRes\MesoPage.xbf">
       <PackagePath>CharacterRes\MesoRes\MesoPage.xbf</PackagePath>
-      <Modified>2021-11-05T16:19:15.280</Modified>
+      <Modified>2021-11-08T08:30:31.565</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\EventRes\Event.xbf">
       <PackagePath>EventRes\Event.xbf</PackagePath>
-      <Modified>2021-11-05T16:19:15.289</Modified>
+      <Modified>2021-11-08T08:30:31.576</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainAppRes\Settings\AddCharTrackPage.xbf">
       <PackagePath>MainAppRes\Settings\AddCharTrackPage.xbf</PackagePath>
-      <Modified>2021-11-05T16:19:15.289</Modified>
+      <Modified>2021-11-08T08:30:31.576</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\ViewPages\HomePage.xbf">
       <PackagePath>ViewPages\HomePage.xbf</PackagePath>
-      <Modified>2021-11-05T16:19:15.289</Modified>
+      <Modified>2021-11-08T08:30:31.576</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2021-11-05T16:19:15.289</Modified>
+      <Modified>2021-11-08T08:30:31.576</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainAppRes\Settings\SettingsPage.xbf">
       <PackagePath>MainAppRes\Settings\SettingsPage.xbf</PackagePath>
-      <Modified>2021-11-05T16:19:15.290</Modified>
+      <Modified>2021-11-08T08:30:31.576</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.UniversalCRT.Debug\10.0.19041.0\\redist\Debug\x86\ucrtbased.dll">
       <PackagePath>ucrtbased.dll</PackagePath>
@@ -254,11 +254,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2021-11-05T15:10:36.205</Modified>
+      <Modified>2021-11-08T05:46:37.034</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\Core\MSEACalculator.exe">
       <PackagePath>MSEACalculator.exe</PackagePath>
-      <Modified>2021-11-05T16:19:16.089</Modified>
+      <Modified>2021-11-08T08:48:08.836</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\lib\uap10.0\Microsoft.UI.Xaml.winmd">
       <PackagePath>Microsoft.UI.Xaml.winmd</PackagePath>

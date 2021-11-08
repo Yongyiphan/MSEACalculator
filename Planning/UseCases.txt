@@ -17,12 +17,12 @@ Meso Earnings
 - I want to view TLDR of Meso gains by N days 
 - I want to view TLDR of Meso gains by Week
 - I want to track mule meso earnings
-- I want to add and remove custom earnings
-- I want to track EB earnings
 
 Inventory
 - I want to track equipment for characters
 - I want to record stats of equipment
+- I want to keep track of extra equipment
+
 
 
 Simulations/ Calculator

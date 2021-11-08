@@ -11,6 +11,9 @@ namespace MSEACalculator.CharacterRes
 {
     public class Character
     {
+
+        
+
         public string className { get; set; }
 
         public string faction { get; set; }
@@ -23,6 +26,9 @@ namespace MSEACalculator.CharacterRes
 
         public string unionEffectType { get; set; }
 
+        public string unionRank { get; set; }
+
+        public int level { get; set; }
 
         public Character() { }
 
@@ -32,16 +38,31 @@ namespace MSEACalculator.CharacterRes
             this.className = cn;
             this.classType = ct;
             this.faction = faction;
+
         }
 
-            //FOR INIT OR RETRIEVE ALL
-            public Character(string CN, string CT, string Faction, string uEffect, string uEffectType)
+
+        //FOR INIT
+        public Character(string CN, string CT, string Faction, string uEffect, string uEffectType)
         {
             this.className = CN;
             this.faction = Faction;
             this.classType = CT;
             this.unionEffect = uEffect;
             this.unionEffectType = uEffectType;
+        }
+        
+        
+        //FOR TRACKING CHARACTER
+        public Character(string CN, string CT, string Faction, string uEffect, string uEffectType, string uRank, int level)
+        {
+            this.className = CN;
+            this.faction = Faction;
+            this.classType = CT;
+            this.unionEffect = uEffect;
+            this.unionEffectType = uEffectType;
+            this.unionRank = uRank;
+            this.level = level;
         }
 
         //FOR BOSSING

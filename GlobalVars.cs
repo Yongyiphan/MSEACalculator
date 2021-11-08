@@ -10,7 +10,7 @@ namespace MSEACalculator
 {
     public static class GlobalVars
     {
-        public static string path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
+        private static string path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
 
         public static string databasePath
         {
@@ -24,5 +24,15 @@ namespace MSEACalculator
             }
         }
 
+        public static List<string> EquipmentSlots { get; set; } = new List<string>() 
+        {
+            "Ring1","Ring2", "Ring3", "Ring4", 
+            "Pendant1", "Pendant2",
+            "Face Accesssory", "EyeDecor","EarRing", "Badge","Medal", "Belt","Heart","Pocket",
+            "Weapon","Emblem","Secondary",
+            "Hat","Top", "Bottom","Shoulder", "Gloves", "Cape", "Shoes"
+        };
+
+        public static StorageFolder storageFolder { get; set; } = ApplicationData.Current.LocalFolder;
     }
 }

@@ -10,11 +10,6 @@
 					</Candidate>
 				</NamedResource>
 				<ResourceMapSubtree name="DataGrid">
-					<NamedResource name="DataGrid.xaml" uri="ms-resource://Microsoft.Toolkit.Uwp.UI.Controls.DataGrid/Files/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid/DataGrid/DataGrid.xaml">
-						<Candidate type="Path">
-							<Value>Microsoft.Toolkit.Uwp.UI.Controls.DataGrid\DataGrid\DataGrid.xaml</Value>
-						</Candidate>
-					</NamedResource>
 					<NamedResource name="DataGrid.xbf" uri="ms-resource://Microsoft.Toolkit.Uwp.UI.Controls.DataGrid/Files/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid/DataGrid/DataGrid.xbf">
 						<Candidate type="EmbeddedData">
 							<Base64Value>[Embedded Binary Data]</Base64Value>
@@ -22,11 +17,6 @@
 					</NamedResource>
 				</ResourceMapSubtree>
 				<ResourceMapSubtree name="Themes">
-					<NamedResource name="Generic.xaml" uri="ms-resource://Microsoft.Toolkit.Uwp.UI.Controls.DataGrid/Files/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid/Themes/Generic.xaml">
-						<Candidate type="Path">
-							<Value>Microsoft.Toolkit.Uwp.UI.Controls.DataGrid\Themes\Generic.xaml</Value>
-						</Candidate>
-					</NamedResource>
 					<NamedResource name="Generic.xbf" uri="ms-resource://Microsoft.Toolkit.Uwp.UI.Controls.DataGrid/Files/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid/Themes/Generic.xbf">
 						<Candidate type="EmbeddedData">
 							<Base64Value>[Embedded Binary Data]</Base64Value>

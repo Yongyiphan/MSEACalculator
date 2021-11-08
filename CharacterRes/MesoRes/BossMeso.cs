@@ -5,71 +5,50 @@ using System.Text;
 using System.Threading.Tasks;
 using MSEACalculator.BossRes;
 using MSEACalculator.CharacterRes;
+using MSEACalculator.OtherRes;
 
 namespace MSEACalculator.CharacterRes.MesoRes
 {
-    public class BossMeso 
+    public class BossMeso :INPCObject
     {
 
         public Dictionary<int, Boss> bossDict { get { return DatabaseAccess.GetBossDB(); } }
-        public Dictionary<string, Character> charDict { get { return DatabaseAccess.GetAllCharDB(); } }
+        public Dictionary<string, Character> charDict { get { return DatabaseAccess.GetAllCharTrackDB(); } }
 
-        //public List<string> charNameList { get { return getCharNameList(charList); } }
-        //public List<string> difficultyList { get { return getDifficulty(bossList); } }
-        //public List<string> bossNameList { get { return getBossNameList(bossList); } }
+        public List<string> bossNameList { get; set; } = new List<string>();
+        public List<string> charNameList { get; set; } = new List<string>();
 
+        public List<int> daysList { get; set; } = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
+        public List<string> displayType { get; set; } = new List<string>() { "Daily", "Weekly", "Monthly" };
+
+        private int dayMultipler;
+        public int DayMultiplier { get { return dayMultipler = daysList[0]; } set { dayMultipler = value; } }
+
+        private string mesoViewBy;
+        public string MesoViewBy { get { return mesoViewBy = displayType[1]; } set { mesoViewBy = value; } }
 
         public BossMeso()
         {
-            
+            InitLoadFields();
         }
 
 
-        //private List<string> getCharNameList(Dictionary<string, Character> charList)
-        //{
+        public void InitLoadFields()
+        {
+            foreach (Boss bossItem in bossDict.Values)
+            {
 
-        //    var temp = new List<string>();
+                if (!bossNameList.Contains(bossItem.name))
+                {
+                    bossNameList.Add(bossItem.name);
+                };
+            }
+            foreach (Character charItem in charDict.Values)
+            {
+                charNameList.Add(charItem.className);
+            }
 
-        //    foreach (Character charItem in charList.Values)
-        //    {
-        //        if (!temp.Contains(charItem.className))
-        //        {
-        //            temp.Add(charItem.className);
-        //        }
-        //    }
-
-
-        //    return temp;
-        //}
-        //private List<string> getDifficulty(Dictionary<int, Boss> bossList)
-        //{
-
-        //    var temp = new List<string>();
-
-        //    foreach (Boss bossItem in bossList.Values)
-        //    {
-        //        if (!difficultyList.Contains(bossItem.difficulty))
-        //        {
-        //            difficultyList.Add(bossItem.difficulty);
-        //        };
-        //    }
-        //    return temp;
-        //}
-        
-        //private List<string> getBossNameList(Dictionary<int, Boss> bossList)
-        //{
-
-        //    var temp = new List<string>();
-
-        //    foreach (Boss bossItem in bossList.Values)
-        //    {
-        //        if (!difficultyList.Contains(bossItem.name))
-        //        {
-        //            difficultyList.Add(bossItem.name);
-        //        };
-        //    }
-        //    return temp;
-        //}
+        }
 
     }
 }

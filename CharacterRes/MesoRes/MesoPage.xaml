@@ -50,11 +50,11 @@
         
         <!--First Portion for Boss Crsytal Tracking-->
         <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            </Grid.RowDefinitions>-->
+            <Grid Name="BossingGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
@@ -62,58 +62,46 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <ComboBox x:Name="MulesNameSelector"  PlaceholderText="Select Mule" ItemsSource="{Binding charNameList, Mode=TwoWay}" Width="200" VerticalAlignment="Center" ></ComboBox>
+                        <ComboBox x:Name="MulesNameSelector"  PlaceholderText="Select Mule" 
+                                  ItemsSource ="{Binding charNameList, Mode=TwoWay}" 
+                                  SelectedItem="{Binding SelectedMule, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                  Width="200" VerticalAlignment="Center" ></ComboBox>
                         <TextBlock>Weekdays:</TextBlock>
-                        <ComboBox Name="weekDayMultiplier">
-                            <ComboBoxItem Content="1" IsSelected="True"/>
-                            <ComboBoxItem Content="2"/>
-                            <ComboBoxItem Content="3"/>
-                            <ComboBoxItem Content="4"/>
-                            <ComboBoxItem Content="5"/>
-                        </ComboBox>
+                        <ComboBox Name="daysMultiplier" 
+                                  ItemsSource ="{Binding daysList}" 
+                                  SelectedItem="{Binding DaysMultiplier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <TextBlock>Weekends:</TextBlock>
-                        <ComboBox Name="weekEndsMultiplier">
-                            <ComboBoxItem Content="1"/>
-                            <ComboBoxItem Content="2" IsSelected="True"/>
-                        </ComboBox>
+                        <ComboBox Name="weekEndsMultiplier" 
+                                  ItemsSource ="{Binding displayType}" 
+                                  SelectedItem="{Binding MesoViewBy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <TextBlock>Total Meso:</TextBlock>
-                        <TextBlock Name="TotalMeso" MaxWidth="180" HorizontalAlignment="Left"></TextBlock>
+                        <TextBlock Name="TotalMeso" MaxWidth="180" HorizontalAlignment="Left" Text="{Binding TotalMeso}"></TextBlock>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="1">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                        <ComboBox x:Name="BossSelectorCBox" PlaceholderText="Select Boss or Custom" ItemsSource="{Binding bossNameList, Mode=TwoWay}" Width="200" 
-                                  ></ComboBox>
-                        <ComboBox x:Name="BossDifficulty" IsTextSearchEnabled="True" PlaceholderText="Difficulty" ItemsSource="{Binding difficultyList, Mode=TwoWay}" MaxHeight="300" Width="110" 
-                                  ></ComboBox>
+                        <ComboBox x:Name="BossSelectorCBox" PlaceholderText="Select Boss or Custom" 
+                                  ItemsSource="{Binding bossNameList, Mode=TwoWay}" 
+                                  SelectedItem="{Binding SelectedBoss, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  Width="200" />
+                        <ComboBox x:Name="BossDifficulty" IsTextSearchEnabled="True" PlaceholderText="Difficulty" 
+                                  ItemsSource="{Binding DifficultyList}" 
+                                  SelectedItem="{Binding SelectedDifficulty, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  MaxHeight="300" Width="110" />
 
-                        <Button Name="AddBossItem">Add Boss</Button>
+                        <Button Name="AddBossItem" Command="{Binding addBossCMD}" Content="Add Boss"></Button>
+                        <Button Name="DeleteBossItem" Command="{Binding deleteBossCMD}" Content="Delete Boss"></Button>
+                        <TextBlock Text="{Binding ErrorMessage}"/>
 
 
-                        <!--Using Pop Up Panel to add custom items-->
 
-                        <Popup x:Name="AddCustomItemPopUp">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                <StackPanel.Resources>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Margin" Value="0 5 0 0"></Setter>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <TextBlock Text="Name:"/>
-                                <TextBox x:Name="CustomIName"></TextBox>
-                                <TextBlock Text="Value: "/>
-                                <TextBox x:Name="CustomIValue"></TextBox>
-                                <TextBlock Text="Quantity: "/>
-                                <TextBox x:Name="CustomIQuantity"></TextBox>
-                                <Button Name="AddCustomItem">Add Item</Button>
-                            </StackPanel>
-                        </Popup>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
-                    <TextBlock x:Name="displayTxt" />
-                    <!--<ListView x:Name="bossListDisplay" ></ListView>-->
-                    <!--<controls:DataGrid Name="bossDisplay" AreRowDetailsFrozen="True" AutoGenerateColumns="False" FontSize="14">
+                        <!--<ListView x:Name="bossListDisplay" ItemsSource="{Binding BossList}"></ListView>-->
+                    <controls:DataGrid Name="bossDisplay" AreRowDetailsFrozen="True" AutoGenerateColumns="False" FontSize="14" 
+                                       ItemsSource="{Binding BossList}"
+                                       SelectedItem="{Binding SelectedBossItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <controls:DataGrid.Columns>
                             <controls:DataGridTextColumn 
                             Header="Boss Name" 
@@ -132,31 +120,17 @@
                             Width="150"
                             Binding="{Binding meso}"/>
                         </controls:DataGrid.Columns>
-                    </controls:DataGrid>-->
+                    </controls:DataGrid>
                 </Grid>
             </Grid>
 
 
-            <!-- Second Portion for EB Tracking-->
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="6*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+            <!-- Second Portion for EB Tracking--><!--
+            <Grid Grid.Row="1" x:Name="EBGrid">
 
-                    <!--Record EB Drops-->
+                <TextBlock x:Name="displayTxt" Text="{Binding TestVar}"/>
 
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                        <ComboBox x:Name="EBItemSelector" PlaceholderText="Select Item" Width="180"></ComboBox>
-                        <TextBlock Text="Price: "/>
-                        <TextBox x:Name="mesoValue" PlaceholderText="100,000,000" VerticalAlignment="Center"/>
-                        <TextBlock Text="Select Date: "/>
-                        <CalendarDatePicker Name="EBItemDateSelector"></CalendarDatePicker>
-                        <Button Name="AddEBItem">Add Item</Button>
-                    </StackPanel>
-                </Grid>
-            </Grid>
+            </Grid>-->
 
 
 
@@ -168,3 +142,21 @@
 
 </Page>
 
+<!--Using Pop Up Panel to add custom items--><!--
+
+<Popup x:Name="AddCustomItemPopUp">
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+        <StackPanel.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="0 5 0 0"></Setter>
+            </Style>
+        </StackPanel.Resources>
+        <TextBlock Text="Name:"/>
+        <TextBox x:Name="CustomIName"></TextBox>
+        <TextBlock Text="Value: "/>
+        <TextBox x:Name="CustomIValue"></TextBox>
+        <TextBlock Text="Quantity: "/>
+        <TextBox x:Name="CustomIQuantity"></TextBox>
+        <Button Name="AddCustomItem">Add Item</Button>
+    </StackPanel>
+</Popup>-->

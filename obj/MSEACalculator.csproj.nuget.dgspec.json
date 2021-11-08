@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj": {}
+    "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj": {
+    "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj",
+        "projectUniqueName": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj",
         "projectName": "MSEACalculator",
-        "projectPath": "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj",
+        "projectPath": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj",
         "packagesPath": "C:\\Users\\edgar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\obj\\",
+        "outputPath": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -24,20 +24,20 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "uap10.0.16299"
+          "uap10.0.17763"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "uap10.0.16299": {
+          "uap10.0.17763": {
             "projectReferences": {}
           }
         }
       },
       "frameworks": {
-        "uap10.0.16299": {
+        "uap10.0.17763": {
           "dependencies": {
             "AsyncEnumerator": {
               "target": "Package",
@@ -57,11 +57,11 @@
             },
             "Microsoft.Toolkit.Uwp.UI.Controls": {
               "target": "Package",
-              "version": "[7.1.0, )"
+              "version": "[7.1.1, )"
             },
             "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": {
               "target": "Package",
-              "version": "[6.1.1, )"
+              "version": "[7.1.1, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

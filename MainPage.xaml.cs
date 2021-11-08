@@ -18,7 +18,8 @@ using MSEACalculator.EventRes;
 using MSEACalculator.StarforceRes;
 using MSEACalculator.CharacterRes;
 using MSEACalculator.CharacterRes.MesoRes;
-using MSEACalculator.ViewPages;
+using MSEACalculator.MainAppRes;
+using MSEACalculator.MainAppRes.Settings;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -51,6 +52,7 @@ namespace MSEACalculator
 
             if (args.IsSettingsSelected)
             {
+                
                 ContentFrame.Navigate(typeof(SettingsPage));
             }
             else

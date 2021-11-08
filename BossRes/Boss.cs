@@ -29,7 +29,7 @@ namespace MSEACalculator.BossRes
             this.meso = M;
         }
 
-        public Boss(int ID, string name, string D, string ET, int EL, int M, int BCC)
+        public Boss(int ID, string name, string D, string ET, int EL, int BCC,int M)
         {
             this.BossID = ID;
             this.name = name;

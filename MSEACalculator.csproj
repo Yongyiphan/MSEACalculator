@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -123,6 +123,7 @@
     <Compile Include="CharacterRes\CharacterPage.xaml.cs">
       <DependentUpon>CharacterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CharacterRes\EquipmentRes\EquipModel.cs" />
     <Compile Include="CharacterRes\MesoRes\BossMeso.cs" />
     <Compile Include="CharacterRes\MesoRes\CustomItem.cs" />
     <Compile Include="CharacterRes\MesoRes\MesoPage.xaml.cs">
@@ -131,13 +132,19 @@
     <Compile Include="CharacterRes\Character.cs" />
     <Compile Include="CharacterRes\MesoRes\MesoViewModel.cs" />
     <Compile Include="CommonFunc.cs" />
-    <Compile Include="DatabaseAccess.cs" />
+    <Compile Include="MainAppRes\Settings\AddCharTrackPage.xaml.cs">
+      <DependentUpon>AddCharTrackPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\Settings\AddCharTrackViewModel.cs" />
+    <Compile Include="OtherRes\DatabaseAccess.cs" />
     <Compile Include="EventRes\Event.xaml.cs">
       <DependentUpon>Event.xaml</DependentUpon>
     </Compile>
     <Compile Include="EventRes\EventRecords.cs" />
     <Compile Include="GlobalVars.cs" />
     <Compile Include="OtherRes\CustomCommand.cs" />
+    <Compile Include="OtherRes\INPCObject.cs" />
+    <Compile Include="UnionRes\UnionModel.cs" />
     <Compile Include="ViewPages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -147,9 +154,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StarforceRes\SFGain.cs" />
     <Compile Include="OtherRes\TableStats.cs" />
-    <Compile Include="ViewPages\SettingsPage.xaml.cs">
+    <Compile Include="MainAppRes\Settings\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainAppRes\Settings\SettingsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -183,6 +191,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MainAppRes\Settings\AddCharTrackPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewPages\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -191,7 +203,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ViewPages\SettingsPage.xaml">
+    <Page Include="MainAppRes\Settings\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -210,10 +222,10 @@
       <Version>6.2.12</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>7.1.0</Version>
+      <Version>7.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
-      <Version>6.1.1</Version>
+      <Version>7.1.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>

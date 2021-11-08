@@ -1,28 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Roots >
   <Roots.PropertyPathNames>
-    <RootPropertyPathName Name="difficultyList" />
+    <RootPropertyPathName Name="BossList" />
+    <RootPropertyPathName Name="SelectedBossItem" />
+    <RootPropertyPathName Name="meso" />
+    <RootPropertyPathName Name="entryType" />
+    <RootPropertyPathName Name="difficulty" />
+    <RootPropertyPathName Name="name" />
+    <RootPropertyPathName Name="ErrorMessage" />
+    <RootPropertyPathName Name="deleteBossCMD" />
+    <RootPropertyPathName Name="addBossCMD" />
+    <RootPropertyPathName Name="DifficultyList" />
+    <RootPropertyPathName Name="SelectedDifficulty" />
     <RootPropertyPathName Name="bossNameList" />
+    <RootPropertyPathName Name="SelectedBoss" />
+    <RootPropertyPathName Name="TotalMeso" />
+    <RootPropertyPathName Name="displayType" />
+    <RootPropertyPathName Name="MesoViewBy" />
+    <RootPropertyPathName Name="daysList" />
+    <RootPropertyPathName Name="DaysMultiplier" />
     <RootPropertyPathName Name="charNameList" />
+    <RootPropertyPathName Name="SelectedMule" />
+    <RootPropertyPathName Name="IsVisible" />
+    <RootPropertyPathName Name="CharTrackList" />
+    <RootPropertyPathName Name="TestVar" />
+    <RootPropertyPathName Name="equipSlots" />
+    <RootPropertyPathName Name="ChkBoxSelected" />
+    <RootPropertyPathName Name="addCharTrackCMD" />
+    <RootPropertyPathName Name="allCharList" />
+    <RootPropertyPathName Name="SelectedAllChar" />
+    <RootPropertyPathName Name="resetDBCMD" />
+    <RootPropertyPathName Name="TimeElapsed" />
   </Roots.PropertyPathNames>
   <Roots.RootTypes>
     <RootType FullName="Windows.UI.Xaml.Application" />
     <RootType FullName="Windows.UI.Xaml.Controls.Page">
       <RootProperty Name="Background" />
       <RootProperty Name="Content" />
+      <RootProperty Name="Resources" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
     <RootType FullName="Windows.UI.Xaml.Controls.Grid">
       <RootProperty Name="RowDefinitions" />
       <RootProperty Name="Resources" />
       <RootProperty Name="Children" />
+      <RootProperty Name="Name" />
       <RootProperty Name="ColumnDefinitions" />
       <RootProperty Name="Margin" />
+      <RootProperty Name="ColumnSpacing" />
       <RootProperty Name="Background" />
       <RootMethod Name="GetRow" />
       <RootMethod Name="SetRow" />
       <RootMethod Name="GetColumn" />
       <RootMethod Name="SetColumn" />
+      <RootMethod Name="GetRowSpan" />
+      <RootMethod Name="SetRowSpan" />
     </RootType>
     <RootType FullName="MSEACalculator.CharacterRes.CharacterPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.RowDefinition">
@@ -38,7 +70,9 @@
       <RootProperty Name="Height" />
       <RootProperty Name="Width" />
       <RootProperty Name="Margin" />
+      <RootProperty Name="Visibility" />
       <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="TextAlignment" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.FrameworkElement">
       <RootProperty Name="Margin" />
@@ -49,24 +83,23 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
       <RootProperty Name="TextAlignment" />
-      <RootProperty Name="PlaceholderText" />
-      <RootProperty Name="VerticalAlignment" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
       <RootProperty Name="FontSize" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ComboBox">
       <RootProperty Name="PlaceholderText" />
-      <RootProperty Name="Width" />
       <RootProperty Name="ItemsSource" />
+      <RootProperty Name="SelectedItem" />
+      <RootProperty Name="Width" />
       <RootProperty Name="IsTextSearchEnabled" />
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Name" />
-      <RootProperty Name="Items" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
       <RootProperty Name="Name" />
+      <RootProperty Name="Command" />
       <RootProperty Name="Content" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Margin" />
@@ -86,35 +119,62 @@
       <RootProperty Name="Property" />
       <RootProperty Name="Value" />
     </RootType>
+    <RootType FullName="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
+      <RootProperty Name="Name" />
+      <RootProperty Name="AreRowDetailsFrozen" />
+      <RootProperty Name="AutoGenerateColumns" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="ItemsSource" />
+      <RootProperty Name="SelectedItem" />
+      <RootProperty Name="Columns" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Data.Binding">
+      <RootProperty Name="UpdateSourceTrigger" />
+      <RootProperty Name="Mode" />
+    </RootType>
+    <RootType FullName="Microsoft.Toolkit.Uwp.UI.Controls.DataGridTextColumn">
+      <RootProperty Name="Header" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="Binding" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.StackPanel">
       <RootProperty Name="Orientation" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Spacing" />
       <RootProperty Name="Children" />
-      <RootProperty Name="Resources" />
       <RootProperty Name="HorizontalAlignment" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Primitives.Popup">
-      <RootProperty Name="Child" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Data.Binding">
-      <RootProperty Name="Mode" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.ComboBoxItem">
-      <RootProperty Name="Content" />
-      <RootProperty Name="IsSelected" />
+      <RootProperty Name="Style" />
+      <RootProperty Name="Visibility" />
     </RootType>
     <RootType FullName="MSEACalculator.CharacterRes.MesoRes.MesoPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
       <RootProperty Name="Width" />
     </RootType>
     <RootType FullName="MSEACalculator.EventRes.Event" />
+    <RootType FullName="Windows.UI.Xaml.UIElement">
+      <RootProperty Name="Visibility" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ListView">
+      <RootProperty Name="ItemsSource" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.CheckBox">
+      <RootProperty Name="Content" />
+      <RootProperty Name="IsChecked" />
+      <RootProperty Name="FlowDirection" />
+      <RootProperty Name="Margin" />
+    </RootType>
+    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
+    <RootType FullName="MSEACalculator.MainAppRes.Settings.AddCharTrackPage" />
     <RootType FullName="MSEACalculator.HomePage" />
     <RootType FullName="Windows.UI.Xaml.Controls.NavigationView">
       <RootProperty Name="Name" />
       <RootProperty Name="OpenPaneLength" />
       <RootProperty Name="MenuItems" />
       <RootProperty Name="Content" />
+      <RootProperty Name="PaneDisplayMode" />
+      <RootProperty Name="IsBackButtonVisible" />
+      <RootProperty Name="SelectionFollowsFocus" />
+      <RootProperty Name="IsSettingsVisible" />
       <RootEvent Name="Loaded" />
       <RootEvent Name="SelectionChanged" />
     </RootType>
@@ -129,8 +189,9 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Frame">
       <RootProperty Name="Padding" />
+      <RootProperty Name="Name" />
     </RootType>
     <RootType FullName="MSEACalculator.MainPage" />
-    <RootType FullName="MSEACalculator.ViewPages.SettingsPage" />
+    <RootType FullName="MSEACalculator.MainAppRes.Settings.SettingsPage" />
   </Roots.RootTypes>
 </Roots>

@@ -78,7 +78,6 @@ namespace MSEACalculator.CharacterRes.MesoRes
                     charNameList.Add(charItem.className);
                 };
             }
-            bossNameList.Add("Custom");
         }
 
 

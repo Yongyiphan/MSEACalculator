@@ -212,7 +212,6 @@ C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\MainP
 C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\ViewPages\SettingsPage.xbf
 C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\XamlSaveStateFile.xml
 C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\MSEACalculator.csproj.CoreCompileInputs.cache
-C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\MSEACalculator.csproj.CopyComplete
 C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.pri.xml
 C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\MSEACalculator.exe
 C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\MSEACalculator.pdb

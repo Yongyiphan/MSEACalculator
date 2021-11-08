@@ -269,7 +269,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
         {
 
             bool deleteResult = DatabaseAccess.deleteCharBossList(SelectedMule, SelectedBossItem.BossID);
-
+            //
             if(deleteResult == true)
             {
                 displayBossResult();

@@ -30,6 +30,12 @@ namespace MSEACalculator.CharacterRes
 
         public int level { get; set; }
 
+        public string MainStat { get; set; }
+        public string SecStat { get; set; }
+
+        public List<string> SMainStat { get; set; }
+        public List<string> SSecStat { get; set; }
+
         public Character() { }
 
         //FOR RETREIVING W/O UNION
@@ -42,25 +48,24 @@ namespace MSEACalculator.CharacterRes
         }
 
 
+
         //FOR INIT
-        public Character(string CN, string CT, string Faction, string uEffect, string uEffectType)
+        public Character(string CN, string CT, string Faction, string uEffect, string uEffectType, string MS, string SS)
         {
             this.className = CN;
             this.faction = Faction;
             this.classType = CT;
             this.unionEffect = uEffect;
             this.unionEffectType = uEffectType;
+            this.MainStat = MS;
+            this.SecStat = SS;
         }
         
         
         //FOR TRACKING CHARACTER
-        public Character(string CN, string CT, string Faction, string uEffect, string uEffectType, string uRank, int level)
+        public Character(string CN, string uRank, int level)
         {
             this.className = CN;
-            this.faction = Faction;
-            this.classType = CT;
-            this.unionEffect = uEffect;
-            this.unionEffectType = uEffectType;
             this.unionRank = uRank;
             this.level = level;
         }

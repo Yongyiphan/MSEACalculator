@@ -5,6 +5,7 @@
     xmlns:local="using:MSEACalculator.MainAppRes.Settings"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
@@ -47,15 +48,14 @@
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
                     <ComboBox x:ConnectionId='6' x:Name="AllCharList" VerticalAlignment="Center" Width="200" 
-                              ItemsSource="{Binding allCharList}" 
+                              ItemsSource="{Binding allCharList}" DisplayMemberPath="className" 
                               SelectedItem="{Binding SelectedAllChar, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="Level"/>
-                    <TextBox/>
+                    <TextBox Text="{Binding LvlInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     <TextBlock Text="Starforce"/>
                     <TextBox/>
                     <Button x:ConnectionId='7' x:Name="AddTrack" Content="Add" Command="{Binding addCharTrackCMD}"/>
                     <Button x:ConnectionId='8' x:Name="RemoveTrack" Content="Remove"/>
-                    <TextBlock Text="{Binding ErrorMessage}" Width="Auto" Height="32" VerticalAlignment="Center" TextAlignment="Center"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1" Grid.RowSpan="3">
@@ -65,12 +65,12 @@
                         <Button Content="Add Item" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding IsVisible, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding IsVisible, Mode=TwoWay}" >
-                        <TextBlock Text="Select Equipment Slot"/>
-                        <ComboBox x:ConnectionId='3' x:Name="EquipmentSlot" Width="150" ItemsSource="{Binding equipSlots}"/>
-                        <TextBlock Text="Weapon Type"/>
-                        <ComboBox x:ConnectionId='4' x:Name="WeapType" Width="130"/>
+                        <TextBlock Text="Equip Slot"/>
+                        <ComboBox x:ConnectionId='3' x:Name="EquipmentSlot" Width="150" ItemsSource="{Binding equipSlots}" DisplayMemberPath="Key"/>
                         <TextBlock Text="Set"/>
-                        <ComboBox x:ConnectionId='5' x:Name="EquipmentList" Width="130"/>
+                        <ComboBox x:ConnectionId='4' x:Name="EquipmentList" Width="130" ItemsSource="{Binding armorSet}"/>
+                        <TextBlock Text="Weapon Type"/>
+                        <ComboBox x:ConnectionId='5' x:Name="WeapType" Width="130"/>
                     </StackPanel>
                     <TextBlock Text="Scroll" Margin="5" FontSize="17" Visibility="{Binding IsVisible, Mode=TwoWay}"/>
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding IsVisible, Mode=TwoWay}">
@@ -101,7 +101,7 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <ListView ItemsSource="{Binding CharTrackList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <ListView ItemsSource="{Binding CharTrackList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="className"/>
         </Grid>
     </Grid>
 </Page>

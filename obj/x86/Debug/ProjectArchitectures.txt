@@ -1,1 +1,1 @@
-C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\MSEACalculator.csproj;x86
+C:\Users\edgar\Documents\Personal Programming\MSEACalculator\MSEACalculator.csproj;x86

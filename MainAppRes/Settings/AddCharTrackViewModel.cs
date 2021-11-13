@@ -6,30 +6,37 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
+using MSEACalculator.CharacterRes.EquipmentRes;
 
 namespace MSEACalculator.MainAppRes.Settings
 {
     public class AddCharTrackViewModel :INPCObject
     {
         public Dictionary<string, Character> allCharDict { get; set; } = DatabaseAccess.GetAllCharDB();
-        public Dictionary<string, Character> CharTrackDict { get; set; } = DatabaseAccess.GetAllCharTrackDB();
+        public Dictionary<string, Character> charTrackDict { get; set; } = DatabaseAccess.GetAllCharTrackDB();
+        public List<EquipModel> ArmorList { get; set; } = DatabaseAccess.GetAllArmorDB();
 
-        public List<string> allCharList { get; } = new List<string>();
 
-        private ObservableCollection<string> charTrackList;
+        public List<Character> allCharList { get; set; }
 
-        public ObservableCollection<string> CharTrackList
+        public List<string> armorSet { get; set; } = GlobalVars.ArmorSet;
+
+        public Dictionary<string, string> equipSlots { get; set; } = GlobalVars.EquipmentDict;
+
+        private ObservableCollection<Character> charTrackList;
+
+        public ObservableCollection<Character> CharTrackList
         {
             get { return charTrackList; }
             set { charTrackList = value; OnPropertyChanged(nameof(CharTrackList)); }
         }
 
-        public List<string> equipSlots { get; set; } = GlobalVars.EquipmentSlots;
 
-        private string selectedAllChar;
+        private Character selectedAllChar;
 
-        public string SelectedAllChar
+        public Character SelectedAllChar
         {
             get { return selectedAllChar; }
             set 
@@ -71,6 +78,21 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
+        private string lvlI;
+        public string LvlInput
+        {
+            get
+            {
+                return lvlI;
+            }
+            set
+            {
+                lvlI = value; 
+                OnPropertyChanged(nameof(LvlInput));
+                addCharTrackCMD.RaiseCanExecuteChanged();
+            }
+        }
+
         private string testVar = "";
         public string TestVar
         {
@@ -82,19 +104,8 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
-        private string errorMessage;
-        public string ErrorMessage
-        {
-            get { return errorMessage; }
-            set
-            {
-                errorMessage = value;
-                OnPropertyChanged(nameof(ErrorMessage));
-            }
-        }
-
         public CustomCommand addCharTrackCMD { get; private set; }
-
+        public CustomCommand validateInput { get; private set; }
         public AddCharTrackViewModel()
         {
             initFields();
@@ -105,52 +116,61 @@ namespace MSEACalculator.MainAppRes.Settings
 
         private void initFields()
         {
-            charTrackList = new ObservableCollection<string>();
-
-            foreach(Character character in allCharDict.Values)
-            {
-                if (!allCharList.Contains(character.className))
-                {
-                    allCharList.Add(character.className);
-                }
-            }
+            charTrackList = new ObservableCollection<Character>();
+            allCharList = allCharDict.Values.ToList();
+            charTrackDict.Values.ToList().ForEach(x => charTrackList.Add(x));
 
             
-            foreach(Character character in CharTrackDict.Values)
-            {
-                if (!CharTrackList.Contains(character.className))
-                {
-                    CharTrackList.Add(character.className);
-                }
-            }
         }
 
         private bool canAddChar()
         {
-            if(SelectedAllChar != null)
+            if(SelectedAllChar != null && LvlInput != null)
             {
-                return true;
+                int outValue;
+                if(int.TryParse(LvlInput, out outValue)){
+                    return true;
+                }
+                CommonFunc.errorDia("Invalid Level Value");
+                LvlInput = null;
+                return false;
             }
 
             return false;
         }
 
+        
+
         private void addChar()
         {
-            if (!CharTrackList.Contains(SelectedAllChar))
+            
+            //ObservableCollecion to List. => find if class already added before.
+            if(CharTrackList.ToList().Find(x => x.className == SelectedAllChar.className) == null)
             {
-                CharTrackList.Add(SelectedAllChar);
-                OnPropertyChanged(nameof(CharTrackList));
+                int charLvl = Convert.ToInt32(LvlInput);
+                string URank = CommonFunc.returnUnionRank(SelectedAllChar.className, charLvl);
+
+                Character tempChar = new Character(SelectedAllChar.className, URank, charLvl);
+                CharTrackList.Add(tempChar);
+                bool insertResult = DatabaseAccess.insertCharTrack(tempChar);
+                if(insertResult == false)
+                {
+                    CommonFunc.errorDia("This character has been added before.");
+                }
                 SelectedAllChar = null;
-                ErrorMessage = "";
+                LvlInput = null;
             }
             else
             {
-                ErrorMessage = "This character has been added before.";
-                Console.WriteLine(ErrorMessage);
+                //ErrorMessage = "This character has been added before.";
+                CommonFunc.errorDia("This character has been added before.");
+                SelectedAllChar = null;
+                LvlInput = null;
             }
             addCharTrackCMD.RaiseCanExecuteChanged();
         }
+
+
     }
 
 }

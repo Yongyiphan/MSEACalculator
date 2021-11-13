@@ -21,12 +21,16 @@
     <RootPropertyPathName Name="DaysMultiplier" />
     <RootPropertyPathName Name="charNameList" />
     <RootPropertyPathName Name="SelectedMule" />
+    <RootPropertyPathName Name="className" />
     <RootPropertyPathName Name="CharTrackList" />
     <RootPropertyPathName Name="TestVar" />
     <RootPropertyPathName Name="IsVisible" />
+    <RootPropertyPathName Name="Key" />
+    <RootPropertyPathName Name="armorSet" />
     <RootPropertyPathName Name="equipSlots" />
     <RootPropertyPathName Name="ChkBoxSelected" />
     <RootPropertyPathName Name="addCharTrackCMD" />
+    <RootPropertyPathName Name="LvlInput" />
     <RootPropertyPathName Name="allCharList" />
     <RootPropertyPathName Name="SelectedAllChar" />
     <RootPropertyPathName Name="resetDBCMD" />
@@ -72,7 +76,6 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="Visibility" />
       <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="TextAlignment" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.FrameworkElement">
       <RootProperty Name="Margin" />
@@ -83,6 +86,7 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
       <RootProperty Name="TextAlignment" />
+      <RootProperty Name="Text" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
       <RootProperty Name="FontSize" />
@@ -96,6 +100,7 @@
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Name" />
+      <RootProperty Name="DisplayMemberPath" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
       <RootProperty Name="Name" />
@@ -154,6 +159,7 @@
     <RootType FullName="MSEACalculator.EventRes.Event" />
     <RootType FullName="Windows.UI.Xaml.Controls.ListView">
       <RootProperty Name="ItemsSource" />
+      <RootProperty Name="DisplayMemberPath" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
     <RootType FullName="Windows.UI.Xaml.Controls.CheckBox">

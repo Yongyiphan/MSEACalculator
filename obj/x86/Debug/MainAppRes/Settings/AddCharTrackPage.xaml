@@ -19,7 +19,7 @@
         </Style>
         <Style x:Key="SP" TargetType="StackPanel">
             <Setter Property="Margin" Value="0 5 0 0"/>
-            <Setter Property="Visibility" Value="{Binding IsVisible, Mode=TwoWay}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="10 0 0 0"/>
@@ -45,10 +45,14 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
                     <ComboBox x:ConnectionId='6' x:Name="AllCharList" VerticalAlignment="Center" Width="200" 
                               ItemsSource="{Binding allCharList}" 
                               SelectedItem="{Binding SelectedAllChar, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBlock Text="Level"/>
+                    <TextBox/>
+                    <TextBlock Text="Starforce"/>
+                    <TextBox/>
                     <Button x:ConnectionId='7' x:Name="AddTrack" Content="Add" Command="{Binding addCharTrackCMD}"/>
                     <Button x:ConnectionId='8' x:Name="RemoveTrack" Content="Remove"/>
                     <TextBlock Text="{Binding ErrorMessage}" Width="Auto" Height="32" VerticalAlignment="Center" TextAlignment="Center"/>
@@ -56,19 +60,22 @@
             </Grid>
             <Grid Grid.Row="1" Grid.RowSpan="3">
                 <StackPanel Orientation="Vertical">
-                    <CheckBox Content="Add Equipment?" IsChecked="{Binding ChkBoxSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FlowDirection="RightToLeft" Margin="10 0 0 0"/>
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
+                        <CheckBox Content="Add Equipment?" IsChecked="{Binding ChkBoxSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FlowDirection="RightToLeft" Margin="5 0 0 0" FontSize="17"/>
+                        <Button Content="Add Item" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding IsVisible, Mode=TwoWay}"/>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding IsVisible, Mode=TwoWay}" >
                         <TextBlock Text="Select Equipment Slot"/>
                         <ComboBox x:ConnectionId='3' x:Name="EquipmentSlot" Width="150" ItemsSource="{Binding equipSlots}"/>
                         <TextBlock Text="Weapon Type"/>
                         <ComboBox x:ConnectionId='4' x:Name="WeapType" Width="130"/>
-                        <TextBlock Text="Equipment List"/>
+                        <TextBlock Text="Set"/>
                         <ComboBox x:ConnectionId='5' x:Name="EquipmentList" Width="130"/>
                     </StackPanel>
-                    <TextBlock Text="Scroll" Margin="10 5 5 5" FontSize="17" Visibility="{Binding IsVisible, Mode=TwoWay}"/>
+                    <TextBlock Text="Scroll" Margin="5" FontSize="17" Visibility="{Binding IsVisible, Mode=TwoWay}"/>
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding IsVisible, Mode=TwoWay}">
                         <TextBlock Text="Slot"/>
-                        <TextBox/>
+                        <ComboBox/>
                         <TextBlock Text="Scroll Type"/>
                         <ComboBox/>
                         <TextBlock Text="Stat"/>

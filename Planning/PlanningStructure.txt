@@ -93,5 +93,15 @@ Event Items to .DB
 #####Calculate SF and Probability#####
 
 #####Inventory#####
-#####Track Stats#####
+#####Track Character/Stats#####
+Total Equipment
+ARMOUR
+Job class ie. warrior | magician | bowman | thief | pirate
+equipment set ie. fensalir | empress |....
+equipment slots ie. hat | overalls |...
+equipment base stats
+Dictionary<equipset, Dictionary<equipslot, basestats>>
+equipset = dictionary.keys.tolist()
+
+ACCESSORIES
 

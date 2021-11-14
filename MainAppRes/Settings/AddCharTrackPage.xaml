@@ -51,7 +51,7 @@
                               ItemsSource="{Binding allCharList}" DisplayMemberPath="className" 
                               SelectedItem="{Binding SelectedAllChar, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="Level"/>
-                    <TextBox Text="{Binding LvlInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBox Text="{Binding LvlInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" />
                     <TextBlock Text="Starforce"/>
                     <TextBox/>
                     <Button x:Name="AddTrack" Content="Add" Command="{Binding addCharTrackCMD}"/>
@@ -66,18 +66,24 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding IsVisible, Mode=TwoWay}" >
                         <TextBlock Text="Equip Slot"/>
-                        <ComboBox x:Name="EquipmentSlot" Width="150" ItemsSource="{Binding equipSlots}" DisplayMemberPath="Key"/>
+                        <ComboBox x:Name="EquipmentSlot" Width="150" 
+                                  ItemsSource="{Binding equipSlots}" 
+                                  DisplayMemberPath="Key" 
+                                  SelectedValue="{Binding SelectedESlot, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  SelectedValuePath="Key"
+                                  />
                         <TextBlock Text="Set"/>
-                        <ComboBox x:Name="EquipmentList" Width="130" ItemsSource="{Binding armorSet}"/>
-                        <TextBlock Text="Weapon Type"/>
-                        <ComboBox x:Name="WeapType" Width="130"/>
+                        <ComboBox x:Name="EquipmentList" Width="130" ItemsSource="{Binding ArmorSet}"/>
+                        <TextBlock Text="Weapon Type" Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
+                        <ComboBox x:Name="WeapType" Width="130" Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
                     </StackPanel>
                     <TextBlock Text="Scroll" Margin="5" FontSize="17" Visibility="{Binding IsVisible, Mode=TwoWay}"/>
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding IsVisible, Mode=TwoWay}">
                         <TextBlock Text="Slot"/>
-                        <ComboBox/>
+                        <ComboBox ItemsSource="{Binding slots}"/>
                         <TextBlock Text="Scroll Type"/>
-                        <ComboBox/>
+                        <ComboBox ItemsSource="{Binding ScrollTypes}"
+                                  />
                         <TextBlock Text="Stat"/>
                         <ComboBox/>
                         <TextBlock Text="Value"/>
@@ -86,7 +92,7 @@
                     <TextBlock Text="Flame" Margin="5" FontSize="17" Visibility="{Binding IsVisible, Mode=TwoWay}"/>
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding IsVisible, Mode=TwoWay}">
                         <TextBlock Text="Stat Type"/>
-                        <ComboBox/>
+                        <ComboBox ItemsSource="{Binding statTypes}"/>
                         <TextBlock Text="Value"/>
                         <TextBox/>
                     </StackPanel>

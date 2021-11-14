@@ -25,9 +25,14 @@
     <RootPropertyPathName Name="CharTrackList" />
     <RootPropertyPathName Name="TestVar" />
     <RootPropertyPathName Name="IsVisible" />
+    <RootPropertyPathName Name="statTypes" />
+    <RootPropertyPathName Name="ScrollTypes" />
+    <RootPropertyPathName Name="slots" />
     <RootPropertyPathName Name="Key" />
-    <RootPropertyPathName Name="armorSet" />
+    <RootPropertyPathName Name="ShowWeapon" />
+    <RootPropertyPathName Name="ArmorSet" />
     <RootPropertyPathName Name="equipSlots" />
+    <RootPropertyPathName Name="SelectedESlot" />
     <RootPropertyPathName Name="ChkBoxSelected" />
     <RootPropertyPathName Name="addCharTrackCMD" />
     <RootPropertyPathName Name="LvlInput" />
@@ -101,6 +106,9 @@
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Name" />
       <RootProperty Name="DisplayMemberPath" />
+      <RootProperty Name="SelectedValue" />
+      <RootProperty Name="SelectedValuePath" />
+      <RootProperty Name="Visibility" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
       <RootProperty Name="Name" />

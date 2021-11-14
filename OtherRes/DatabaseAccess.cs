@@ -132,6 +132,16 @@ namespace MSEACalculator
                 TableStats equipTable = new TableStats(equipTableName, equipTableSpec, "Armor");
                 staticTables.Add(equipTable);
 
+                string equipSlotTS = "(" +
+                    "EquipSlot string," +
+                    "EquipType string," +
+                    "PRIMARY KEY(EquipSlot)" +
+                    ");";
+
+                string EquipSlotTName = "EquipSlot";
+                TableStats equipslot = new TableStats(EquipSlotTName, equipSlotTS, "EquipSlot");
+                staticTables.Add(equipslot);
+
                 //BLANK TABLES
                 //TABLE FOR CHARACTER TO TRACK
                 string charTrackSpec = "(" +
@@ -160,6 +170,7 @@ namespace MSEACalculator
                 blankTables.Add(bossMesoGainsTable);
 
                 
+
 
 
                 //INIT Blank Tables <- Tables with foreign key FIRST
@@ -404,6 +415,39 @@ namespace MSEACalculator
                                 insertCMD.Parameters.AddWithValue("@SPD", equipItem.SPD);
                                 insertCMD.Parameters.AddWithValue("@JUMP", equipItem.JUMP);
                                 insertCMD.Parameters.AddWithValue("@IED", equipItem.IED);
+
+                                insertCMD.ExecuteNonQuery();
+                            }
+                        }
+                    }
+
+                    break;
+                case "EquipSlot":
+
+                    //Dictionary<EquipSlot,EquipType>
+                    Dictionary<string, string> EquipmentDict = new Dictionary<string, string>()
+                    {
+                        {"Ring1", "Ring" },{"Ring2", "Ring" },{"Ring3", "Ring" },{"Ring4", "Ring" },
+                        {"Pendant1", "Pendant" },{"Pendant2", "Pendant" },
+                        {"Face Accessory", "Accesory" },{"Eye Decor", "Accesory" },{"Ear Ring", "Accesory" },{"Belt", "Accesory" },
+                        {"Heart", "Heart" },
+                        {"Badge", "Misc" },{"Medal", "Misc" },{"Pocket", "Misc" },
+                        {"Weapon", "Weapon" },{"Secondary", "Weapon" },{"Emblem", "Weapon" },
+                        {"Hat", "Armor" },{"Top", "Armor" },{"Bottom", "Armor" },{"Overall", "Armor" },{"Cape", "Armor" },{"Shoes", "Armor" },
+                        {"Shoulder", "Shoulder"},
+                        {"Gloves", "Gloves" }
+
+                    };
+
+                    if(connection.State == ConnectionState.Open)
+                    {
+                        foreach(string Eitem in EquipmentDict.Keys)
+                        {
+                            string insertQuery = "INSERT INTO " + tableName + " VALUES(@ES, @ET);";
+                            using (SqliteCommand insertCMD = new SqliteCommand(insertQuery, connection))
+                            {
+                                insertCMD.Parameters.AddWithValue("@ES", Eitem);
+                                insertCMD.Parameters.AddWithValue("@ET", EquipmentDict[Eitem]);
 
                                 insertCMD.ExecuteNonQuery();
                             }
@@ -824,7 +868,31 @@ namespace MSEACalculator
             return equipList;
         }
 
+        public static Dictionary<string, string> GetEquipSlotDB()
+        {
+            Dictionary<string, string> equipSlotDict = new Dictionary<string, string>();
 
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GlobalVars.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM EquipSlot";
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using(SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            equipSlotDict.Add(reader.GetString(0), reader.GetString(1));
+                        }
+
+                        
+                    }
+                }
+            }
+
+            return equipSlotDict;
+        }
 
         public static bool insertCharTrack(Character character)
         {

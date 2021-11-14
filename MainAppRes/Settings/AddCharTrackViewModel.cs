@@ -12,18 +12,19 @@ using MSEACalculator.CharacterRes.EquipmentRes;
 
 namespace MSEACalculator.MainAppRes.Settings
 {
-    public class AddCharTrackViewModel :INPCObject
+    public class AddCharTrackViewModel : INPCObject
     {
+        //Retrieving List/Data/Dict
         public Dictionary<string, Character> allCharDict { get; set; } = DatabaseAccess.GetAllCharDB();
         public Dictionary<string, Character> charTrackDict { get; set; } = DatabaseAccess.GetAllCharTrackDB();
         public List<EquipModel> ArmorList { get; set; } = DatabaseAccess.GetAllArmorDB();
+        public Dictionary<string, string> equipSlots { get; set; } = DatabaseAccess.GetEquipSlotDB();
+        public List<string> statTypes { get; set; } = GlobalVars.StatTypes;
+        public List<string> ScrollTypes { get; set; } = new Scrolling().ScrollTypes;
+        public List<int> slots { get; set; } = new Scrolling().slots;
 
-
+        //INIT Empty List
         public List<Character> allCharList { get; set; }
-
-        public List<string> armorSet { get; set; } = GlobalVars.ArmorSet;
-
-        public Dictionary<string, string> equipSlots { get; set; } = GlobalVars.EquipmentDict;
 
         private ObservableCollection<Character> charTrackList;
 
@@ -33,9 +34,11 @@ namespace MSEACalculator.MainAppRes.Settings
             set { charTrackList = value; OnPropertyChanged(nameof(CharTrackList)); }
         }
 
+        public List<string> ArmorSet { get; set; }
+        
 
+        //VARAIBLES
         private Character selectedAllChar;
-
         public Character SelectedAllChar
         {
             get { return selectedAllChar; }
@@ -47,8 +50,22 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
-        private bool chkboxSelected;
+        private string lvlI;
+        public string LvlInput
+        {
+            get
+            {
+                return lvlI;
+            }
+            set
+            {
+                lvlI = value;
+                OnPropertyChanged(nameof(LvlInput));
+                addCharTrackCMD.RaiseCanExecuteChanged();
+            }
+        }
 
+        private bool chkboxSelected;
         public bool ChkBoxSelected
         {
             get
@@ -58,13 +75,11 @@ namespace MSEACalculator.MainAppRes.Settings
             set
             {
                 chkboxSelected = value;
-                TestVar = value.ToString();
                 IsVisible = chkboxSelected ? Visibility.Visible : Visibility.Collapsed;
                 OnPropertyChanged(nameof(ChkBoxSelected));
-                
-
             }
         }
+
         private Visibility isVisible = Visibility.Collapsed;
         public Visibility IsVisible
         {
@@ -78,18 +93,28 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
-        private string lvlI;
-        public string LvlInput
+        
+
+        private Visibility showWeapon = Visibility.Collapsed;
+        public Visibility ShowWeapon
         {
-            get
-            {
-                return lvlI;
-            }
+            get { return showWeapon; }
             set
             {
-                lvlI = value; 
-                OnPropertyChanged(nameof(LvlInput));
-                addCharTrackCMD.RaiseCanExecuteChanged();
+                showWeapon = value;
+                OnPropertyChanged(nameof(ShowWeapon));
+            }
+        }
+
+        private string selectedESlot;
+        public string SelectedESlot 
+        {
+            get {return selectedESlot;} 
+            set 
+            { 
+                selectedESlot = value;
+                ShowWeapon = equipSlots[SelectedESlot] == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
+                OnPropertyChanged(nameof(SelectedESlot)); 
             }
         }
 
@@ -106,6 +131,8 @@ namespace MSEACalculator.MainAppRes.Settings
 
         public CustomCommand addCharTrackCMD { get; private set; }
         public CustomCommand validateInput { get; private set; }
+
+
         public AddCharTrackViewModel()
         {
             initFields();
@@ -119,8 +146,10 @@ namespace MSEACalculator.MainAppRes.Settings
             charTrackList = new ObservableCollection<Character>();
             allCharList = allCharDict.Values.ToList();
             charTrackDict.Values.ToList().ForEach(x => charTrackList.Add(x));
+            ArmorSet = ArmorList.Select(x => x.EquipSet).ToList().Distinct().ToList();
+            //ScrollTypes = new Scrolling().ScrollTypes.ToList();
 
-            
+
         }
 
         private bool canAddChar()

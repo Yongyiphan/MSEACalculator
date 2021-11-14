@@ -27,27 +27,19 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int IED { get; set; }
         public int BD { get; set; }
         public int ATKSPD { get; set; }
+        public int DMG { get; set; }
 
         //FLAME STATS
-        public int FAllStat { get; set; }
-        public int FSTR { get; set; }
-        public int FDEX { get; set; }
-        public int FLUK { get; set; }
-        public int FINT { get; set; }
-        public int FDEF { get; set; }
-        public int FHP { get; set; }
-        public int FMP { get; set; }
-        public int FSPD { get; set; }
-        public int FJUMP { get; set; }
-
-
-        public int FATK { get; set; }
-        public int FIED { get; set; }
-        public int FBD { get; set; }
+        public int AllStat { get; set; }
+        public int STR { get; set; }
+        public int DEX { get; set; }
+        public int LUK { get; set; }
+        public int INT { get; set; }
 
         //SCROLLING
         public int Slots { get; set; }
         public string scroll { get; set; }
+        public int lvl { get; set; }
 
         public EquipModel() { }
 
@@ -86,5 +78,33 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             this.JUMP = jump;
             this.IED = ied;
         }
+
+
+        //FOR FLAME TRACK ARMOR
+        public EquipModel(string equipSet, string equipSlot,
+            int str = 0, int dex = 0, int luk = 0, int INT = 0, int AS = 0,
+            int hp = 0, int mp = 0, int def = 0, int spd = 0, int j = 0,
+            int atk = 0, int bd = 0, int ied = 0, int dmg = 0)
+        {
+            this.EquipSet = equipSet;
+            this.EquipSlot = equipSlot;
+            this.STR = str;
+            this.DEX = dex;
+            this.LUK = luk;
+            this.INT = INT;
+            this.AllStat = AS;
+            this.HP = hp;
+            this.MP = mp;
+            this.DEF = def;
+            this.SPD = spd;
+            this.JUMP = j;
+            this.ATK = atk;
+            this.BD = bd;
+            this.IED = ied;
+            this.DMG = dmg;
+        }
+
+        
+    
     }
 }

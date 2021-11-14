@@ -124,6 +124,7 @@
       <DependentUpon>CharacterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CharacterRes\EquipmentRes\EquipModel.cs" />
+    <Compile Include="CharacterRes\EquipmentRes\Scrolling.cs" />
     <Compile Include="CharacterRes\MesoRes\BossMeso.cs" />
     <Compile Include="CharacterRes\MesoRes\CustomItem.cs" />
     <Compile Include="CharacterRes\MesoRes\MesoPage.xaml.cs">
@@ -136,6 +137,9 @@
       <DependentUpon>AddCharTrackPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainAppRes\Settings\AddCharTrackViewModel.cs" />
+    <Compile Include="MainAppRes\TestingBlankPage.xaml.cs">
+      <DependentUpon>TestingBlankPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OtherRes\DatabaseAccess.cs" />
     <Compile Include="EventRes\Event.xaml.cs">
       <DependentUpon>Event.xaml</DependentUpon>
@@ -192,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainAppRes\Settings\AddCharTrackPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\TestingBlankPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

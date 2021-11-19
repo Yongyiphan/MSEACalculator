@@ -328,3 +328,8 @@ C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\Micro
 C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\.winmd_cache\$Microsoft.Graphics.Canvas.winmd_637214534760000000.json
 C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\MSEACalculator.csproj.AssemblyReference.cache
 C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\MSEACalculator.csproj.CopyComplete
+C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainAppRes\TestingBlankPage.xbf
+C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\MainAppRes\TestingBlankPage.g.i.cs
+C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\MainAppRes\TestingBlankPage.g.cs
+C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\MainAppRes\TestingBlankPage.xaml
+C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\MainAppRes\TestingBlankPage.xbf

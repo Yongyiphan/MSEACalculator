@@ -175,6 +175,9 @@
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainAppRes\Settings\AddCharTrackPage.xbf">
       <PackagePath>MainAppRes\Settings\AddCharTrackPage.xbf</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainAppRes\TestingBlankPage.xbf">
+      <PackagePath>MainAppRes\TestingBlankPage.xbf</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\ViewPages\HomePage.xbf">
       <PackagePath>ViewPages\HomePage.xbf</PackagePath>
     </AppxPackagedFile>

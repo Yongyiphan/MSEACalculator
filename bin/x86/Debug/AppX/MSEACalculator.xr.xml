@@ -178,6 +178,12 @@
       <RootProperty Name="FontSize" />
     </RootType>
     <RootType FullName="MSEACalculator.MainAppRes.Settings.AddCharTrackPage" />
+    <RootType FullName="Windows.UI.Xaml.Controls.RelativePanel">
+      <RootProperty Name="Children" />
+      <RootMethod Name="GetRightOf" />
+      <RootMethod Name="SetRightOf" />
+    </RootType>
+    <RootType FullName="MSEACalculator.MainAppRes.TestingBlankPage" />
     <RootType FullName="MSEACalculator.HomePage" />
     <RootType FullName="Windows.UI.Xaml.Controls.NavigationView">
       <RootProperty Name="Name" />

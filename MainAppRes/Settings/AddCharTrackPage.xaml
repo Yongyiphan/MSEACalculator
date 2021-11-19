@@ -26,7 +26,9 @@
             <Setter Property="Margin" Value="10 0 0 0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+        
     </Page.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="13*"/>
@@ -36,19 +38,15 @@
         <Grid ColumnSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="4*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
+                <!--CHARACTER SELECTION/ ADDITION TO DATABASE/ REMOVAL FROM DATABASE-->
                 <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
                     <ComboBox x:Name="AllCharList" VerticalAlignment="Center" Width="200" 
-                              ItemsSource="{Binding allCharList}" DisplayMemberPath="className" 
+                              ItemsSource="{Binding AllCharList}" DisplayMemberPath="className" 
                               SelectedItem="{Binding SelectedAllChar, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="Level"/>
                     <TextBox Text="{Binding LvlInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" />
@@ -58,48 +56,70 @@
                     <Button x:Name="RemoveTrack" Content="Remove"/>
                 </StackPanel>
             </Grid>
-            <Grid Grid.Row="1" Grid.RowSpan="3">
+            <Grid Grid.Row="1">
                 <StackPanel Orientation="Vertical">
+                    <!--TOGGLE TO ADD EQUIPMENT ALONG WITH CHARACTER-->
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
                         <CheckBox Content="Add Equipment?" IsChecked="{Binding ChkBoxSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FlowDirection="RightToLeft" Margin="5 0 0 0" FontSize="17"/>
-                        <Button Content="Add Item" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding IsVisible, Mode=TwoWay}"/>
+                        <Button Content="Add Item" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding ShowEquipmentPanel, Mode=TwoWay}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding IsVisible, Mode=TwoWay}" >
+                    <!--FIELDS FOR EQUIPMENT ITEM SELECTION-->
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding ShowEquipmentPanel, Mode=TwoWay}" >
                         <TextBlock Text="Equip Slot"/>
                         <ComboBox x:Name="EquipmentSlot" Width="150" 
-                                  ItemsSource="{Binding equipSlots}" 
+                                  ItemsSource="{Binding AllCharTModel.EquipSlot}" 
                                   DisplayMemberPath="Key" 
                                   SelectedValue="{Binding SelectedESlot, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                   SelectedValuePath="Key"
                                   />
-                        <TextBlock Text="Set"/>
-                        <ComboBox x:Name="EquipmentList" Width="130" ItemsSource="{Binding ArmorSet}"/>
+                        <TextBlock Text="Set: "/>
+                        <ComboBox x:Name="EquipmentList" Width="130" ItemsSource="{Binding ArmorSet, Mode=TwoWay}"/>
+                        <!--OPTION TO ADD WEAPON-->
                         <TextBlock Text="Weapon Type" Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
                         <ComboBox x:Name="WeapType" Width="130" Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
                     </StackPanel>
-                    <TextBlock Text="Scroll" Margin="5" FontSize="17" Visibility="{Binding IsVisible, Mode=TwoWay}"/>
-                    <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding IsVisible, Mode=TwoWay}">
-                        <TextBlock Text="Slot"/>
-                        <ComboBox ItemsSource="{Binding slots}"/>
-                        <TextBlock Text="Scroll Type"/>
-                        <ComboBox ItemsSource="{Binding ScrollTypes}"
-                                  />
-                        <TextBlock Text="Stat"/>
-                        <ComboBox/>
-                        <TextBlock Text="Value"/>
-                        <TextBox/>
+                    <!--SCROLLING RECORDS-->
+                    <TextBlock Text="Scroll" Margin="5" FontSize="17" Visibility="{Binding ShowBonusStat, Mode=TwoWay}" />
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding ShowBonusStat, Mode=TwoWay}">
+                        <CheckBox x:Name="chkSpellTrace" Content="Spell Traced?" FlowDirection="RightToLeft" Margin="5 0 0 0 " FontSize="17"
+                                  IsChecked="{Binding IsSpellTrace, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <TextBlock Text="Slot" Visibility="{Binding ShoWSlot, Mode=TwoWay}"/>
+                        <ComboBox ItemsSource="{Binding Slots}" Visibility="{Binding ShoWSlot, Mode=TwoWay}"
+                                  SelectedItem="{Binding NoSlot, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        
+                        <!--<TextBlock Text="Scroll Type"/>-->
+                        <!--<ComboBox ItemsSource="{Binding ScrollTypes}" 
+                                  SelectedItem="{Binding SelectedScroll, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>-->
+                        <TextBlock Text="{Binding ScrollTypeTxt}"/>
+                        <ComboBox ItemsSource="{Binding StatTypes}"
+                                  SelectedItem="{Binding SelectedScrollStat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <TextBlock Text="Value" Visibility="{Binding ShowScrollValue}"/>
+                        <TextBox Visibility="{Binding ShowScrollValue}" Text="{Binding ScrollStatValue, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                     </StackPanel>
-                    <TextBlock Text="Flame" Margin="5" FontSize="17" Visibility="{Binding IsVisible, Mode=TwoWay}"/>
-                    <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding IsVisible, Mode=TwoWay}">
+                    <!--FLAMING RECORDS-->
+                    <TextBlock Text="Flame" Margin="5" FontSize="17" Visibility="{Binding ShowBonusStat, Mode=TwoWay}"/>
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding ShowBonusStat, Mode=TwoWay}">
                         <TextBlock Text="Stat Type"/>
-                        <ComboBox ItemsSource="{Binding statTypes}"/>
+                        <ComboBox ItemsSource="{Binding FlameStatsTypes}"/>
                         <TextBlock Text="Value"/>
                         <TextBox/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
-            <Grid Grid.Row="4" Grid.RowSpan="4">
-                <TextBlock Text="{Binding TestVar}"/>
+            <Grid Grid.Row="2">
+                <!--<TextBlock Text="{Binding TestVar}"/>-->
+                <ListView ItemsSource="{Binding ScrollRecord, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="KeyTxt" Text="{Binding Key}"/>
+                                <TextBlock x:Name="ValTxt" Text="{Binding Value}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                    
+                </ListView>
             </Grid>
             <Grid Grid.Row="8">
                 <Button x:Name="UpdateDB" Content="Update DB" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>

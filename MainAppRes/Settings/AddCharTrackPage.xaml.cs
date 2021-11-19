@@ -22,11 +22,12 @@ namespace MSEACalculator.MainAppRes.Settings
     /// </summary>
     public sealed partial class AddCharTrackPage : Page
     {
+        
         public AddCharTrackPage()
         {
             this.InitializeComponent();
-
-            this.DataContext = new AddCharTrackViewModel();
+            AddCharTrackViewModel ACTViewModel = new AddCharTrackViewModel();
+            this.DataContext = ACTViewModel;
         }
     }
 }

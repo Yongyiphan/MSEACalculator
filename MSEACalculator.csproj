@@ -124,7 +124,7 @@
       <DependentUpon>CharacterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CharacterRes\EquipmentRes\EquipModel.cs" />
-    <Compile Include="CharacterRes\EquipmentRes\Scrolling.cs" />
+    <Compile Include="CharacterRes\EquipmentRes\ScrollingModel.cs" />
     <Compile Include="CharacterRes\MesoRes\BossMeso.cs" />
     <Compile Include="CharacterRes\MesoRes\CustomItem.cs" />
     <Compile Include="CharacterRes\MesoRes\MesoPage.xaml.cs">
@@ -133,6 +133,7 @@
     <Compile Include="CharacterRes\Character.cs" />
     <Compile Include="CharacterRes\MesoRes\MesoViewModel.cs" />
     <Compile Include="CommonFunc.cs" />
+    <Compile Include="MainAppRes\Settings\ACTModel.cs" />
     <Compile Include="MainAppRes\Settings\AddCharTrackPage.xaml.cs">
       <DependentUpon>AddCharTrackPage.xaml</DependentUpon>
     </Compile>

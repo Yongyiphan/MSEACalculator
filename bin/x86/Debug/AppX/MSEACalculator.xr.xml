@@ -23,20 +23,30 @@
     <RootPropertyPathName Name="SelectedMule" />
     <RootPropertyPathName Name="className" />
     <RootPropertyPathName Name="CharTrackList" />
-    <RootPropertyPathName Name="TestVar" />
-    <RootPropertyPathName Name="IsVisible" />
-    <RootPropertyPathName Name="statTypes" />
-    <RootPropertyPathName Name="ScrollTypes" />
-    <RootPropertyPathName Name="slots" />
+    <RootPropertyPathName Name="ScrollRecord" />
+    <RootPropertyPathName Name="Value" />
     <RootPropertyPathName Name="Key" />
+    <RootPropertyPathName Name="ShowBonusStat" />
+    <RootPropertyPathName Name="FlameStatsTypes" />
+    <RootPropertyPathName Name="ShowScrollValue" />
+    <RootPropertyPathName Name="ScrollStatValue" />
+    <RootPropertyPathName Name="StatTypes" />
+    <RootPropertyPathName Name="SelectedScrollStat" />
+    <RootPropertyPathName Name="ScrollTypeTxt" />
+    <RootPropertyPathName Name="Slots" />
+    <RootPropertyPathName Name="ShoWSlot" />
+    <RootPropertyPathName Name="NoSlot" />
+    <RootPropertyPathName Name="IsSpellTrace" />
+    <RootPropertyPathName Name="ShowEquipmentPanel" />
     <RootPropertyPathName Name="ShowWeapon" />
     <RootPropertyPathName Name="ArmorSet" />
-    <RootPropertyPathName Name="equipSlots" />
+    <RootPropertyPathName Name="AllCharTModel" />
+    <RootPropertyPathName Name="EquipSlot" />
     <RootPropertyPathName Name="SelectedESlot" />
     <RootPropertyPathName Name="ChkBoxSelected" />
     <RootPropertyPathName Name="addCharTrackCMD" />
     <RootPropertyPathName Name="LvlInput" />
-    <RootPropertyPathName Name="allCharList" />
+    <RootPropertyPathName Name="AllCharList" />
     <RootPropertyPathName Name="SelectedAllChar" />
     <RootPropertyPathName Name="resetDBCMD" />
     <RootPropertyPathName Name="TimeElapsed" />
@@ -54,8 +64,8 @@
       <RootProperty Name="Resources" />
       <RootProperty Name="Children" />
       <RootProperty Name="Name" />
-      <RootProperty Name="ColumnDefinitions" />
       <RootProperty Name="Margin" />
+      <RootProperty Name="ColumnDefinitions" />
       <RootProperty Name="ColumnSpacing" />
       <RootProperty Name="Background" />
       <RootMethod Name="GetRow" />
@@ -91,6 +101,7 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
       <RootProperty Name="TextAlignment" />
+      <RootProperty Name="Visibility" />
       <RootProperty Name="Text" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
@@ -105,10 +116,10 @@
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Name" />
+      <RootProperty Name="Visibility" />
       <RootProperty Name="DisplayMemberPath" />
       <RootProperty Name="SelectedValue" />
       <RootProperty Name="SelectedValuePath" />
-      <RootProperty Name="Visibility" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
       <RootProperty Name="Name" />
@@ -116,7 +127,6 @@
       <RootProperty Name="Content" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Margin" />
-      <RootProperty Name="MinWidth" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Visibility" />
       <RootEvent Name="Click" />
@@ -161,21 +171,25 @@
       <RootProperty Name="Visibility" />
     </RootType>
     <RootType FullName="MSEACalculator.CharacterRes.MesoRes.MesoPage" />
+    <RootType FullName="MSEACalculator.EventRes.Event" />
     <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
       <RootProperty Name="Width" />
     </RootType>
-    <RootType FullName="MSEACalculator.EventRes.Event" />
     <RootType FullName="Windows.UI.Xaml.Controls.ListView">
       <RootProperty Name="ItemsSource" />
       <RootProperty Name="DisplayMemberPath" />
+      <RootProperty Name="ItemTemplate" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.DataTemplate">
+      <RootProperty Name="Template" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
     <RootType FullName="Windows.UI.Xaml.Controls.CheckBox">
       <RootProperty Name="Content" />
-      <RootProperty Name="IsChecked" />
       <RootProperty Name="FlowDirection" />
       <RootProperty Name="Margin" />
       <RootProperty Name="FontSize" />
+      <RootProperty Name="IsChecked" />
     </RootType>
     <RootType FullName="MSEACalculator.MainAppRes.Settings.AddCharTrackPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.RelativePanel">

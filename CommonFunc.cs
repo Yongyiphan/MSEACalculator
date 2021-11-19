@@ -14,6 +14,7 @@ using MSEACalculator.EventRes;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Windows.UI.Popups;
+using Windows.UI.Core;
 
 namespace MSEACalculator
 {
@@ -94,17 +95,21 @@ namespace MSEACalculator
             return rank;
         }
 
-        public static bool validateIntInput(object para)
-        {
-            int pValue;
-
-            return int.TryParse(para.ToString(), out pValue);
-        }
+        //public static bool validateIntInput(string toCheck)
+        //{
+            
+        //    if(int.TryParse(toCheck, out outValue) == false)
+        //    {
+        //        errorDia("Invalid Number. Try again.");
+        //    }
+        //}
 
         public static async void errorDia(string message)
         {
             var errorDia = new MessageDialog(message);
+
             await errorDia.ShowAsync();
+           
         }
 
         //public static async Task<List<EventRecords>> retrieveEventJson()

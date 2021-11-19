@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using MSEACalculator.CharacterRes.EquipmentRes;
 
@@ -14,37 +11,70 @@ namespace MSEACalculator.MainAppRes.Settings
 {
     public class AddCharTrackViewModel : INPCObject
     {
+        public ACTModel AllCharTModel { get; set; } = new ACTModel();
+        public ScrollingModel ScrollModel { get; set; } = new ScrollingModel();
+
         //Retrieving List/Data/Dict
-        public Dictionary<string, Character> allCharDict { get; set; } = DatabaseAccess.GetAllCharDB();
-        public Dictionary<string, Character> charTrackDict { get; set; } = DatabaseAccess.GetAllCharTrackDB();
-        public List<EquipModel> ArmorList { get; set; } = DatabaseAccess.GetAllArmorDB();
-        public Dictionary<string, string> equipSlots { get; set; } = DatabaseAccess.GetEquipSlotDB();
-        public List<string> statTypes { get; set; } = GlobalVars.StatTypes;
-        public List<string> ScrollTypes { get; set; } = new Scrolling().ScrollTypes;
-        public List<int> slots { get; set; } = new Scrolling().slots;
+        public Dictionary<string, string> EquipSlots { get { return AllCharTModel.EquipSlot; } }
+        public List<string> FlameStatsTypes { get { return AllCharTModel.FlameStatsTypes; }}
+        public List<string> ScrollTypes { get { return ScrollModel.ScrollTypes; } } //= new Scrolling().ScrollTypes;
+        public List<int> Slots { get { return ScrollModel.Slots; } } //= new Scrolling().Slots;
+        public List<Character> AllCharList { get { return AllCharTModel.AllCharList; } }
 
         //INIT Empty List
-        public List<Character> allCharList { get; set; }
-
-        private ObservableCollection<Character> charTrackList;
-
+        private ObservableCollection<Character> charTrackList = new ObservableCollection<Character>();
         public ObservableCollection<Character> CharTrackList
         {
             get { return charTrackList; }
             set { charTrackList = value; OnPropertyChanged(nameof(CharTrackList)); }
         }
 
-        public List<string> ArmorSet { get; set; }
-        
+        private List<string> _ArmorSet;
+        public List<string> ArmorSet
+        {
+            get { return _ArmorSet; }
+            set
+            {
+                _ArmorSet = value;
+                OnPropertyChanged(nameof(ArmorSet));
+            }
+        }
+
+        public List<string> _StatTypes;
+        public List<string> StatTypes
+        {
+            get { return _StatTypes; }
+            set
+            {
+                _StatTypes = value;
+                OnPropertyChanged(nameof(StatTypes));
+            }
+        }
+
+        //Flame Data Retrieved
+        public Dictionary<string, int> FlameRecord { get; set; } = new Dictionary<string, int>();
+
+        //Scrolling Data Retrieved
+        private Dictionary<string, int> _ScrollRecord  = new Dictionary<string, int>();
+        public Dictionary<string, int> ScrollRecord
+        {
+            get { return _ScrollRecord; }
+            set
+            {
+                _ScrollRecord = value;
+                OnPropertyChanged(nameof(ScrollRecord));
+            }
+        }
+
 
         //VARAIBLES
-        private Character selectedAllChar;
+        private Character _SelectedAllChar;
         public Character SelectedAllChar
         {
-            get { return selectedAllChar; }
+            get { return _SelectedAllChar; }
             set 
             { 
-                selectedAllChar = value; 
+                _SelectedAllChar = value; 
                 OnPropertyChanged(nameof(SelectedAllChar)); 
                 addCharTrackCMD.RaiseCanExecuteChanged(); 
             }
@@ -75,47 +105,187 @@ namespace MSEACalculator.MainAppRes.Settings
             set
             {
                 chkboxSelected = value;
-                IsVisible = chkboxSelected ? Visibility.Visible : Visibility.Collapsed;
+                ShowEquipmentPanel = chkboxSelected ? Visibility.Visible : Visibility.Collapsed;
+                ShowBonusStat = SelectedESlot != null && ChkBoxSelected ? Visibility.Visible : Visibility.Collapsed;
                 OnPropertyChanged(nameof(ChkBoxSelected));
             }
         }
 
-        private Visibility isVisible = Visibility.Collapsed;
-        public Visibility IsVisible
+        //Visibility Controls
+        private Visibility _ShowEquipmentPanel = Visibility.Collapsed;
+        public Visibility ShowEquipmentPanel
         {
             get
             {
-                return isVisible;
+                return _ShowEquipmentPanel;
             }set
             {
-                isVisible = value;
-                OnPropertyChanged(nameof(IsVisible));
+                _ShowEquipmentPanel = value;
+                OnPropertyChanged(nameof(ShowEquipmentPanel));
             }
         }
 
-        
-
-        private Visibility showWeapon = Visibility.Collapsed;
+        private Visibility _ShowWeapon = Visibility.Collapsed;
         public Visibility ShowWeapon
         {
-            get { return showWeapon; }
+            get { return _ShowWeapon; }
             set
             {
-                showWeapon = value;
+                _ShowWeapon = value;
                 OnPropertyChanged(nameof(ShowWeapon));
             }
         }
 
-        private string selectedESlot;
-        public string SelectedESlot 
+        private Visibility _ShowBonusStat = Visibility.Collapsed;
+        public Visibility ShowBonusStat
         {
-            get {return selectedESlot;} 
+            get { return _ShowBonusStat; }
+            set
+            {
+                _ShowBonusStat = value;
+                OnPropertyChanged(nameof(ShowBonusStat));
+            }
+        }
+
+        private Visibility _ShowSlot = Visibility.Collapsed;
+        public Visibility ShoWSlot
+        {
+            get
+            {
+                return _ShowSlot;
+            }
+            set
+            {
+                _ShowSlot = value;
+                OnPropertyChanged(nameof(ShoWSlot));
+            }
+        }
+
+        private Visibility _ShowScrollValue = Visibility.Collapsed;
+        public Visibility ShowScrollValue 
+        {
+            get { return _ShowScrollValue; } 
+            set 
+            {
+                _ShowScrollValue = value; 
+                OnPropertyChanged(nameof(ShowScrollValue)); 
+            }
+        }
+
+        private string _SelectedESlot;
+        public string SelectedESlot
+        {
+            get {return _SelectedESlot;} 
             set 
             { 
-                selectedESlot = value;
-                ShowWeapon = equipSlots[SelectedESlot] == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
-                OnPropertyChanged(nameof(SelectedESlot)); 
+                _SelectedESlot = value;
+                ShowWeapon = EquipSlots[SelectedESlot] == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
+                //Code For each types of EquipSlot
+                ArmorSet = EquipSlots[SelectedESlot] == "Armor" ? AllCharTModel.ArmorSets : null;
+                ShowBonusStat = SelectedESlot != null && ChkBoxSelected ? Visibility.Visible : Visibility.Collapsed;
+                OnPropertyChanged(nameof(SelectedESlot));
             }
+        }
+
+        private int _NoSlot;
+        public int NoSlot
+        {
+            get { return _NoSlot; }
+            set
+            {
+                _NoSlot = value;
+                OnPropertyChanged(nameof(NoSlot));
+            }
+        }
+
+        private bool _IsSpellTrace;
+        public bool IsSpellTrace
+        {
+            get
+            {
+                return _IsSpellTrace;
+            }
+            set
+            {
+                _IsSpellTrace = value;
+                ShoWSlot = IsSpellTrace ? Visibility.Visible : Visibility.Collapsed;
+                ShowScrollValue = IsSpellTrace ? Visibility.Collapsed : Visibility.Visible;
+                ScrollTypeTxt = IsSpellTrace ? "Perc:" : "Stat:";
+                StatTypes = IsSpellTrace ? ScrollModel.SpellTraceTypes : GlobalVars.BaseStatTypes;
+                OnPropertyChanged(nameof(IsSpellTrace));
+            }
+        }
+
+        private string _ScrollTypeTxt = "Stat:";
+        public string ScrollTypeTxt
+        {
+            get { return _ScrollTypeTxt; }
+            set
+            {
+                _ScrollTypeTxt = value;
+                OnPropertyChanged(nameof(ScrollTypeTxt));
+            }
+        }
+
+       
+
+        private string _SelectedScrollStat;
+        public string SelectedScrollStat
+        {
+            get { return _SelectedScrollStat; }
+            set
+            {
+                _SelectedScrollStat = value;
+                ShowScrollValue = ScrollModel.SpellTraceTypes.Contains(SelectedScrollStat) ? Visibility.Collapsed : Visibility.Visible;
+                if (SelectedScrollStat != null) 
+                {
+
+                    if(ScrollRecord.ContainsKey(SelectedScrollStat))
+                    {
+                        ScrollStatValue = ScrollRecord[SelectedScrollStat].ToString();
+                    }
+
+                }
+                
+
+                OnPropertyChanged(nameof(SelectedScrollStat));
+            }
+        }
+
+        private string _ScrollStatvalue;
+        public string ScrollStatValue
+        {
+            get { return _ScrollStatvalue; }
+            set
+            {
+                _ScrollStatvalue = value;
+
+                if(SelectedScrollStat != null)
+                {
+                    if (int.TryParse(ScrollStatValue, out _))
+                    {
+                        //Total Inputed Variables
+                        //Spell Trace <- Handled when Adding to DB
+                        //Selected Scroll | Selected ScrollStat <= Spelltrace Percs
+
+
+                        //Non Spell Trace <- add to Dictionary => ScrollRecord
+                        //Selected Scroll | Selected ScrollStat | SelectedScrollValue
+                        ScrollRecord[SelectedScrollStat] = int.Parse(ScrollStatValue);
+                        SelectedScrollStat = null;
+                        
+
+                    }
+                    else
+                    {
+                        CommonFunc.errorDia("Invalid number. Try again.");
+                    }
+                }
+                
+
+                
+                OnPropertyChanged(nameof(ScrollStatValue));
+            } 
         }
 
         private string testVar = "";
@@ -130,8 +300,6 @@ namespace MSEACalculator.MainAppRes.Settings
         }
 
         public CustomCommand addCharTrackCMD { get; private set; }
-        public CustomCommand validateInput { get; private set; }
-
 
         public AddCharTrackViewModel()
         {
@@ -143,13 +311,8 @@ namespace MSEACalculator.MainAppRes.Settings
 
         private void initFields()
         {
-            charTrackList = new ObservableCollection<Character>();
-            allCharList = allCharDict.Values.ToList();
-            charTrackDict.Values.ToList().ForEach(x => charTrackList.Add(x));
-            ArmorSet = ArmorList.Select(x => x.EquipSet).ToList().Distinct().ToList();
-            //ScrollTypes = new Scrolling().ScrollTypes.ToList();
-
-
+            AllCharTModel.AllCharTrackDict.Values.ToList().ForEach(x => charTrackList.Add(x));
+            StatTypes = GlobalVars.BaseStatTypes;
         }
 
         private bool canAddChar()

@@ -9,48 +9,23 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:ConnectionId='2' x:Name="Navigation" Width="1*"/>
-            <ColumnDefinition x:ConnectionId='3' x:Name="MainBod" Width="6*"/>
-        </Grid.ColumnDefinitions>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>-->
-
-
-        <!--Nagivation Buttons-->
-        <StackPanel Grid.Column="0">
-
-            <Button x:ConnectionId='12' Margin="20,50,0,0" MinWidth="100" x:Name="toHomeBtn"                          Content="Home Page"/>
-            <Button x:ConnectionId='13' Margin="20" MinWidth="100" x:Name="toScrollBtn"                            Content="Scrolling"/>
-
-        </StackPanel>
         <!--Event Duration-->
         <StackPanel Grid.Column="1">
-            <Grid x:ConnectionId='4' x:Name="EventDuration" Margin="0,20,0,0">
+            <Grid x:ConnectionId='2' x:Name="EventDuration" Margin="0,20,0,0">
                 <!---Starting Coordinates -->
                 <!--0-->
                 <TextBlock Text="Start Date" Height="20" Width="70" HorizontalAlignment="Left" Margin="20,0,0,0"></TextBlock>
                 <!--90-->
-                <CalendarDatePicker x:ConnectionId='8' Name="startDatePicker" Height="30" Width="130" Margin="100,0,0,0" VerticalAlignment="Center"                                          />
+                <CalendarDatePicker x:ConnectionId='6' Name="startDatePicker" Height="30" Width="130" Margin="100,0,0,0" VerticalAlignment="Center"                                          />
                 <!--230-->
                 <TextBlock Text="End Date" Height="20" Width="70" HorizontalAlignment="Left" Margin="240,0,0,0"></TextBlock>
                 <!--300-->
-                <CalendarDatePicker x:ConnectionId='9' Name="endDatePicker" Height="30" Width="130" Margin="310,0,0,0" VerticalAlignment="Top"                                        />
+                <CalendarDatePicker x:ConnectionId='7' Name="endDatePicker" Height="30" Width="130" Margin="310,0,0,0" VerticalAlignment="Top"                                        />
                 <!--440-->
                 <TextBlock Text="Days Left:" Height="20" Width="70" HorizontalAlignment="Left" Margin="450,0,0,0"></TextBlock>
                 <!--520-->
-                <TextBlock x:ConnectionId='10' x:Name="DaysLeft" Height="20" Width="50" HorizontalAlignment="Left" Margin="520,0,0,0"/>
-                <Button x:ConnectionId='11' x:Name="updateEventRecords" Content="Update"                                  HorizontalAlignment="Right" Margin="0,0,50,0"></Button>
+                <TextBlock x:ConnectionId='8' x:Name="DaysLeft" Height="20" Width="50" HorizontalAlignment="Left" Margin="520,0,0,0"/>
+                <Button x:ConnectionId='9' x:Name="updateEventRecords" Content="Update"                                  HorizontalAlignment="Right" Margin="0,0,50,0"></Button>
             </Grid>
 
             <!--Calculate Weekday-->
@@ -58,7 +33,7 @@
             <!--Calculate Available / Commitment Dates-->
             <Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <ComboBox x:ConnectionId='7' x:Name="DaysofWeeks"></ComboBox>
+                    <ComboBox x:ConnectionId='5' x:Name="DaysofWeeks"></ComboBox>
                 </StackPanel>
 
 
@@ -66,8 +41,8 @@
 
 
 
-            <TextBlock x:ConnectionId='5' x:Name="TestBlock" Height="104" ></TextBlock>
-            <Button x:ConnectionId='6' x:Name="testButton"                         ></Button>
+            <TextBlock x:ConnectionId='3' x:Name="TestBlock" Height="104" ></TextBlock>
+            <Button x:ConnectionId='4' x:Name="testButton"                         ></Button>
         </StackPanel>
 
     </Grid>

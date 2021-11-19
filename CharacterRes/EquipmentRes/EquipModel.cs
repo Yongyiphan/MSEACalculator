@@ -36,11 +36,8 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int LUK { get; set; }
         public int INT { get; set; }
 
-        //SCROLLING
-        public int Slots { get; set; }
-        public string scroll { get; set; }
-        public int lvl { get; set; }
-
+        
+        //DEFAULT CONSTRUCTOR
         public EquipModel() { }
 
 
@@ -48,35 +45,35 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         //FOR INIT FROM DATABASE
         public EquipModel(string equipset, string job, string equipslot, int ms, int ss, int hp, int mp, int atk, int matk, int def, int spd, int jump, int ied)
         {
-            this.EquipSet = equipset;
-            this.JobType = job;
-            this.EquipSlot = equipslot;
-            this.MS = ms;
-            this.SS = ss;
-            this.HP = hp;
-            this.MP = mp;
-            this.ATK = atk;
-            this.MATK = matk;
-            this.DEF = def;
-            this.SPD = spd;
-            this.JUMP = jump;
-            this.IED = ied;
+            EquipSet = equipset;
+            JobType = job;
+            EquipSlot = equipslot;
+            MS = ms;
+            SS = ss;
+            HP = hp;
+            MP = mp;
+            ATK = atk;
+            MATK = matk;
+            DEF = def;
+            SPD = spd;
+            JUMP = jump;
+            IED = ied;
         }
 
         //RETRIEVE FROM DATABASE
         public EquipModel(string equipslot, int ms, int ss, int hp, int mp, int atk, int matk, int def, int spd, int jump, int ied)
         {
-            this.EquipSlot = equipslot;
-            this.MS = ms;
-            this.SS = ss;
-            this.HP = hp;
-            this.MP = mp;
-            this.ATK = atk;
-            this.MATK = matk;
-            this.DEF = def;
-            this.SPD = spd;
-            this.JUMP = jump;
-            this.IED = ied;
+            EquipSlot = equipslot;
+            MS = ms;
+            SS = ss;
+            HP = hp;
+            MP = mp;
+            ATK = atk;
+            MATK = matk;
+            DEF = def;
+            SPD = spd;
+            JUMP = jump;
+            IED = ied;
         }
 
 
@@ -86,23 +83,38 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             int hp = 0, int mp = 0, int def = 0, int spd = 0, int j = 0,
             int atk = 0, int bd = 0, int ied = 0, int dmg = 0)
         {
-            this.EquipSet = equipSet;
-            this.EquipSlot = equipSlot;
-            this.STR = str;
-            this.DEX = dex;
-            this.LUK = luk;
+            EquipSet = equipSet;
+            EquipSlot = equipSlot;
+            STR = str;
+            DEX = dex;
+            LUK = luk;
             this.INT = INT;
-            this.AllStat = AS;
-            this.HP = hp;
-            this.MP = mp;
-            this.DEF = def;
-            this.SPD = spd;
-            this.JUMP = j;
-            this.ATK = atk;
-            this.BD = bd;
-            this.IED = ied;
-            this.DMG = dmg;
+            AllStat = AS;
+            HP = hp;
+            MP = mp;
+            DEF = def;
+            SPD = spd;
+            JUMP = j;
+            ATK = atk;
+            BD = bd;
+            IED = ied;
+            DMG = dmg;
         }
+
+        //FOR SCROLLING
+        public EquipModel(string equipset, string equipSlot, int str =0, int dex=0, int luk=0, int INT=0, int atk=0)
+        {
+            EquipSet = equipset;
+            EquipSlot = equipSlot;
+            STR = str;
+            this.INT = INT;
+            DEX = dex;
+            LUK = luk;
+            ATK = atk;
+
+        }
+
+        
 
         
     

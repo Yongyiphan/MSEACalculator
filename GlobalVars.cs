@@ -15,10 +15,15 @@ namespace MSEACalculator
 
 
 
-        public static List<string> StatTypes { get; set; } = new List<string> {
+        public static List<string> BaseStatTypes { get; set; } = new List<string> {
             "STR","DEX","INT","LUK","ALL",
             "HP","MP","DEF","SPD","JUMP",
-            "ATK","BD","IED","DMG"
+            "ATK"
+        };
+
+        public static List<string> AddStatType { get; set; } = new List<string>
+        {
+            "BD","IED","DMG"
         };
         
 

@@ -9,31 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="Navigation" Width="1*"/>
-            <ColumnDefinition x:Name="MainBod" Width="6*"/>
-        </Grid.ColumnDefinitions>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>-->
-
-
-        <!--Nagivation Buttons-->
-        <StackPanel Grid.Column="0">
-
-            <Button Margin="20,50,0,0" MinWidth="100" x:Name="toHomeBtn"  Click="toHomeBtn_Click" Content="Home Page"/>
-            <Button Margin="20" MinWidth="100" x:Name="toScrollBtn"  Click="toScrollBtn_Click" Content="Scrolling"/>
-
-        </StackPanel>
         <!--Event Duration-->
         <StackPanel Grid.Column="1">
             <Grid x:Name="EventDuration" Margin="0,20,0,0">

@@ -66,6 +66,26 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
+        private List<string> dictKey;
+
+        public List<string> DictKey
+        {
+            get { return dictKey; }
+            set { dictKey = value;
+                OnPropertyChanged(nameof(DictKey));
+            }
+        }
+
+        private List<int> dictValue;
+
+        public List<int> DictValue
+        {
+            get { return dictValue; }
+            set { dictValue = value;
+                OnPropertyChanged(nameof(DictValue));
+            }
+        }
+        
 
         //VARAIBLES
         private Character _SelectedAllChar;
@@ -228,7 +248,6 @@ namespace MSEACalculator.MainAppRes.Settings
         }
 
        
-
         private string _SelectedScrollStat;
         public string SelectedScrollStat
         {
@@ -237,12 +256,18 @@ namespace MSEACalculator.MainAppRes.Settings
             {
                 _SelectedScrollStat = value;
                 ShowScrollValue = ScrollModel.SpellTraceTypes.Contains(SelectedScrollStat) ? Visibility.Collapsed : Visibility.Visible;
+
                 if (SelectedScrollStat != null) 
                 {
 
-                    if(ScrollRecord.ContainsKey(SelectedScrollStat))
+                    if (ScrollRecord.ContainsKey(SelectedScrollStat))
                     {
                         ScrollStatValue = ScrollRecord[SelectedScrollStat].ToString();
+
+                    }
+                    else
+                    {
+                        ScrollStatValue = string.Empty;
                     }
 
                 }
@@ -252,7 +277,7 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
-        private string _ScrollStatvalue;
+        private string _ScrollStatvalue = string.Empty;
         public string ScrollStatValue
         {
             get { return _ScrollStatvalue; }
@@ -260,33 +285,50 @@ namespace MSEACalculator.MainAppRes.Settings
             {
                 _ScrollStatvalue = value;
 
-                if(SelectedScrollStat != null)
+                AddStatCMD.RaiseCanExecuteChanged();
+                OnPropertyChanged(nameof(ScrollStatValue));
+            } 
+        }
+
+        private string _SelectedFlame;
+        public string SelectedFlame
+        {
+            get { return _SelectedFlame; }
+            set
+            {
+                _SelectedFlame = value;
+                if (SelectedFlame != null)
                 {
-                    if (int.TryParse(ScrollStatValue, out _))
+
+                    if (FlameRecord.ContainsKey(SelectedFlame))
                     {
-                        //Total Inputed Variables
-                        //Spell Trace <- Handled when Adding to DB
-                        //Selected Scroll | Selected ScrollStat <= Spelltrace Percs
-
-
-                        //Non Spell Trace <- add to Dictionary => ScrollRecord
-                        //Selected Scroll | Selected ScrollStat | SelectedScrollValue
-                        ScrollRecord[SelectedScrollStat] = int.Parse(ScrollStatValue);
-                        SelectedScrollStat = null;
-                        
+                        FlameStat = FlameRecord[SelectedFlame].ToString();
 
                     }
                     else
                     {
-                        CommonFunc.errorDia("Invalid number. Try again.");
+                        FlameStat = string.Empty;
                     }
-                }
-                
 
-                
-                OnPropertyChanged(nameof(ScrollStatValue));
-            } 
+                }
+                OnPropertyChanged(nameof(SelectedFlame));
+            }
         }
+
+        private string _FlameStat = string.Empty;
+        public string FlameStat
+        {
+            get { return _FlameStat; }
+            set { _FlameStat = value;
+                AddFlameCMD.RaiseCanExecuteChanged();
+                OnPropertyChanged(nameof(FlameStat));
+            }
+        }
+
+       
+
+
+
 
         private string testVar = "";
         public string TestVar
@@ -300,13 +342,16 @@ namespace MSEACalculator.MainAppRes.Settings
         }
 
         public CustomCommand addCharTrackCMD { get; private set; }
+        public CustomCommand AddStatCMD { get; private set; }
+        public CustomCommand AddFlameCMD { get; private set; }
 
         public AddCharTrackViewModel()
         {
             initFields();
 
             addCharTrackCMD = new CustomCommand(addChar, canAddChar);
-
+            AddStatCMD = new CustomCommand(AddStat, canAddStat);
+            AddFlameCMD = new CustomCommand(AddFlame, canAddFlame);
         }
 
         private void initFields()
@@ -330,9 +375,6 @@ namespace MSEACalculator.MainAppRes.Settings
 
             return false;
         }
-
-        
-
         private void addChar()
         {
             
@@ -363,6 +405,66 @@ namespace MSEACalculator.MainAppRes.Settings
         }
 
 
+        private bool canAddStat()
+        {
+            bool canAdd = false;
+            //Check if stat is selected
+            //Check if int value is keyed into value textbox
+            if(SelectedScrollStat != null && ScrollStatValue != null)
+            {
+                if (int.TryParse(ScrollStatValue.ToString(), out int value))
+                {
+                    canAdd = true;
+                }
+                else{   
+                    if(ScrollStatValue != string.Empty)
+                    {
+                        CommonFunc.errorDia("Invalid");
+                        canAdd = false;
+                    }
+                }
+            }
+
+            return canAdd;
+        }
+        private void AddStat()
+        {
+            //Stat selected, Int value inserted
+            ScrollRecord[SelectedScrollStat] = int.Parse(ScrollStatValue);
+            SelectedScrollStat = null;
+            //DictKey = ScrollRecord.Keys.ToList();
+            //DictValue = ScrollRecord.Values.ToList();
+        }
+
+
+        private bool canAddFlame()
+        {
+            bool canAdd = false;
+            //Flame Stat selected
+            if (SelectedFlame != null)
+            {
+                //Check Value is INT
+                if(int.TryParse(FlameStat, out int value))
+                {
+                    canAdd = true;
+                }
+                else
+                {
+                    if(FlameStat != string.Empty)
+                    {
+                        canAdd = false;
+                    }
+                }
+            }
+            return canAdd;
+        }
+        private void AddFlame()
+        {
+            FlameRecord[SelectedFlame] = int.Parse(FlameStat);
+            SelectedFlame = null;
+            DictKey = FlameRecord.Keys.ToList();
+            DictValue = FlameRecord.Values.ToList();
+        }
     }
 
 }

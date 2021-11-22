@@ -103,5 +103,57 @@ equipment base stats
 Dictionary<equipset, Dictionary<equipslot, basestats>>
 equipset = dictionary.keys.tolist()
 
-ACCESSORIES
 
+Track Equipment 
+SQL TABLES INVOLVED
+CharTrack Table <- Created
+"ClassName" | Level | UnionRank
+
+
+EquipSlot <- Created
+"EquipSlot" | EquipType
+
+CharacterStatType <- Part of AllCharTable
+"ClassName" | MainStat | SecStat
+="Hero"     | "STR"    | "DEX"
+
+EquipSetEffect
+"EquipSet | "SetNo" | Stat.... 
+= "Abso"  | 1       | .....
+= "Abso"  | 2       | ....
+
+AllArmor Table
+"EquipSet" | "ClassType" | "EquipSlot" | MainStat | SecStat | Stat......
+
+
+AllAccessories Table
+"EquipSet" | "EquipSlot" | BaseStat...
+= "Glorion"| "Ring"	 | ....
+
+EquipTrackS(croll) <- Init as Blank
+"ClassName" | "EquipSlot" | "EquipSet" | ScrollSlots | SF | Stat...(if nothing ? 0 : Value)
+= "Hero"    | "Hat"       | "CRA"      | 11          | 17 | Stats.....
+= "Hero"    | "Ring"      | "Glorion"  | 0 	     | 0  | 
+
+EquipTrackF(lame) <- Init as Blank
+"ClassName" | "EquipSlot" | "EquipSet" | FlameStats....
+
+
+IN APP Data
+Job Classes
+Warrior | Magician | Bowman | Thief | Pirate
+
+Spelltrace Stat increase
+EquipType -> Tier -> 100/70/30/15 -> Stat Increase
+
+EquipSetEffect Stats
+AllStat
+MainStat
+SecStat
+HP Perc/ Flat
+MP Perc/ Flat
+Def
+WATK
+MATK
+Status Res
+Skill +2

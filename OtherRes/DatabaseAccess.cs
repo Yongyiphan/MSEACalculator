@@ -88,14 +88,17 @@ namespace MSEACalculator
                     "ClassName string," +
                     "ClassType string," +
                     "Faction string," +
-                    "UnionEffect string," +
-                    "UnionEffectType string," +
-                    "PRIMARY KEY (className)" +
+                    "UnionE string," +
+                    "UnionET string," +
+                    "MainStat string," +
+                    "SecStat string," +
+                    "PRIMARY KEY (ClassName)" +
                     ");";
 
                 string tableNameChar = "AllCharacter";
                 TableStats defaultCharacterTable = new TableStats(tableNameChar, CharacterTableSpec, "AllCharacter");
                 staticTables.Add(defaultCharacterTable);
+
 
                 //TABLE FOR UNION EFFECTS
                 string unionETableSpecs = "(" +
@@ -112,10 +115,23 @@ namespace MSEACalculator
                 TableStats unionTable = new TableStats(unionETableName, unionETableSpecs, "UnionEffect");
                 staticTables.Add(unionTable);
 
+                //TABLE FOR EQUIP SLOT AND TYPES
+                string equipSlotTS = "(" +
+                    "EquipSlot string," +
+                    "EquipType string," +
+                    "PRIMARY KEY(EquipSlot)" +
+                    ");";
+
+                string EquipSlotTName = "EquipSlot";
+                TableStats equipslot = new TableStats(EquipSlotTName, equipSlotTS, "EquipSlot");
+                staticTables.Add(equipslot);
+
+                //TABLE FOR ALL ARMOR
                 string equipTableSpec = "(" +
                     "EquipSet string," +
                     "ClassType string," +
                     "EquipSlot string," +
+                    "EquipLevel int," +
                     "MainStat int," +
                     "SecStat int," +
                     "HP int," +
@@ -132,23 +148,38 @@ namespace MSEACalculator
                 TableStats equipTable = new TableStats(equipTableName, equipTableSpec, "Armor");
                 staticTables.Add(equipTable);
 
-                string equipSlotTS = "(" +
-                    "EquipSlot string," +
-                    "EquipType string," +
-                    "PRIMARY KEY(EquipSlot)" +
-                    ");";
 
-                string EquipSlotTName = "EquipSlot";
-                TableStats equipslot = new TableStats(EquipSlotTName, equipSlotTS, "EquipSlot");
-                staticTables.Add(equipslot);
+                //TABLE FOR ACCESSORIES
+                string AccessoriesTableSpec = "(" +
+                    "EquipName string," +
+                    "EquipSet string," +
+                    "EquipSlot string," +
+                    "EquipLevel int," +
+                    "AllStat int," +
+                    "HP string," +
+                    "MP string," +
+                    "WATK int," +
+                    "MATK int," +
+                    "DEF int," +
+                    "SPD int," +
+                    "JUMP int," +
+                    "PRIMARY KEY (EquipName, EquipSet, EquipSlot) " +
+                    ");";
+                string AccessoriesTableName = "AccessoriesData";
+                TableStats accessoriesTable = new TableStats(AccessoriesTableSpec, AccessoriesTableName, "Accessories");
+                staticTables.Add(accessoriesTable);
+
+
+                //Equipment Set Effects
+
 
                 //BLANK TABLES
                 //TABLE FOR CHARACTER TO TRACK
                 string charTrackSpec = "(" +
-                    "charName string," +
-                    "unionRank string," +
-                    "level int," +
-                    "PRIMARY KEY(charName)"+
+                    "CharName string," +
+                    "UnionRank string," +
+                    "Level int," +
+                    "PRIMARY KEY(CharName)" +
                     ");";
 
                 string charTrackTableName = "CharacterTrack";
@@ -157,11 +188,11 @@ namespace MSEACalculator
 
                 //TABLE FOR CHAR'S BOSS TRACKING
                 string bossMesoGainsTableSpec = "(" +
-                    "charName string," +
+                    "CharName string," +
                     "BossName string," +
                     "BossID int," +
-                    "PRIMARY KEY(charName, BossID)," +
-                    "FOREIGN KEY (charName) REFERENCES CharacterTrack(charName) ON DELETE CASCADE," +
+                    "PRIMARY KEY(CharName, BossID)," +
+                    "FOREIGN KEY (CharName) REFERENCES CharacterTrack(CharName) ON DELETE CASCADE," +
                     "FOREIGN KEY (BossID) REFERENCES BossList(BossID)" +
                     ");";
 
@@ -169,7 +200,7 @@ namespace MSEACalculator
                 TableStats bossMesoGainsTable = new TableStats(bossMesoTableName, bossMesoGainsTableSpec);
                 blankTables.Add(bossMesoGainsTable);
 
-                
+
 
 
 
@@ -325,12 +356,12 @@ namespace MSEACalculator
                                 addRow(tempSFI, nameof(tempSFI.NonWATK), tempSFI.NonWATKL);
                                 addRow(tempSFI, nameof(tempSFI.WATK), tempSFI.WATKL);
                             }
-                            if(tempSFI.StarForceLevel > 22)
+                            if (tempSFI.StarForceLevel > 22)
                             {
                                 addRow(tempSFI, nameof(tempSFI.NonWATK), tempSFI.NonWATKL);
                                 addRow(tempSFI, nameof(tempSFI.WATK), tempSFI.WATKL);
                             }
-                            
+
 
 
                             startCount += 1;
@@ -343,12 +374,12 @@ namespace MSEACalculator
 
                     List<Character> charTable = await GetCharCSVAsync();
 
-                    if(connection.State == ConnectionState.Open)
+                    if (connection.State == ConnectionState.Open)
                     {
-                        foreach(Character charItem in charTable)
+                        foreach (Character charItem in charTable)
                         {
-                            string insertChar = "INSERT INTO " + tableName + "(ClassName, ClassType, Faction, UnionEffect, UnionEffectType)" +
-                                " VALUES (@CN, @CT, @Fac, @UE, @UET)";
+                            string insertChar = "INSERT INTO " + tableName + "(ClassName, ClassType, Faction, UnionE, UnionET, MainStat, SecStat)" +
+                                " VALUES (@CN, @CT, @Fac, @UE, @UET, @MS, @SS)";
 
                             SqliteCommand insertCharCmd = new SqliteCommand(insertChar, connection);
 
@@ -357,6 +388,9 @@ namespace MSEACalculator
                             insertCharCmd.Parameters.AddWithValue("@Fac", charItem.faction);
                             insertCharCmd.Parameters.AddWithValue("@UE", charItem.unionEffect);
                             insertCharCmd.Parameters.AddWithValue("@UET", charItem.unionEffectType);
+                            insertCharCmd.Parameters.AddWithValue("@MS", charItem.MainStat);
+                            insertCharCmd.Parameters.AddWithValue("@SS", charItem.SecStat);
+
 
                             insertCharCmd.ExecuteNonQuery();
                         }
@@ -365,9 +399,9 @@ namespace MSEACalculator
                     break;
                 case "UnionEffect":
                     List<UnionModel> unionList = await GetUnionECSVAsync();
-                    if(connection.State == ConnectionState.Open)
+                    if (connection.State == ConnectionState.Open)
                     {
-                        foreach(UnionModel unionItem in unionList)
+                        foreach (UnionModel unionItem in unionList)
                         {
 
                             string insertUnion = "INSERT INTO " + tableName + " (Stat, StatType, B, A, S, SS, SSS)" +
@@ -395,16 +429,17 @@ namespace MSEACalculator
 
                     if (connection.State == ConnectionState.Open)
                     {
-                        foreach(EquipModel equipItem in equipList)
+                        foreach (EquipModel equipItem in equipList)
                         {
-                            string insertEquip = "INSERT INTO " + tableName + "(EquipSet, ClassType, EquipSlot, MainStat, SecStat, HP, MP, ATK, MATK, DEF, SPD, JUMP,IED)" +
-                                " VALUES (@Set, @Job, @Slot, @MS, @SS, @HP, @MP, @ATK, @MATK,@DEF, @SPD,@JUMP,@IED);";
+                            string insertEquip = "INSERT INTO " + tableName + "(EquipSet, ClassType, EquipSlot, EquipLevel, MainStat, SecStat, HP, MP, ATK, MATK, DEF, SPD, JUMP,IED)" +
+                                " VALUES (@Set, @Job, @Slot,@Lvl, @MS, @SS, @HP, @MP, @ATK, @MATK,@DEF, @SPD,@JUMP,@IED);";
 
                             using (SqliteCommand insertCMD = new SqliteCommand(insertEquip, connection))
                             {
                                 insertCMD.Parameters.AddWithValue("@Set", equipItem.EquipSet);
                                 insertCMD.Parameters.AddWithValue("@Job", equipItem.JobType);
                                 insertCMD.Parameters.AddWithValue("@Slot", equipItem.EquipSlot);
+                                insertCMD.Parameters.AddWithValue("@Lvl", equipItem.EquipLevel);
                                 insertCMD.Parameters.AddWithValue("@MS", equipItem.MS);
                                 insertCMD.Parameters.AddWithValue("@SS", equipItem.SS);
                                 insertCMD.Parameters.AddWithValue("@HP", equipItem.HP);
@@ -429,7 +464,7 @@ namespace MSEACalculator
                     {
                         {"Ring1", "Ring" },{"Ring2", "Ring" },{"Ring3", "Ring" },{"Ring4", "Ring" },
                         {"Pendant1", "Pendant" },{"Pendant2", "Pendant" },
-                        {"Face Accessory", "Accesory" },{"Eye Decor", "Accesory" },{"Ear Ring", "Accesory" },{"Belt", "Accesory" },
+                        {"Face Accessory", "Accessory" },{"Eye Decor", "Accessory" },{"Ear Ring", "Accessory" },{"Belt", "Accessory" },
                         {"Heart", "Heart" },
                         {"Badge", "Misc" },{"Medal", "Misc" },{"Pocket", "Misc" },
                         {"Weapon", "Weapon" },{"Secondary", "Weapon" },{"Emblem", "Weapon" },
@@ -439,9 +474,9 @@ namespace MSEACalculator
 
                     };
 
-                    if(connection.State == ConnectionState.Open)
+                    if (connection.State == ConnectionState.Open)
                     {
-                        foreach(string Eitem in EquipmentDict.Keys)
+                        foreach (string Eitem in EquipmentDict.Keys)
                         {
                             string insertQuery = "INSERT INTO " + tableName + " VALUES(@ES, @ET);";
                             using (SqliteCommand insertCMD = new SqliteCommand(insertQuery, connection))
@@ -453,6 +488,35 @@ namespace MSEACalculator
                             }
                         }
                     }
+
+                    break;
+                case "Accessories":
+                    List<EquipModel>  AccessoriesList= await GetAccessoriesCSVAsync();
+
+                    if(connection.State == ConnectionState.Open)
+                    {
+                        foreach(EquipModel Eitem in AccessoriesList) 
+                        {
+                            string AccessoriesTableSpec = "(" +
+                                "EquipName string," +
+                                "EquipSet string," +
+                                "EquipSlot string," +
+                                "EquipLevel int," +
+                                "AllStat int," +
+                                "HP string," +
+                                "MP string," +
+                                "WATK int," +
+                                "MATK int," +
+                                "DEF int," +
+                                "SPD int," +
+                                "JUMP int," +
+                                "PRIMARY KEY (EquipName, EquipSet, EquipSlot) " +
+                                ");";
+                                string insertQuery = "INSERT INTO " + tableName + " (EquipName, EquipSet, EquipSlot, EquipLevel, AllStat, HP, MP, ";
+                        }
+                    }
+
+
 
                     break;
                 default:
@@ -492,7 +556,7 @@ namespace MSEACalculator
                         counter += 1;
                         Boss tempboss = new Boss(counter, temp[0], temp[1], temp[2], Convert.ToInt32(temp[3]), Convert.ToInt32(temp[4]), Convert.ToInt32(temp[5]));
                         //Boss Contructor BossID | Name | Difficulty | Entry Type | Entry Limit | BossCrystalCount | Meso
-                       
+
 
                         AllBossList.Add(tempboss);
 
@@ -509,7 +573,7 @@ namespace MSEACalculator
 
         private static async Task<List<SFGain>> GetSFCSVAsync()
         {
-           List<SFGain> SFList = new List<SFGain>();
+            List<SFGain> SFList = new List<SFGain>();
 
             StorageFile statTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\statGains.csv");
 
@@ -583,7 +647,7 @@ namespace MSEACalculator
 
             return SFList;
         }
-        
+
         private static async Task<List<Character>> GetCharCSVAsync()
         {
             List<Character> characterList = new List<Character>();
@@ -621,7 +685,7 @@ namespace MSEACalculator
             }
 
 
-                return characterList;
+            return characterList;
         }
 
         private static async Task<List<UnionModel>> GetUnionECSVAsync()
@@ -643,9 +707,9 @@ namespace MSEACalculator
 
                     var result = text.Split("\r\n");
                     int counter = 0;
-                    foreach(string unionItems in result.Skip(1))
+                    foreach (string unionItems in result.Skip(1))
                     {
-                        if(unionItems == "")
+                        if (unionItems == "")
                         {
                             return unionList;
                         }
@@ -659,6 +723,7 @@ namespace MSEACalculator
                             Convert.ToInt32(temp[5]),
                             Convert.ToInt32(temp[6]));
 
+
                         //Stat = temp[0],
                         //    StatType = temp[1],
                         //    RankB = Convert.ToInt32(temp[2]),
@@ -671,7 +736,7 @@ namespace MSEACalculator
                 }
             }
 
-                return unionList;
+            return unionList;
         }
 
         private static async Task<List<EquipModel>> GetEquipCSVAsync()
@@ -702,21 +767,20 @@ namespace MSEACalculator
 
                         var temp = equipItem.Split(",");
                         counter += 1;
-                        EquipModel equip = new EquipModel(
-                            temp[0],
-                            temp[1],
-                            temp[2],
-                            Convert.ToInt32(temp[3]),
-                            Convert.ToInt32(temp[4]),
-                            Convert.ToInt32(temp[5]),
-                            Convert.ToInt32(temp[6]),
-                            Convert.ToInt32(temp[7]),
-                            Convert.ToInt32(temp[8]),
-                            Convert.ToInt32(temp[9]),
-                            Convert.ToInt32(temp[10]),
-                            Convert.ToInt32(temp[11]),
-                            Convert.ToInt32(temp[12])
-                            );
+                        EquipModel equip = new EquipModel();
+                        equip.EquipSet = temp[0];
+                        equip.JobType = temp[1];
+                        equip.EquipSlot = temp[2];
+                        equip.EquipLevel = Convert.ToInt32(temp[3]);
+                        equip.MS = Convert.ToInt32(temp[4]);
+                        equip.SS = Convert.ToInt32(temp[5]);
+                        equip.HP = Convert.ToInt32(temp[6]);
+                        equip.ATK = Convert.ToInt32(temp[7]);
+                        equip.MATK = Convert.ToInt32(temp[8]);
+                        equip.DEF = Convert.ToInt32(temp[9]);
+                        equip.SPD = Convert.ToInt32(temp[10]);
+                        equip.JUMP = Convert.ToInt32(temp[11]);
+                        equip.IED = Convert.ToInt32(temp[12]);
 
                         equipList.Add(equip);
 
@@ -725,6 +789,57 @@ namespace MSEACalculator
             }
             return equipList;
 
+        }
+
+        private static async Task<List<EquipModel>> GetAccessoriesCSVAsync()
+        {
+            List<EquipModel> AccessoriesList = new List<EquipModel>();
+
+            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\AccessoriesData.csv");
+
+            var stream = await charTable.OpenAsync(FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    var result = text.Split("\r\n");
+                    foreach (string accItem in result.Skip(1))
+                    {
+                        if (accItem == "")
+                        {
+                            return AccessoriesList;
+                        }
+
+                        var temp = accItem.Split(",");
+
+                        EquipModel equip = new EquipModel();
+                        equip.EquipName = temp[0];
+                        equip.EquipSet = temp[1];
+                        equip.EquipSlot = temp[2];
+                        equip.EquipLevel = Convert.ToInt32(temp[3]);
+                        equip.AllStat = Convert.ToInt32(temp[4]);
+                        equip.SpecialHP = temp[5];
+                        equip.SpecialMP = temp[6];
+                        equip.ATK = Convert.ToInt32(temp[7]);
+                        equip.MATK = Convert.ToInt32(temp[8]);
+                        equip.DEF = Convert.ToInt32(temp[9]);
+                        equip.SPD = Convert.ToInt32(temp[10]);
+                        equip.JUMP = Convert.ToInt32(temp[11]);
+                        AccessoriesList.Add(equip);
+                        
+                        
+                    }
+                }
+            }
+
+
+            return AccessoriesList;
         }
 
         //Retrieving Data from Maplestory.db
@@ -742,12 +857,12 @@ namespace MSEACalculator
 
                 SqliteDataReader query = selectCmd.ExecuteReader();
 
-                
+
                 while (query.Read())
                 {
                     Boss tempBoss = new Boss();
                     tempBoss.BossID = query.GetInt16(0);
-                    tempBoss.name= query.GetString(1);
+                    tempBoss.name = query.GetString(1);
                     tempBoss.difficulty = query.GetString(2);
                     tempBoss.entryType = query.GetString(3);
                     tempBoss.entryLimit = query.GetInt16(4);
@@ -780,7 +895,7 @@ namespace MSEACalculator
                 {
                     using (SqliteDataReader query = selectCmd.ExecuteReader())
                     {
-                        while(query.Read())
+                        while (query.Read())
                         {
                             Character tempChar = new Character();
                             tempChar.className = query.GetString(0);
@@ -839,7 +954,8 @@ namespace MSEACalculator
 
                 using (SqliteCommand selectCMD = new SqliteCommand(getArmor, dbCon))
                 {
-                    using(SqliteDataReader result = selectCMD.ExecuteReader()){
+                    using (SqliteDataReader result = selectCMD.ExecuteReader())
+                    {
 
                         while (result.Read())
                         {
@@ -879,14 +995,14 @@ namespace MSEACalculator
                 string selectQuery = "SELECT * FROM EquipSlot";
                 using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
                 {
-                    using(SqliteDataReader reader = selectCMD.ExecuteReader())
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             equipSlotDict.Add(reader.GetString(0), reader.GetString(1));
                         }
 
-                        
+
                     }
                 }
             }
@@ -906,7 +1022,7 @@ namespace MSEACalculator
 
                 try
                 {
-                    using(SqliteCommand insertCMD = new SqliteCommand(insertQueryStr, dbCon))
+                    using (SqliteCommand insertCMD = new SqliteCommand(insertQueryStr, dbCon))
                     {
                         insertCMD.Parameters.AddWithValue("@CN", character.className);
                         insertCMD.Parameters.AddWithValue("@UR", character.unionRank);
@@ -943,7 +1059,7 @@ namespace MSEACalculator
                 "INNER JOIN BossMesoGains ON BossMesoGains.BossID = BossList.BossID " +
                 "WHERE BossMesoGains.charName = @charName";
 
- 
+
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GlobalVars.databasePath}"))
             {
                 dbCon.Open();
@@ -975,7 +1091,7 @@ namespace MSEACalculator
 
                 }
             }
-            
+
             return bossList;
         }
 
@@ -985,12 +1101,12 @@ namespace MSEACalculator
 
             string insertQueryStr = "INSERT INTO BossMesoGains (charName, BossName, BossID) VALUES (@charName, @bossName, @bossID)";
 
-            using(SqliteConnection dbCon =  new SqliteConnection($"Filename={GlobalVars.databasePath}"))
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename={GlobalVars.databasePath}"))
             {
                 dbCon.Open();
                 try
                 {
-                    using (SqliteCommand insertCMD =  new SqliteCommand(insertQueryStr, dbCon))
+                    using (SqliteCommand insertCMD = new SqliteCommand(insertQueryStr, dbCon))
                     {
                         insertCMD.Parameters.AddWithValue("@charName", charName);
                         insertCMD.Parameters.AddWithValue("@bossName", bossName);
@@ -1048,7 +1164,7 @@ namespace MSEACalculator
 
     }
 
-    
+
 }
 
 

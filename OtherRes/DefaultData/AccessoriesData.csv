@@ -1,0 +1,67 @@
+﻿EquipName,EquipSet,EquipSlot,EquipLevel,AS,HP,MP,WATK,MATK,DEF,SPD,JUMP
+Abso Shoulder,Abso,Shoulder,160,14,0,0,10,10,100,0,0
+Arcane Shoulder,Arcane,Shoulder,200,35,0,0,20,20,300,0,0
+Blazing Sun Face Paint,Blazing Sun,Face Accessory,130,5,0,0,4,4,38,0,0
+Blazing Sun Earring,Blazing Sun,Earring,130,7,150,150,0,0,90,0,0
+Blazing Sun Ring,Blazing Sun,Ring,130,8,150,150,4,4,0,0,0
+Blazing Sun Pendant,Blazing Sun,Pendant,130,19,250,250,3,3,215,0,0
+Blazing Sun Belt ,Blazing Sun,Belt,130,12,160,160,3,3,140,0,0
+Condensed Power Crystal,Boss,Face Accessory,110,5,0,0,5,5,100,0,0
+Aquatic Letter,Boss,Eye Decor,100,6,0,0,1,1,100,0,0
+Black Bean Mark,Boss,Eye Decor,135,7,0,0,1,1,100,0,0
+Papulatus Mark,Boss,Eye Decor,145,8,0,0,1,1,150,0,0
+Dea Sidus,Boss,Earring,130,5,0,0,2,2,50,0,0
+Will o wisps,Boss,Earring,130,7,100,100,2,2,100,0,0
+Silver Blossom,Boss,Ring,110,5,0,0,2,2,0,0,0
+Noble Ifia,Boss,Ring,120,5,200,200,2,2,0,0,0
+Guardian Slime,Boss,Ring,160,5,200,200,2,2,0,0,0
+Horntail,Boss,Pendant,120,7,0,0,0,0,108,0,0
+Chaos Horntail,Boss,Pendant,120,10,10%,10%,2,2,140,0,0
+Machinator,Boss,Pendant,120,10,250,250,1,1,100,0,0
+Dominator,Boss,Pendant,140,20,10%,10%,3,3,100,0,0
+Golden Clover,Boss,Belt,140,15,150,150,1,1,150,0,0
+Enraged Zakum,Boss,Belt,150,18,150,150,1,1,150,0,0
+Royal Black Metal,Boss,Shoulder,120,10,0,0,6,6,100,0,0
+Stone of Eternal Life,Boss,Pocket,0,3,0,0,3,3,0,0,0
+Pink Holy Cup,Boss,Pocket,140,5,50,50,5,5,0,0,0
+Crystal Ventus,Boss,Badge,130,10,0,0,5,5,0,10,10
+Shiny Red Meister Symbol,Craft,Face Accessory,130,3,0,0,3,3,26,0,0
+White Angelic,Craft,Ring,90,10,150,150,0,0,0,0,0
+Cygnus Kohinoor,Craft,Ring,140,5,200,200,5,5,150,10,10
+Empress Shoulder,Empress,Shoulder,140,11,0,0,7,7,100,0,0
+Lightning God ,Gacha,Ring,100,12,150,150,0,0,0,18,10
+BOD,Gacha,Ring,150,15,200,200,25,25,0,18,10
+Sailor Belt,Gold Beach,Belt,30,2,50,50,0,0,30,0,0
+Ifia Earring,Ifia,Earring,110,1,150,150,0,0,120,0,0
+Ifia Ring,Ifia,Ring,110,3,100,100,1,1,140,0,0
+Ifia Pendant,Ifia,Pendant,110,5,150,150,1,1,108,0,0
+Inverse Metal ,Kritias,Shoulder,150,10,0,0,10,10,180,0,0
+Inverse Jewel,Kritias,Earring,150,6,600,600,4,4,80,0,0
+Scarlet Shoulder,Lucky,Shoulder,135,75,400,0,7,7,125,0,0
+Scarlet Earring,Lucky,Earring,135,6,200,200,3,3,100,0,0
+Ocean Glow,Lucky,Earring,150,7,750,750,5,5,75,0,0
+Scarlet Ring,Lucky,Ring,135,4,150,150,1,1,100,0,0
+Meister Ring,Meister,Ring,140,5,200,200,1,1,150,0,0
+Meister Earring,Meister,Earring,140,5,500,500,4,4,70,0,0
+Meister Shoulder,Meister,Shoulder,140,13,0,0,9,9,150,0,0
+Greed Pendant,MP,Pendant,75,3,0,0,0,0,100,0,0
+Day Badge,MP,Badge,100,7,0,0,7,7,0,0,0
+Seven Day Badge,MP,Badge,100,7,0,0,7,7,0,0,0
+Black Heart,Pitched Boss,Heart,120,10,100,0,77,77,0,0,0
+Loose Control,Pitched Boss,Face Accessory,160,10,0,0,10,10,200,0,0
+Magic Eyepatch,Pitched Boss,Eye Decor,160,15,0,0,3,3,300,0,0
+Source of Suffering,Pitched Boss,Pendant,160,10,5%,0,3,3,200,0,0
+Spellbook,Pitched Boss,Pocket,160,10,100,100,10,10,0,0,0
+Commander Force,Pitched Boss,Earring,200,7,500,500,5,5,10,0,0
+Endless Terror,Pitched Boss,Ring,200,5,250,250,4,4,0,0,0
+Dream Belt,Pitched Boss,Belt,200,50,150,150,6,6,150,0,0
+Genesis Badge,Pitched Boss,Badge,200,15,0,0,10,10,0,10,10
+Mitra Rage,Pitched Boss,Emblem,200,40,700,0,5,5,0,0,0
+Purple Pendant,Purple,Pendant,130,16,180,180,0,0,185,0,0
+Kanna,Sengoku,Ring,140,5,200,200,1,1,150,0,0
+Hayato,Sengoku,Shoulder,140,11,0,0,7,7,100,0,0
+Ayame,Sengoku,Belt,140,10,200,200,1,1,100,0,0
+Platinum,Silent Crusade,Ring,120,3,75,75,1,1,60,5,0
+Pharaoh Ring,Story,Ring,80,2,100,100,0,0,0,0,0
+Tyrant Belt,Superior,Belt,150,50,0,0,25,25,105,0,0
+Xiamen Earring,Xiamen,Earring,140,5,150,150,0,0,70,0,0

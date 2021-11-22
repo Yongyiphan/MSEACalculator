@@ -23,12 +23,15 @@
     <RootPropertyPathName Name="SelectedMule" />
     <RootPropertyPathName Name="className" />
     <RootPropertyPathName Name="CharTrackList" />
-    <RootPropertyPathName Name="ScrollRecord" />
-    <RootPropertyPathName Name="Value" />
-    <RootPropertyPathName Name="Key" />
+    <RootPropertyPathName Name="DictValue" />
+    <RootPropertyPathName Name="DictKey" />
     <RootPropertyPathName Name="ShowBonusStat" />
+    <RootPropertyPathName Name="AddFlameCMD" />
+    <RootPropertyPathName Name="FlameStat" />
     <RootPropertyPathName Name="FlameStatsTypes" />
+    <RootPropertyPathName Name="SelectedFlame" />
     <RootPropertyPathName Name="ShowScrollValue" />
+    <RootPropertyPathName Name="AddStatCMD" />
     <RootPropertyPathName Name="ScrollStatValue" />
     <RootPropertyPathName Name="StatTypes" />
     <RootPropertyPathName Name="SelectedScrollStat" />
@@ -38,6 +41,7 @@
     <RootPropertyPathName Name="NoSlot" />
     <RootPropertyPathName Name="IsSpellTrace" />
     <RootPropertyPathName Name="ShowEquipmentPanel" />
+    <RootPropertyPathName Name="Key" />
     <RootPropertyPathName Name="ShowWeapon" />
     <RootPropertyPathName Name="ArmorSet" />
     <RootPropertyPathName Name="AllCharTModel" />
@@ -101,8 +105,8 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
       <RootProperty Name="TextAlignment" />
-      <RootProperty Name="Visibility" />
       <RootProperty Name="Text" />
+      <RootProperty Name="Visibility" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
       <RootProperty Name="FontSize" />
@@ -178,10 +182,6 @@
     <RootType FullName="Windows.UI.Xaml.Controls.ListView">
       <RootProperty Name="ItemsSource" />
       <RootProperty Name="DisplayMemberPath" />
-      <RootProperty Name="ItemTemplate" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.DataTemplate">
-      <RootProperty Name="Template" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
     <RootType FullName="Windows.UI.Xaml.Controls.CheckBox">

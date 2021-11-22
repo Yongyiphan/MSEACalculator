@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Machine>YNYAHAHAHAH</Machine>
+    <Machine>EDGARPC</Machine>
     <WindowsUser>edgar</WindowsUser>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetOsVersion>10.0</TargetOsVersion>
@@ -10,7 +10,7 @@
     <PackageArchitecture>x86</PackageArchitecture>
     <PackageIdentityName>000f7318-a33f-4024-b59c-7eafe27b8831</PackageIdentityName>
     <PackageIdentityPublisher>CN=edgar</PackageIdentityPublisher>
-    <IntermediateOutputPath>C:\Users\edgar\Documents\Personal Programming\MSEACalculator\obj\x86\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\</IntermediateOutputPath>
     <RemoteDeploymentType>
     </RemoteDeploymentType>
     <PackageRegistrationPath>
@@ -18,8 +18,8 @@
     <RemoveNonLayoutFiles>true</RemoveNonLayoutFiles>
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
-    <LayoutDir>C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\AppX</LayoutDir>
-    <RegisteredManifestChecksum>9A3E08B9B5175F4DDF7605F22B6D54E45CD3A5C84A0BD7F97EAF31E1923A4F5A</RegisteredManifestChecksum>
+    <LayoutDir>C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\AppX</LayoutDir>
+    <RegisteredManifestChecksum>3C05249370DC8E8D453AE862BE40E59089EED72CBB4E8929C05957AEB04C4EC7</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>MSEA-000f7318-a33f-4024-b59c-7eafe27b8831_1.0.0.0_x86__h8rqv0gxgvjbt</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>MSEA-000f7318-a33f-4024-b59c-7eafe27b8831_h8rqv0gxgvjbt!App</RegisteredUserModeAppID>
     <RegisteredPackageID>MSEA-000f7318-a33f-4024-b59c-7eafe27b8831</RegisteredPackageID>
@@ -27,28 +27,20 @@
     <RegisteredVersion>1.0.0.0</RegisteredVersion>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\Core\AppxManifest.xml">
+    <AppXManifest Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:40.065</Modified>
-=======
-      <Modified>2021-11-16T13:48:34.588</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-22T11:54:13.340</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MSEACalculator.exe">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MSEACalculator.exe">
       <PackagePath>entrypoint\MSEACalculator.exe</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:39.077</Modified>
-=======
-      <Modified>2021-11-16T13:48:32.967</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-22T11:54:12.709</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\asyncenumerator\4.0.2\lib\netstandard2.0\AsyncEnumerable.dll">
       <PackagePath>AsyncEnumerable.dll</PackagePath>
-      <Modified>2019-12-04T10:28:16.000</Modified>
+      <Modified>2019-12-04T18:28:16.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\colorcode.core\2.0.6\lib\netstandard1.4\ColorCode.Core.dll">
       <PackagePath>ColorCode.Core.dll</PackagePath>
@@ -60,7 +52,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.bcl.asyncinterfaces\5.0.0\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll">
       <PackagePath>Microsoft.Bcl.AsyncInterfaces.dll</PackagePath>
-      <Modified>2020-10-19T10:40:26.000</Modified>
+      <Modified>2020-10-19T18:40:26.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.data.sqlite.core\5.0.10\lib\netstandard2.0\Microsoft.Data.Sqlite.dll">
       <PackagePath>Microsoft.Data.Sqlite.dll</PackagePath>
@@ -108,39 +100,39 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\newtonsoft.json\13.0.1\lib\netstandard2.0\Newtonsoft.Json.dll">
       <PackagePath>Newtonsoft.Json.dll</PackagePath>
-      <Modified>2021-03-17T12:03:36.000</Modified>
+      <Modified>2021-03-17T20:03:36.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.2.12\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.dll">
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.2.12\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.dll">
       <PackagePath>System.Runtime.dll</PackagePath>
       <Modified>2021-02-04T17:15:46.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\sqlitepclraw.bundle_e_sqlite3\2.0.4\lib\netstandard2.0\SQLitePCLRaw.batteries_v2.dll">
       <PackagePath>SQLitePCLRaw.batteries_v2.dll</PackagePath>
-      <Modified>2020-09-03T09:13:26.000</Modified>
+      <Modified>2020-09-03T17:13:26.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\sqlitepclraw.core\2.0.4\lib\netstandard2.0\SQLitePCLRaw.core.dll">
       <PackagePath>SQLitePCLRaw.core.dll</PackagePath>
-      <Modified>2020-09-03T09:13:04.000</Modified>
+      <Modified>2020-09-03T17:13:04.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\sqlitepclraw.lib.e_sqlite3\2.0.4\runtimes\win10-x86\nativeassets\uap10.0\e_sqlite3.dll">
       <PackagePath>e_sqlite3.dll</PackagePath>
-      <Modified>2020-08-17T06:38:50.000</Modified>
+      <Modified>2020-08-17T14:38:50.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\sqlitepclraw.provider.e_sqlite3\2.0.4\lib\uap10.0\SQLitePCLRaw.provider.e_sqlite3.dll">
       <PackagePath>SQLitePCLRaw.provider.e_sqlite3.dll</PackagePath>
-      <Modified>2020-09-03T09:13:06.000</Modified>
+      <Modified>2020-09-03T17:13:06.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\system.runtime.compilerservices.unsafe\5.0.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll">
       <PackagePath>System.Runtime.CompilerServices.Unsafe.dll</PackagePath>
-      <Modified>2020-10-19T10:46:44.000</Modified>
+      <Modified>2020-10-19T18:46:44.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\system.text.encodings.web\5.0.1\lib\netstandard2.0\System.Text.Encodings.Web.dll">
       <PackagePath>System.Text.Encodings.Web.dll</PackagePath>
-      <Modified>2021-02-16T13:53:32.000</Modified>
+      <Modified>2021-02-16T21:53:32.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\system.text.json\5.0.2\lib\netstandard2.0\System.Text.Json.dll">
       <PackagePath>System.Text.Json.dll</PackagePath>
-      <Modified>2021-03-16T14:34:16.000</Modified>
+      <Modified>2021-03-16T22:34:16.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\win2d.uwp\1.25.0\runtimes\win10-x86\native\Microsoft.Graphics.Canvas.dll">
       <PackagePath>Microsoft.Graphics.Canvas.dll</PackagePath>
@@ -178,123 +170,83 @@
       <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Media\Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml</PackagePath>
       <Modified>2021-10-18T23:19:18.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\Properties\Default.rd.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
-      <Modified>2021-10-24T10:14:51.918</Modified>
+      <Modified>2021-08-17T04:17:37.427</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\Assets\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
-      <Modified>2021-10-24T10:14:51.895</Modified>
+      <Modified>2021-08-17T04:17:37.421</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\Assets\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2021-10-24T10:14:51.896</Modified>
+      <Modified>2021-08-17T04:17:37.421</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\Assets\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2021-10-24T10:14:51.897</Modified>
+      <Modified>2021-08-17T04:17:37.421</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\Assets\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2021-10-24T10:14:51.897</Modified>
+      <Modified>2021-08-17T04:17:37.421</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2021-10-24T10:14:51.898</Modified>
+      <Modified>2021-08-17T04:17:37.422</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2021-10-24T10:14:51.899</Modified>
+      <Modified>2021-08-17T04:17:37.422</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\Assets\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2021-10-24T10:14:51.899</Modified>
+      <Modified>2021-08-17T04:17:37.422</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MSEACalculator.xr.xml">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MSEACalculator.xr.xml">
       <PackagePath>MSEACalculator.xr.xml</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:38.936</Modified>
-=======
-      <Modified>2021-11-16T13:48:32.693</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-19T16:04:43.344</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\App.xbf">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:38.973</Modified>
-=======
-      <Modified>2021-11-16T13:31:39.757</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-22T11:54:12.620</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\CharacterRes\CharacterPage.xbf">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\CharacterRes\CharacterPage.xbf">
       <PackagePath>CharacterRes\CharacterPage.xbf</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:38.974</Modified>
-=======
-      <Modified>2021-11-16T13:31:39.757</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-22T11:54:12.620</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\CharacterRes\MesoRes\MesoPage.xbf">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\CharacterRes\MesoRes\MesoPage.xbf">
       <PackagePath>CharacterRes\MesoRes\MesoPage.xbf</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:38.958</Modified>
-=======
-      <Modified>2021-11-16T13:31:39.724</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-22T11:54:12.605</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\EventRes\Event.xbf">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\EventRes\Event.xbf">
       <PackagePath>EventRes\Event.xbf</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:38.974</Modified>
-=======
-      <Modified>2021-11-16T13:31:39.758</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-22T11:54:12.620</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MainAppRes\Settings\AddCharTrackPage.xbf">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainAppRes\Settings\AddCharTrackPage.xbf">
       <PackagePath>MainAppRes\Settings\AddCharTrackPage.xbf</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:38.960</Modified>
+      <Modified>2021-11-22T11:54:12.608</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainAppRes\TestingBlankPage.xbf">
       <PackagePath>MainAppRes\TestingBlankPage.xbf</PackagePath>
-      <Modified>2021-11-14T10:57:38.962</Modified>
-=======
-      <Modified>2021-11-16T13:48:32.704</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-22T11:54:12.610</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MainAppRes\TestingBlankPage.xbf">
-      <PackagePath>MainAppRes\TestingBlankPage.xbf</PackagePath>
-      <Modified>2021-11-16T13:31:39.738</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\ViewPages\HomePage.xbf">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\ViewPages\HomePage.xbf">
       <PackagePath>ViewPages\HomePage.xbf</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:38.974</Modified>
-=======
-      <Modified>2021-11-16T13:31:39.758</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-22T11:54:12.620</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MainPage.xbf">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:38.974</Modified>
-=======
-      <Modified>2021-11-16T13:31:39.758</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-22T11:54:12.621</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MainAppRes\Settings\SettingsPage.xbf">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\MainAppRes\Settings\SettingsPage.xbf">
       <PackagePath>MainAppRes\Settings\SettingsPage.xbf</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:38.974</Modified>
-=======
-      <Modified>2021-11-16T13:31:39.759</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-22T11:54:12.621</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.UniversalCRT.Debug\10.0.19041.0\\redist\Debug\x86\ucrtbased.dll">
       <PackagePath>ucrtbased.dll</PackagePath>
@@ -304,21 +256,13 @@
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
       <Modified>2020-12-01T18:52:06.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\resources.pri">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:39.499</Modified>
-=======
-      <Modified>2021-11-15T12:21:19.507</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-19T08:19:48.890</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\Core\MSEACalculator.exe">
+    <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\Core\MSEACalculator.exe">
       <PackagePath>MSEACalculator.exe</PackagePath>
-<<<<<<< HEAD
-      <Modified>2021-11-14T10:57:40.059</Modified>
-=======
-      <Modified>2021-11-16T13:48:34.577</Modified>
->>>>>>> 1b05ce867f9562c5d56716a322faa4c9c98a4c30
+      <Modified>2021-11-22T11:54:13.337</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\lib\uap10.0\Microsoft.UI.Xaml.winmd">
       <PackagePath>Microsoft.UI.Xaml.winmd</PackagePath>
@@ -371,57 +315,57 @@
       <MoreInfo>
       </MoreInfo>
     </ResolvedSDKReference>
-    <ResolvedSDKReference Include="C:\Users\edgar\.nuget\packages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx">
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx">
       <Name>Microsoft.NET.CoreRuntime.2.2</Name>
       <Version>2.2.29713.2</Version>
       <Architecture>x86</Architecture>
       <FrameworkIdentity>Name = Microsoft.NET.CoreRuntime.2.2, MinVersion = 2.2.29713.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
-      <AppxLocation>C:\Users\edgar\.nuget\packages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx</AppxLocation>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx</AppxLocation>
       <MoreInfo>
       </MoreInfo>
     </ResolvedSDKReference>
-    <ResolvedSDKReference Include="C:\Users\edgar\.nuget\packages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx">
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx">
       <Name>Microsoft.NET.CoreRuntime.2.2</Name>
       <Version>2.2.29713.2</Version>
       <Architecture>x64</Architecture>
       <FrameworkIdentity>Name = Microsoft.NET.CoreRuntime.2.2, MinVersion = 2.2.29713.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
-      <AppxLocation>C:\Users\edgar\.nuget\packages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx</AppxLocation>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx</AppxLocation>
       <MoreInfo>
       </MoreInfo>
     </ResolvedSDKReference>
-    <ResolvedSDKReference Include="C:\Users\edgar\.nuget\packages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx">
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx">
       <Name>Microsoft.NET.CoreRuntime.2.2</Name>
       <Version>2.2.29713.2</Version>
       <Architecture>arm</Architecture>
       <FrameworkIdentity>Name = Microsoft.NET.CoreRuntime.2.2, MinVersion = 2.2.29713.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
-      <AppxLocation>C:\Users\edgar\.nuget\packages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx</AppxLocation>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx</AppxLocation>
       <MoreInfo>
       </MoreInfo>
     </ResolvedSDKReference>
-    <ResolvedSDKReference Include="C:\Users\edgar\.nuget\packages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx">
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx">
       <Name>Microsoft.NET.CoreFramework.Debug.2.2</Name>
       <Version>2.2.29301.2</Version>
       <Architecture>x86</Architecture>
       <FrameworkIdentity>Name = Microsoft.NET.CoreFramework.Debug.2.2, MinVersion = 2.2.29301.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
-      <AppxLocation>C:\Users\edgar\.nuget\packages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx</AppxLocation>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx</AppxLocation>
       <MoreInfo>
       </MoreInfo>
     </ResolvedSDKReference>
-    <ResolvedSDKReference Include="C:\Users\edgar\.nuget\packages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx">
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx">
       <Name>Microsoft.NET.CoreFramework.Debug.2.2</Name>
       <Version>2.2.29301.2</Version>
       <Architecture>x64</Architecture>
       <FrameworkIdentity>Name = Microsoft.NET.CoreFramework.Debug.2.2, MinVersion = 2.2.29301.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
-      <AppxLocation>C:\Users\edgar\.nuget\packages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx</AppxLocation>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx</AppxLocation>
       <MoreInfo>
       </MoreInfo>
     </ResolvedSDKReference>
-    <ResolvedSDKReference Include="C:\Users\edgar\.nuget\packages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx">
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx">
       <Name>Microsoft.NET.CoreFramework.Debug.2.2</Name>
       <Version>2.2.29301.2</Version>
       <Architecture>arm</Architecture>
       <FrameworkIdentity>Name = Microsoft.NET.CoreFramework.Debug.2.2, MinVersion = 2.2.29301.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
-      <AppxLocation>C:\Users\edgar\.nuget\packages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx</AppxLocation>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.12\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx</AppxLocation>
       <MoreInfo>
       </MoreInfo>
     </ResolvedSDKReference>

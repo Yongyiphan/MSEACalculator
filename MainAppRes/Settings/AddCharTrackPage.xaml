@@ -81,45 +81,42 @@
                     <!--SCROLLING RECORDS-->
                     <TextBlock Text="Scroll" Margin="5" FontSize="17" Visibility="{Binding ShowBonusStat, Mode=TwoWay}" />
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding ShowBonusStat, Mode=TwoWay}">
+                        <!--Check if equip is spell traced-->
                         <CheckBox x:Name="chkSpellTrace" Content="Spell Traced?" FlowDirection="RightToLeft" Margin="5 0 0 0 " FontSize="17"
                                   IsChecked="{Binding IsSpellTrace, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <!--Show Slots or stat chossing depending on checkbox-->
                         <TextBlock Text="Slot" Visibility="{Binding ShoWSlot, Mode=TwoWay}"/>
                         <ComboBox ItemsSource="{Binding Slots}" Visibility="{Binding ShoWSlot, Mode=TwoWay}"
                                   SelectedItem="{Binding NoSlot, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         
-                        <!--<TextBlock Text="Scroll Type"/>-->
-                        <!--<ComboBox ItemsSource="{Binding ScrollTypes}" 
-                                  SelectedItem="{Binding SelectedScroll, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>-->
+                        <!--Stat or spell trace perc-->
                         <TextBlock Text="{Binding ScrollTypeTxt}"/>
                         <ComboBox ItemsSource="{Binding StatTypes}"
                                   SelectedItem="{Binding SelectedScrollStat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <TextBlock Text="Value" Visibility="{Binding ShowScrollValue}"/>
                         <TextBox Visibility="{Binding ShowScrollValue}" Text="{Binding ScrollStatValue, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                        <Button x:Name="AddStatValueBtn" Content="Add Stat" Visibility="{Binding ShowScrollValue, Mode=TwoWay}"
+                                Command="{Binding AddStatCMD, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </StackPanel>
                     <!--FLAMING RECORDS-->
                     <TextBlock Text="Flame" Margin="5" FontSize="17" Visibility="{Binding ShowBonusStat, Mode=TwoWay}"/>
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding ShowBonusStat, Mode=TwoWay}">
                         <TextBlock Text="Stat Type"/>
-                        <ComboBox ItemsSource="{Binding FlameStatsTypes}"/>
+                        <ComboBox ItemsSource="{Binding FlameStatsTypes}"
+                                  SelectedItem="{Binding SelectedFlame, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <TextBlock Text="Value"/>
-                        <TextBox/>
+                        <TextBox Text="{Binding FlameStat, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                        <Button x:Name="AddFlameBtn" Content="Add Flame"
+                                Command="{Binding AddFlameCMD, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2">
                 <!--<TextBlock Text="{Binding TestVar}"/>-->
-                <ListView ItemsSource="{Binding ScrollRecord, Mode=TwoWay}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock x:Name="KeyTxt" Text="{Binding Key}"/>
-                                <TextBlock x:Name="ValTxt" Text="{Binding Value}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-
-                    
-                </ListView>
+                <StackPanel Orientation="Horizontal">
+                    <ListView ItemsSource="{Binding DictKey, Mode=TwoWay}"/>
+                    <ListView ItemsSource="{Binding DictValue, Mode=TwoWay}"/>
+                </StackPanel>
             </Grid>
             <Grid Grid.Row="8">
                 <Button x:Name="UpdateDB" Content="Update DB" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>

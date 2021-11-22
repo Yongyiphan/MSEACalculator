@@ -8,16 +8,21 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 {
     public class EquipModel
     {
+        public string EquipName { get; set; }
         public string EquipSet { get; set; }
         public string JobType { get; set; }
         public string EquipSlot { get; set; }
+        public int EquipLevel { get; set; }
+        public string StatType { get; set; } //PERC OR FLAT 
 
         //BASE STATS
         public int MS { get; set; }
         public int SS { get; set; }
         public int DEF { get; set; }
         public int HP { get; set; }
+        public string SpecialHP { get; set; }
         public int MP { get; set; }
+        public string SpecialMP { get; set; }
         public int SPD { get; set; }
         public int JUMP { get; set; }
         public int ATK { get; set; }
@@ -42,78 +47,96 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
 
 
-        //FOR INIT FROM DATABASE
-        public EquipModel(string equipset, string job, string equipslot, int ms, int ss, int hp, int mp, int atk, int matk, int def, int spd, int jump, int ied)
-        {
-            EquipSet = equipset;
-            JobType = job;
-            EquipSlot = equipslot;
-            MS = ms;
-            SS = ss;
-            HP = hp;
-            MP = mp;
-            ATK = atk;
-            MATK = matk;
-            DEF = def;
-            SPD = spd;
-            JUMP = jump;
-            IED = ied;
-        }
+        ////FOR INIT FROM DATABASE
+        //public EquipModel(string equipset, string job, string equipslot, int ms, int ss, int hp, int mp, int atk, int matk, int def, int spd, int jump, int ied)
+        //{
+        //    EquipSet = equipset;
+        //    JobType = job;
+        //    EquipSlot = equipslot;
+        //    MS = ms;
+        //    SS = ss;
+        //    HP = hp;
+        //    MP = mp;
+        //    ATK = atk;
+        //    MATK = matk;
+        //    DEF = def;
+        //    SPD = spd;
+        //    JUMP = jump;
+        //    IED = ied;
+        //}
 
-        //RETRIEVE FROM DATABASE
-        public EquipModel(string equipslot, int ms, int ss, int hp, int mp, int atk, int matk, int def, int spd, int jump, int ied)
-        {
-            EquipSlot = equipslot;
-            MS = ms;
-            SS = ss;
-            HP = hp;
-            MP = mp;
-            ATK = atk;
-            MATK = matk;
-            DEF = def;
-            SPD = spd;
-            JUMP = jump;
-            IED = ied;
-        }
+        ////RETRIEVE FROM DATABASE
+        //public EquipModel(string equipslot, int ms, int ss, int hp, int mp, int atk, int matk, int def, int spd, int jump, int ied)
+        //{
+        //    EquipSlot = equipslot;
+        //    MS = ms;
+        //    SS = ss;
+        //    HP = hp;
+        //    MP = mp;
+        //    ATK = atk;
+        //    MATK = matk;
+        //    DEF = def;
+        //    SPD = spd;
+        //    JUMP = jump;
+        //    IED = ied;
+        //}
 
 
-        //FOR FLAME TRACK ARMOR
-        public EquipModel(string equipSet, string equipSlot,
-            int str = 0, int dex = 0, int luk = 0, int INT = 0, int AS = 0,
-            int hp = 0, int mp = 0, int def = 0, int spd = 0, int j = 0,
-            int atk = 0, int bd = 0, int ied = 0, int dmg = 0)
-        {
-            EquipSet = equipSet;
-            EquipSlot = equipSlot;
-            STR = str;
-            DEX = dex;
-            LUK = luk;
-            this.INT = INT;
-            AllStat = AS;
-            HP = hp;
-            MP = mp;
-            DEF = def;
-            SPD = spd;
-            JUMP = j;
-            ATK = atk;
-            BD = bd;
-            IED = ied;
-            DMG = dmg;
-        }
+        ////FOR FLAME TRACK ARMOR
+        //public EquipModel(string equipSet, string equipSlot,
+        //    int str = 0, int dex = 0, int luk = 0, int INT = 0, int AS = 0,
+        //    int hp = 0, int mp = 0, int def = 0, int spd = 0, int j = 0,
+        //    int atk = 0, int bd = 0, int ied = 0, int dmg = 0)
+        //{
+        //    EquipSet = equipSet;
+        //    EquipSlot = equipSlot;
+        //    STR = str;
+        //    DEX = dex;
+        //    LUK = luk;
+        //    this.INT = INT;
+        //    AllStat = AS;
+        //    HP = hp;
+        //    MP = mp;
+        //    DEF = def;
+        //    SPD = spd;
+        //    JUMP = j;
+        //    ATK = atk;
+        //    BD = bd;
+        //    IED = ied;
+        //    DMG = dmg;
+        //}
 
-        //FOR SCROLLING
-        public EquipModel(string equipset, string equipSlot, int str =0, int dex=0, int luk=0, int INT=0, int atk=0)
-        {
-            EquipSet = equipset;
-            EquipSlot = equipSlot;
-            STR = str;
-            this.INT = INT;
-            DEX = dex;
-            LUK = luk;
-            ATK = atk;
+        ////FOR SCROLLING
+        //public EquipModel(string equipset, string equipSlot, int str =0, int dex=0, int luk=0, int INT=0, int atk=0)
+        //{
+        //    EquipSet = equipset;
+        //    EquipSlot = equipSlot;
+        //    STR = str;
+        //    this.INT = INT;
+        //    DEX = dex;
+        //    LUK = luk;
+        //    ATK = atk;
 
-        }
+        //}
 
+        //public EquipModel(string equipName, string equipSet, string equipSlot, int equipLvl, 
+        //    int AS, int HP, int MP, string ST, 
+        //    int atk, int matk, int def, int spd, int jump)
+        //{
+        //    this.EquipName = equipName;
+        //    this.EquipSet = equipSet;
+        //    this.EquipSlot = equipSlot;
+        //    this.EquipLevel = equipLvl;
+        //    this.AllStat = AS;
+        //    this.HP = HP;
+        //    this.MP = MP;
+        //    this.StatType = ST;
+        //    this.ATK = atk;
+        //    this.MATK = matk;
+        //    this.DEF = def;
+        //    this.SPD = spd;
+        //    this.JUMP = jump;
+        //}
         
 
         

@@ -352,6 +352,8 @@ namespace MSEACalculator.MainAppRes.Settings
             addCharTrackCMD = new CustomCommand(addChar, canAddChar);
             AddStatCMD = new CustomCommand(AddStat, canAddStat);
             AddFlameCMD = new CustomCommand(AddFlame, canAddFlame);
+            ACTModel model = new ACTModel();
+            
         }
 
         private void initFields()

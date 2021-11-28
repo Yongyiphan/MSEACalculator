@@ -10,7 +10,7 @@ namespace MSEACalculator.MainAppRes.Settings
 {
     public class ACTModel
     {
-        
+
 
         public Dictionary<string, Character> AllCharDict { get; set; } = DatabaseAccess.GetAllCharDB();
         public Dictionary<string, Character> AllCharTrackDict { get; set; } = DatabaseAccess.GetAllCharTrackDB();

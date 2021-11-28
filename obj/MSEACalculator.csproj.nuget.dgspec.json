@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj": {}
+    "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj": {
+    "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj",
+        "projectUniqueName": "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj",
         "projectName": "MSEACalculator",
-        "projectPath": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\MSEACalculator.csproj",
+        "projectPath": "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj",
         "packagesPath": "C:\\Users\\edgar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\edgar\\Documents\\Personal Progamming\\MSEACalculator\\obj\\",
+        "outputPath": "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -45,35 +45,31 @@
             },
             "Microsoft.Data.Sqlite": {
               "target": "Package",
-              "version": "[5.0.10, )"
-            },
-            "Microsoft.Data.Sqlite.Core": {
-              "target": "Package",
-              "version": "[5.0.10, )"
+              "version": "[5.0.12, )"
             },
             "Microsoft.NETCore.UniversalWindowsPlatform": {
               "target": "Package",
-              "version": "[6.2.12, )"
+              "version": "[6.2.13, )"
             },
             "Microsoft.Toolkit.Uwp.UI.Controls": {
               "target": "Package",
-              "version": "[7.1.1, )"
+              "version": "[7.1.2, )"
             },
             "Microsoft.Toolkit.Uwp.UI.Controls.DataGrid": {
               "target": "Package",
-              "version": "[7.1.1, )"
+              "version": "[7.1.2, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"
             },
-            "SQLitePCLRaw.core": {
+            "SQLitePCLRaw.bundle_winsqlite3": {
               "target": "Package",
-              "version": "[2.0.4, )"
+              "version": "[2.0.7, )"
             },
             "System.Text.Json": {
               "target": "Package",
-              "version": "[5.0.2, )"
+              "version": "[6.0.0, )"
             }
           },
           "imports": [

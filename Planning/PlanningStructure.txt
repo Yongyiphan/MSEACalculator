@@ -126,12 +126,13 @@ AllArmor Table
 "EquipSet" | "ClassType" | "EquipSlot" | MainStat | SecStat | Stat......
 
 
-AllAccessories Table
-"EquipSet" | "EquipSlot" | BaseStat...
-= "Glorion"| "Ring"	 | ....
+AllAccessories Table <- (Gathered)
+"EquipName" |"EquipSet" | "EquipSlot" | AS  | HP | MP | WATK | MATK | DEF | SPD | JUMP 
+= "Glorion" |"Event"    |  "Ring"     | ....
+= "PapuMark"| "Boss"    |  "Eye" 
 
 EquipTrackS(croll) <- Init as Blank
-"ClassName" | "EquipSlot" | "EquipSet" | ScrollSlots | SF | Stat...(if nothing ? 0 : Value)
+"ClassName" | "EquipSlot" | "EquipSet" | ScrollSlots | SF | Stat...(if nothing ? 0 : Value) 
 = "Hero"    | "Hat"       | "CRA"      | 11          | 17 | Stats.....
 = "Hero"    | "Ring"      | "Glorion"  | 0 	     | 0  | 
 
@@ -157,3 +158,9 @@ WATK
 MATK
 Status Res
 Skill +2
+DMG
+IED
+BOSS DMG
+
+TRACK INVENTORY
+EquipSlot | Level | Pot 1 | Pot 2 |Pot3 |AddPot1 |AddPot2 | AddPot3

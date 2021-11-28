@@ -136,4 +136,5 @@ C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\Multip
 C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\ProjectArchitectures.txt
 C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\.winmd_cache\$Microsoft.Graphics.Canvas.winmd_637214534760000000.json
 C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\.winmd_cache\$Microsoft.UI.Xaml.Markup.winmd_637424527200000000.json
+C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\SQLitePCLRaw.provider.winsqlite3.dll
 C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\obj\x86\Debug\MSEACalculator.csproj.AssemblyReference.cache

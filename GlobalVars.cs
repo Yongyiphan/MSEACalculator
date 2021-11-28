@@ -11,7 +11,11 @@ namespace MSEACalculator
 {
     public static class GlobalVars
     {
-        public static string databasePath { get; set; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
+
+        public static string DBName { get; set; } = "Maplestory.db";
+        public static string databasePath { get; set; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, DBName);
+
+        
 
 
 

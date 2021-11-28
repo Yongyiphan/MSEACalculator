@@ -21,8 +21,6 @@ namespace MSEACalculator.CharacterRes.MesoRes
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Windows.UI.Xaml.Build.Tasks"," 10.0.19041.685")]
         private global::Windows.UI.Xaml.Controls.Grid BossingGrid; 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Windows.UI.Xaml.Build.Tasks"," 10.0.19041.685")]
-        private global::Microsoft.Toolkit.Uwp.UI.Controls.DataGrid bossDisplay; 
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Windows.UI.Xaml.Build.Tasks"," 10.0.19041.685")]
         private global::Windows.UI.Xaml.Controls.ComboBox BossSelectorCBox; 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Windows.UI.Xaml.Build.Tasks"," 10.0.19041.685")]
         private global::Windows.UI.Xaml.Controls.ComboBox BossDifficulty; 

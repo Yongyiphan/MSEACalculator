@@ -162,6 +162,9 @@
   <data name="FormatDateTimeOffset" xml:space="preserve">
     <value>The JSON value is not in a supported DateTimeOffset format.</value>
   </data>
+  <data name="BuiltInConvertersNotRooted" xml:space="preserve">
+    <value>Built-in type converters have not been initialized. There is no converter available for type '{0}'. To root all built-in converters, use a 'JsonSerializerOptions'-based method of the 'JsonSerializer'.</value>
+  </data>
   <data name="SpecialNumberValuesNotSupported" xml:space="preserve">
     <value>.NET number values such as positive and negative infinity cannot be written as valid JSON.</value>
   </data>
@@ -183,6 +186,9 @@
   <data name="SerializerOptionsImmutable" xml:space="preserve">
     <value>Serializer options cannot be changed once serialization or deserialization has occurred.</value>
   </data>
+  <data name="NodeValueNotAllowed" xml:space="preserve">
+    <value>A JsonNode cannot be used as a value.</value>
+  </data>
   <data name="EmptyJsonIsInvalid" xml:space="preserve">
     <value>Writing an empty JSON payload (excluding comments) is invalid.</value>
   </data>
@@ -192,11 +198,14 @@
   <data name="DeserializeNoConstructor" xml:space="preserve">
     <value>Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with '{0}' is not supported. Type '{1}'.</value>
   </data>
+  <data name="NoMetadataForType" xml:space="preserve">
+    <value>Metadata for type '{0}' was not provided to the serializer. The serializer method used does not support reflection-based creation of serialization-related type metadata. If using source generation, ensure that all root types passed to the serializer have been indicated with 'JsonSerializableAttribute', along with any types that might be serialized polymorphically.</value>
+  </data>
   <data name="InvalidLeadingZeroInNumber" xml:space="preserve">
     <value>Invalid leading zero before '{0}'.</value>
   </data>
   <data name="MultipleMembersBindWithConstructorParameter" xml:space="preserve">
-    <value>Members '{0}' and '{1}' on type '{2}' cannot both bind with parameter '{3}' in constructor '{4}' on deserialization.</value>
+    <value>Members '{0}' and '{1}' on type '{2}' cannot both bind with parameter '{3}' in the deserialization constructor.</value>
   </data>
   <data name="EndOfStringNotFound" xml:space="preserve">
     <value>Expected end of string, but instead reached end of data.</value>
@@ -207,14 +216,8 @@
   <data name="ArrayDepthTooLarge" xml:space="preserve">
     <value>The maximum configured depth of {0} has been exceeded. Cannot read next JSON array.</value>
   </data>
-  <data name="JsonObjectDuplicateKey" xml:space="preserve">
-    <value>Property with name '{0}' already exists.</value>
-  </data>
   <data name="ExpectedStartOfValueNotFound" xml:space="preserve">
     <value>'{0}' is an invalid start of a value.</value>
-  </data>
-  <data name="DeserializeDuplicateKey" xml:space="preserve">
-    <value>An item with the same property name '{0}' has already been added.</value>
   </data>
   <data name="DefaultIgnoreConditionAlreadySpecified" xml:space="preserve">
     <value>'IgnoreNullValues' and 'DefaultIgnoreCondition' cannot both be set to non-default values.</value>
@@ -222,14 +225,14 @@
   <data name="SerializationConverterOnAttributeNotCompatible" xml:space="preserve">
     <value>The converter specified on '{0}' is not compatible with the type '{1}'.</value>
   </data>
+  <data name="NodeWrongType" xml:space="preserve">
+    <value>The node must be of type '{0}'.</value>
+  </data>
+  <data name="NodeDynamicObjectResultNotAssignable" xml:space="preserve">
+    <value>The result type '{0}' of the dynamic binding produced by the object with type '{1}' for the binder '{2}' is not compatible with the result type '{3}' expected by the call site.</value>
+  </data>
   <data name="CannotWritePropertyWithinArray" xml:space="preserve">
     <value>Cannot write a JSON property within an array or as the first JSON token. Current token type is '{0}'.</value>
-  </data>
-  <data name="EmptyStringToInitializeNumber" xml:space="preserve">
-    <value>Expected a number, but instead got empty string.</value>
-  </data>
-  <data name="PropertyNotFound" xml:space="preserve">
-    <value>Property with name '{0}' not found.</value>
   </data>
   <data name="MetadataInvalidReferenceToValueType" xml:space="preserve">
     <value>Invalid reference to value type '{0}'.</value>
@@ -241,22 +244,28 @@
     <value>The non-public property '{0}' on type '{1}' is annotated with 'JsonIncludeAttribute' which is invalid.</value>
   </data>
   <data name="SerializationDataExtensionPropertyInvalid" xml:space="preserve">
-    <value>The data extension property '{0}.{1}' does not match the required signature of IDictionary&lt;string, JsonElement&gt; or IDictionary&lt;string, object&gt;.</value>
+    <value>The data extension property '{0}.{1}' is invalid. It must implement 'IDictionary&lt;string, JsonElement&gt;' or 'IDictionary&lt;string, object&gt;', or be 'JsonObject'.</value>
   </data>
   <data name="RequiredDigitNotFoundAfterDecimal" xml:space="preserve">
     <value>'{0}' is invalid within a number, immediately after a decimal point ('.'). Expected a digit ('0'-'9').</value>
+  </data>
+  <data name="ConverterCanConvertMultipleTypes" xml:space="preserve">
+    <value>The converter '{0}' handles type '{1}' but is being asked to convert type '{2}'. Either create a separate converter for type '{2}' or change the converter's 'CanConvert' method to only return 'true' for a single type.</value>
   </data>
   <data name="MetadataInvalidPropertyWithLeadingDollarSign" xml:space="preserve">
     <value>Properties that start with '$' are not allowed on preserve mode, either escape the character or turn off preserve references by setting ReferenceHandler to null.</value>
   </data>
   <data name="SerializationDuplicateTypeAttribute" xml:space="preserve">
-    <value>The type '{0}' cannot have more than one property that has the attribute '{1}'.</value>
+    <value>The type '{0}' cannot have more than one member that has the attribute '{1}'.</value>
   </data>
   <data name="ZeroDepthAtEnd" xml:space="preserve">
     <value>Expected depth to be zero at the end of the JSON payload. There is an open JSON object or array that should be closed.</value>
   </data>
   <data name="IgnoreConditionOnValueTypeInvalid" xml:space="preserve">
     <value>The ignore condition 'JsonIgnoreCondition.WhenWritingNull' is not valid on value-type member '{0}' on type '{1}'. Consider using 'JsonIgnoreCondition.WhenWritingDefault'.</value>
+  </data>
+  <data name="NodeUnableToConvert" xml:space="preserve">
+    <value>A value of type '{0}' cannot be converted to a '{1}'.</value>
   </data>
   <data name="ExpectedStartOfPropertyOrValueAfterComment" xml:space="preserve">
     <value>'{0}' is an invalid start of a property name or value, after a comment.</value>
@@ -280,21 +289,21 @@
     <value>The JSON property name for '{0}.{1}' cannot be null.</value>
   </data>
   <data name="ConstructorParamIncompleteBinding" xml:space="preserve">
-    <value>Each parameter in constructor '{0}' on type '{1}' must bind to an object property or field on deserialization. Each parameter name must match with a property or field on the object. The match can be case-insensitive.</value>
-  </data>
-  <data name="ConverterCanConvertNullableRedundant" xml:space="preserve">
-    <value>The converter '{0}' handles type '{1}' but is being asked to convert type '{2}'. Either create a separate converter for type '{2}' or change the converter's 'CanConvert' method to only return 'true' for a single type.</value>
+    <value>Each parameter in the deserialization constructor on type '{0}' must bind to an object property or field on deserialization. Each parameter name must match with a property or field on the object. The match can be case-insensitive.</value>
   </data>
   <data name="MetadataPreservedArrayFailed" xml:space="preserve">
     <value>Deserialization failed for one of these reasons:
 1. {0}
 2. {1}</value>
   </data>
-  <data name="NotNodeJsonElementParent" xml:space="preserve">
-    <value>This JsonElement instance was not built from a JsonNode and is immutable.</value>
+  <data name="NodeArrayIndexNegative" xml:space="preserve">
+    <value>Number was less than 0.</value>
   </data>
-  <data name="InvalidDuplicatePropertyNameHandling" xml:space="preserve">
-    <value>The DuplicatePropertyNameHandling enum must be set to one of the supported values.</value>
+  <data name="NodeElementCannotBeObjectOrArray" xml:space="preserve">
+    <value>The element cannot be an object or array.</value>
+  </data>
+  <data name="NodeJsonObjectCustomConverterNotAllowedOnExtensionProperty" xml:space="preserve">
+    <value>A custom converter for JsonObject is not allowed on an extension property.</value>
   </data>
   <data name="ExpectedNextDigitEValueNotFound" xml:space="preserve">
     <value>'{0}' is an invalid end of a number. Expected 'E' or 'e'.</value>
@@ -308,20 +317,26 @@
   <data name="RequiredDigitNotFoundAfterSign" xml:space="preserve">
     <value>'{0}' is invalid within a number, immediately after a sign character ('+' or '-'). Expected a digit ('0'-'9').</value>
   </data>
+  <data name="NodeUnableToConvertElement" xml:space="preserve">
+    <value>An element of type '{0}' cannot be converted to a '{1}'.</value>
+  </data>
   <data name="CannotWriteCommentWithEmbeddedDelimiter" xml:space="preserve">
     <value>Cannot write a comment value which contains the end of comment delimiter.</value>
   </data>
   <data name="RequiredDigitNotFoundEndOfData" xml:space="preserve">
     <value>Expected a digit ('0'-'9'), but instead reached end of data.</value>
   </data>
+  <data name="NodeElementWrongType" xml:space="preserve">
+    <value>The element must be of type '{0}'</value>
+  </data>
   <data name="DictionaryKeyTypeNotSupported" xml:space="preserve">
-    <value>The type '{0}' is not a supported Dictionary key type.</value>
+    <value>The type '{0}' is not a supported dictionary key using converter of type '{1}'.</value>
+  </data>
+  <data name="MissingFSharpCoreMember" xml:space="preserve">
+    <value>Could not locate required member '{0}' from FSharp.Core. This might happen because your application has enabled member-level trimming.</value>
   </data>
   <data name="DefaultIgnoreConditionInvalid" xml:space="preserve">
     <value>The value cannot be 'JsonIgnoreCondition.Always'.</value>
-  </data>
-  <data name="NumberHandlingOnPropertyTypeMustBeNumberOrCollection" xml:space="preserve">
-    <value>When 'JsonNumberHandlingAttribute' is placed on a property or field, the property or field must be a number or a collection. See member '{0}' on type '{1}'.</value>
   </data>
   <data name="CannotEncodeInvalidUTF16" xml:space="preserve">
     <value>Cannot encode invalid UTF-16 text as JSON. Invalid surrogate value: '{0}'.</value>
@@ -336,7 +351,7 @@
     <value>The '$values' metadata property must be a JSON array. Current token type is '{0}'.</value>
   </data>
   <data name="SerializeTypeInstanceNotSupported" xml:space="preserve">
-    <value>Serialization and deserialization of 'System.Type' instances are not supported and should be avoided since they can lead to security issues.</value>
+    <value>Serialization and deserialization of '{0}' instances are not supported.</value>
   </data>
   <data name="CannotWriteValueAfterPrimitiveOrClose" xml:space="preserve">
     <value>Cannot write a JSON value after a single JSON value or outside of an existing closed object/array. Current token type is '{0}'.</value>
@@ -345,7 +360,7 @@
     <value>The JSON value is not in a supported Boolean format.</value>
   </data>
   <data name="ExtensionDataCannotBindToCtorParam" xml:space="preserve">
-    <value>The extension data property '{0}' on type '{1}' cannot bind with a parameter in constructor '{2}'.</value>
+    <value>The extension data property '{0}' on type '{1}' cannot bind with a parameter in the deserialization constructor.</value>
   </data>
   <data name="UnexpectedEndOfDataWhileReadingComment" xml:space="preserve">
     <value>Unexpected end of data while reading a comment.</value>
@@ -365,6 +380,9 @@
   <data name="FormatByte" xml:space="preserve">
     <value>Either the JSON value is not in a supported format, or is out of bounds for an unsigned byte.</value>
   </data>
+  <data name="NoMetadataForTypeCtorParams" xml:space="preserve">
+    <value>'JsonSerializerContext' '{0}' did not provide constructor parameter metadata for type '{1}'.</value>
+  </data>
   <data name="MetadataIdIsNotFirstProperty" xml:space="preserve">
     <value>The metadata property '$id' must be the first property in the JSON object.</value>
   </data>
@@ -373,6 +391,9 @@
   </data>
   <data name="SerializerConverterFactoryReturnsNull" xml:space="preserve">
     <value>The converter '{0}' cannot return a null value.</value>
+  </data>
+  <data name="SerializerContextOptionsImmutable" xml:space="preserve">
+    <value>A 'JsonSerializerOptions' instance associated with a 'JsonSerializerContext' instance cannot be mutated once the context has been instantiated.</value>
   </data>
   <data name="FormatInt64" xml:space="preserve">
     <value>Either the JSON value is not in a supported format, or is out of bounds for an Int64.</value>
@@ -393,10 +414,13 @@
     <value>Unable to cast object of type '{0}' to type '{1}'.</value>
   </data>
   <data name="ConstructorMaxOf64Parameters" xml:space="preserve">
-    <value>The constructor '{0}' on type '{1}' may not have more than 64 parameters for deserialization.</value>
+    <value>The deserialization constructor on type '{0}' may not have more than 64 parameters for deserialization.</value>
   </data>
   <data name="MaxDepthMustBePositive" xml:space="preserve">
     <value>Max depth must be positive.</value>
+  </data>
+  <data name="FieldCannotBeVirtual" xml:space="preserve">
+    <value>A 'field' member cannot be 'virtual'. See arguments for the '{0}' and '{1}' parameters. </value>
   </data>
   <data name="TrailingCommaNotAllowedBeforeObjectEnd" xml:space="preserve">
     <value>The JSON object contains a trailing comma at the end which is not supported in this mode. Change the reader options.</value>
@@ -410,17 +434,20 @@
   <data name="SerializationConverterNotCompatible" xml:space="preserve">
     <value>The converter '{0}' is not compatible with the type '{1}'.</value>
   </data>
-  <data name="PropertyTypeMismatch" xml:space="preserve">
-    <value>Property with name '{0}' has a different type than expected.</value>
-  </data>
   <data name="MetadataCannotParsePreservedObjectToImmutable" xml:space="preserve">
     <value>Cannot parse a JSON object containing metadata properties like '$id' into an array or immutable collection type. Type '{0}'.</value>
   </data>
   <data name="ExpectedEndOfDigitNotFound" xml:space="preserve">
     <value>'{0}' is an invalid end of a number. Expected a delimiter.</value>
   </data>
+  <data name="ConverterForPropertyMustBeValid" xml:space="preserve">
+    <value>The generic type of the converter for property '{0}.{1}' must match with the specified converter type '{2}'. The converter must not be 'null'.</value>
+  </data>
   <data name="CannotEncodeInvalidUTF8" xml:space="preserve">
     <value>Cannot encode invalid UTF-8 text as JSON. Invalid input: '{0}'.</value>
+  </data>
+  <data name="OptionsAlreadyBoundToContext" xml:space="preserve">
+    <value>"The specified 'JsonSerializerOptions' instance is already bound with a 'JsonSerializerContext' instance."</value>
   </data>
   <data name="ValueTooLarge" xml:space="preserve">
     <value>The JSON value of length {0} is too large and not supported.</value>
@@ -440,6 +467,9 @@
   <data name="ExpectedOneCompleteToken" xml:space="preserve">
     <value>The input does not contain any complete JSON tokens. Expected the input to have at least one valid, complete, JSON token.</value>
   </data>
+  <data name="FSharpDiscriminatedUnionsNotSupported" xml:space="preserve">
+    <value>F# discriminated union serialization is not supported. Consider authoring a custom converter for the type.</value>
+  </data>
   <data name="SerializationConverterRead" xml:space="preserve">
     <value>The converter '{0}' read too much or not enough.</value>
   </data>
@@ -458,6 +488,9 @@
   <data name="ExpectedNull" xml:space="preserve">
     <value>'{0}' is an invalid JSON literal. Expected the literal 'null'.</value>
   </data>
+  <data name="NodeCollectionIsReadOnly" xml:space="preserve">
+    <value>Collection is read-only.</value>
+  </data>
   <data name="CannotTranscodeInvalidUtf16" xml:space="preserve">
     <value>Cannot transcode invalid UTF-16 string to UTF-8 JSON text.</value>
   </data>
@@ -469,6 +502,9 @@
   </data>
   <data name="FormatUInt64" xml:space="preserve">
     <value>Either the JSON value is not in a supported format, or is out of bounds for a UInt64.</value>
+  </data>
+  <data name="NodeCycleDetected" xml:space="preserve">
+    <value>A node cycle was detected.</value>
   </data>
   <data name="ExpectedFalse" xml:space="preserve">
     <value>'{0}' is an invalid JSON literal. Expected the literal 'false'.</value>
@@ -494,17 +530,35 @@
   <data name="InvalidEndOfJsonNonPrimitive" xml:space="preserve">
     <value>'{0}' is an invalid token type for the end of the JSON payload. Expected either 'EndArray' or 'EndObject'.</value>
   </data>
+  <data name="NoDefaultOptionsForContext" xml:space="preserve">
+    <value>To specify a serialization implementation for type '{0}'', context '{0}' must specify default options.</value>
+  </data>
+  <data name="NodeDuplicateKey" xml:space="preserve">
+    <value>An item with the same key has already been added. Key: {0}</value>
+  </data>
   <data name="DeserializePolymorphicInterface" xml:space="preserve">
     <value>Deserialization of interface types is not supported. Type '{0}'.</value>
   </data>
   <data name="DeserializeUnableToConvertValue" xml:space="preserve">
     <value>The JSON value could not be converted to {0}.</value>
   </data>
+  <data name="TypeRequiresAsyncSerialization" xml:space="preserve">
+    <value>The type '{0}' can only be serialized using async serialization methods.</value>
+  </data>
+  <data name="SerializerConverterFactoryReturnsJsonConverterFactory" xml:space="preserve">
+    <value>The converter '{0}' cannot return an instance of JsonConverterFactory.</value>
+  </data>
   <data name="FormatSingle" xml:space="preserve">
     <value>Either the JSON value is not in a supported format, or is out of bounds for a Single.</value>
   </data>
+  <data name="NodeArrayTooSmall" xml:space="preserve">
+    <value>Destination array was not long enough.</value>
+  </data>
   <data name="CannotSkip" xml:space="preserve">
     <value>Cannot skip tokens on partial JSON. Either get the whole payload and create a Utf8JsonReader instance where isFinalBlock is true or call TrySkip.</value>
+  </data>
+  <data name="NoMetadataForTypeProperties" xml:space="preserve">
+    <value>'JsonSerializerContext' '{0}' did not provide property metadata for type '{1}'.</value>
   </data>
   <data name="PropertyNameTooLarge" xml:space="preserve">
     <value>The JSON property name of length {0} is too large and not supported.</value>
@@ -515,17 +569,23 @@
   <data name="DeserializeWrongType" xml:space="preserve">
     <value>The specified type {0} must derive from the specific value's type {1}.</value>
   </data>
+  <data name="FormatTimeSpan" xml:space="preserve">
+    <value>The JSON value is not in a supported TimeSpan format.</value>
+  </data>
   <data name="ExpectedValueAfterPropertyNameNotFound" xml:space="preserve">
     <value>Expected a value, but instead reached end of data.</value>
   </data>
-  <data name="NumberHandlingConverterMustBeBuiltIn" xml:space="preserve">
-    <value>'JsonNumberHandlingAttribute' cannot be placed on a property, field, or type that is handled by a custom converter. See usage(s) of converter '{0}' on type '{1}'.</value>
+  <data name="NumberHandlingOnPropertyInvalid" xml:space="preserve">
+    <value>'JsonNumberHandlingAttribute' is only valid on a number or a collection of numbers when applied to a property or field. See member '{0}' on type '{1}'.</value>
   </data>
   <data name="StreamNotWritable" xml:space="preserve">
     <value>Stream is not writable.</value>
   </data>
   <data name="CallFlushToAvoidDataLoss" xml:space="preserve">
     <value>The JSON writer needs to be flushed before getting the current state. There are {0} bytes that have not been committed to the output.</value>
+  </data>
+  <data name="NodeAlreadyHasParent" xml:space="preserve">
+    <value>The node already has a parent.</value>
   </data>
   <data name="MetadataReferenceOfTypeCannotBeAssignedToType" xml:space="preserve">
     <value>The object with reference id '{0}' of type '{1}' cannot be assigned to the type '{2}'.</value>
@@ -539,9 +599,6 @@
   <data name="ExpectedSeparatorAfterPropertyNameNotFound" xml:space="preserve">
     <value>'{0}' is invalid after a property name. Expected a ':'.</value>
   </data>
-  <data name="ArrayModifiedDuringIteration" xml:space="preserve">
-    <value>The JSON array was modified during iteration.</value>
-  </data>
   <data name="UnexpectedEndOfLineSeparator" xml:space="preserve">
     <value>Found invalid line or paragraph separator character while reading a comment.</value>
   </data>
@@ -553,5 +610,11 @@
   </data>
   <data name="JsonSerializerDoesNotSupportComments" xml:space="preserve">
     <value>Comments cannot be stored when deserializing objects, only the Skip and Disallow comment handling modes are supported.</value>
+  </data>
+  <data name="MetadataInitFuncsNull" xml:space="preserve">
+    <value>Invalid configuration provided for 'propInitFunc', 'ctorParamInitFunc' and 'serializeFunc'.</value>
+  </data>
+  <data name="InitializeTypeInfoAsObjectInvalid" xml:space="preserve">
+    <value>The value must represent an object type.</value>
   </data>
 </root>

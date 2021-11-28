@@ -73,10 +73,12 @@
                                   SelectedValuePath="Key"
                                   />
                         <TextBlock Text="Set: "/>
-                        <ComboBox x:Name="EquipmentList" Width="130" ItemsSource="{Binding ArmorSet, Mode=TwoWay}"/>
-                        <!--OPTION TO ADD WEAPON-->
-                        <TextBlock Text="Weapon Type" Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
-                        <ComboBox x:Name="WeapType" Width="130" Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
+                        <ComboBox x:Name="EquipmentList" Width="130" ItemsSource="{Binding ArmorSet, Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedSet, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <!--OPTION TO SELECT WEAP/ ACCESSORY NAME-->
+                        <TextBlock Text="{Binding ItemNameTypeTxt}" Visibility="{Binding ShowItemSelect, Mode=TwoWay}"/>
+                        <ComboBox x:Name="WeapType" Width="130" Visibility="{Binding ShowItemSelect, Mode=TwoWay}"
+                                  ItemsSource="{Binding ItemNameList}"/>
                     </StackPanel>
                     <!--SCROLLING RECORDS-->
                     <TextBlock Text="Scroll" Margin="5" FontSize="17" Visibility="{Binding ShowBonusStat, Mode=TwoWay}" />

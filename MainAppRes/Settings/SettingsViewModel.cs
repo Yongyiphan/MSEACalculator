@@ -38,6 +38,7 @@ namespace MSEACalculator.MainAppRes.Settings
             var timer = new Stopwatch();
             timer.Start();
             var resetDB = DatabaseAccess.databaseInit();
+            //var testDB = DatabaseAccess.testDBCon();
             timer.Stop();
 
             TimeSpan timeTaken = timer.Elapsed;
@@ -46,6 +47,7 @@ namespace MSEACalculator.MainAppRes.Settings
 
             TimeElapsed = String.Format("{0}", timeTaken.ToString(@"m\:ss\.fff"));
 
+            //TimeElapsed = testDB.ToString();
 
         }
 

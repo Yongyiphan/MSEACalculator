@@ -160,6 +160,7 @@ namespace MSEACalculator
                 "CharName string," +
                 "UnionRank string," +
                 "Level int," +
+                "Starforce int," +
                 "PRIMARY KEY(CharName)" +
                 ");";
 
@@ -1060,7 +1061,7 @@ namespace MSEACalculator
         {
             bool insertPassed;
 
-            string insertQueryStr = "INSERT INTO CharacterTrack (charName, unionRank, level) VALUES (@CN, @UR, @Lvl)";
+            string insertQueryStr = "INSERT INTO CharacterTrack (CharName, UnionRank, Level, Starforce ) VALUES (@CN, @UR, @Lvl, @SF)";
 
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GlobalVars.databasePath}"))
             {
@@ -1073,6 +1074,7 @@ namespace MSEACalculator
                         insertCMD.Parameters.AddWithValue("@CN", character.className);
                         insertCMD.Parameters.AddWithValue("@UR", character.unionRank);
                         insertCMD.Parameters.AddWithValue("@Lvl", character.level);
+                        insertCMD.Parameters.AddWithValue("@SF", character.starforce);
 
                         insertCMD.ExecuteNonQuery();
                     }

@@ -36,6 +36,8 @@ namespace MSEACalculator.CharacterRes
         public List<string> SMainStat { get; set; }
         public List<string> SSecStat { get; set; }
 
+        public int starforce { get; set; }
+
         public Character() { }
 
         //FOR RETREIVING W/O UNION
@@ -63,11 +65,12 @@ namespace MSEACalculator.CharacterRes
         
         
         //FOR TRACKING CHARACTER
-        public Character(string CN, string uRank, int level)
+        public Character(string CN, string uRank, int level, int sf)
         {
             this.className = CN;
             this.unionRank = uRank;
             this.level = level;
+            this.starforce = sf;
         }
 
         //FOR BOSSING

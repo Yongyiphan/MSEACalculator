@@ -21,6 +21,11 @@ namespace MSEACalculator.MainAppRes.Settings
         public List<int> Slots { get { return ScrollModel.Slots; } } //= new Scrolling().Slots;
         public List<Character> AllCharList { get { return AllCharTModel.AllCharList; } }
 
+        public List<string> SlotSet { get; set; } = new List<string>
+        {
+            "Weapon", "Gloves", "Armor"
+        };
+
         //INIT Empty List
         private ObservableCollection<Character> charTrackList = new ObservableCollection<Character>();
         public ObservableCollection<Character> CharTrackList
@@ -100,7 +105,7 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
-        private string lvlI;
+        private string lvlI = GlobalVars.minLevel.ToString();
         public string LvlInput
         {
             get
@@ -112,6 +117,17 @@ namespace MSEACalculator.MainAppRes.Settings
                 lvlI = value;
                 OnPropertyChanged(nameof(LvlInput));
                 addCharTrackCMD.RaiseCanExecuteChanged();
+            }
+        }
+
+        private string _StarF = "0";
+        public string StarF
+        {
+            get { return _StarF; }
+            set 
+            {
+                _StarF = value;
+                OnPropertyChanged(nameof(StarF));
             }
         }
 
@@ -145,14 +161,14 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
-        private Visibility _ShowItemSelect = Visibility.Collapsed;
-        public Visibility ShowItemSelect
+        private Visibility _ShowWeapon = Visibility.Collapsed;
+        public Visibility ShowWeapon
         {
-            get { return _ShowItemSelect; }
+            get { return _ShowWeapon; }
             set
             {
-                _ShowItemSelect = value;
-                OnPropertyChanged(nameof(ShowItemSelect));
+                _ShowWeapon = value;
+                OnPropertyChanged(nameof(ShowWeapon));
             }
         }
 
@@ -199,26 +215,31 @@ namespace MSEACalculator.MainAppRes.Settings
             set
             {
                 _SelectedESlot = value;
-                ItemNameTypeTxt = EquipSlots[SelectedESlot] == "Weapon" ? "Weapon Type: " : "Item Name: ";
+                ItemNameTypeTxt = SlotSet.Contains(EquipSlots[SelectedESlot]) ? "Set: " : "Item Name: ";
                 ShowBonusStat = SelectedESlot != null && ChkBoxSelected ? Visibility.Visible : Visibility.Collapsed;
-                ShowItemSelect = SelectedESlot != null && ChkBoxSelected ? Visibility.Visible : Visibility.Collapsed;
+                 
+                 
+                ShowWeapon = ShowBonusStat == Visibility.Visible
+                    && EquipSlots[SelectedESlot] == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
+
+
                 ShowEquipSet(SelectedESlot);
                 OnPropertyChanged(nameof(SelectedESlot));
             }
         }
 
-        private string _SelectedSet;
-        public string SelectedSet
+        private string _SelectedSetItem;
+        public string SelectedSetItem
         {
-            get { return _SelectedSet; }
+            get { return _SelectedSetItem; }
             set
             {
-                _SelectedSet = value;
-                OnPropertyChanged(nameof(SelectedSet));
+                _SelectedSetItem = value;
+                OnPropertyChanged(nameof(SelectedSetItem));
             }
         }
 
-        private string _ItemNameTypeTxt;
+        private string _ItemNameTypeTxt = "Set: ";
         public string ItemNameTypeTxt
         {
             get { return _ItemNameTypeTxt; }
@@ -226,15 +247,6 @@ namespace MSEACalculator.MainAppRes.Settings
                 _ItemNameTypeTxt = value; 
                 OnPropertyChanged(nameof(ItemNameTypeTxt)); }
         }
-
-        private ObservableCollection<string> _ItemNameList = new ObservableCollection<string>();
-        public ObservableCollection<string> ItemNameList 
-        {
-            get { return _ItemNameList; } 
-            set { _ItemNameList = value;
-                OnPropertyChanged(nameof(ItemNameList));
-            } 
-        } 
 
         private int _NoSlot;
         public int NoSlot
@@ -393,14 +405,17 @@ namespace MSEACalculator.MainAppRes.Settings
 
         private bool canAddChar()
         {
-            if (SelectedAllChar != null && LvlInput != null)
+            if (SelectedAllChar != null && LvlInput != null && StarF != null)
             {
-                int outValue;
-                if (int.TryParse(LvlInput, out outValue)) {
-                    return true;
+                int lvlOutput, sfOutput;
+                if (int.TryParse(LvlInput, out lvlOutput) && int.TryParse(StarF, out sfOutput)){
+
+                    if (lvlOutput <= GlobalVars.maxLevel && lvlOutput >= GlobalVars.minLevel)
+                    {
+                        return true;
+                    }
                 }
                 CommonFunc.errorDia("Invalid Level Value");
-                LvlInput = null;
                 return false;
             }
 
@@ -413,9 +428,11 @@ namespace MSEACalculator.MainAppRes.Settings
             if (CharTrackList.ToList().Find(x => x.className == SelectedAllChar.className) == null)
             {
                 int charLvl = Convert.ToInt32(LvlInput);
+                
+                int sf = Convert.ToInt32(StarF);
                 string URank = CommonFunc.returnUnionRank(SelectedAllChar.className, charLvl);
 
-                Character tempChar = new Character(SelectedAllChar.className, URank, charLvl);
+                Character tempChar = new Character(SelectedAllChar.className, URank, charLvl, sf);
                 CharTrackList.Add(tempChar);
                 bool insertResult = DatabaseAccess.insertCharTrack(tempChar);
                 if (insertResult == false)
@@ -423,7 +440,8 @@ namespace MSEACalculator.MainAppRes.Settings
                     CommonFunc.errorDia("This character has been added before.");
                 }
                 SelectedAllChar = null;
-                LvlInput = null;
+                LvlInput = "1";
+                StarF = "0";
             }
             else
             {
@@ -497,86 +515,74 @@ namespace MSEACalculator.MainAppRes.Settings
             DictValue = FlameRecord.Values.ToList();
         }
 
-
         private void ShowEquipSet(string selectedESlot)
         {
+            Func<string, ObservableCollection<string>, List<EquipModel>, ObservableCollection<string>> 
+                FilterSet = (eSlot, displayList, itemList) =>
+            {
+                
+
+                foreach(var item in itemList)
+                {
+                    if(item.EquipSlot == eSlot)
+                    {
+                        if (!displayList.Contains(item.EquipSet))
+                        {
+                            displayList.Add(item.EquipSet);
+                        }
+                    }
+                }
+
+
+                return displayList;
+            };
+
+            Func<string, ObservableCollection<string>, List<EquipModel>, ObservableCollection<string>>
+                DisplayItemNameL = (eSlot, displayList, itemList) =>
+            {
+                foreach(var item in itemList)
+                {
+                    if(item.EquipSlot == eSlot)
+                    {
+                        if (!displayList.Contains(item.EquipName))
+                        {
+                            displayList.Add(item.EquipName);
+                        }
+                    }
+                }
+
+                return displayList;
+            };
+            
             switch (EquipSlots[selectedESlot])
             {
                 case "Weapon":
-                    ArmorSet.Clear();
                     break;
-
-                case "Armor":
-
-                    ArmorSet.Clear();
-
-                    foreach(var item in AllCharTModel.AllArmorList)
-                    {
-                        if(item.EquipSlot == selectedESlot)
-                        {
-                            if (!ArmorSet.Contains(item.EquipSet))
-                            {
-                                ArmorSet.Add(item.EquipSet);
-                            }
-                            
-                        }
-                    }
-                    break;
-                //Code For each types of EquipSlot
                 case "Gloves":
-
                     ArmorSet.Clear();
-
-                    foreach (var item in AllCharTModel.AllArmorList)
-                    {
-                        if (item.EquipSlot == selectedESlot)
-                        {
-                            if (!ArmorSet.Contains(item.EquipSet))
-                            {
-                                ArmorSet.Add(item.EquipSet);
-                            }
-
-                        }
-                    }
-
+                    ArmorSet = FilterSet(selectedESlot, ArmorSet, AllCharTModel.AllArmorList);
+                    break;
+                case "Armor":
+                    ArmorSet.Clear();
+                    ArmorSet = FilterSet(selectedESlot, ArmorSet, AllCharTModel.AllArmorList);
                     break;
                 case "Accessory":
-
                     ArmorSet.Clear();
-                    
-                    foreach(var item in AllCharTModel.AllAccList)
-                    {
-                        if (item.EquipSlot == selectedESlot)
-                        {
-                            if (!ArmorSet.Contains(item.EquipSet))
-                            {
-                                ArmorSet.Add(item.EquipSet);
-                            }
-
-                        }
-                    }
-
+                    ArmorSet = DisplayItemNameL(selectedESlot, ArmorSet, AllCharTModel.AllAccList);
                     break;
-
                 case "Ring":
                     ArmorSet.Clear();
-
-                    foreach (var item in AllCharTModel.AllAccList)
-                    {
-                        if(item.EquipSlot == EquipSlots[selectedESlot])
-                        {
-                            if (!ArmorSet.Contains(item.EquipSet))
-                            {
-                                ArmorSet.Add(item.EquipSet);
-                            }
-                        }
-                    }
-
+                    ArmorSet = DisplayItemNameL(EquipSlots[selectedESlot], ArmorSet, AllCharTModel.AllAccList);
                     break;
-
+                case "Pendant":
+                    ArmorSet.Clear();
+                    ArmorSet = DisplayItemNameL(EquipSlots[selectedESlot], ArmorSet, AllCharTModel.AllAccList);
+                    break;
                 default:
+                    ArmorSet.Clear();
                     break;
             }
+
         }
     }
 

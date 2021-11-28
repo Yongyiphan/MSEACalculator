@@ -15,8 +15,8 @@ namespace MSEACalculator
         public static string DBName { get; set; } = "Maplestory.db";
         public static string databasePath { get; set; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, DBName);
 
-        
-
+        public static int minLevel { get; set; } = 1;
+        public static int maxLevel { get; set; } = 300;
 
 
         public static List<string> BaseStatTypes { get; set; } = new List<string> {

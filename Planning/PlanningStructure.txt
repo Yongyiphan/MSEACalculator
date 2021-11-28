@@ -164,3 +164,12 @@ BOSS DMG
 
 TRACK INVENTORY
 EquipSlot | Level | Pot 1 | Pot 2 |Pot3 |AddPot1 |AddPot2 | AddPot3
+
+
+Add Flow 1
+Select equipslot
+if weapon -> display weapon set, list
+if armor -> display set 5?
+if gloves -> display set 5?
+if accessories -> display item name for slot
+

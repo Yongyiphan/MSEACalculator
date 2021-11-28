@@ -51,7 +51,7 @@
                     <TextBlock Text="Level"/>
                     <TextBox Text="{Binding LvlInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" />
                     <TextBlock Text="Starforce"/>
-                    <TextBox/>
+                    <TextBox Text="{Binding StarF, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                     <Button x:Name="AddTrack" Content="Add" Command="{Binding addCharTrackCMD}"/>
                     <Button x:Name="RemoveTrack" Content="Remove"/>
                 </StackPanel>
@@ -72,13 +72,13 @@
                                   SelectedValue="{Binding SelectedESlot, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                   SelectedValuePath="Key"
                                   />
-                        <TextBlock Text="Set: "/>
+                        <!--Display Armor Set / Item Name-->
+                        <TextBlock Text="{Binding ItemNameTypeTxt, Mode=TwoWay}"/>
                         <ComboBox x:Name="EquipmentList" Width="130" ItemsSource="{Binding ArmorSet, Mode=TwoWay}"
-                                  SelectedItem="{Binding SelectedSet, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                        <!--OPTION TO SELECT WEAP/ ACCESSORY NAME-->
-                        <TextBlock Text="{Binding ItemNameTypeTxt}" Visibility="{Binding ShowItemSelect, Mode=TwoWay}"/>
-                        <ComboBox x:Name="WeapType" Width="130" Visibility="{Binding ShowItemSelect, Mode=TwoWay}"
-                                  ItemsSource="{Binding ItemNameList}"/>
+                                  SelectedItem="{Binding SelectedSetItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <!--OPTION TO SELECT WEAP-->
+                        <TextBlock Text="Type: " Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
+                        <ComboBox x:Name="WeapType" Width="130" Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
                     </StackPanel>
                     <!--SCROLLING RECORDS-->
                     <TextBlock Text="Scroll" Margin="5" FontSize="17" Visibility="{Binding ShowBonusStat, Mode=TwoWay}" />

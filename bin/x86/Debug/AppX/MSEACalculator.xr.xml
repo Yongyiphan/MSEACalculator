@@ -42,8 +42,11 @@
     <RootPropertyPathName Name="IsSpellTrace" />
     <RootPropertyPathName Name="ShowEquipmentPanel" />
     <RootPropertyPathName Name="Key" />
-    <RootPropertyPathName Name="ShowWeapon" />
+    <RootPropertyPathName Name="ShowItemSelect" />
+    <RootPropertyPathName Name="ItemNameList" />
+    <RootPropertyPathName Name="ItemNameTypeTxt" />
     <RootPropertyPathName Name="ArmorSet" />
+    <RootPropertyPathName Name="SelectedSet" />
     <RootPropertyPathName Name="AllCharTModel" />
     <RootPropertyPathName Name="EquipSlot" />
     <RootPropertyPathName Name="SelectedESlot" />

@@ -18,7 +18,7 @@ namespace MSEACalculator.MainAppRes.Settings
         public Dictionary<string, string> EquipSlot { get; set; } = DatabaseAccess.GetEquipSlotDB();
         public List<string> FlameStatsTypes { get; set; } = GlobalVars.BaseStatTypes.Concat(GlobalVars.AddStatType).ToList();
 
-        public List<string> ArmorSets { get; set; }
+        public List<EquipModel> AllAccList { get; set; } = DatabaseAccess.GetAllAccessoriesDB();
 
 
         public List<Character> AllCharList { get; set; }
@@ -134,7 +134,7 @@ namespace MSEACalculator.MainAppRes.Settings
 
         public ACTModel()
         {
-            ArmorSets = AllArmorList.Select(x => x.EquipSet).ToList().Distinct().ToList();
+            //ArmorSets = AllArmorList.Select(x => x.EquipSet).ToList().Distinct().ToList();
             AllCharList = AllCharDict.Values.ToList();
         }
 

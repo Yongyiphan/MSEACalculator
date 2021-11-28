@@ -18,8 +18,13 @@
     <RemoveNonLayoutFiles>true</RemoveNonLayoutFiles>
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
+<<<<<<< HEAD
     <LayoutDir>C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\AppX</LayoutDir>
     <RegisteredManifestChecksum>4834163E0924CBDD1356CC1D364EF76BBEC8ED71F05DCD05890CDD4EA7CB2CA2</RegisteredManifestChecksum>
+=======
+    <LayoutDir>C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\bin\x86\Debug\AppX</LayoutDir>
+    <RegisteredManifestChecksum>CEBD08CE5C268DDEAC1FF9626ED69DB59BC608AD4F1BCB9EC110541CA0B10F2B</RegisteredManifestChecksum>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     <RegisteredPackageMoniker>MSEA-000f7318-a33f-4024-b59c-7eafe27b8831_1.0.0.0_x86__h8rqv0gxgvjbt</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>MSEA-000f7318-a33f-4024-b59c-7eafe27b8831_h8rqv0gxgvjbt!App</RegisteredUserModeAppID>
     <RegisteredPackageID>MSEA-000f7318-a33f-4024-b59c-7eafe27b8831</RegisteredPackageID>
@@ -30,13 +35,21 @@
     <AppXManifest Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:05.621</Modified>
+=======
+      <Modified>2021-11-27T19:08:33.612</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MSEACalculator.exe">
       <PackagePath>entrypoint\MSEACalculator.exe</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:02.101</Modified>
+=======
+      <Modified>2021-11-27T19:08:32.960</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\asyncenumerator\4.0.2\lib\netstandard2.0\AsyncEnumerable.dll">
       <PackagePath>AsyncEnumerable.dll</PackagePath>
@@ -214,43 +227,83 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MSEACalculator.xr.xml">
       <PackagePath>MSEACalculator.xr.xml</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-22T12:10:30.605</Modified>
+=======
+      <Modified>2021-11-27T19:03:48.134</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:01.844</Modified>
+=======
+      <Modified>2021-11-27T19:08:32.848</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\CharacterRes\CharacterPage.xbf">
       <PackagePath>CharacterRes\CharacterPage.xbf</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:01.844</Modified>
+=======
+      <Modified>2021-11-27T19:08:32.849</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\CharacterRes\MesoRes\MesoPage.xbf">
       <PackagePath>CharacterRes\MesoRes\MesoPage.xbf</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:01.809</Modified>
+=======
+      <Modified>2021-11-27T19:08:32.834</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\EventRes\Event.xbf">
       <PackagePath>EventRes\Event.xbf</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:01.844</Modified>
+=======
+      <Modified>2021-11-27T19:08:32.849</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MainAppRes\Settings\AddCharTrackPage.xbf">
       <PackagePath>MainAppRes\Settings\AddCharTrackPage.xbf</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:01.819</Modified>
+=======
+      <Modified>2021-11-27T19:08:32.837</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MainAppRes\TestingBlankPage.xbf">
       <PackagePath>MainAppRes\TestingBlankPage.xbf</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:01.825</Modified>
+=======
+      <Modified>2021-11-27T19:08:32.838</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\ViewPages\HomePage.xbf">
       <PackagePath>ViewPages\HomePage.xbf</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:01.845</Modified>
+=======
+      <Modified>2021-11-27T19:08:32.849</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:01.845</Modified>
+=======
+      <Modified>2021-11-27T19:08:32.849</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\MainAppRes\Settings\SettingsPage.xbf">
       <PackagePath>MainAppRes\Settings\SettingsPage.xbf</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:01.845</Modified>
+=======
+      <Modified>2021-11-27T19:08:32.849</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.UniversalCRT.Debug\10.0.19041.0\\redist\Debug\x86\ucrtbased.dll">
       <PackagePath>ucrtbased.dll</PackagePath>
@@ -262,11 +315,19 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:03.576</Modified>
+=======
+      <Modified>2021-11-26T17:34:37.282</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\Documents\Personal Programming\MSEACalculator\bin\x86\Debug\Core\MSEACalculator.exe">
       <PackagePath>MSEACalculator.exe</PackagePath>
+<<<<<<< HEAD
       <Modified>2021-11-25T12:53:05.606</Modified>
+=======
+      <Modified>2021-11-27T19:08:33.610</Modified>
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edgar\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\lib\uap10.0\Microsoft.UI.Xaml.winmd">
       <PackagePath>Microsoft.UI.Xaml.winmd</PackagePath>

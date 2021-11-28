@@ -6,16 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Microsoft.Data.Sqlite;
 
 namespace MSEACalculator
 {
     public static class GlobalVars
     {
-        public static string DBFileName { get; set; } = "Maplestory.db";
 
-        public static string databasePath { get; set; } = Path.Combine(ApplicationData.Current.LocalFolder.Path,DBFileName);
+        public static string DBName { get; set; } = "Maplestory.db";
+        public static string databasePath { get; set; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, DBName);
+
         
+
 
 
         public static List<string> BaseStatTypes { get; set; } = new List<string> {

@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "bAyGTL4vxIKJn0f6Raj24zqJmgBAbUwIl7yMfaV7zVdfJoCTR60HpmxIRXoxNVOissYEsUFPLV9DO81Bgwosjw==",
+=======
+  "dgSpecHash": "zn6pjRpIl3s+UVKjMOvb5DeUzS8Gm2jWdGESejWjZLZIrUdMaLsbWqIFY/wIJ0DdeL9wAsuRE5b311R4vvEZuw==",
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
   "success": true,
   "projectFilePath": "C:\\Users\\edgar\\Documents\\Personal Programming\\MSEACalculator\\MSEACalculator.csproj",
   "expectedPackageFiles": [
@@ -12,7 +16,11 @@
     "C:\\Users\\edgar\\.nuget\\packages\\microsoft.data.sqlite.core\\5.0.12\\microsoft.data.sqlite.core.5.0.12.nupkg.sha512",
     "C:\\Users\\edgar\\.nuget\\packages\\microsoft.net.native.compiler\\2.2.11-rel-30601-02\\microsoft.net.native.compiler.2.2.11-rel-30601-02.nupkg.sha512",
     "C:\\Users\\edgar\\.nuget\\packages\\microsoft.net.uwpcoreruntimesdk\\2.2.13\\microsoft.net.uwpcoreruntimesdk.2.2.13.nupkg.sha512",
+<<<<<<< HEAD
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\microsoft.netcore.platforms\\2.1.0\\microsoft.netcore.platforms.2.1.0.nupkg.sha512",
+=======
+    "C:\\Users\\edgar\\.nuget\\packages\\microsoft.netcore.platforms\\2.1.0\\microsoft.netcore.platforms.2.1.0.nupkg.sha512",
+>>>>>>> 845c6f34bc2e50a4f011d261812597dd0f0727b0
     "C:\\Users\\edgar\\.nuget\\packages\\microsoft.netcore.universalwindowsplatform\\6.2.13\\microsoft.netcore.universalwindowsplatform.6.2.13.nupkg.sha512",
     "C:\\Users\\edgar\\.nuget\\packages\\microsoft.toolkit\\7.1.2\\microsoft.toolkit.7.1.2.nupkg.sha512",
     "C:\\Users\\edgar\\.nuget\\packages\\microsoft.toolkit.uwp\\7.1.2\\microsoft.toolkit.uwp.7.1.2.nupkg.sha512",

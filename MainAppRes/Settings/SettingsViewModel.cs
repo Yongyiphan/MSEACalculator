@@ -1,5 +1,12 @@
 ﻿using MSEACalculator.OtherRes;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MSEACalculator.MainAppRes;
+using MSEACalculator.CharacterRes.MesoRes;
+using Microsoft.UI.Xaml.Controls;
 using System.Diagnostics;
 
 namespace MSEACalculator.MainAppRes.Settings
@@ -24,24 +31,23 @@ namespace MSEACalculator.MainAppRes.Settings
             resetDBCMD = new CustomCommand(resetDB, () => { return true; });
 
         }
-
+        
 
         private void resetDB()
         {
             var timer = new Stopwatch();
             timer.Start();
             var resetDB = DatabaseAccess.databaseInit();
-            //var test = DatabaseAccess.TestDBCon();
+            //var testDB = DatabaseAccess.testDBCon();
             timer.Stop();
 
             TimeSpan timeTaken = timer.Elapsed;
 
             //timelapsed.Text = "Time Taken: " + timeTaken.ToString(@"m\:ss\.fff");
 
-            TimeElapsed = String.Format("Completed at {0}", timeTaken.ToString(@"m\:ss\.fff"));
+            TimeElapsed = String.Format("{0}", timeTaken.ToString(@"m\:ss\.fff"));
 
-            //TimeElapsed = test.ToString();
-
+            //TimeElapsed = testDB.ToString();
 
         }
 

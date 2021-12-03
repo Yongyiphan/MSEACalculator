@@ -1,10 +1,7 @@
 ﻿using MSEACalculator.CharacterRes;
 using MSEACalculator.CharacterRes.EquipmentRes;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MSEACalculator.MainAppRes.Settings
 {
@@ -16,7 +13,7 @@ namespace MSEACalculator.MainAppRes.Settings
         public Dictionary<string, Character> AllCharTrackDict { get; set; } = DatabaseAccess.GetAllCharTrackDB();
         public List<EquipModel> AllArmorList { get; set; } = DatabaseAccess.GetAllArmorDB();
         public Dictionary<string, string> EquipSlot { get; set; } = DatabaseAccess.GetEquipSlotDB();
-        public List<string> FlameStatsTypes { get; set; } = GlobalVars.BaseStatTypes.Concat(GlobalVars.AddStatType).ToList();
+        public List<string> FlameStatsTypes { get; set; } = GlobalVars.BaseStatTypes.Concat(GlobalVars.SpecialStatType).ToList();
 
         public List<EquipModel> AllAccList { get; set; } = DatabaseAccess.GetAllAccessoriesDB();
 

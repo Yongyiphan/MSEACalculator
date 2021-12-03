@@ -45,7 +45,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
             }
             foreach (Character charItem in charDict.Values)
             {
-                charNameList.Add(charItem.className);
+                charNameList.Add(charItem.ClassName);
             }
 
         }

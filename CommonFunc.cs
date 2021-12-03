@@ -15,28 +15,32 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Windows.UI.Popups;
 using Windows.UI.Core;
+using MSEACalculator.CharacterRes.EquipmentRes;
+using MSEACalculator.CharacterRes;
 
 namespace MSEACalculator
 {
-    class CommonFunc
+    public class CommonFunc
     {
         
 
-        public int scrollUsedCal(int currentMainStat, int baseAtk, int itemlvl, Dictionary<int, SFGain> Stattable)
+        public static int SpellTraceTier(EquipModel selectedEquip)
         {
-            int scrollResult = 0;
-            Dictionary<int, List<int>> spellTraceScroll = new Dictionary<int, List<int>>()
+            int tier = 0;
+            if(selectedEquip.EquipLevel < 75)
             {
-                {100, new List<int>{1,3} },
-                {70,  new List<int>{2,5} },
-                {30,  new List<int>{3,7} },
-                {15,  new List<int>{4,9} }
+                tier = 1;
+            }
+            else if(selectedEquip.EquipLevel >= 75 && selectedEquip.EquipLevel < 115)
+            {
+                tier = 2;
+            }
+            else if(selectedEquip.EquipLevel > 114)
+            {
+                tier = 3;
+            }
 
-            };
-
-
-
-            return scrollResult;
+            return tier;
         }
 
         public static string returnUnionRank(string charName,int lvl)
@@ -95,15 +99,6 @@ namespace MSEACalculator
             return rank;
         }
 
-        //public static bool validateIntInput(string toCheck)
-        //{
-            
-        //    if(int.TryParse(toCheck, out outValue) == false)
-        //    {
-        //        errorDia("Invalid Number. Try again.");
-        //    }
-        //}
-
         public static async void errorDia(string message)
         {
             var errorDia = new MessageDialog(message);
@@ -111,6 +106,53 @@ namespace MSEACalculator
             await errorDia.ShowAsync();
            
         }
+
+        public static EquipModel retrieveConstructE(Character character, List<EquipModel> equipList, EquipModel baseEquip)
+        {
+            //To update equip with proper values as per class
+            //EquipModel equipModel = new EquipModel();
+
+            //Update from Main/Sec Stats to Stat Values STR|DEX|...
+            //Keep MS/SS property
+            int mainStat = baseEquip.BaseStats.MS, secStat = baseEquip.BaseStats.SS;
+
+            switch (character.MainStat)
+            {
+                case "STR":
+                    baseEquip.BaseStats.STR = mainStat;
+                    baseEquip.BaseStats.DEX = secStat;
+                    break;
+                case "DEX":
+                    baseEquip.BaseStats.DEX = mainStat;
+                    baseEquip.BaseStats.STR = secStat;
+                    break;
+                case "INT":
+                    baseEquip.BaseStats.INT = mainStat;
+                    baseEquip.BaseStats.LUK = secStat;
+                    break;
+                case "LUK":
+                    baseEquip.BaseStats.LUK = mainStat;
+                    if(character.SecStat == "SPECIAL")
+                    {
+                        baseEquip.BaseStats.STR = secStat;
+                    }
+                    baseEquip.BaseStats.DEX = secStat;
+                    break;
+                case "HP":
+                    break;
+                case "SPECIAL":
+                    baseEquip.BaseStats.STR = mainStat;
+                    baseEquip.BaseStats.DEX = mainStat;
+                    baseEquip.BaseStats.LUK = mainStat;
+                    break;
+
+            }
+
+
+            return baseEquip;
+        }
+
+        
 
         //public static async Task<List<EventRecords>> retrieveEventJson()
         //{

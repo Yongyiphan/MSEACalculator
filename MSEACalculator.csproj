@@ -124,6 +124,7 @@
       <DependentUpon>CharacterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CharacterRes\EquipmentRes\EquipModel.cs" />
+    <Compile Include="CharacterRes\EquipmentRes\EquipStatsModel.cs" />
     <Compile Include="CharacterRes\EquipmentRes\ScrollingModel.cs" />
     <Compile Include="CharacterRes\MesoRes\BossMeso.cs" />
     <Compile Include="CharacterRes\MesoRes\CustomItem.cs" />

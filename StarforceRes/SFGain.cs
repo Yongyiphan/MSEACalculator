@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSEACalculator.StarforceRes
 {
-    class SFGain
+    public class SFGain
     {
         public int StarForceLevel { get; set; }
         public int MainStat { get; set; }

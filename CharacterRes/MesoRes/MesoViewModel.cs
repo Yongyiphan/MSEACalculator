@@ -237,7 +237,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
             {
                 if (boss.name == SelectedBoss && boss.difficulty == SelectedDifficulty)
                 {
-                    bool insertResult = DatabaseAccess.insertCharBossList(SelectedMule, SelectedBoss, boss.BossID);
+                    bool insertResult = DatabaseAccess.insertCharTBossList(SelectedMule, SelectedBoss, boss.BossID);
 
                     if (insertResult == true)
                     {

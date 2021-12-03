@@ -173,3 +173,6 @@ if armor -> display set 5?
 if gloves -> display set 5?
 if accessories -> display item name for slot
 
+Displaying Currently Added Items
+
+

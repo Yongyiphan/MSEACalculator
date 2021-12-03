@@ -14,11 +14,11 @@ namespace MSEACalculator.CharacterRes
 
         
 
-        public string className { get; set; }
+        public string ClassName { get; set; }
 
-        public string faction { get; set; }
+        public string Faction { get; set; }
 
-        public string classType { get; set; }
+        public string ClassType { get; set; }
 
         public List<Boss> bossList { get; set; } = new List<Boss>();
 
@@ -33,9 +33,6 @@ namespace MSEACalculator.CharacterRes
         public string MainStat { get; set; }
         public string SecStat { get; set; }
 
-        public List<string> SMainStat { get; set; }
-        public List<string> SSecStat { get; set; }
-
         public int starforce { get; set; }
 
         public Character() { }
@@ -43,9 +40,9 @@ namespace MSEACalculator.CharacterRes
         //FOR RETREIVING W/O UNION
         public Character(string cn, string ct, string faction)
         {
-            this.className = cn;
-            this.classType = ct;
-            this.faction = faction;
+            this.ClassName = cn;
+            this.ClassType = ct;
+            this.Faction = faction;
 
         }
 
@@ -54,9 +51,9 @@ namespace MSEACalculator.CharacterRes
         //FOR INIT
         public Character(string CN, string CT, string Faction, string uEffect, string uEffectType, string MS, string SS)
         {
-            this.className = CN;
-            this.faction = Faction;
-            this.classType = CT;
+            this.ClassName = CN;
+            this.Faction = Faction;
+            this.ClassType = CT;
             this.unionEffect = uEffect;
             this.unionEffectType = uEffectType;
             this.MainStat = MS;
@@ -67,7 +64,7 @@ namespace MSEACalculator.CharacterRes
         //FOR TRACKING CHARACTER
         public Character(string CN, string uRank, int level, int sf)
         {
-            this.className = CN;
+            this.ClassName = CN;
             this.unionRank = uRank;
             this.level = level;
             this.starforce = sf;
@@ -76,7 +73,7 @@ namespace MSEACalculator.CharacterRes
         //FOR BOSSING
         public Character(string CN,  List<Boss> bossList)
         {
-            this.className = CN;
+            this.ClassName = CN;
 
             this.bossList = bossList;
         }

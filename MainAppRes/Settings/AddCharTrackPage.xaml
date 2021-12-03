@@ -26,7 +26,49 @@
             <Setter Property="Margin" Value="10 0 0 0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
-        
+
+        <DataTemplate x:Key="DisplaySEquip">
+            <StackPanel>
+                <TextBlock Text="{Binding Path=EquipName, Mode=TwoWay}" FontSize="18"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Column="0">
+                        <TextBlock Text="STR: "/>
+                        <TextBlock Text="DEX: "/>
+                        <TextBlock Text="INT: "/>
+                        <TextBlock Text="LUK: "/>
+                        <TextBlock Text="ATK: "/>
+                        <TextBlock Text="MATK:"/>
+                        <TextBlock Text="HP:  "/>
+                        <TextBlock Text="DEF: "/>
+                    </StackPanel>
+                   
+                    <ContentControl Grid.Column="1"
+                                    Content="{Binding BaseStats}"
+                                    ContentTemplate="{StaticResource EquipStat}"/>
+                    <ContentControl Grid.Column="2"/>
+                    <ContentControl Grid.Column="3"/>
+                </Grid>
+            </StackPanel>
+                
+        </DataTemplate>
+        <DataTemplate x:Key="EquipStat">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="{Binding STR,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding DEX,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding INT,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding LUK,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding ATK,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding MATK,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding HP,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding DEF,Mode=TwoWay}"/>
+            </StackPanel>
+        </DataTemplate>
     </Page.Resources>
     
     <Grid>
@@ -46,14 +88,14 @@
                 <!--CHARACTER SELECTION/ ADDITION TO DATABASE/ REMOVAL FROM DATABASE-->
                 <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
                     <ComboBox x:Name="AllCharList" VerticalAlignment="Center" Width="200" 
-                              ItemsSource="{Binding AllCharList}" DisplayMemberPath="className" 
+                              ItemsSource="{Binding AllCharList}" DisplayMemberPath="ClassName" 
                               SelectedItem="{Binding SelectedAllChar, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="Level"/>
                     <TextBox Text="{Binding LvlInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" />
                     <TextBlock Text="Starforce"/>
                     <TextBox Text="{Binding StarF, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                     <Button x:Name="AddTrack" Content="Add" Command="{Binding addCharTrackCMD}"/>
-                    <Button x:Name="RemoveTrack" Content="Remove"/>
+                    <Button x:Name="RemoveTrack" Content="Remove" Command="{Binding removeCharTrackCMD}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
@@ -61,7 +103,8 @@
                     <!--TOGGLE TO ADD EQUIPMENT ALONG WITH CHARACTER-->
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
                         <CheckBox Content="Add Equipment?" IsChecked="{Binding ChkBoxSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FlowDirection="RightToLeft" Margin="5 0 0 0" FontSize="17"/>
-                        <Button Content="Add Item" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding ShowEquipmentPanel, Mode=TwoWay}"/>
+                        <Button Content="Add Item" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding ShowEquipmentPanel, Mode=TwoWay}"
+                                Command="{Binding AddItemCMD}"/>
                     </StackPanel>
                     <!--FIELDS FOR EQUIPMENT ITEM SELECTION-->
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}" Visibility="{Binding ShowEquipmentPanel, Mode=TwoWay}" >
@@ -78,7 +121,8 @@
                                   SelectedItem="{Binding SelectedSetItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <!--OPTION TO SELECT WEAP-->
                         <TextBlock Text="Type: " Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
-                        <ComboBox x:Name="WeapType" Width="130" Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
+                        <ComboBox x:Name="WeapType" Width="130" Visibility="{Binding ShowWeapon, Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedWeapon, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </StackPanel>
                     <!--SCROLLING RECORDS-->
                     <TextBlock Text="Scroll" Margin="5" FontSize="17" Visibility="{Binding ShowBonusStat, Mode=TwoWay}" />
@@ -89,12 +133,13 @@
                         <!--Show Slots or stat chossing depending on checkbox-->
                         <TextBlock Text="Slot" Visibility="{Binding ShoWSlot, Mode=TwoWay}"/>
                         <ComboBox ItemsSource="{Binding Slots}" Visibility="{Binding ShoWSlot, Mode=TwoWay}"
-                                  SelectedItem="{Binding NoSlot, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                  SelectedItem="{Binding NoSlot, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                         
                         <!--Stat or spell trace perc-->
                         <TextBlock Text="{Binding ScrollTypeTxt}"/>
-                        <ComboBox ItemsSource="{Binding StatTypes}"
-                                  SelectedItem="{Binding SelectedScrollStat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <ComboBox ItemsSource="{Binding StatTypes}" 
+                                  SelectedIndex="{Binding SelectedScrollIndex, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedScrollStat, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                         <TextBlock Text="Value" Visibility="{Binding ShowScrollValue}"/>
                         <TextBox Visibility="{Binding ShowScrollValue}" Text="{Binding ScrollStatValue, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                         <Button x:Name="AddStatValueBtn" Content="Add Stat" Visibility="{Binding ShowScrollValue, Mode=TwoWay}"
@@ -115,10 +160,29 @@
             </Grid>
             <Grid Grid.Row="2">
                 <!--<TextBlock Text="{Binding TestVar}"/>-->
-                <StackPanel Orientation="Horizontal">
-                    <ListView ItemsSource="{Binding DictKey, Mode=TwoWay}"/>
-                    <ListView ItemsSource="{Binding DictValue, Mode=TwoWay}"/>
-                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                    <SplitView IsPaneOpen="True" OpenPaneLength="150" DisplayMode="Inline" Margin="15">
+                        <SplitView.Pane>
+                            <Grid>
+
+                                <ListView SelectionMode="Single"
+                                          ItemsSource="{Binding CItemDictT, Mode=TwoWay}"
+                                          DisplayMemberPath="EquipSlot"
+                                          IsSynchronizedWithCurrentItem="{Binding SyncCI, Mode=TwoWay}"
+                                        SelectedItem="{Binding CItemSelect, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+
+                            </Grid>
+                        </SplitView.Pane>
+                        <SplitView.Content>
+                            <ContentControl Content="{Binding CItemSelect, Mode=TwoWay}"
+                                            ContentTemplate="{StaticResource DisplaySEquip}"
+                                            Visibility="{Binding ShowSEquipStat, Mode=TwoWay}"
+                                            Margin="20 0">
+                                
+                            </ContentControl>
+                        </SplitView.Content>
+                    </SplitView>
+                </ScrollViewer>
             </Grid>
             <Grid Grid.Row="8">
                 <Button x:Name="UpdateDB" Content="Update DB" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
@@ -126,7 +190,8 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <ListView ItemsSource="{Binding CharTrackList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="className"/>
+            <ListView ItemsSource="{Binding CharTrackList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="ClassName"
+                      SelectedItem="{Binding CharTSelect, Mode=TwoWay}"/>
         </Grid>
     </Grid>
 </Page>

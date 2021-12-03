@@ -11,6 +11,20 @@ namespace MSEACalculator.MainAppRes.Settings
 {
     public class AddCharTrackViewModel : INPCObject
     {
+        /// <summary>
+        /// CHECKLIST FOR THIS FUNCTION
+        /// ADDING CHARACTER TO DB => DONE
+        /// DELETING CHARACTER FROM DB => DONE
+        /// 
+        /// SELECT ITEM SLOT => DONE
+        /// SELECT ITEM SET/ ITEM NAME => DONE
+        /// INPUT ITEM SCROLL STATS => DONE
+        /// INPUT FLAME STATS => DONE
+        /// 
+        /// INSERT ITEM TO ITEMlIST/DICT
+        /// ADDING ITEMLIST/DICT TO DB
+        /// 
+        /// </summary>
         public ACTModel AllCharTModel { get; set; } = new ACTModel();
         public ScrollingModel ScrollModel { get; set; } = new ScrollingModel();
 
@@ -55,19 +69,31 @@ namespace MSEACalculator.MainAppRes.Settings
                 OnPropertyChanged(nameof(StatTypes));
             }
         }
-
-        //Flame Data Retrieved
+        public Dictionary<string, int> ScrollRecord { get; set; } = new Dictionary<string, int>();
         public Dictionary<string, int> FlameRecord { get; set; } = new Dictionary<string, int>();
+        public ObservableCollection<EquipModel> CItemDictT { get; set; } = new ObservableCollection< EquipModel>();
 
-        //Scrolling Data Retrieved
-        private Dictionary<string, int> _ScrollRecord = new Dictionary<string, int>();
-        public Dictionary<string, int> ScrollRecord
+        private bool _SyncCI = false;
+
+        public bool SyncCI
         {
-            get { return _ScrollRecord; }
+            get { return _SyncCI; }
+            set { _SyncCI = value;
+                OnPropertyChanged(nameof(SyncCI));
+            }
+        }
+
+
+        private EquipModel _CItemSelect;
+        public EquipModel CItemSelect
+        {
+            get { return _CItemSelect; }
             set
             {
-                _ScrollRecord = value;
-                OnPropertyChanged(nameof(ScrollRecord));
+                _CItemSelect = value;
+                OnPropertyChanged(nameof(CItemSelect));
+                ShowSEquipStat = CItemSelect != null ? Visibility.Visible : Visibility.Collapsed;
+
             }
         }
 
@@ -102,6 +128,7 @@ namespace MSEACalculator.MainAppRes.Settings
                 _SelectedAllChar = value;
                 OnPropertyChanged(nameof(SelectedAllChar));
                 addCharTrackCMD.RaiseCanExecuteChanged();
+                AddItemCMD.RaiseCanExecuteChanged();
             }
         }
 
@@ -144,6 +171,7 @@ namespace MSEACalculator.MainAppRes.Settings
                 ShowEquipmentPanel = chkboxSelected ? Visibility.Visible : Visibility.Collapsed;
                 ShowBonusStat = SelectedESlot != null && ChkBoxSelected ? Visibility.Visible : Visibility.Collapsed;
                 OnPropertyChanged(nameof(ChkBoxSelected));
+                addCharTrackCMD.RaiseCanExecuteChanged();
             }
         }
 
@@ -208,6 +236,17 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
+        private Visibility _ShowSEquipStat = Visibility.Collapsed;
+
+        public Visibility ShowSEquipStat
+        {
+            get { return _ShowSEquipStat; }
+            set { _ShowSEquipStat = value;
+                OnPropertyChanged(nameof(ShowSEquipStat));
+            }
+        }
+
+
         private string _SelectedESlot;
         public string SelectedESlot
         {
@@ -215,7 +254,7 @@ namespace MSEACalculator.MainAppRes.Settings
             set
             {
                 _SelectedESlot = value;
-                ItemNameTypeTxt = SlotSet.Contains(EquipSlots[SelectedESlot]) ? "Set: " : "Item Name: ";
+                ItemNameTypeTxt = SelectedESlot != null && SlotSet.Contains(EquipSlots[SelectedESlot]) ? "Set: " : "Item Name: ";
                 ShowBonusStat = SelectedESlot != null && ChkBoxSelected ? Visibility.Visible : Visibility.Collapsed;
                  
                  
@@ -224,6 +263,10 @@ namespace MSEACalculator.MainAppRes.Settings
 
 
                 ShowEquipSet(SelectedESlot);
+                IsSpellTrace = false;
+                NoSlot = 0;
+                SelectedScrollStat = null;
+
                 OnPropertyChanged(nameof(SelectedESlot));
             }
         }
@@ -248,6 +291,17 @@ namespace MSEACalculator.MainAppRes.Settings
                 OnPropertyChanged(nameof(ItemNameTypeTxt)); }
         }
 
+        private EquipModel _SelectedWeapon;
+            
+        public EquipModel SelectedWeapon
+        {
+            get { return _SelectedWeapon; }
+            set { _SelectedWeapon = value;
+                OnPropertyChanged(nameof(SelectedWeapon));
+            }
+        }
+
+
         private int _NoSlot;
         public int NoSlot
         {
@@ -255,6 +309,10 @@ namespace MSEACalculator.MainAppRes.Settings
             set
             {
                 _NoSlot = value;
+                if(NoSlot == 0)
+                {
+                    SelectedScrollStat = null;
+                }
                 OnPropertyChanged(nameof(NoSlot));
             }
         }
@@ -288,6 +346,15 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
+        private int _SelectedScrollIndex;
+
+        public int SelectedScrollIndex
+        {
+            get { return _SelectedScrollIndex; }
+            set { _SelectedScrollIndex = value;
+                OnPropertyChanged(nameof(SelectedScrollIndex));
+            }
+        }
 
         private string _SelectedScrollStat;
         public string SelectedScrollStat
@@ -296,24 +363,39 @@ namespace MSEACalculator.MainAppRes.Settings
             set
             {
                 _SelectedScrollStat = value;
-                ShowScrollValue = ScrollModel.SpellTraceTypes.Contains(SelectedScrollStat) ? Visibility.Collapsed : Visibility.Visible;
 
-                if (SelectedScrollStat != null)
+                if (IsSpellTrace)
                 {
-
-                    if (ScrollRecord.ContainsKey(SelectedScrollStat))
+                    if (SelectedScrollStat != null)
                     {
-                        ScrollStatValue = ScrollRecord[SelectedScrollStat].ToString();
+                        if (NoSlot == 0)
+                        {
+                            CommonFunc.errorDia("Slot cannot be 0.");
+                            SelectedScrollIndex = -1;
 
+                        }
                     }
-                    else
-                    {
-                        ScrollStatValue = string.Empty;
-                    }
-
                 }
+                else
+                {
+                    if (SelectedScrollStat != null)
+                    {
 
+                        ShowScrollValue = ScrollModel.SpellTraceTypes.Contains(SelectedScrollStat) ? Visibility.Collapsed : Visibility.Visible;
 
+                        if (ScrollRecord.ContainsKey(SelectedScrollStat))
+                        {
+                            ScrollStatValue = ScrollRecord[SelectedScrollStat].ToString();
+
+                        }
+                        else
+                        {
+                            ScrollStatValue = string.Empty;
+                        }
+
+                    }
+                }
+                AddItemCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(SelectedScrollStat));
             }
         }
@@ -327,6 +409,7 @@ namespace MSEACalculator.MainAppRes.Settings
                 _ScrollStatvalue = value;
 
                 AddStatCMD.RaiseCanExecuteChanged();
+                AddItemCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(ScrollStatValue));
             }
         }
@@ -366,9 +449,15 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
-
-
-
+        private Character _CharTSelect;
+        public Character CharTSelect
+        {
+            get { return _CharTSelect; }
+            set { _CharTSelect = value;
+                OnPropertyChanged(nameof(CharTSelect));
+                removeCharTrackCMD.RaiseCanExecuteChanged();
+            }
+        }
 
 
         private string testVar = "";
@@ -383,19 +472,25 @@ namespace MSEACalculator.MainAppRes.Settings
         }
 
         public CustomCommand addCharTrackCMD { get; private set; }
+        public CustomCommand removeCharTrackCMD { get; set; }   
         public CustomCommand AddStatCMD { get; private set; }
         public CustomCommand AddFlameCMD { get; private set; }
+        public CustomCommand AddItemCMD { get; private set; }
 
         public AddCharTrackViewModel()
         {
             initFields();
 
             addCharTrackCMD = new CustomCommand(addChar, canAddChar);
+            removeCharTrackCMD = new CustomCommand(removeChar, canRemoveChar);
             AddStatCMD = new CustomCommand(AddStat, canAddStat);
             AddFlameCMD = new CustomCommand(AddFlame, canAddFlame);
+            AddItemCMD = new CustomCommand(AddItem, canAddItem);
             ACTModel model = new ACTModel();
             
         }
+
+        
 
         private void initFields()
         {
@@ -405,19 +500,51 @@ namespace MSEACalculator.MainAppRes.Settings
 
         private bool canAddChar()
         {
-            if (SelectedAllChar != null && LvlInput != null && StarF != null)
+            if (!ChkBoxSelected)
             {
-                int lvlOutput, sfOutput;
-                if (int.TryParse(LvlInput, out lvlOutput) && int.TryParse(StarF, out sfOutput)){
-
-                    if (lvlOutput <= GlobalVars.maxLevel && lvlOutput >= GlobalVars.minLevel)
+                //SIMPLE ADD CHAR
+                if (SelectedAllChar != null && LvlInput != null && StarF != null)
+                {
+                    int lvlOutput, sfOutput;
+                    if (int.TryParse(LvlInput, out lvlOutput) && int.TryParse(StarF, out sfOutput))
                     {
-                        return true;
+
+                        if (lvlOutput <= GlobalVars.maxLevel && lvlOutput >= GlobalVars.minLevel)
+                        {
+                            return true;
+                        }
+                    }
+                    CommonFunc.errorDia("Invalid Level Value");
+                    return false;
+                }
+            }
+            else
+            {
+                //COMPLEX ADD CHAR WITH ITEMS
+                if(CItemDictT.Count == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (SelectedAllChar != null && LvlInput != null && StarF != null)
+                    {
+                        int lvlOutput, sfOutput;
+                        if (int.TryParse(LvlInput, out lvlOutput) && int.TryParse(StarF, out sfOutput))
+                        {
+
+                            if (lvlOutput <= GlobalVars.maxLevel && lvlOutput >= GlobalVars.minLevel)
+                            {
+                                return true;
+                            }
+                        }
+                        CommonFunc.errorDia("Invalid Level Value");
+                        return false;
                     }
                 }
-                CommonFunc.errorDia("Invalid Level Value");
-                return false;
             }
+
+           
 
             return false;
         }
@@ -425,14 +552,15 @@ namespace MSEACalculator.MainAppRes.Settings
         {
 
             //ObservableCollecion to List. => find if class already added before.
-            if (CharTrackList.ToList().Find(x => x.className == SelectedAllChar.className) == null)
+            //IF CHKBOX CHECKED == ADDING WITH ITEMS
+            if (CharTrackList.ToList().Find(x => x.ClassName == SelectedAllChar.ClassName) == null)
             {
                 int charLvl = Convert.ToInt32(LvlInput);
                 
                 int sf = Convert.ToInt32(StarF);
-                string URank = CommonFunc.returnUnionRank(SelectedAllChar.className, charLvl);
+                string URank = CommonFunc.returnUnionRank(SelectedAllChar.ClassName, charLvl);
 
-                Character tempChar = new Character(SelectedAllChar.className, URank, charLvl, sf);
+                Character tempChar = new Character(SelectedAllChar.ClassName, URank, charLvl, sf);
                 CharTrackList.Add(tempChar);
                 bool insertResult = DatabaseAccess.insertCharTrack(tempChar);
                 if (insertResult == false)
@@ -452,7 +580,26 @@ namespace MSEACalculator.MainAppRes.Settings
             }
             addCharTrackCMD.RaiseCanExecuteChanged();
         }
+        private void removeChar()
+        {
+            if(CharTSelect != null)
+            {
+                if (DatabaseAccess.deleteCharT(CharTSelect))
+                {
+                    CharTrackList.Remove(CharTSelect);
+                }
 
+            }
+        }
+
+        private bool canRemoveChar()
+        {
+            if(CharTSelect != null)
+            {
+                return true;
+            }
+            return false;
+        }
 
         private bool canAddStat()
         {
@@ -480,9 +627,9 @@ namespace MSEACalculator.MainAppRes.Settings
         {
             //Stat selected, Int value inserted
             ScrollRecord[SelectedScrollStat] = int.Parse(ScrollStatValue);
+
             SelectedScrollStat = null;
-            //DictKey = ScrollRecord.Keys.ToList();
-            //DictValue = ScrollRecord.Values.ToList();
+            AddItemCMD.RaiseCanExecuteChanged();
         }
 
 
@@ -511,8 +658,7 @@ namespace MSEACalculator.MainAppRes.Settings
         {
             FlameRecord[SelectedFlame] = int.Parse(FlameStat);
             SelectedFlame = null;
-            DictKey = FlameRecord.Keys.ToList();
-            DictValue = FlameRecord.Values.ToList();
+            AddItemCMD.RaiseCanExecuteChanged();
         }
 
         private void ShowEquipSet(string selectedESlot)
@@ -583,6 +729,126 @@ namespace MSEACalculator.MainAppRes.Settings
                     break;
             }
 
+        }
+
+
+        private bool canAddItem()
+        {
+            Func<bool,string,Dictionary<string, int>, Dictionary<string, int>, bool> 
+                checkAddStatAdded = (isSpellTraced, scrollStat, scrollRecord, flameRecord) =>
+            {
+                //Spell trace, check slots, spell trace perc
+                //check scrollrecord, flamerecords
+                if (isSpellTraced)
+                {
+                    //scrollstat null == slotcount = 0
+                    if(scrollStat != null && flameRecord.Count >= 0)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    //if flameRecord = 0 && scrollRecord = 0 == clean equip, no flame, no scroll
+                    if(flameRecord.Count >= 0 && scrollRecord.Count >= 0)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            };
+            if (SelectedAllChar != null)
+            {
+                if (SelectedESlot != null && SelectedSetItem != null)
+                {
+                    if (ShowWeapon == Visibility.Visible && SelectedWeapon != null)
+                    {
+                        return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
+                    }
+                    return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
+                }
+            }
+            SyncCI = CItemDictT.Count == 0 ? true : false;
+
+            return false;
+        }
+
+        private void AddItem()
+        {
+            Func<Character, Dictionary<string, int>, Dictionary<string, int>, EquipModel>
+                ConstructEquip = (character, scrollR, flameR) =>
+            {
+                EquipModel equipModel = new EquipModel();
+
+                
+
+
+                return equipModel;
+            };
+
+           //if scroll perc selected, slot >0
+            //Information to gather
+            //Selected Char
+            //If armor -> EquipSet and Slot and ClassType <- Armor Data
+            //If weapon -> EquipSet and Type
+            //Else -> Set and Name. 
+            switch (EquipSlots[SelectedESlot])
+            {
+
+                case "Armor":
+                    Character selectedChar = AllCharTModel.AllCharDict[SelectedAllChar.ClassName];
+                    EquipModel selectedEquip = new EquipModel();
+                    selectedEquip = SelectedSetItem == "Fensalir" || SelectedSetItem == "Empress" ?
+                        AllCharTModel.AllArmorList.Find(i => i.EquipSet == SelectedSetItem && i.EquipSlot == SelectedESlot && i.ClassType == selectedChar.ClassType ) :
+                        AllCharTModel.AllArmorList.Find(i => i.EquipSet == SelectedSetItem && i.EquipSlot == SelectedESlot && i.ClassType == "All");
+                    selectedEquip.EquipName = String.Format("{0} {1}", SelectedSetItem, SelectedESlot);
+                    selectedEquip.ClassType = selectedChar.ClassType;
+                    selectedEquip.SlotCount = NoSlot;
+                    //Get Base Stats
+                    selectedEquip = CommonFunc.retrieveConstructE(selectedChar, AllCharTModel.AllArmorList, selectedEquip);
+
+                    if (IsSpellTrace)
+                    {
+                        string MainStat = selectedChar.MainStat, SecStat = selectedChar.SecStat;
+                        int STTier = CommonFunc.SpellTraceTier(selectedEquip);
+                        int perc = Convert.ToInt32(SelectedScrollStat.Remove(SelectedScrollStat.Length - 1));
+                        selectedEquip.ScrollStats.HP = AllCharTModel.SpellTraceDict["Armor"][STTier][perc].HP * NoSlot;
+                        selectedEquip.ScrollStats.DEF = AllCharTModel.SpellTraceDict["Armor"][STTier][perc].DEF *NoSlot;
+
+                        if(MainStat == "HP")
+                        {
+                            selectedEquip.ScrollStats.HP += AllCharTModel.SpellTraceDict["Armor"][STTier][perc].MainStat * NoSlot * 50;
+                        }
+                        else
+                        {
+                            selectedEquip.ScrollStats.GetType().GetProperty(MainStat).SetValue(selectedEquip.ScrollStats, AllCharTModel.SpellTraceDict["Armor"][STTier][perc].MainStat * NoSlot, null);
+                        }
+                    }
+                    
+
+                    if(CItemDictT.ToList().Any(equip => equip.EquipSlot == selectedEquip.EquipSlot))
+                    {
+                        CommonFunc.errorDia("Equip added before");
+                    }
+                    else {
+                        CItemDictT.Add(selectedEquip);
+                    }
+                    NoSlot = 0;
+
+                    AddItemCMD.RaiseCanExecuteChanged();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void ShowEquipToAdd()
+        {
+            if(CItemDictT.Count != 0)
+            {
+
+            }
         }
     }
 

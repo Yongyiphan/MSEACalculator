@@ -11,10 +11,11 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         //BASE STATS
         public int MS { get; set; } = 0;
         public int SS { get; set; } = 0;
+
         public int STR { get; set; } = 0;
         public int DEX { get; set; } = 0;
-        public int LUK { get; set; } = 0;
         public int INT { get; set; } = 0;
+        public int LUK { get; set; } = 0;       
         public int DEF { get; set; } = 0;
         public int HP { get; set; } = 0;
         public string SpecialHP { get; set; }
@@ -39,5 +40,36 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
         }
 
+        public override bool Equals(object obj)
+        {
+            List<string> test = new List<string>();
+            if (obj == null)
+            {
+                return false;
+            }
+            if(obj is EquipStatsModel)
+            {
+                test.Add(STR ==  ((EquipStatsModel)obj).STR ? "true" : "false" );
+                test.Add(DEX ==  ((EquipStatsModel)obj).DEX ? "true" : "false" );
+                test.Add(INT ==  ((EquipStatsModel)obj).INT ? "true" : "false" );
+                test.Add(LUK ==  ((EquipStatsModel)obj).LUK ? "true" : "false" );
+                test.Add(ATK ==  ((EquipStatsModel)obj).ATK ? "true" : "false" );
+                test.Add(MATK ==  ((EquipStatsModel)obj).MATK ? "true" : "false" );
+                test.Add(DEF ==  ((EquipStatsModel)obj).DEF ? "true" : "false" );
+                test.Add(HP ==  ((EquipStatsModel)obj).HP ? "true" : "false" );
+                test.Add(MP ==  ((EquipStatsModel)obj).MP ? "true" : "false" );
+                test.Add(SPD ==  ((EquipStatsModel)obj).SPD ? "true" : "false" );
+                test.Add(JUMP ==  ((EquipStatsModel)obj).JUMP ? "true" : "false" );
+                test.Add(AllStat ==  ((EquipStatsModel)obj).AllStat ? "true" : "false" );
+
+                
+            }
+            return test.Contains("false") ? false : true;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

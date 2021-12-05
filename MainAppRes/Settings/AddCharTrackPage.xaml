@@ -30,6 +30,12 @@
         <DataTemplate x:Key="DisplaySEquip">
             <StackPanel>
                 <TextBlock Text="{Binding Path=EquipName, Mode=TwoWay}" FontSize="18"/>
+                <RelativePanel>
+                    <TextBlock Name="PH" Text="Stats"/>
+                    <TextBlock Name="BASE" Text="Base" RelativePanel.RightOf="PH"/>
+                    <TextBlock Name="SCROLL" Text="Scroll" RelativePanel.RightOf="BASE"/>
+                    <TextBlock Name="FLAME" Text="Flame" RelativePanel.RightOf="SCROLL"/>
+                </RelativePanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -38,24 +44,32 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Vertical" Grid.Column="0">
-                        <TextBlock Text="STR: "/>
-                        <TextBlock Text="DEX: "/>
-                        <TextBlock Text="INT: "/>
-                        <TextBlock Text="LUK: "/>
-                        <TextBlock Text="ATK: "/>
-                        <TextBlock Text="MATK:"/>
-                        <TextBlock Text="HP:  "/>
-                        <TextBlock Text="DEF: "/>
+                        <TextBlock Name="STR"  Text="STR: " />
+                        <TextBlock Name="DEX"  Text="DEX: " />
+                        <TextBlock Name="INT"  Text="INT: " />
+                        <TextBlock Name="LUK"  Text="LUK: " />
+                        <TextBlock Name="ATK"  Text="ATK: " />
+                        <TextBlock Name="MATK" Text="MATK:" />
+                        <TextBlock Name="HP"   Text="HP:  " />
+                        <TextBlock Name="MP"  Text="MP: " />
+                        <TextBlock Name="DEF"  Text="DEF: " />
+                        <TextBlock Name="SPD"  Text="SPD: " />
+                        <TextBlock Name="JUMP"  Text="JUMP: " />
+                        <TextBlock Name="AS"   Text="AllStat: " />
                     </StackPanel>
-                   
                     <ContentControl Grid.Column="1"
                                     Content="{Binding BaseStats}"
                                     ContentTemplate="{StaticResource EquipStat}"/>
-                    <ContentControl Grid.Column="2"/>
-                    <ContentControl Grid.Column="3"/>
+                    <ContentControl Grid.Column="2" Grid.ColumnSpan="2"
+                                    Content="{Binding ScrollStats}"
+                                    ContentTemplate="{StaticResource EquipStat}"/>
+
+                    <ContentControl Grid.Column="3"
+                                    Content="{Binding FlameStats}"
+                                    ContentTemplate="{StaticResource EquipStat}"/>
                 </Grid>
             </StackPanel>
-                
+
         </DataTemplate>
         <DataTemplate x:Key="EquipStat">
             <StackPanel Orientation="Vertical">
@@ -66,11 +80,15 @@
                 <TextBlock Text="{Binding ATK,Mode=TwoWay}"/>
                 <TextBlock Text="{Binding MATK,Mode=TwoWay}"/>
                 <TextBlock Text="{Binding HP,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding MP,Mode=TwoWay}"/>
                 <TextBlock Text="{Binding DEF,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding SPD,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding JUMP,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding AllStat,Mode=TwoWay}"/>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="13*"/>
@@ -92,8 +110,9 @@
                               SelectedItem="{Binding SelectedAllChar, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="Level"/>
                     <TextBox Text="{Binding LvlInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" />
-                    <TextBlock Text="Starforce"/>
-                    <TextBox Text="{Binding StarF, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                    <TextBlock Text="Starforce" Visibility="{Binding ShowBasicSF, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding StarF, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                             Visibility="{Binding ShowBasicSF, Mode=TwoWay}"/>
                     <Button x:Name="AddTrack" Content="Add" Command="{Binding addCharTrackCMD}"/>
                     <Button x:Name="RemoveTrack" Content="Remove" Command="{Binding removeCharTrackCMD}"/>
                 </StackPanel>
@@ -103,6 +122,9 @@
                     <!--TOGGLE TO ADD EQUIPMENT ALONG WITH CHARACTER-->
                     <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
                         <CheckBox Content="Add Equipment?" IsChecked="{Binding ChkBoxSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FlowDirection="RightToLeft" Margin="5 0 0 0" FontSize="17"/>
+                        <TextBlock Text="Starforce: " Visibility="{Binding ShowEquipmentPanel, Mode=TwoWay}"/>
+                        <TextBox Text="{Binding StarF, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"
+                                 Visibility="{Binding ShowEquipmentPanel, Mode=TwoWay}"/>
                         <Button Content="Add Item" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding ShowEquipmentPanel, Mode=TwoWay}"
                                 Command="{Binding AddItemCMD}"/>
                     </StackPanel>
@@ -134,7 +156,7 @@
                         <TextBlock Text="Slot" Visibility="{Binding ShoWSlot, Mode=TwoWay}"/>
                         <ComboBox ItemsSource="{Binding Slots}" Visibility="{Binding ShoWSlot, Mode=TwoWay}"
                                   SelectedItem="{Binding NoSlot, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
-                        
+
                         <!--Stat or spell trace perc-->
                         <TextBlock Text="{Binding ScrollTypeTxt}"/>
                         <ComboBox ItemsSource="{Binding StatTypes}" 
@@ -178,7 +200,7 @@
                                             ContentTemplate="{StaticResource DisplaySEquip}"
                                             Visibility="{Binding ShowSEquipStat, Mode=TwoWay}"
                                             Margin="20 0">
-                                
+
                             </ContentControl>
                         </SplitView.Content>
                     </SplitView>

@@ -29,11 +29,11 @@ namespace MSEACalculator.MainAppRes.Settings
         public ScrollingModel ScrollModel { get; set; } = new ScrollingModel();
 
         //Retrieving List/Data/Dict
-        public Dictionary<string, string> EquipSlots { get { return AllCharTModel.EquipSlot; } }
-        public List<string> FlameStatsTypes { get { return AllCharTModel.FlameStatsTypes; } }
-        public List<string> ScrollTypes { get { return ScrollModel.ScrollTypes; } } //= new Scrolling().ScrollTypes;
-        public List<int> Slots { get { return ScrollModel.Slots; } } //= new Scrolling().Slots;
-        public List<Character> AllCharList { get { return AllCharTModel.AllCharList; } }
+        public Dictionary<string, string> EquipSlots { get => AllCharTModel.EquipSlot; }
+        public List<string> FlameStatsTypes { get => AllCharTModel.FlameStatsTypes; }
+
+        public List<int> Slots { get => ScrollModel.Slots; } //= new Scrolling().Slots;
+        public List<Character> AllCharList { get => AllCharTModel.AllCharList;}
 
         public List<string> SlotSet { get; set; } = new List<string>
         {
@@ -73,47 +73,89 @@ namespace MSEACalculator.MainAppRes.Settings
         public Dictionary<string, int> FlameRecord { get; set; } = new Dictionary<string, int>();
         public ObservableCollection<EquipModel> CItemDictT { get; set; } = new ObservableCollection< EquipModel>();
 
-        private bool _SyncCI = false;
-
-        public bool SyncCI
+        
+        //Visibility Controls
+        private Visibility _ShowEquipmentPanel = Visibility.Collapsed;
+        public Visibility ShowEquipmentPanel
         {
-            get { return _SyncCI; }
-            set { _SyncCI = value;
-                OnPropertyChanged(nameof(SyncCI));
+            get
+            {
+                return _ShowEquipmentPanel;
             }
-        }
-
-
-        private EquipModel _CItemSelect;
-        public EquipModel CItemSelect
-        {
-            get { return _CItemSelect; }
             set
             {
-                _CItemSelect = value;
-                OnPropertyChanged(nameof(CItemSelect));
-                ShowSEquipStat = CItemSelect != null ? Visibility.Visible : Visibility.Collapsed;
-
+                _ShowEquipmentPanel = value;
+                OnPropertyChanged(nameof(ShowEquipmentPanel));
             }
         }
 
-        private List<string> dictKey;
-
-        public List<string> DictKey
+        private Visibility _ShowBasicSF;
+        public Visibility ShowBasicSF
         {
-            get { return dictKey; }
-            set { dictKey = value;
-                OnPropertyChanged(nameof(DictKey));
+            get { return _ShowBasicSF; }
+            set
+            {
+                _ShowBasicSF = value;
+                OnPropertyChanged(nameof(ShowBasicSF));
             }
         }
 
-        private List<int> dictValue;
-
-        public List<int> DictValue
+        private Visibility _ShowWeapon = Visibility.Collapsed;
+        public Visibility ShowWeapon
         {
-            get { return dictValue; }
-            set { dictValue = value;
-                OnPropertyChanged(nameof(DictValue));
+            get { return _ShowWeapon; }
+            set
+            {
+                _ShowWeapon = value;
+                OnPropertyChanged(nameof(ShowWeapon));
+            }
+        }
+
+        private Visibility _ShowBonusStat = Visibility.Collapsed;
+        public Visibility ShowBonusStat
+        {
+            get { return _ShowBonusStat; }
+            set
+            {
+                _ShowBonusStat = value;
+                OnPropertyChanged(nameof(ShowBonusStat));
+            }
+        }
+
+        private Visibility _ShowSlot = Visibility.Collapsed;
+        public Visibility ShoWSlot
+        {
+            get
+            {
+                return _ShowSlot;
+            }
+            set
+            {
+                _ShowSlot = value;
+                OnPropertyChanged(nameof(ShoWSlot));
+            }
+        }
+
+        private Visibility _ShowScrollValue = Visibility.Collapsed;
+        public Visibility ShowScrollValue
+        {
+            get { return _ShowScrollValue; }
+            set
+            {
+                _ShowScrollValue = value;
+                OnPropertyChanged(nameof(ShowScrollValue));
+            }
+        }
+
+        private Visibility _ShowSEquipStat = Visibility.Collapsed;
+
+        public Visibility ShowSEquipStat
+        {
+            get { return _ShowSEquipStat; }
+            set
+            {
+                _ShowSEquipStat = value;
+                OnPropertyChanged(nameof(ShowSEquipStat));
             }
         }
 
@@ -170,83 +212,13 @@ namespace MSEACalculator.MainAppRes.Settings
                 chkboxSelected = value;
                 ShowEquipmentPanel = chkboxSelected ? Visibility.Visible : Visibility.Collapsed;
                 ShowBonusStat = SelectedESlot != null && ChkBoxSelected ? Visibility.Visible : Visibility.Collapsed;
+                ShowBasicSF = chkboxSelected ? Visibility.Collapsed : Visibility.Visible;
                 OnPropertyChanged(nameof(ChkBoxSelected));
                 addCharTrackCMD.RaiseCanExecuteChanged();
             }
         }
 
-        //Visibility Controls
-        private Visibility _ShowEquipmentPanel = Visibility.Collapsed;
-        public Visibility ShowEquipmentPanel
-        {
-            get
-            {
-                return _ShowEquipmentPanel;
-            } set
-            {
-                _ShowEquipmentPanel = value;
-                OnPropertyChanged(nameof(ShowEquipmentPanel));
-            }
-        }
-
-        private Visibility _ShowWeapon = Visibility.Collapsed;
-        public Visibility ShowWeapon
-        {
-            get { return _ShowWeapon; }
-            set
-            {
-                _ShowWeapon = value;
-                OnPropertyChanged(nameof(ShowWeapon));
-            }
-        }
-
-        private Visibility _ShowBonusStat = Visibility.Collapsed;
-        public Visibility ShowBonusStat
-        {
-            get { return _ShowBonusStat; }
-            set
-            {
-                _ShowBonusStat = value;
-                OnPropertyChanged(nameof(ShowBonusStat));
-            }
-        }
-
-        private Visibility _ShowSlot = Visibility.Collapsed;
-        public Visibility ShoWSlot
-        {
-            get
-            {
-                return _ShowSlot;
-            }
-            set
-            {
-                _ShowSlot = value;
-                OnPropertyChanged(nameof(ShoWSlot));
-            }
-        }
-
-        private Visibility _ShowScrollValue = Visibility.Collapsed;
-        public Visibility ShowScrollValue
-        {
-            get { return _ShowScrollValue; }
-            set
-            {
-                _ShowScrollValue = value;
-                OnPropertyChanged(nameof(ShowScrollValue));
-            }
-        }
-
-        private Visibility _ShowSEquipStat = Visibility.Collapsed;
-
-        public Visibility ShowSEquipStat
-        {
-            get { return _ShowSEquipStat; }
-            set { _ShowSEquipStat = value;
-                OnPropertyChanged(nameof(ShowSEquipStat));
-            }
-        }
-
-
+        
         private string _SelectedESlot;
         public string SelectedESlot
         {
@@ -261,11 +233,12 @@ namespace MSEACalculator.MainAppRes.Settings
                 ShowWeapon = ShowBonusStat == Visibility.Visible
                     && EquipSlots[SelectedESlot] == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
 
-
                 ShowEquipSet(SelectedESlot);
                 IsSpellTrace = false;
                 NoSlot = 0;
                 SelectedScrollStat = null;
+                ScrollRecord.Clear();
+                FlameRecord.Clear();
 
                 OnPropertyChanged(nameof(SelectedESlot));
             }
@@ -459,6 +432,40 @@ namespace MSEACalculator.MainAppRes.Settings
             }
         }
 
+        private bool _SyncCI = false;
+        public bool SyncCI
+        {
+            get { return _SyncCI; }
+            set
+            {
+                _SyncCI = value;
+                OnPropertyChanged(nameof(SyncCI));
+            }
+        }
+
+
+        private EquipModel _CItemSelect;
+        public EquipModel CItemSelect
+        {
+            get { return _CItemSelect; }
+            set
+            {
+                _CItemSelect = value;
+                OnPropertyChanged(nameof(CItemSelect));
+                ShowSEquipStat = CItemSelect != null ? Visibility.Visible : Visibility.Collapsed;
+                SelectedESlot = CItemSelect.EquipSlot;
+                SelectedSetItem = CItemSelect.EquipSet;
+                IsSpellTrace = CItemSelect.SpellTraced;
+                NoSlot = CItemSelect.SlotCount;
+                if (CItemSelect.SpellTraced)
+                {
+                    SelectedScrollIndex = CItemSelect.SpellTracePerc;
+                }
+                ScrollRecord = CommonFunc.propertyToRecord(CItemSelect.ScrollStats, ScrollRecord);
+                FlameRecord = CommonFunc.propertyToRecord(CItemSelect.FlameStats, FlameRecord);
+
+            }
+        }
 
         private string testVar = "";
         public string TestVar
@@ -776,13 +783,26 @@ namespace MSEACalculator.MainAppRes.Settings
 
         private void AddItem()
         {
-            Func<Character, Dictionary<string, int>, Dictionary<string, int>, EquipModel>
-                ConstructEquip = (character, scrollR, flameR) =>
+            Func<Character, List<EquipModel>,string,string, EquipModel>
+                FindEquip = (character, equipList, set, slot) =>
             {
                 EquipModel equipModel = new EquipModel();
-
-                
-
+                string searchClassType = set == "Fensalir" || set == "Empress" ? character.ClassType : "All";
+               
+                foreach(EquipModel equip in equipList)
+                {
+                    if(equip.EquipSet == set)
+                    {
+                        if(equip.ClassType == searchClassType)
+                        {
+                            if(equip.EquipSlot == slot)
+                            {
+                                return equipModel = equip;
+                            }
+                        }
+                        
+                    }
+                }
 
                 return equipModel;
             };
@@ -799,11 +819,13 @@ namespace MSEACalculator.MainAppRes.Settings
                 case "Armor":
                     Character selectedChar = AllCharTModel.AllCharDict[SelectedAllChar.ClassName];
                     EquipModel selectedEquip = new EquipModel();
-                    selectedEquip = SelectedSetItem == "Fensalir" || SelectedSetItem == "Empress" ?
-                        AllCharTModel.AllArmorList.Find(i => i.EquipSet == SelectedSetItem && i.EquipSlot == SelectedESlot && i.ClassType == selectedChar.ClassType ) :
-                        AllCharTModel.AllArmorList.Find(i => i.EquipSet == SelectedSetItem && i.EquipSlot == SelectedESlot && i.ClassType == "All");
+                    //selectedEquip = SelectedSetItem == "Fensalir" || SelectedSetItem == "Empress" ?
+                    //    AllCharTModel.AllArmorList.Find(i => i.EquipSet == SelectedSetItem && i.EquipSlot == SelectedESlot && i.ClassType == selectedChar.ClassType) :
+                    //    AllCharTModel.AllArmorList.Find(i => i.EquipSet == SelectedSetItem && i.EquipSlot == SelectedESlot && i.ClassType == "All");
+
+                    //Retreive base equip stats from list
+                    selectedEquip = FindEquip(selectedChar, AllCharTModel.AllArmorList, SelectedSetItem, SelectedESlot);
                     selectedEquip.EquipName = String.Format("{0} {1}", SelectedSetItem, SelectedESlot);
-                    selectedEquip.ClassType = selectedChar.ClassType;
                     selectedEquip.SlotCount = NoSlot;
                     //Get Base Stats
                     selectedEquip = CommonFunc.retrieveConstructE(selectedChar, AllCharTModel.AllArmorList, selectedEquip);
@@ -824,18 +846,43 @@ namespace MSEACalculator.MainAppRes.Settings
                         {
                             selectedEquip.ScrollStats.GetType().GetProperty(MainStat).SetValue(selectedEquip.ScrollStats, AllCharTModel.SpellTraceDict["Armor"][STTier][perc].MainStat * NoSlot, null);
                         }
+                        selectedEquip.FlameStats = CommonFunc.recordToProperty(selectedEquip.FlameStats, FlameRecord);
+                        selectedEquip.SpellTraced = true;
+                        selectedEquip.SpellTracePerc = SelectedScrollIndex;
                     }
-                    
-
-                    if(CItemDictT.ToList().Any(equip => equip.EquipSlot == selectedEquip.EquipSlot))
+                    else
                     {
-                        CommonFunc.errorDia("Equip added before");
+                        selectedEquip.ScrollStats = CommonFunc.recordToProperty(selectedEquip.ScrollStats, ScrollRecord);
+                        selectedEquip.FlameStats = CommonFunc.recordToProperty(selectedEquip.FlameStats, FlameRecord);
+                        selectedEquip.SpellTraced =  false;
                     }
-                    else {
+
+
+                    EquipModel existEquip = CItemDictT.ToList().Find(equip => equip.EquipSlot == SelectedESlot);
+
+                    //if slot added before
+                    //if (existEquip != null)
+                    //{
+                    //    if (existEquip.Equals(selectedEquip))
+                    //    {
+                    //        CommonFunc.errorDia("Equip added before");
+                    //    }
+                    //    //update
+                    //    else
+                    //    {
+                    //        int existitngIndex = CItemDictT.ToList().FindIndex(item => item.EquipSlot == SelectedESlot);
+                    //        CItemDictT[existitngIndex] = selectedEquip;
+                    //    }
+                    //}
+                    //else {
+                    //    CItemDictT.Add(selectedEquip);
+                    //}
+                    if(existEquip == null)
+                    {
                         CItemDictT.Add(selectedEquip);
                     }
                     NoSlot = 0;
-
+                    
                     AddItemCMD.RaiseCanExecuteChanged();
                     break;
                 default:
@@ -850,6 +897,7 @@ namespace MSEACalculator.MainAppRes.Settings
 
             }
         }
+
     }
 
 }

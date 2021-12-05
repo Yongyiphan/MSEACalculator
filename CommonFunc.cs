@@ -152,7 +152,76 @@ namespace MSEACalculator
             return baseEquip;
         }
 
+        public static EquipStatsModel recordToProperty(EquipStatsModel RM, Dictionary<string, int> record)
+        {
+            foreach(var R in record.Keys)
+            {
+                switch (R)
+                {
+                    case "STR":
+                        RM.STR = record[R];
+                        break;
+                    case "DEX":
+                        RM.DEX = record[R];
+                        break;
+                    case "INT":
+                        RM.INT = record[R];
+                        break;
+                    case "LUK":
+                        RM.LUK = record[R];
+                        break;
+                    case "ATK":
+                        RM.ATK = record[R];
+                        break;
+                    case "MATK":
+                        RM.MATK = record[R];
+                        break;
+                    case "HP":
+                        RM.HP = record[R];
+                        break;
+                    case "MP":
+                        RM.MP = record[R];
+                        break;
+                    case "DEF":
+                        RM.DEF = record[R];
+                        break;
+                    case "SPD":
+                        RM.SPD = record[R];
+                        break;
+                    case "JUMP":
+                        RM.JUMP = record[R];
+                        break;
+
+                    case "AllStat":
+                        RM.AllStat = record[R];
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+            return RM;
+        }
         
+        public static Dictionary<string,int> propertyToRecord(EquipStatsModel RM, Dictionary<string, int> record)
+        {
+            record.Clear();
+            record["STR"] = RM.STR;
+            record["DEX"] = RM.DEX;
+            record["INT"] = RM.INT;
+            record["LUK"] = RM.LUK;
+            record["ATK"] = RM.ATK;
+            record["MATK"] = RM.MATK;
+            record["DEF"] = RM.DEF;
+            record["HP"] = RM.HP;
+            record["MP"] = RM.MP;
+            record["SPD"] = RM.SPD;
+            record["JUMP"] = RM.JUMP;
+            record["AllSTAT"] = RM.AllStat;
+
+            return record;
+        }
 
         //public static async Task<List<EventRecords>> retrieveEventJson()
         //{

@@ -11,12 +11,16 @@ namespace MSEACalculator.MainAppRes.Settings
 
         public Dictionary<string, Character> AllCharDict { get; set; } = DatabaseAccess.GetAllCharDB();
         public Dictionary<string, Character> AllCharTrackDict { get; set; } = DatabaseAccess.GetAllCharTrackDB();
-        public List<EquipModel> AllArmorList { get; set; } = DatabaseAccess.GetAllArmorDB();
+        public List<EquipModel> AllArmorList { get => DatabaseAccess.GetAllArmorDB(); }
         public Dictionary<string, string> EquipSlot { get; set; } = DatabaseAccess.GetEquipSlotDB();
         public List<string> FlameStatsTypes { get; set; } = GlobalVars.BaseStatTypes.Concat(GlobalVars.SpecialStatType).ToList();
 
-        public List<EquipModel> AllAccList { get; set; } = DatabaseAccess.GetAllAccessoriesDB();
+        public List<EquipModel> AllAccList { get => DatabaseAccess.GetAllAccessoriesDB(); }
 
+        public List<string> AccGrp { get; } = new List<string>
+        {
+            "Accessory", "Ring", "Pendant"
+        };
 
         public List<Character> AllCharList { get; set; }
 
@@ -58,7 +62,7 @@ namespace MSEACalculator.MainAppRes.Settings
                     [30] = new ScrollingModel(3)
                 }
             },
-            ["Accessories"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
+            ["Accessory"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
             {
                 [1] = new Dictionary<int, ScrollingModel>
                 {

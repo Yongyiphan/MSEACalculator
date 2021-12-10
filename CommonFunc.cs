@@ -107,47 +107,55 @@ namespace MSEACalculator
            
         }
 
-        public static EquipModel retrieveConstructE(Character character, List<EquipModel> equipList, EquipModel baseEquip)
+        public static EquipModel updateBaseStats(Character character, EquipModel baseEquip, string type)
         {
             //To update equip with proper values as per class
             //EquipModel equipModel = new EquipModel();
 
             //Update from Main/Sec Stats to Stat Values STR|DEX|...
             //Keep MS/SS property
-            int mainStat = baseEquip.BaseStats.MS, secStat = baseEquip.BaseStats.SS;
-
-            switch (character.MainStat)
+            int mainStat = baseEquip.BaseStats.MS, secStat = baseEquip.BaseStats.SS, AS = baseEquip.BaseStats.AllStat;
+            if(type == "Base")
             {
-                case "STR":
-                    baseEquip.BaseStats.STR = mainStat;
-                    baseEquip.BaseStats.DEX = secStat;
-                    break;
-                case "DEX":
-                    baseEquip.BaseStats.DEX = mainStat;
-                    baseEquip.BaseStats.STR = secStat;
-                    break;
-                case "INT":
-                    baseEquip.BaseStats.INT = mainStat;
-                    baseEquip.BaseStats.LUK = secStat;
-                    break;
-                case "LUK":
-                    baseEquip.BaseStats.LUK = mainStat;
-                    if(character.SecStat == "SPECIAL")
-                    {
+                switch (character.MainStat)
+                {
+                    case "STR":
+                        baseEquip.BaseStats.STR = mainStat;
+                        baseEquip.BaseStats.DEX = secStat;
+                        break;
+                    case "DEX":
+                        baseEquip.BaseStats.DEX = mainStat;
                         baseEquip.BaseStats.STR = secStat;
-                    }
-                    baseEquip.BaseStats.DEX = secStat;
-                    break;
-                case "HP":
-                    break;
-                case "SPECIAL":
-                    baseEquip.BaseStats.STR = mainStat;
-                    baseEquip.BaseStats.DEX = mainStat;
-                    baseEquip.BaseStats.LUK = mainStat;
-                    break;
+                        break;
+                    case "INT":
+                        baseEquip.BaseStats.INT = mainStat;
+                        baseEquip.BaseStats.LUK = secStat;
+                        break;
+                    case "LUK":
+                        baseEquip.BaseStats.LUK = mainStat;
+                        if (character.SecStat == "SPECIAL")
+                        {
+                            baseEquip.BaseStats.STR = secStat;
+                        }
+                        baseEquip.BaseStats.DEX = secStat;
+                        break;
+                    case "HP":
+                        break;
+                    case "SPECIAL":
+                        baseEquip.BaseStats.STR = mainStat;
+                        baseEquip.BaseStats.DEX = mainStat;
+                        baseEquip.BaseStats.LUK = mainStat;
+                        break;
 
+                }
             }
-
+            if (type == "All")
+            {
+                baseEquip.BaseStats.STR = AS;
+                baseEquip.BaseStats.DEX = AS;
+                baseEquip.BaseStats.INT = AS;
+                baseEquip.BaseStats.LUK = AS;
+            }
 
             return baseEquip;
         }
@@ -194,6 +202,12 @@ namespace MSEACalculator
 
                     case "AllStat":
                         RM.AllStat = record[R];
+                        break;
+                    case "SpecialHP":
+                        RM.SpecialHP = record[R].ToString();
+                        break;
+                    case "SpecialMP":
+                        RM.SpecialMP = record[R].ToString();
                         break;
                     default:
                         break;

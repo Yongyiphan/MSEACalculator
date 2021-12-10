@@ -73,6 +73,7 @@ namespace MSEACalculator.MainAppRes.Settings
         public Dictionary<string, int> FlameRecord { get; set; } = new Dictionary<string, int>();
         public ObservableCollection<EquipModel> CItemDictT { get; set; } = new ObservableCollection< EquipModel>();
 
+
         
         //Visibility Controls
         private Visibility _ShowEquipmentPanel = Visibility.Collapsed;
@@ -251,6 +252,7 @@ namespace MSEACalculator.MainAppRes.Settings
             set
             {
                 _SelectedSetItem = value;
+                AddItemCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(SelectedSetItem));
             }
         }
@@ -451,18 +453,21 @@ namespace MSEACalculator.MainAppRes.Settings
             set
             {
                 _CItemSelect = value;
-                OnPropertyChanged(nameof(CItemSelect));
                 ShowSEquipStat = CItemSelect != null ? Visibility.Visible : Visibility.Collapsed;
-                SelectedESlot = CItemSelect.EquipSlot;
-                SelectedSetItem = CItemSelect.EquipSet;
-                IsSpellTrace = CItemSelect.SpellTraced;
-                NoSlot = CItemSelect.SlotCount;
-                if (CItemSelect.SpellTraced)
+                if (CItemSelect != null)
                 {
-                    SelectedScrollIndex = CItemSelect.SpellTracePerc;
+                    SelectedESlot = CItemSelect.EquipSlot;
+                    SelectedSetItem = AllCharTModel.AccGrp.Contains(EquipSlots[SelectedESlot]) ? CItemSelect.EquipName : CItemSelect.EquipSet;
+                    IsSpellTrace = CItemSelect.SpellTraced;
+                    if (CItemSelect.SpellTraced)
+                    {
+                        NoSlot = CItemSelect.SlotCount;
+                        SelectedScrollIndex = CItemSelect.SpellTracePerc;
+                    }
+                    ScrollRecord = CommonFunc.propertyToRecord(CItemSelect.ScrollStats, ScrollRecord);
+                    FlameRecord = CommonFunc.propertyToRecord(CItemSelect.FlameStats, FlameRecord);
                 }
-                ScrollRecord = CommonFunc.propertyToRecord(CItemSelect.ScrollStats, ScrollRecord);
-                FlameRecord = CommonFunc.propertyToRecord(CItemSelect.FlameStats, FlameRecord);
+                OnPropertyChanged(nameof(CItemSelect));
 
             }
         }
@@ -769,10 +774,6 @@ namespace MSEACalculator.MainAppRes.Settings
             {
                 if (SelectedESlot != null && SelectedSetItem != null)
                 {
-                    if (ShowWeapon == Visibility.Visible && SelectedWeapon != null)
-                    {
-                        return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
-                    }
                     return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
                 }
             }
@@ -783,119 +784,209 @@ namespace MSEACalculator.MainAppRes.Settings
 
         private void AddItem()
         {
-            Func<Character, List<EquipModel>,string,string, EquipModel>
-                FindEquip = (character, equipList, set, slot) =>
+            Func<Character, List<EquipModel>,string,string,string, EquipModel>
+                FindEquip = (character, equipList, set, slot, type) =>
             {
+
                 EquipModel equipModel = new EquipModel();
-                string searchClassType = set == "Fensalir" || set == "Empress" ? character.ClassType : "All";
                
-                foreach(EquipModel equip in equipList)
-                {
-                    if(equip.EquipSet == set)
-                    {
-                        if(equip.ClassType == searchClassType)
+                switch(type) {
+                    case"Armor":
+                        string searchClassType = set == "Fensalir" || set == "Empress" ? character.ClassType : "All";
+
+                        foreach (EquipModel equip in equipList)
                         {
-                            if(equip.EquipSlot == slot)
+                            if (equip.EquipSet == set && equip.ClassType == searchClassType && equip.EquipSlot == slot)
                             {
                                 return equipModel = equip;
                             }
+
+                        }
+                        break;
+                    case "Weapon":
+                        break;
+                    case "Accessory":
+
+                        //Retreiving Ring Info
+
+                        foreach (EquipModel equip in equipList)
+                        {
+                            if (AllCharTModel.AccGrp.Contains(EquipSlots[slot]))
+                            {
+
+                                if (equip.EquipSlot == EquipSlots[slot] && equip.EquipName == set)
+                                {
+                                        return equipModel = equip;
+                                }
+                                
+                            }
+                            else
+                            {
+                                if(equip.EquipSlot == slot && equip.EquipName == set)
+                                {
+                                    return equipModel = equip;
+                                }
+                            }
                         }
                         
-                    }
+                        //Retrieving Pendant Info
+                        break;
+                    default:
+
+                        break;
                 }
 
                 return equipModel;
             };
 
-           //if scroll perc selected, slot >0
+            //if scroll perc selected, slot >0
             //Information to gather
             //Selected Char
             //If armor -> EquipSet and Slot and ClassType <- Armor Data
             //If weapon -> EquipSet and Type
             //Else -> Set and Name. 
+            Character selectedChar = AllCharTModel.AllCharDict[SelectedAllChar.ClassName];
+
+            //Blank Equp
+            EquipModel selectedEquip = new EquipModel();
+            List<EquipModel> EList = new List<EquipModel>(); //<- determine which dataset to use (List<EquipModel>)
+
+            string slotType = ""; //<- determine which spell trace scroll stats to apply
+
+            //Possible Retrieve types: Weapon | Armor | Accessory | Misc
+            string retreiveType = ""; //<- method / conditions used to find item
+
+            //Possible types: Base | All
+            string baseStatType = ""; //<- determine how to translate DB Stat to Equip stat property
+
+            int namingType = 0;
             switch (EquipSlots[SelectedESlot])
             {
 
                 case "Armor":
-                    Character selectedChar = AllCharTModel.AllCharDict[SelectedAllChar.ClassName];
-                    EquipModel selectedEquip = new EquipModel();
-                    //selectedEquip = SelectedSetItem == "Fensalir" || SelectedSetItem == "Empress" ?
-                    //    AllCharTModel.AllArmorList.Find(i => i.EquipSet == SelectedSetItem && i.EquipSlot == SelectedESlot && i.ClassType == selectedChar.ClassType) :
-                    //    AllCharTModel.AllArmorList.Find(i => i.EquipSet == SelectedSetItem && i.EquipSlot == SelectedESlot && i.ClassType == "All");
+                    EList = AllCharTModel.AllArmorList;
+                    slotType = "Armor";
+                    retreiveType = "Armor";
+                    baseStatType = "Base";
+                    namingType = 0;
+                    break;
+                case "Gloves":
+                    EList = AllCharTModel.AllArmorList;
+                    slotType = "Gloves";
+                    retreiveType = "Armor";
+                    baseStatType = "Base";
+                    namingType =0;
+                    break;
 
-                    //Retreive base equip stats from list
-                    selectedEquip = FindEquip(selectedChar, AllCharTModel.AllArmorList, SelectedSetItem, SelectedESlot);
-                    selectedEquip.EquipName = String.Format("{0} {1}", SelectedSetItem, SelectedESlot);
-                    selectedEquip.SlotCount = NoSlot;
-                    //Get Base Stats
-                    selectedEquip = CommonFunc.retrieveConstructE(selectedChar, AllCharTModel.AllArmorList, selectedEquip);
+                case "Accessory":
+                    EList = AllCharTModel.AllAccList;
+                    //equipname is retrieved
+                    slotType = SelectedESlot == "Shoulder" ? "Armor" : "Accessory";
+                    retreiveType = "Accessory";
+                    baseStatType = "All";
+                    namingType = 1;
+                    break;
 
-                    if (IsSpellTrace)
+                case "Ring":
+                    EList = AllCharTModel.AllAccList;
+                    //equipname is retrieved
+                    slotType = "Accessory";
+                    retreiveType = "Accessory";
+                    baseStatType = "All";
+                    namingType = 1;
+                    break;
+
+                case "Pendant":
+                    EList = AllCharTModel.AllAccList;
+                    //equipname is retrieved
+                    slotType = "Accessory";
+                    retreiveType = "Accessory";
+                    baseStatType = "All";
+                    namingType = 1;
+                    break;
+
+                case "Weapon":
+                    break;
+                case "Misc":
+                    if(SelectedESlot == "Heart")
                     {
-                        string MainStat = selectedChar.MainStat, SecStat = selectedChar.SecStat;
-                        int STTier = CommonFunc.SpellTraceTier(selectedEquip);
-                        int perc = Convert.ToInt32(SelectedScrollStat.Remove(SelectedScrollStat.Length - 1));
-                        selectedEquip.ScrollStats.HP = AllCharTModel.SpellTraceDict["Armor"][STTier][perc].HP * NoSlot;
-                        selectedEquip.ScrollStats.DEF = AllCharTModel.SpellTraceDict["Armor"][STTier][perc].DEF *NoSlot;
+                        EList = AllCharTModel.AllAccList;
+                        slotType = "Heart";
+                        retreiveType = "Accessory";
+                        baseStatType = "All";
+                        namingType = 1;
 
-                        if(MainStat == "HP")
-                        {
-                            selectedEquip.ScrollStats.HP += AllCharTModel.SpellTraceDict["Armor"][STTier][perc].MainStat * NoSlot * 50;
-                        }
-                        else
-                        {
-                            selectedEquip.ScrollStats.GetType().GetProperty(MainStat).SetValue(selectedEquip.ScrollStats, AllCharTModel.SpellTraceDict["Armor"][STTier][perc].MainStat * NoSlot, null);
-                        }
-                        selectedEquip.FlameStats = CommonFunc.recordToProperty(selectedEquip.FlameStats, FlameRecord);
-                        selectedEquip.SpellTraced = true;
-                        selectedEquip.SpellTracePerc = SelectedScrollIndex;
                     }
-                    else
-                    {
-                        selectedEquip.ScrollStats = CommonFunc.recordToProperty(selectedEquip.ScrollStats, ScrollRecord);
-                        selectedEquip.FlameStats = CommonFunc.recordToProperty(selectedEquip.FlameStats, FlameRecord);
-                        selectedEquip.SpellTraced =  false;
-                    }
-
-
-                    EquipModel existEquip = CItemDictT.ToList().Find(equip => equip.EquipSlot == SelectedESlot);
-
-                    //if slot added before
-                    //if (existEquip != null)
-                    //{
-                    //    if (existEquip.Equals(selectedEquip))
-                    //    {
-                    //        CommonFunc.errorDia("Equip added before");
-                    //    }
-                    //    //update
-                    //    else
-                    //    {
-                    //        int existitngIndex = CItemDictT.ToList().FindIndex(item => item.EquipSlot == SelectedESlot);
-                    //        CItemDictT[existitngIndex] = selectedEquip;
-                    //    }
-                    //}
-                    //else {
-                    //    CItemDictT.Add(selectedEquip);
-                    //}
-                    if(existEquip == null)
-                    {
-                        CItemDictT.Add(selectedEquip);
-                    }
-                    NoSlot = 0;
-                    
-                    AddItemCMD.RaiseCanExecuteChanged();
                     break;
                 default:
                     break;
             }
-        }
 
-        public void ShowEquipToAdd()
-        {
-            if(CItemDictT.Count != 0)
+            //Retreive base equip stats from list
+            selectedEquip = FindEquip(selectedChar,EList, SelectedSetItem, SelectedESlot, retreiveType);
+            if(namingType == 0) { selectedEquip.EquipName = String.Format("{0} {1}", SelectedSetItem, SelectedESlot); }
+            selectedEquip.EquipSlot = SelectedESlot; //<- override value of Selected slot i.e ring1... pendant1...
+            selectedEquip.SlotCount = NoSlot;
+            //Assign base stats to correct property
+            selectedEquip = CommonFunc.updateBaseStats(selectedChar, selectedEquip, baseStatType);
+            selectedEquip.SpellTraced = IsSpellTrace;
+            selectedEquip = updateEquipModelStats(selectedEquip, selectedChar, slotType);
+
+            //Check for new / update of item.
+            EquipModel existEquip = CItemDictT.ToList().Find(equip => equip.EquipSlot == SelectedESlot);
+            //if slot added before
+            if (existEquip != null)
             {
-
+                if (existEquip.Equals(selectedEquip))
+                {
+                    CommonFunc.errorDia("Equip added before");
+                    CItemSelect = selectedEquip;
+                }
+                //update
+                else
+                {
+                    int existitngIndex = CItemDictT.ToList().FindIndex(item => item.EquipSlot == SelectedESlot);
+                    CItemDictT[existitngIndex] = selectedEquip;
+                    CItemSelect = CItemDictT[existitngIndex];
+                }
             }
+            else
+            {
+                CItemDictT.Add(selectedEquip);
+                NoSlot = 0;
+            }
+            AddItemCMD.RaiseCanExecuteChanged();
+        }
+        
+
+        private EquipModel updateEquipModelStats(EquipModel selectedEquip, Character selectedChar, string slotType)
+        {
+            if (selectedEquip.SpellTraced)
+            {
+                string MainStat = selectedChar.MainStat;
+                int STTier = CommonFunc.SpellTraceTier(selectedEquip);
+                int perc = Convert.ToInt32(SelectedScrollStat.Remove(SelectedScrollStat.Length - 1));
+                selectedEquip.ScrollStats.HP = AllCharTModel.SpellTraceDict[slotType][STTier][perc].HP * NoSlot;
+                selectedEquip.ScrollStats.DEF = AllCharTModel.SpellTraceDict[slotType][STTier][perc].DEF * NoSlot;
+
+                if (MainStat == "HP")
+                {
+                    selectedEquip.ScrollStats.HP += AllCharTModel.SpellTraceDict[slotType][STTier][perc].MainStat * NoSlot * 50;
+                }
+                else
+                {
+                    selectedEquip.ScrollStats.GetType().GetProperty(MainStat).SetValue(selectedEquip.ScrollStats, AllCharTModel.SpellTraceDict[slotType][STTier][perc].MainStat * NoSlot, null);
+                }
+                selectedEquip.FlameStats = CommonFunc.recordToProperty(selectedEquip.FlameStats, FlameRecord);
+                selectedEquip.SpellTracePerc = SelectedScrollIndex;
+            }
+            else
+            {
+                selectedEquip.ScrollStats = CommonFunc.recordToProperty(selectedEquip.ScrollStats, ScrollRecord);
+                selectedEquip.FlameStats = CommonFunc.recordToProperty(selectedEquip.FlameStats, FlameRecord);
+            }
+
+            return selectedEquip;
         }
 
     }

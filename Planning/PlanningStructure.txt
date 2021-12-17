@@ -175,4 +175,3 @@ if accessories -> display item name for slot
 
 Displaying Currently Added Items
 
-

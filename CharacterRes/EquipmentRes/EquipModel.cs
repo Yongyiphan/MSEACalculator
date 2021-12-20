@@ -11,6 +11,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public string EquipName { get; set; }
         public string EquipSet { get; set; }
         public string ClassType { get; set; }
+        public string WeaponType { get; set; }
         public string EquipSlot { get; set; }
         public int EquipLevel { get; set; }
         public string StatType { get; set; } //PERC OR FLAT 

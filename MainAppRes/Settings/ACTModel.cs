@@ -17,6 +17,8 @@ namespace MSEACalculator.MainAppRes.Settings
 
         public List<EquipModel> AllAccList { get => DatabaseAccess.GetAllAccessoriesDB(); }
 
+        public List<EquipModel> AllWeapList { get => DatabaseAccess.GetAllWeaponDB(); }
+
         public List<string> AccGrp { get; } = new List<string>
         {
             "Accessory", "Ring", "Pendant"

@@ -150,6 +150,24 @@ namespace MSEACalculator
                 ");";
             staticTables.Add(new TableStats("AccessoriesData", AccessoriesTableSpec, "Accessories"));
 
+            //TABLE FOR WEAPON
+            string WeapTableSpec = "(" +
+                "ClassType string," +
+                "EquipSet string," +
+                "WeaponType string," +
+                "EquipLevel int," +
+                "ATKSPD int," +
+                "ATK int," +
+                "SPD int," +
+                "BDMG int," +
+                "IED int," +
+                "MainStat int," +
+                "SecStat int," +
+                "HP int," +
+                "MATK int," +
+                "PRIMARY KEY (ClassType, EquipSet, WeaponType) " +
+                ");";
+            staticTables.Add(new TableStats("WeaponData", WeapTableSpec, "Weapon"));
 
             //Equipment Set Effects
 
@@ -219,6 +237,8 @@ namespace MSEACalculator
                 "FOREIGN KEY (CharName) REFERENCES CharacterTrack(CharName) ON DELETE CASCADE" +
                 ");";
             blankTables.Add(new TableStats("CharTEquipFlame", charEquipFlameSpec));
+
+            
 
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GlobalVars.databasePath}"))
             {
@@ -561,13 +581,47 @@ namespace MSEACalculator
                                 insertCMD.ExecuteNonQuery();
                             }
                         }
-                                
+
 
                     }
-           
+                    break;
+                case "Weapon":
+                    List<EquipModel> WeapList = await GetWeaponCSVAsync();
 
+                    if(connection.State == ConnectionState.Open)
+                    {
+                        string insertQuery = "INSERT INTO " + tableName + " (" +
+                            "ClassType, EquipSet, WeaponType, EquipLevel, ATKSPD, ATK, SPD, BDMG, IED, MainStat, SecStat, HP, MATK) VALUES" +
+                            "(@CT, @ES, @WT, @EL, @AS, @A, @S, @BD, @IED, @MS, @SS, @HP, @MATK);";
+                        
+                        using (SqliteCommand insertCMD = new SqliteCommand(insertQuery, connection, transaction))
+                        {
+                            foreach (EquipModel model in WeapList)
+                            {
+                                insertCMD.Parameters.Clear();
+                                insertCMD.Parameters.AddWithValue("@CT", model.ClassType);
+                                insertCMD.Parameters.AddWithValue("@ES", model.EquipSet);
+                                insertCMD.Parameters.AddWithValue("@WT", model.WeaponType);
+                                insertCMD.Parameters.AddWithValue("@EL", model.EquipLevel);
+                                insertCMD.Parameters.AddWithValue("@AS", model.BaseStats.ATKSPD);
+                                insertCMD.Parameters.AddWithValue("@A", model.BaseStats.ATK);
+                                insertCMD.Parameters.AddWithValue("@S", model.BaseStats.SPD);
+                                insertCMD.Parameters.AddWithValue("@BD", model.BaseStats.BD);
+                                insertCMD.Parameters.AddWithValue("@IED", model.BaseStats.IED);
+                                insertCMD.Parameters.AddWithValue("@MS", model.BaseStats.MS);
+                                insertCMD.Parameters.AddWithValue("@SS", model.BaseStats.SS);
+                                insertCMD.Parameters.AddWithValue("@HP", model.BaseStats.HP);
+                                insertCMD.Parameters.AddWithValue("@MATK", model.BaseStats.MATK);
+                                
+                                insertCMD.ExecuteNonQuery();
+                            }
+                        }
+                    }
 
                     break;
+
+
+                   
                 default:
                     break;
             }
@@ -892,6 +946,61 @@ namespace MSEACalculator
             return AccessoriesList;
         }
 
+        private static async Task<List<EquipModel>> GetWeaponCSVAsync()
+        {
+            List<EquipModel> WeaponList = new List<EquipModel>();
+
+            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\WeaponData.csv");
+
+            var stream = await charTable.OpenAsync(FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    var result = text.Split("\r\n");
+                    foreach (string weapItem in result.Skip(1))
+                    {
+                        if (weapItem == "")
+                        {
+                            return WeaponList;
+                        }
+
+                        var temp = weapItem.Split(",");
+
+                        EquipModel equip = new EquipModel();
+                        equip.ClassType = temp[1];
+                        equip.EquipSet = temp[2];
+                        equip.WeaponType = temp[3];
+                        equip.EquipLevel = Convert.ToInt32(temp[4]);
+                        equip.BaseStats.ATKSPD = Convert.ToInt32(temp[5]);
+                        equip.BaseStats.ATK = Convert.ToInt32(temp[6]);
+                        equip.BaseStats.SPD = Convert.ToInt32(temp[7]);
+                        equip.BaseStats.BD = Convert.ToInt32(temp[8]);
+                        equip.BaseStats.IED = Convert.ToInt32(temp[9]);
+                        equip.BaseStats.MS = Convert.ToInt32(temp[10]);
+                        equip.BaseStats.SS = Convert.ToInt32(temp[11]);
+                        equip.BaseStats.HP = Convert.ToInt32(temp[12]);
+                        equip.BaseStats.MATK = Convert.ToInt32(temp[13]); 
+                        
+                        WeaponList.Add(equip);
+
+
+                    }
+                }
+            }
+
+
+            return WeaponList;
+
+
+        }
+
         //Retrieving Data from Maplestory.db
 
         public static Dictionary<int, Boss> GetBossDB()
@@ -1103,6 +1212,50 @@ namespace MSEACalculator
 
 
             return accModel;
+        }
+        
+        public static List<EquipModel> GetAllWeaponDB()
+        {
+            List<EquipModel> weapModel = new List<EquipModel>();
+
+            using(SqliteConnection dbCon = new SqliteConnection($"Filename = {GlobalVars.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM WeaponData";
+
+                using(SqliteCommand selectCMD = new SqliteCommand( selectQuery, dbCon))
+                {
+                    using(SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            EquipModel equipModel = new EquipModel();
+                            equipModel.ClassType = reader.GetString(0);
+                            equipModel.EquipSet = reader.GetString(1);
+                            equipModel.WeaponType = reader.GetString(2);
+                            equipModel.EquipLevel = reader.GetInt32(3);
+                            equipModel.BaseStats.ATKSPD= reader.GetInt32(4);
+                            equipModel.BaseStats.ATK = reader.GetInt32(5);
+                            equipModel.BaseStats.SPD= reader.GetInt32(6);
+                            equipModel.BaseStats.BD = reader.GetInt32(7);
+                            equipModel.BaseStats.IED = reader.GetInt32(8);
+                            equipModel.BaseStats.MS = reader.GetInt32(9);
+                            equipModel.BaseStats.SS = reader.GetInt32(10);
+                            equipModel.BaseStats.HP = reader.GetInt32(11);
+                            equipModel.BaseStats.MATK = reader.GetInt32(12);
+
+                            weapModel.Add(equipModel);
+                        }
+                    }
+                }
+
+
+            }
+
+
+
+            return weapModel;
         }
 
 

@@ -115,8 +115,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="3*"/>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="4.5*"/>
+                <RowDefinition Height="0.5*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <!--CHARACTER SELECTION/ ADDITION TO DATABASE/ REMOVAL FROM DATABASE-->

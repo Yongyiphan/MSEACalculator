@@ -9,6 +9,15 @@ using Windows.Storage;
 
 namespace MSEACalculator
 {
+    //NAMING CONVENTION
+    //STATIC DATA TABLE
+    //CLASSNAME <- WINDARCHER, KANNA....
+    //CLASSTYPE <-  WARRIOR, MAGE, BOWMAN, THIEF, PIRATE
+    //ENTRY TYPE <- DAILY, WEEKLY, MONTHLY
+
+    //EDITABLE DATA TABLE
+    //CHARNAME <- WINDARCHER, KANNA....
+
     public static class GlobalVars
     {
 

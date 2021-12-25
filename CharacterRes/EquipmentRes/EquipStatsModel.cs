@@ -18,22 +18,22 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int LUK { get; set; } = 0;       
         public int DEF { get; set; } = 0;
         public int HP { get; set; } = 0;
-        public string SpecialHP { get; set; }
+        public string SpecialHP { get; set; } = "";
         public int MP { get; set; } = 0;
-        public string SpecialMP { get; set; }
+        public string SpecialMP { get; set; } = "";
         public int SPD { get; set; } = 0;
         public int JUMP { get; set; } = 0;
         public int ATK { get; set; } = 0;
         public int MATK { get; set; } = 0;
 
         //ADDITIONAL BASE STAT FOR WEAPONS
-        public int IED { get; set; }
-        public int BD { get; set; }
-        public int ATKSPD { get; set; }
-        public int DMG { get; set; }
+        public int IED { get; set; } = 0;
+        public int BD { get; set; } = 0;
+        public int ATKSPD { get; set; } = 0;
+        public int DMG { get; set; } = 0;
 
         //FLAME STATS
-        public int AllStat { get; set; }
+        public int AllStat { get; set; } = 0;
 
         public EquipStatsModel()
         {

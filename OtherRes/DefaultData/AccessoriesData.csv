@@ -1,67 +1,93 @@
-﻿EquipName,EquipSet,EquipSlot,EquipLevel,AS,HP,MP,WATK,MATK,DEF,SPD,JUMP
-Abso Shoulder,Abso,Shoulder,160,14,0,0,10,10,100,0,0
-Arcane Shoulder,Arcane,Shoulder,200,35,0,0,20,20,300,0,0
-Blazing Sun Face Paint,Blazing Sun,Face Accessory,130,5,0,0,4,4,38,0,0
-Blazing Sun Earring,Blazing Sun,Earring,130,7,150,150,0,0,90,0,0
-Blazing Sun Ring,Blazing Sun,Ring,130,8,150,150,4,4,0,0,0
-Blazing Sun Pendant,Blazing Sun,Pendant,130,19,250,250,3,3,215,0,0
-Blazing Sun Belt ,Blazing Sun,Belt,130,12,160,160,3,3,140,0,0
-Condensed Power Crystal,Boss,Face Accessory,110,5,0,0,5,5,100,0,0
-Aquatic Letter,Boss,Eye Decor,100,6,0,0,1,1,100,0,0
-Black Bean Mark,Boss,Eye Decor,135,7,0,0,1,1,100,0,0
-Papulatus Mark,Boss,Eye Decor,145,8,0,0,1,1,150,0,0
-Dea Sidus,Boss,Earring,130,5,0,0,2,2,50,0,0
-Will o wisps,Boss,Earring,130,7,100,100,2,2,100,0,0
-Silver Blossom,Boss,Ring,110,5,0,0,2,2,0,0,0
-Noble Ifia,Boss,Ring,120,5,200,200,2,2,0,0,0
-Guardian Slime,Boss,Ring,160,5,200,200,2,2,0,0,0
-Horntail,Boss,Pendant,120,7,0,0,0,0,108,0,0
-Chaos Horntail,Boss,Pendant,120,10,10%,10%,2,2,140,0,0
-Machinator,Boss,Pendant,120,10,250,250,1,1,100,0,0
-Dominator,Boss,Pendant,140,20,10%,10%,3,3,100,0,0
-Golden Clover,Boss,Belt,140,15,150,150,1,1,150,0,0
-Enraged Zakum,Boss,Belt,150,18,150,150,1,1,150,0,0
-Royal Black Metal,Boss,Shoulder,120,10,0,0,6,6,100,0,0
-Stone of Eternal Life,Boss,Pocket,0,3,0,0,3,3,0,0,0
-Pink Holy Cup,Boss,Pocket,140,5,50,50,5,5,0,0,0
-Crystal Ventus,Boss,Badge,130,10,0,0,5,5,0,10,10
-Shiny Red Meister Symbol,Craft,Face Accessory,130,3,0,0,3,3,26,0,0
-White Angelic,Craft,Ring,90,10,150,150,0,0,0,0,0
-Cygnus Kohinoor,Craft,Ring,140,5,200,200,5,5,150,10,10
-Empress Shoulder,Empress,Shoulder,140,11,0,0,7,7,100,0,0
-Lightning God ,Gacha,Ring,100,12,150,150,0,0,0,18,10
-BOD,Gacha,Ring,150,15,200,200,25,25,0,18,10
-Sailor Belt,Gold Beach,Belt,30,2,50,50,0,0,30,0,0
-Ifia Earring,Ifia,Earring,110,1,150,150,0,0,120,0,0
-Ifia Ring,Ifia,Ring,110,3,100,100,1,1,140,0,0
-Ifia Pendant,Ifia,Pendant,110,5,150,150,1,1,108,0,0
-Inverse Metal ,Kritias,Shoulder,150,10,0,0,10,10,180,0,0
-Inverse Jewel,Kritias,Earring,150,6,600,600,4,4,80,0,0
-Scarlet Shoulder,Lucky,Shoulder,135,75,400,0,7,7,125,0,0
-Scarlet Earring,Lucky,Earring,135,6,200,200,3,3,100,0,0
-Ocean Glow,Lucky,Earring,150,7,750,750,5,5,75,0,0
-Scarlet Ring,Lucky,Ring,135,4,150,150,1,1,100,0,0
-Meister Ring,Meister,Ring,140,5,200,200,1,1,150,0,0
-Meister Earring,Meister,Earring,140,5,500,500,4,4,70,0,0
-Meister Shoulder,Meister,Shoulder,140,13,0,0,9,9,150,0,0
-Greed Pendant,MP,Pendant,75,3,0,0,0,0,100,0,0
-Day Badge,MP,Badge,100,7,0,0,7,7,0,0,0
-Seven Day Badge,MP,Badge,100,7,0,0,7,7,0,0,0
-Black Heart,Pitched Boss,Heart,120,10,100,0,77,77,0,0,0
-Loose Control,Pitched Boss,Face Accessory,160,10,0,0,10,10,200,0,0
-Magic Eyepatch,Pitched Boss,Eye Decor,160,15,0,0,3,3,300,0,0
-Source of Suffering,Pitched Boss,Pendant,160,10,5%,0,3,3,200,0,0
-Spellbook,Pitched Boss,Pocket,160,10,100,100,10,10,0,0,0
-Commander Force,Pitched Boss,Earring,200,7,500,500,5,5,10,0,0
-Endless Terror,Pitched Boss,Ring,200,5,250,250,4,4,0,0,0
-Dream Belt,Pitched Boss,Belt,200,50,150,150,6,6,150,0,0
-Genesis Badge,Pitched Boss,Badge,200,15,0,0,10,10,0,10,10
-Mitra Rage,Pitched Boss,Emblem,200,40,700,0,5,5,0,0,0
-Purple Pendant,Purple,Pendant,130,16,180,180,0,0,185,0,0
-Kanna,Sengoku,Ring,140,5,200,200,1,1,150,0,0
-Hayato,Sengoku,Shoulder,140,11,0,0,7,7,100,0,0
-Ayame,Sengoku,Belt,140,10,200,200,1,1,100,0,0
-Platinum,Silent Crusade,Ring,120,3,75,75,1,1,60,5,0
-Pharaoh Ring,Story,Ring,80,2,100,100,0,0,0,0,0
-Tyrant Belt,Superior,Belt,150,50,0,0,25,25,105,0,0
-Xiamen Earring,Xiamen,Earring,140,5,150,150,0,0,70,0,0
+,EquipName,EquipSet,ClassType,EquipSlot,EquipLevel,MainStat,SecStat,HP,MP,DEF,Atk,MAtk,AS,SPD,JUMP,IED
+0,AbsoLab Archer ,AbsoLab,Bowman,Shoulder,160,0,0,0,0,100,10,10,14,0,0,0
+1,AbsoLab Mage ,AbsoLab,Magician,Shoulder,160,0,0,0,0,100,10,10,14,0,0,0
+2,AbsoLab Pirate ,AbsoLab,Pirate,Shoulder,160,0,0,0,0,100,10,10,14,0,0,0
+3,AbsoLab Thief ,AbsoLab,Thief,Shoulder,160,0,0,0,0,100,10,10,14,0,0,0
+4,AbsoLab Knight ,AbsoLab,Warrior,Shoulder,160,0,0,0,0,100,10,10,14,0,0,0
+5,Arcane Umbra Archer ,Arcane,Bowman,Shoulder,200,0,0,0,0,300,20,20,35,0,0,0
+6,Arcane Umbra Mage ,Arcane,Magician,Shoulder,200,0,0,0,0,300,20,20,35,0,0,0
+7,Arcane Umbra Pirate ,Arcane,Pirate,Shoulder,200,0,0,0,0,300,20,20,35,0,0,0
+8,Arcane Umbra Thief ,Arcane,Thief,Shoulder,200,0,0,0,0,300,20,20,35,0,0,0
+9,Arcane Umbra Knight ,Arcane,Warrior,Shoulder,200,0,0,0,0,300,20,20,35,0,0,0
+10,Meister Earring,Ardentmill,Any,Earrings,140,0,0,00,00,70,4,4,5,0,0,0
+11,Meister ,Ardentmill,Any,Ring,140,0,0,00,00,150,1,1,5,0,0,0
+12,Meister ,Ardentmill,Any,Shoulder,140,0,0,0,0,150,9,9,13,0,0,0
+13,Blazing Sun Face Paint,Blazing Sun,Any,Face Accessory,130,0,0,0,0,38,4,4,5,0,0,0
+14,Blazing Sun ,Blazing Sun,Any,Earrings,130,0,0,50,50,90,0,0,7,0,0,0
+15,Blazing Sun ,Blazing Sun,Any,Ring,130,0,0,50,50,0,4,4,8,0,0,0
+16,Blazing Sun ,Blazing Sun,Any,Pendant,130,0,0,50,50,215,3,3,19,0,0,0
+17,Blazing Sun ,Blazing Sun,Any,Belt,130,0,0,60,60,140,3,3,12,0,0,0
+18,Condensed Power Crystal,Boss Accessory,Any,Face Accessory,110,0,0,0,0,100,5,5,5,0,0,0
+19,Aquatic Letter ,Boss Accessory,Any,Eye Accessory,100,0,0,0,0,100,1,1,6,0,0,0
+20,Black Bean Mark,Boss Accessory,Any,Eye Accessory,135,0,0,0,0,120,1,1,7,0,0,0
+21,Papulatus Mark,Boss Accessory,Any,Eye Accessory,145,0,0,0,0,150,1,1,8,0,0,0
+22,Dea Sidus Earring,Boss Accessory,Any,Earrings,130,0,0,0,0,50,2,2,5,0,0,0
+23,Will o' the Wisps,Boss Accessory,Any,Earrings,130,0,0,00,00,100,2,2,7,0,0,0
+24,Silver Blossom ,Boss Accessory,Any,Ring,110,0,0,0,0,0,2,2,5,0,0,0
+25,Noble Ifia's ,Boss Accessory,Any,Ring,120,0,0,00,00,0,2,2,5,0,0,0
+26,Guardian Angel ,Boss Accessory,Any,Ring,160,0,0,00,00,0,2,2,5,0,0,0
+27,Horntail Necklace,Boss Accessory,Any,Pendant,120,0,0,0,0,108,0,0,7,0,0,0
+28,Chaos Horntail Necklace,Boss Accessory,Any,Pendant,120,0,0,10%,10%,140,2,2,10,0,0,0
+29,Mechanator ,Boss Accessory,Any,Pendant,120,0,0,50,50,100,1,1,10,0,0,0
+30,Dominator ,Boss Accessory,Any,Pendant,140,0,0,10%,10%,100,3,3,20,0,0,0
+31,Golden Clover ,Boss Accessory,Any,Belt,140,0,0,50,50,150,1,1,15,0,0,0
+32,Enraged Zakum ,Boss Accessory,Any,Belt,150,0,0,50,50,150,1,1,18,0,0,0
+33,Royal Black Metal ,Boss Accessory,Any,Shoulder,120,0,0,0,0,100,6,6,10,0,0,0
+34,Stone of Eternal Life,Boss Accessory,Any,Pocket Item,None,0,0,0,0,0,3,3,3,0,0,0
+35,Pink Holy Cup,Boss Accessory,Any,Pocket Item,140,0,0,0,0,0,5,5,5,0,0,0
+36,Crystal Ventus ,Boss Accessory,Any,Badge,130,0,0,0,0,0,5,5,10,10,10,0
+37,Dragon Tail Mage ,Dragon Tail,Magician,Shoulder,140,0,0,0,0,100,7,7,11,0,0,0
+38,Falcon Wing Sentinel ,Falcon Wing,Bowman,Shoulder,140,0,0,0,0,100,7,7,1,0,0,0
+39,Gold Engine,Gold Parts,Any,Mechanic Engine,100,0,0,0,0,50,4,0,0,0,0,0
+40,Gold Machine Arm,Gold Parts,Any,Mechanic Arm,100,4,0,0,0,50,0,0,0,0,0,0
+41,Gold Machine Leg,Gold Parts,Any,Mechanic Leg,100,0,0,0,0,50,0,0,0,8,8,0
+42,Gold Body Frame,Gold Parts,Any,Mechanic Frame,100,0,0,00,0,50,0,0,0,0,0,0
+43,Gold Transistor,Gold Parts,Any,Mechanic Transistor,100,4,0,0,0,50,0,0,0,0,0,0
+44,Ifia's ,Ifia's Treasure,Any,Earrings,110,0,0,50,50,120,0,0,1,0,0,0
+45,Ifia's ,Ifia's Treasure,Any,Ring,110,0,0,00,00,140,1,1,3,0,0,0
+46,Ifia's Necklace,Ifia's Treasure,Any,Pendant,110,0,0,50,50,108,1,1,5,0,0,0
+47,Lionheart Battle ,Lionheart,Warrior,Shoulder,140,0,0,0,0,100,7,7,11,0,0,0
+48,Mystic ,Mystic,Any,Face Accessory,115,0,0,0,0,20,2,2,1,0,0,0
+49,Mystic ,Mystic,Any,Eye Accessory,115,0,0,0,0,120,1,1,0,0,0,0
+50,Mystic ,Mystic,Any,Earrings,115,0,0,0,0,35,0,0,4,0,0,0
+51,Mystic ,Mystic,Any,Pendant,115,0,0,0,0,50,1,1,5,0,0,0
+52,Mystic ,Mystic,Any,Belt,115,0,0,0,0,86,0,0,7,0,0,0
+53,Black Heart,Pitched Boss,Any,Android Heart,120,0,0,00,0,0,77,77,10,0,0,0
+54,Berserked,Pitched Boss,Any,Face Accessory,160,0,0,0,0,200,10,10,10,0,0,0
+55,Magic Eyepatch,Pitched Boss,Any,Eye Accessory,160,0,0,0,0,300,3,3,15,0,0,0
+56,Source of Suffering,Pitched Boss,Any,Pendant,160,0,0,5%,0,200,3,3,10,0,0,0
+57,Cursed Red Spellbook,Pitched Boss,Any,Pocket Item,160,20,10,00,00,0,10,10,0,0,0,0
+58,Cursed Blue Spellbook,Pitched Boss,Any,Pocket Item,160,10,10,00,00,0,10,10,0,0,0,0
+59,Cursed Green Spellbook,Pitched Boss,Any,Pocket Item,160,10,20,00,00,0,10,10,0,0,0,0
+60,Cursed Yellow Spellbook,Pitched Boss,Any,Pocket Item,160,10,10,00,00,0,10,10,0,0,0,0
+61,Commanding Force Earring,Pitched Boss,Any,Earrings,200,0,0,00,00,10,5,5,7,0,0,0
+62,Endless Terror,Pitched Boss,Any,Ring,200,0,0,50,50,0,4,4,5,0,0,0
+63,Dreamy ,Pitched Boss,Any,Belt,200,0,0,50,50,150,6,6,50,0,0,0
+64,Genesis ,Pitched Boss,Any,Badge,200,0,0,0,0,0,10,10,15,10,10,0
+65,Mitra's Rage: Warrior,Pitched Boss,Warrior,Emblem,200,40,40,00,0,0,5,5,0,0,0,0
+66,Mitra's Rage: Bowman,Pitched Boss,Bowman,Emblem,200,40,40,0,0,0,5,5,0,0,0,0
+67,Mitra's Rage: Pirate,Pitched Boss,Pirate,Emblem,200,40,40,0,0,0,5,5,0,0,0,0
+68,Mitra's Rage: Magician,Pitched Boss,Magician,Emblem,200,40,40,0,0,0,5,5,0,0,0,0
+69,Mitra's Rage: Thief,Pitched Boss,Thief,Emblem,200,40,40,0,0,0,5,5,0,0,0,0
+70,Pure Gold Engine,Gold Parts,Any,Mechanic Engine,120,0,0,0,0,60,5,0,0,0,0,0
+71,Pure Gold Machine Arm,Gold Parts,Any,Mechanic Arm,120,5,0,0,0,60,0,0,0,0,0,0
+72,Pure Gold Machine Leg,Gold Parts,Any,Mechanic Leg,120,0,0,0,0,50,0,0,0,10,10,0
+73,Pure Gold Body Frame,Gold Parts,Any,Mechanic Frame,120,0,0,00,0,60,0,0,0,0,0,0
+74,Pure Gold Transistor,Gold Parts,Any,Mechanic Transistor,120,5,0,0,0,60,0,0,0,0,0,0
+75,Raven Horn Chaser ,Raven Horn,Thief,Shoulder,140,0,0,0,0,100,7,7,11,0,0,0
+76,Trixter Ranger Pants,Root Abyss,Bowman,Bottom,150,30,30,0,0,135,2,0,0,0,0,5
+77,Trixter Dunwitch Pants,Root Abyss,Magician,Bottom,150,30,30,0,0,120,0,2,0,0,0,5
+78,Trixter Wanderer Pants,Root Abyss,Pirate,Bottom,150,30,30,0,0,135,2,0,0,0,0,5
+79,Trixter Assassin Pants,Root Abyss,Thief,Bottom,150,30,30,0,0,135,2,0,0,0,0,5
+80,Trixter Warrior Pants,Root Abyss,Warrior,Bottom,150,30,30,0,0,210,2,0,0,0,0,5
+81,Kanna's Treasure,Sengoku,Any,Ring,140,0,0,00,00,150,1,1,5,0,0,0
+82,Ayame's Treasure,Sengoku,Any,Belt,140,0,0,00,00,100,1,1,10,0,0,0
+83,Hayato's Treasure,Sengoku,Any,Shoulder,140,0,0,0,0,100,7,7,11,0,0,0
+84,Seven Days ,Seven Days,Any,Badge,100,0,0,0,0,0,7,7,7,0,0,10
+85,Seven Day Monster Parker,Seven Days,Any,Medal,100,0,0,0,0,0,7,7,7,0,0,10
+86,Shark Tooth Skipper ,Shark Tooth,Pirate,Shoulder,140,0,0,0,0,100,7,7,11,0,0,0
+87,Tyrant,Tyrant,Pirate,Belt,150,50,50,0,0,105,25,25,0,0,0,0
+88,Tyrant,Tyrant,Bowman,Belt,150,50,50,0,0,105,25,25,0,0,0,0
+89,Tyrant,Tyrant,Magician,Belt,150,50,50,0,0,105,25,25,0,0,0,0
+90,Tyrant,Tyrant,Warrior,Belt,150,50,50,0,0,105,25,25,0,0,0,0
+91,Tyrant,Tyrant,Thief,Belt,150,50,50,0,0,105,25,25,0,0,0,0

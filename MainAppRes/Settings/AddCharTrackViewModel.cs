@@ -35,7 +35,7 @@ namespace MSEACalculator.MainAppRes.Settings
         public List<int> Slots { get => ScrollModel.Slots; } //= new Scrolling().Slots;
         public List<Character> AllCharList { get => AllCharTModel.AllCharList;}
 
-        public List<EquipModel> WeaponList 
+        
         public List<string> SlotSet { get; set; } = new List<string>
         {
             "Weapon", "Gloves", "Armor"

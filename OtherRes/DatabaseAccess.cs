@@ -39,24 +39,24 @@ namespace MSEACalculator
                             "ClassName string," +
                             "ClassType string," +
                             "Faction string," +
-                            "UnionE string," +
-                            "UnionET string," +
                             "MainStat string," +
                             "SecStat string," +
+                            "UnionE string," +
+                            "UnionET string," +
                             "PRIMARY KEY (ClassName)" +
                             ");";
             staticTables.Add(new TableStats("AllCharacter", CharacterTableSpec, "AllCharacter"));
 
             //TABLE FOR UNION EFFECTS
             string unionETableSpecs = "(" +
-                "Stat string," +
-                "StatType string," +
+                "Effect string," +
+                "EffectType string," +
                 "B int," +
                 "A int," +
                 "S int," +
                 "SS int," +
                 "SSS int," +
-                "PRIMARY KEY(Stat, StatType)" +
+                "PRIMARY KEY(Effect, EffectType)" +
                 ");";
             staticTables.Add(new TableStats("UnionEffects", unionETableSpecs, "UnionEffect"));
 
@@ -66,7 +66,10 @@ namespace MSEACalculator
                 "PRIMARY KEY (ClassName, WeaponType)" +
                 ");";
 
-            staticTables.Add(new TableStats("ClassWeapon", WeapToClassSpec,"ClassWeapon"));
+            staticTables.Add(new TableStats("ClassMWeapon", WeapToClassSpec,"ClassMWeapon"));
+
+
+
             ///////BOSSING///////
 
 
@@ -508,8 +511,8 @@ namespace MSEACalculator
                         foreach (Character charItem in charTable)
                         {
                             counter++;
-                            string insertChar = "INSERT INTO " + tableName + "(ClassName, ClassType, Faction, UnionE, UnionET, MainStat, SecStat)" +
-                                " VALUES (@CN, @CT, @Fac, @UE, @UET, @MS, @SS)";
+                            string insertChar = "INSERT INTO " + tableName + "(ClassName, ClassType, Faction, MainStat, SecStat, UnionE, UnionET)" +
+                                " VALUES (@CN, @CT, @Fac, @MS, @SS, @UE, @UET)";
 
                             SqliteCommand insertCharCmd = new SqliteCommand(insertChar, connection, transaction);
 
@@ -542,12 +545,13 @@ namespace MSEACalculator
                         foreach (UnionModel unionItem in unionList)
                         {
                             counter++;
-                            string insertUnion = "INSERT INTO " + tableName + " (Stat, StatType, B, A, S, SS, SSS)" +
-                                " VALUES (@Stat, @ST, @B, @A, @S, @SS, @SSS);";
+                            string insertUnion = "INSERT INTO " + tableName + " (Effect, EffectType, B, A, S, SS, SSS)" +
+                                " VALUES (@E, @ET, @B, @A, @S, @SS, @SSS);";
                             using (SqliteCommand insertCMD = new SqliteCommand(insertUnion, connection, transaction))
                             {
-                                insertCMD.Parameters.AddWithValue("@Stat", unionItem.Stat);
-                                insertCMD.Parameters.AddWithValue("@ST", unionItem.StatType);
+                                insertCMD.Parameters.Clear();
+                                insertCMD.Parameters.AddWithValue("@E", unionItem.Effect);
+                                insertCMD.Parameters.AddWithValue("@ET", unionItem.EffectType);
                                 insertCMD.Parameters.AddWithValue("@B", unionItem.RankB);
                                 insertCMD.Parameters.AddWithValue("@A", unionItem.RankA);
                                 insertCMD.Parameters.AddWithValue("@S", unionItem.RankS);
@@ -752,9 +756,9 @@ namespace MSEACalculator
 
                     break;
 
-                case "ClassWeapon":
+                case "ClassMWeapon":
 
-                    Dictionary<int, List<string>> CWDict = await GetClassWeaponCSVAsync();
+                    Dictionary<int, List<string>> CWDict = await GetClassMWeaponCSVAsync();
                     if (connection.State == ConnectionState.Open) {
 
                         string insertQ = "INSERT INTO " + tableName + "(" +
@@ -798,7 +802,7 @@ namespace MSEACalculator
 
             List<Boss> AllBossList = new List<Boss>();
 
-            StorageFile statTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\BossListData.csv");
+            StorageFile statTable = await GlobalVars.storageFolder.GetFileAsync(GlobalVars.CalculationsPath + "BossListData.csv");
 
             var stream = await statTable.OpenAsync(FileAccessMode.Read);
 
@@ -843,7 +847,7 @@ namespace MSEACalculator
         {
             List<SFGain> SFList = new List<SFGain>();
 
-            StorageFile statTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\statGains.csv");
+            StorageFile statTable = await GlobalVars.storageFolder.GetFileAsync(GlobalVars.CalculationsPath + "statGains.csv");
 
             var stream = await statTable.OpenAsync(FileAccessMode.Read);
 
@@ -921,7 +925,7 @@ namespace MSEACalculator
             List<Character> characterList = new List<Character>();
 
 
-            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\CharacterData.csv");
+            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(GlobalVars.CharacterPath + "CharacterData.csv");
 
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
 
@@ -945,7 +949,15 @@ namespace MSEACalculator
 
                         var temp = characterItem.Split(",");
                         counter += 1;
-                        Character tempChar = new Character(temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6]);
+                        Character tempChar = new Character();
+                        tempChar.ClassName = temp[1];
+                        tempChar.Faction = temp[2];
+                        tempChar.ClassType = temp[3];
+                        tempChar.MainStat = temp[4];
+                        tempChar.SecStat = temp[5];
+                        tempChar.unionEffect = temp[6];
+                        tempChar.unionEffectType = temp[7];
+
                         characterList.Add(tempChar);
 
                     }
@@ -960,7 +972,7 @@ namespace MSEACalculator
         {
             List<UnionModel> unionList = new List<UnionModel>();
 
-            StorageFile UnionTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\UnionEffect.csv");
+            StorageFile UnionTable = await GlobalVars.storageFolder.GetFileAsync(GlobalVars.CharacterPath + "UnionData.csv");
 
             var stream = await UnionTable.OpenAsync(FileAccessMode.Read);
 
@@ -983,13 +995,14 @@ namespace MSEACalculator
                         }
                         var temp = unionItems.Split(",");
                         counter += 1;
-                        UnionModel tempUnion = new UnionModel(temp[0],
-                            temp[1],
-                            Convert.ToInt32(temp[2]),
-                            Convert.ToInt32(temp[3]),
-                            Convert.ToInt32(temp[4]),
-                            Convert.ToInt32(temp[5]),
-                            Convert.ToInt32(temp[6]));
+                        UnionModel tempUnion = new UnionModel();
+                        tempUnion.Effect = temp[1];
+                        tempUnion.RankB = Convert.ToInt32(temp[2]);
+                        tempUnion.RankA = Convert.ToInt32(temp[3]);
+                        tempUnion.RankS = Convert.ToInt32(temp[4]);
+                        tempUnion.RankSS = Convert.ToInt32(temp[5]);
+                        tempUnion.RankSSS = Convert.ToInt32(temp[6]);
+                        tempUnion.EffectType = temp[7];
 
 
                         //Stat = temp[0],
@@ -1011,7 +1024,7 @@ namespace MSEACalculator
         {
             List<EquipModel> equipList = new List<EquipModel>();
 
-            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\ArmorData.csv");
+            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(GlobalVars.EquipmentPath + "ArmorData.csv");
 
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
 
@@ -1065,7 +1078,7 @@ namespace MSEACalculator
         {
             List<EquipModel> AccessoriesList = new List<EquipModel>();
 
-            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\AccessoriesData.csv");
+            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(GlobalVars.EquipmentPath + "AccessoriesData.csv");
 
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
 
@@ -1125,7 +1138,7 @@ namespace MSEACalculator
         {
             List<EquipModel> WeaponList = new List<EquipModel>();
 
-            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\WeaponData.csv");
+            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(GlobalVars.EquipmentPath + "WeaponData.csv");
 
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
 
@@ -1176,10 +1189,10 @@ namespace MSEACalculator
 
         }
 
-        private static async Task<Dictionary<int, List<string>>> GetClassWeaponCSVAsync()
+        private static async Task<Dictionary<int, List<string>>> GetClassMWeaponCSVAsync()
         {
             Dictionary<int, List<string>> CWdict = new Dictionary<int, List<string>>();
-            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(@"\DefaultData\ClassWeapData.csv");
+            StorageFile charTable = await GlobalVars.storageFolder.GetFileAsync(GlobalVars.CharacterPath + "ClassMainWeapon.csv");
 
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
 

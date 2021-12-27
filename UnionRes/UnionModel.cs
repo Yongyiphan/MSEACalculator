@@ -9,8 +9,8 @@ namespace MSEACalculator.UnionRes
     public class UnionModel
     {
 
-        public string Stat { get; set; }
-        public string StatType { get; set; }
+        public string Effect { get; set; }
+        public string EffectType { get; set; }
         public int RankB { get; set; }
         public int RankA { get; set; }
         public int RankS { get; set; }
@@ -24,8 +24,8 @@ namespace MSEACalculator.UnionRes
 
         public UnionModel(string Stat, string ST, int B, int A, int S, int SS, int SSS)
         {
-            this.Stat = Stat;
-            this.StatType = ST;
+            this.Effect = Stat;
+            this.EffectType = ST;
             this.RankB = B;
             this.RankA = A;
             this.RankS = S;

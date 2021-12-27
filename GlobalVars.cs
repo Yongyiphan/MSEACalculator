@@ -24,6 +24,13 @@ namespace MSEACalculator
         public static string DBName { get; set; } = "Maplestory.db";
         public static string databasePath { get; set; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, DBName);
 
+        public const string CharacterPath = @"\DefaultData\CharacterData\";
+
+        public const string EquipmentPath = @"\DefaultData\EquipmentData\";
+        public const string CalculationsPath = @"\DefaultData\Calculations\";
+
+
+
         public static string CONN_STRING { get; set; } = $"Filename = {databasePath}";
         public static int minLevel { get; set; } = 1;
         public static int maxLevel { get; set; } = 300;

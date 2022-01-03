@@ -1,4 +1,5 @@
 ﻿using MSEACalculator.OtherRes;
+using MSEACalculator.OtherRes.Database;
 using System;
 using System.Diagnostics;
 
@@ -30,7 +31,7 @@ namespace MSEACalculator.MainAppRes.Settings
         {
             var timer = new Stopwatch();
             timer.Start();
-            var resetDB = DatabaseAccess.databaseInit();
+            var resetDB = DatabaseINIT.databaseInit();
             timer.Stop();
 
             TimeSpan timeTaken = timer.Elapsed;

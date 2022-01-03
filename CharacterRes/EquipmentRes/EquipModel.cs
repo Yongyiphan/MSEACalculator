@@ -22,6 +22,9 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public EquipStatsModel ScrollStats { get; set; } = new EquipStatsModel();
         public EquipStatsModel FlameStats { get; set; } = new EquipStatsModel();
 
+        public PotentialStats MainPot { get; set; }
+        public PotentialStats AddPot { get; set; }
+
         public bool SpellTraced { get; set; } = false;
 
         public int SpellTracePerc { get; set; } = -1;

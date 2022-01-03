@@ -120,11 +120,29 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BossRes\Boss.cs" />
+    <Compile Include="CharacterRes\ArcaneSymbol.cs" />
     <Compile Include="CharacterRes\CharacterPage.xaml.cs">
       <DependentUpon>CharacterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CharacterRes\CharTStore.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\AddEquipFlamePage.xaml.cs">
+      <DependentUpon>AddEquipFlamePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\Settings\AddChar\AddEquipModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\AddEquipPage.xaml.cs">
+      <DependentUpon>AddEquipPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\Settings\AddChar\AddEquipPotentialPage.xaml.cs">
+      <DependentUpon>AddEquipPotentialPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\Settings\AddChar\AddEquipScrollPage.xaml.cs">
+      <DependentUpon>AddEquipScrollPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\Settings\AddChar\AddEquipScrollViewModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\AddEquipViewModel.cs" />
     <Compile Include="CharacterRes\EquipmentRes\EquipModel.cs" />
     <Compile Include="CharacterRes\EquipmentRes\EquipStatsModel.cs" />
+    <Compile Include="CharacterRes\EquipmentRes\PotentialStats.cs" />
     <Compile Include="CharacterRes\EquipmentRes\ScrollingModel.cs" />
     <Compile Include="CharacterRes\MesoRes\BossMeso.cs" />
     <Compile Include="CharacterRes\MesoRes\CustomItem.cs" />
@@ -134,24 +152,30 @@
     <Compile Include="CharacterRes\Character.cs" />
     <Compile Include="CharacterRes\MesoRes\MesoViewModel.cs" />
     <Compile Include="CommonFunc.cs" />
-    <Compile Include="MainAppRes\Settings\ACTModel.cs" />
-    <Compile Include="MainAppRes\Settings\AddCharTrackPage.xaml.cs">
+    <Compile Include="MainAppRes\Settings\AddChar\ACTModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\AddCharTrackPage.xaml.cs">
       <DependentUpon>AddCharTrackPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainAppRes\Settings\AddCharTrackViewModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\AddCharTrackViewModel.cs" />
     <Compile Include="MainAppRes\TestingBlankPage.xaml.cs">
       <DependentUpon>TestingBlankPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OtherRes\DatabaseAccess.cs" />
+    <Compile Include="OtherRes\CalculationFormulas.cs" />
+    <Compile Include="OtherRes\Database\DatabaseINIT.cs" />
     <Compile Include="EventRes\Event.xaml.cs">
       <DependentUpon>Event.xaml</DependentUpon>
     </Compile>
     <Compile Include="EventRes\EventRecords.cs" />
-    <Compile Include="GlobalVars.cs" />
+    <Compile Include="GVar.cs" />
     <Compile Include="OtherRes\CustomCommand.cs" />
+    <Compile Include="OtherRes\Database\DBAccess.cs" />
+    <Compile Include="OtherRes\Database\DBRetrieve.cs" />
+    <Compile Include="OtherRes\Database\ImportCSV.cs" />
     <Compile Include="OtherRes\INPCObject.cs" />
+    <Compile Include="OtherRes\Interface\INavigationService.cs" />
+    <Compile Include="OtherRes\ScrapCode.cs" />
     <Compile Include="UnionRes\UnionModel.cs" />
-    <Compile Include="ViewPages\HomePage.xaml.cs">
+    <Compile Include="MainAppRes\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
@@ -189,6 +213,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MainAppRes\Settings\AddChar\AddEquipFlamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\Settings\AddChar\AddEquipPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CharacterRes\MesoRes\MesoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -197,7 +229,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainAppRes\Settings\AddCharTrackPage.xaml">
+    <Page Include="MainAppRes\Settings\AddChar\AddCharTrackPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\Settings\AddChar\AddEquipPotentialPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\Settings\AddChar\AddEquipScrollPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,7 +245,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewPages\HomePage.xaml">
+    <Page Include="MainAppRes\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -244,7 +284,10 @@
       <Version>6.0.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Navigation\" />
+    <Folder Include="OtherRes\ServicesI\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using MSEACalculator.BossRes;
 using MSEACalculator.CharacterRes;
 using MSEACalculator.OtherRes;
+using MSEACalculator.OtherRes.Database;
 
 namespace MSEACalculator.CharacterRes.MesoRes
 {
     public class BossMeso :INPCObject
     {
 
-        public Dictionary<int, Boss> bossDict { get { return DatabaseAccess.GetBossDB(); } }
-        public Dictionary<string, Character> charDict { get { return DatabaseAccess.GetAllCharTrackDB(); } }
+        public Dictionary<int, Boss> bossDict { get { return DBRetrieve.GetBossDB(); } }
+        public Dictionary<string, Character> charDict { get { return DBRetrieve.GetAllCharTrackDB(); } }
 
         public List<string> bossNameList { get; set; } = new List<string>();
         public List<string> charNameList { get; set; } = new List<string>();
@@ -38,9 +39,9 @@ namespace MSEACalculator.CharacterRes.MesoRes
             foreach (Boss bossItem in bossDict.Values)
             {
 
-                if (!bossNameList.Contains(bossItem.name))
+                if (!bossNameList.Contains(bossItem.BossName))
                 {
-                    bossNameList.Add(bossItem.name);
+                    bossNameList.Add(bossItem.BossName);
                 };
             }
             foreach (Character charItem in charDict.Values)

@@ -1,11 +1,8 @@
-﻿using MSEACalculator.CharacterRes.EquipmentRes;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
+
+using MSEACalculator.OtherRes;
 
 namespace MSEACalculator
 {
@@ -18,23 +15,39 @@ namespace MSEACalculator
     //EDITABLE DATA TABLE
     //CHARNAME <- WINDARCHER, KANNA....
 
-    public static class GlobalVars
+    public static class GVar
     {
-
+        /// <summary>
+        /// COMMON PATHS
+        /// </summary>
         public static string DBName { get; set; } = "Maplestory.db";
         public static string databasePath { get; set; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, DBName);
 
         public const string CharacterPath = @"\DefaultData\CharacterData\";
-
         public const string EquipmentPath = @"\DefaultData\EquipmentData\";
-        public const string CalculationsPath = @"\DefaultData\Calculations\";
+        public const string CalculationsPath = @"\DefaultData\CalculationsData\";
 
 
 
+        /// <summary>
+        /// STATIC / CONSTANT VARIABLES
+        /// </summary>
+        public const int MaxCrytalCount = 120;
+        public const int MaxSymbolLvl = 20;
+        public static int MaxSymbolExp { get; set; } = CalculationFormulas.CalMaxExp(MaxSymbolLvl);
         public static string CONN_STRING { get; set; } = $"Filename = {databasePath}";
-        public static int minLevel { get; set; } = 1;
-        public static int maxLevel { get; set; } = 300;
 
+
+        public const int minLevel  = 1;
+        public const int maxLevel  = 300;
+
+
+
+
+        public static List<string> CategoryAEquips { get; set; } = new List<string>
+        {
+            "Hat", "Top", "Bottom", "Overall", "Cape", "Ring", "Pendant", "Belt", "Shoulderpad", "Shield" ,"Weapon"
+        };
 
         public static List<string> BaseStatTypes { get; set; } = new List<string> {
             "STR","DEX","INT","LUK",
@@ -46,12 +59,16 @@ namespace MSEACalculator
         {
             "BD","DMG", "AllStat"
         };
-        
+
+        public static List<string> PotentialGrade { get; set; } = new List<string>
+        {
+            "Rare","Epic", "Unique","Legendary"
+        };
+
 
         public static StorageFolder storageFolder { get; set; } = ApplicationData.Current.LocalFolder;
 
 
-        //public static List<string> ArmorSet { get; set; } = DatabaseAccess.GetAllArmorDB().Select(x => x.EquipSet).ToList().Distinct().ToList();
 
         
 

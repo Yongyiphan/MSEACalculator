@@ -1,23 +1,25 @@
-﻿using MSEACalculator.CharacterRes;
-using MSEACalculator.CharacterRes.EquipmentRes;
+﻿using MSEACalculator.OtherRes.Database;
+using MSEACalculator.MainAppRes.Settings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MSEACalculator.MainAppRes.Settings
+namespace MSEACalculator.CharacterRes.EquipmentRes
 {
-    public class ACTModel
+    public class AddEquipModel
     {
+        
+        public List<EquipModel> AllArmorList { get => DBRetrieve.GetAllArmorDB(); }
+        public List<EquipModel> AllAccList { get => DBRetrieve.GetAllAccessoriesDB(); }
+        public List<EquipModel> AllWeapList { get => DBRetrieve.GetAllWeaponDB(); }
 
 
-        public Dictionary<string, Character> AllCharDict { get; set; } = DatabaseAccess.GetAllCharDB();
-        public Dictionary<string, Character> AllCharTrackDict { get; set; } = DatabaseAccess.GetAllCharTrackDB();
-        public List<EquipModel> AllArmorList { get => DatabaseAccess.GetAllArmorDB(); }
-        public Dictionary<string, string> EquipSlot { get; set; } = DatabaseAccess.GetEquipSlotDB();
-        public List<string> FlameStatsTypes { get; set; } = GlobalVars.BaseStatTypes.Concat(GlobalVars.SpecialStatType).ToList();
+        public Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
+        public List<string> FlameStatsTypes { get; set; } = GVar.BaseStatTypes.Concat(GVar.SpecialStatType).ToList();
 
-        public List<EquipModel> AllAccList { get => DatabaseAccess.GetAllAccessoriesDB(); }
-
-        public List<EquipModel> AllWeapList { get => DatabaseAccess.GetAllWeaponDB(); }
+        
 
         public List<string> AccGrp { get; } = new List<string>
         {
@@ -25,6 +27,10 @@ namespace MSEACalculator.MainAppRes.Settings
         };
 
         public List<Character> AllCharList { get; set; }
+
+
+        
+
 
         public Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModel>>> SpellTraceDict { get; set; } = new Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModel>>>
         {
@@ -134,12 +140,6 @@ namespace MSEACalculator.MainAppRes.Settings
             }
 
         };
-
-        public ACTModel()
-        {
-            //ArmorSets = AllArmorList.Select(x => x.EquipSet).ToList().Distinct().ToList();
-            AllCharList = AllCharDict.Values.ToList();
-        }
 
     }
 }

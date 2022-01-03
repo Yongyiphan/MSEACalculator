@@ -1,0 +1,28 @@
+"-" = Problem/ Goals/ Purpose for test
+"#" = Preconditions
+"}" = Steps
+">" = Sample Input Data
+"<" = Outcome
+
+
+Test Cases
+
+Function
+
+AddCharTrackViewModel.cs
+- Adding Char with bare min info
+# Character must not already be in DB
+} Select char from dropdown
+} Enter Char Level, Starforce Level
+} Click "Add"
+> Luminous
+> 250, 140
+< "Luminous" entry found in DB
+< "Luminous" displayed on CharTracked List
+
+AddEquipViewModel.cs
+- Adding Armor for Selected Character
+# Character must be Selected
+
+
+Validation

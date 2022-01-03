@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MSEACalculator.BossRes;
+using MSEACalculator.CharacterRes.EquipmentRes;
 using MSEACalculator.CharacterRes.MesoRes;
 
 
@@ -33,7 +34,15 @@ namespace MSEACalculator.CharacterRes
         public string MainStat { get; set; }
         public string SecStat { get; set; }
 
-        public int starforce { get; set; }
+        public List<string> MainWeapon { get; set; }
+        public List<string> SecondaryWeapon { get; set; }
+
+        public int Starforce { get; set; }
+
+        //EACH CHAR HAS OWN SET OF EQUIPMENT LIST
+        //EACH EQUIPMENT IN LIST HAS OWN BASE / FLAME / SCROLL STATS
+        //:. 
+        List<EquipModel> EquipmentList { get; set; } = new List<EquipModel>();
 
         public Character() { }
 
@@ -67,7 +76,7 @@ namespace MSEACalculator.CharacterRes
             this.ClassName = CN;
             this.unionRank = uRank;
             this.level = level;
-            this.starforce = sf;
+            this.Starforce = sf;
         }
 
         //FOR BOSSING

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSEACalculator.OtherRes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,46 +13,43 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using System.Diagnostics;
-using MSEACalculator.MainAppRes.Settings.AddChar;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace MSEACalculator.MainAppRes.Settings
+namespace MSEACalculator.MainAppRes.Settings.AddChar
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SettingsPage : Page
+    public sealed partial class AddCharTrackPage : Page
     {
+        public AddCharTrackViewModel ACTViewModel;
 
 
-        public SettingsPage()
+        public AddCharTrackPage()
         {
             this.InitializeComponent();
-
-            SettingsGrid.DataContext = new SettingsViewModel();
-
+            
+            ACTViewModel = new AddCharTrackViewModel();
+            this.DataContext = ACTViewModel;
         }
 
-        private void SettingsNav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void AddEqupmentNav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             NavigationViewItem navItem = args.SelectedItem as NavigationViewItem;
 
 
             switch (navItem.Tag.ToString())
             {
-                case "AddCharTrack_Page":
-                    SettingsContentFrame.Navigate(typeof(AddCharTrackPage));
+                case "AddEquip_Page":
+                    SAddContentFrame.Navigate(typeof(AddEquipPage));
+                    SAddContentFrame.DataContext = ACTViewModel.AEquipVM;
                     break;
-                case "ModifyDB_Page":
+                case "AddArcane_Page":
                     break;
 
 
             }
-            
         }
     }
-
-
 }

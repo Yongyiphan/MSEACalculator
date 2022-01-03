@@ -1,5 +1,6 @@
 ﻿using MSEACalculator.BossRes;
 using MSEACalculator.OtherRes;
+using MSEACalculator.OtherRes.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -167,11 +168,11 @@ namespace MSEACalculator.CharacterRes.MesoRes
         {
             if (SelectedMule != null)
             {
-                BossList = DatabaseAccess.getCharBossList(SelectedMule);
+                BossList = DBAccess.getCharBossList(SelectedMule);
 
-                int dailyMeso = BossList.Where(boss => boss.entryType == "Daily").Sum(boss => boss.meso);
-                int weeklyMeso = BossList.Where(boss => boss.entryType == "Weekly").Sum(boss => boss.meso);
-                int monthlyMeso = BossList.Where(boss => boss.entryType == "Monthly").Sum(boss => boss.meso); ;
+                int dailyMeso = BossList.Where(boss => boss.EntryType == "Daily").Sum(boss => boss.Meso);
+                int weeklyMeso = BossList.Where(boss => boss.EntryType == "Weekly").Sum(boss => boss.Meso);
+                int monthlyMeso = BossList.Where(boss => boss.EntryType == "Monthly").Sum(boss => boss.Meso); ;
                 int tMeso = 0;
 
                 switch (MesoViewBy)
@@ -208,9 +209,9 @@ namespace MSEACalculator.CharacterRes.MesoRes
             {
                 foreach (Boss boss in bossMeso.bossDict.Values)
                 {
-                    if (boss.name == SelectedBoss)
+                    if (boss.BossName == SelectedBoss)
                     {
-                        temp.Add(boss.difficulty);
+                        temp.Add(boss.Difficulty);
                     }
                 }
             }
@@ -235,9 +236,9 @@ namespace MSEACalculator.CharacterRes.MesoRes
 
             foreach(Boss boss in bossMeso.bossDict.Values)
             {
-                if (boss.name == SelectedBoss && boss.difficulty == SelectedDifficulty)
+                if (boss.BossName == SelectedBoss && boss.Difficulty == SelectedDifficulty)
                 {
-                    bool insertResult = DatabaseAccess.insertCharTBossList(SelectedMule, SelectedBoss, boss.BossID);
+                    bool insertResult = DBAccess.insertCharTBossList(SelectedMule, SelectedBoss, boss.BossID);
 
                     if (insertResult == true)
                     {
@@ -268,8 +269,9 @@ namespace MSEACalculator.CharacterRes.MesoRes
         public void deleteBoss() 
         {
 
-            bool deleteResult = DatabaseAccess.deleteCharBossList(SelectedMule, SelectedBossItem.BossID);
-            //
+            bool deleteResult = DBAccess.deleteCharBossList(SelectedMule, SelectedBossItem.BossID);
+            
+            
             if(deleteResult == true)
             {
                 displayBossResult();

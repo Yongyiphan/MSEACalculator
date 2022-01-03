@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="MSEACalculator.MainAppRes.Settings.AddChar.AddEquipPotentialPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MSEACalculator.MainAppRes.Settings.AddChar"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <!--POTENTIAL RECORDS-->
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Content="Add Pot?" Style="{StaticResource AddEquipCBX}"/>
+                <TextBlock Text="Grade"/>
+                <ComboBox />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
+                
+                <TextBlock Text="1st Line"/>
+                <ComboBox />
+                <TextBlock Text="2nd Line"/>
+                <ComboBox />
+                <TextBlock Text="3rd Line"/>
+                <ComboBox />
+            </StackPanel>
+            <Button x:Name="AddPotentialBtn" Content="Add Flame" Margin="10"/>
+        </StackPanel>
+        
+    </Grid>
+</Page>

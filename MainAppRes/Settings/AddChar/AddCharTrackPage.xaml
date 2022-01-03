@@ -1,0 +1,161 @@
+﻿<Page
+    x:Class="MSEACalculator.MainAppRes.Settings.AddChar.AddCharTrackPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MSEACalculator.MainAppRes.Settings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="10 0 0 0"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="10 0 0 0"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="10 0 0 0"/>
+        </Style>
+        <Style x:Key="SP" TargetType="StackPanel">
+            <Setter Property="Margin" Value="0 5 0 0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="10 0 0 0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <DataTemplate x:Key="DisplaySEquip">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="5 0"/>
+                        <Setter Property="TextAlignment" Value="Center"/>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="{Binding Path=EquipName, Mode=TwoWay}" FontSize="18"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Column="0">
+                        <TextBlock Name="Stat" Text="Stat"/>
+                        <TextBlock Name="STR"  Text="STR:" />
+                        <TextBlock Name="DEX"  Text="DEX:" />
+                        <TextBlock Name="INT"  Text="INT:" />
+                        <TextBlock Name="LUK"  Text="LUK:" />
+                        <TextBlock Name="ATK"  Text="ATK" />
+                        <TextBlock Name="MATK" Text="MATK:" />
+                        <TextBlock Name="HP"   Text="HP:" />
+                        <TextBlock Name="MP"   Text="MP:" />
+                        <TextBlock Name="DEF"  Text="DEF:" />
+                        <TextBlock Name="SPD"  Text="Speed:" />
+                        <TextBlock Name="JUMP" Text="Jump:" />
+                        <TextBlock Name="AS"   Text="AllStat:" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                        <TextBlock x:Name="BaseStats" Text="Base"/>
+                        <ContentControl
+                                    Content="{Binding BaseStats}"
+                                    ContentTemplate="{StaticResource EquipStat}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock x:Name="ScrollStats" Text="Scroll"/>
+                        <ContentControl
+                                    Content="{Binding ScrollStats}"
+                                    ContentTemplate="{StaticResource EquipStat}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="3">
+                        <TextBlock x:Name="FlameStats" Text="Flame"/>
+                        <ContentControl 
+                                    Content="{Binding FlameStats}"
+                                    ContentTemplate="{StaticResource EquipStat}"/>
+                    </StackPanel>
+                    
+
+                </Grid>
+            </StackPanel>
+            
+        </DataTemplate>
+        <DataTemplate x:Key="EquipStat">
+            <StackPanel Orientation="Vertical">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="TextAlignment" Value="Center"/>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="{Binding STR,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding DEX,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding INT,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding LUK,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding ATK,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding MATK,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding HP,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding MP,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding DEF,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding SPD,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding JUMP,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding AllStat,Mode=TwoWay}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="13*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid ColumnSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="0.5*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <!--CHARACTER SELECTION/ ADDITION TO DATABASE/ REMOVAL FROM DATABASE-->
+                <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
+                    <ComboBox x:Name="AllCharList" VerticalAlignment="Center" Width="200" 
+                              ItemsSource="{Binding AllCharList}" DisplayMemberPath="ClassName" 
+                              SelectedItem="{Binding SelectedAllChar, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBlock Text="Level"/>
+                    <TextBox Text="{Binding LvlInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" />
+                    <TextBlock Text="Starforce"/>
+                    <TextBox Text="{Binding StarF, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                    <Button x:Name="AddTrack" Content="Add" Command="{Binding addCharTrackCMD}"/>
+                    <Button x:Name="RemoveTrack" Content="Remove" Command="{Binding removeCharTrackCMD}"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1" Margin="5" >
+                <NavigationView Name="AddEqupmentNav" 
+                                PaneDisplayMode="Top" 
+                                IsBackButtonVisible="Collapsed"
+                                SelectionFollowsFocus="Enabled" 
+                                IsSettingsVisible="False"
+                                SelectionChanged="AddEqupmentNav_SelectionChanged">
+                    <!--SelectionChanged="AddEqupmentNav_SelectionChanged"-->
+                    <NavigationView.MenuItems>
+                        <NavigationViewItem Name="AddEquip" Content="Equipment" Tag="AddEquip_Page"/>
+                        <NavigationViewItem Name="AddArcane" Content="Arcane" Tag="AddArcane_Page"/>
+                    </NavigationView.MenuItems>
+
+                    <Frame Name="SAddContentFrame"/>
+                </NavigationView>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Button x:Name="UpdateDB" Content="Update DB" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                        Command="{Binding UpdateDBCMD}"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <ListView ItemsSource="{Binding CharTrackList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="ClassName"
+                      SelectedItem="{Binding CharTSelect, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        </Grid>
+    </Grid>
+</Page>

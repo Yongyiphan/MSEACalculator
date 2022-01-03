@@ -155,7 +155,8 @@ EquipTrackS(croll) <- Init as Blank
 EquipTrackF(lame) <- Init as Blank
 "ClassName" | "EquipSlot" | "EquipSet" | FlameStats....
 
-
+Potential
+Potential Grade | Stat Increase | Level Rank | Prime | Stat | Type (Perc/Flat) | 
 IN APP Data
 Job Classes
 Warrior | Magician | Bowman | Thief | Pirate

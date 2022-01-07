@@ -118,7 +118,7 @@
                     
 
                     <TextBlock Text="Type: " Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
-                        <ComboBox x:Name="WeapType" Width="130" Visibility="{Binding ShowWeapon, Mode=TwoWay}"
+                        <ComboBox x:Name="WeapType" Visibility="{Binding ShowWeapon, Mode=TwoWay}"
                                   ItemsSource="{Binding CharacterWeapon, Mode=TwoWay}"
                                     SelectedItem="{Binding SelectedWeapon, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>     
                 </StackPanel>

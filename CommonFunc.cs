@@ -237,6 +237,18 @@ namespace MSEACalculator
             return record;
         }
 
+
+        public static EquipModel FindEquip()
+        {
+            return new EquipModel();
+        }
+
+        public static EquipModel FindWSE()
+        {
+
+            return new EquipModel();
+        }
+
         //public static async Task<List<EventRecords>> retrieveEventJson()
         //{
         //    List<EventRecords> eventList;

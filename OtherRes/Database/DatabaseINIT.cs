@@ -200,6 +200,18 @@ namespace MSEACalculator.OtherRes.Database
                 ");" };
             staticTables.Add(new TableStats("AddSFStat", addSFstatSpec[0], "AddStarForce"));
 
+            string[] PotSpec = { "(" +
+                    "EquipGrp string," +
+                    "Grade string," +
+                    "GradeT string," +
+                    "StatT string," +
+                    "Stat nvarchar," +
+                    "MinLvl int," +
+                    "MaxLvl int," +
+                    "ValueI nvarchar," +
+                    "PRIMARY KEY (EquipGrp, Grade, GradeT, Stat, MinLvl, MaxLvl, ValueI)" +
+                    ");"};
+            staticTables.Add(new TableStats("PotentialData", PotSpec[0], "Potential"));
 
             /////BLANK TABLES/////
 
@@ -759,7 +771,45 @@ namespace MSEACalculator.OtherRes.Database
                             }
                         }
                         break;
+                    case "Potential":
 
+                        List<PotentialStats> PotList = await ImportCSV.GetPotentialCSVAsync();
+
+                        string insertPot = "INSERT INTO " + tableName +"(" +
+                            "EquipGrp, Grade, GradeT, StatT, Stat, MinLvl, MaxLvl, ValueI) VALUES " +
+                            "(@EG, @G, @GT, @ST, @S, @MinL, @MaxL, @VI);";
+                        using(SqliteCommand insertCMD =  new SqliteCommand(insertPot, connection, transaction))
+                        {
+                            foreach (PotentialStats pot in PotList)
+                            {
+                                counter+=1;
+                                foreach (string i in pot.EquipGrpL)
+                                {
+                                    insertCMD.Parameters.Clear();
+                                    insertCMD.Parameters.AddWithValue("@EG", i);
+                                    insertCMD.Parameters.AddWithValue("@G", pot.Grade);
+                                    insertCMD.Parameters.AddWithValue("@GT", pot.Prime);
+                                    insertCMD.Parameters.AddWithValue("@ST", pot.StatType);
+                                    insertCMD.Parameters.AddWithValue("@S", pot.StatIncrease);
+                                    insertCMD.Parameters.AddWithValue("@MinL", pot.MinLvl);
+                                    insertCMD.Parameters.AddWithValue("@MaxL", pot.MaxLvl);
+                                    insertCMD.Parameters.AddWithValue("@VI", pot.StatValue);
+
+                                    try
+                                    {
+                                        insertCMD.ExecuteNonQuery();
+                                    }
+                                    catch (Exception ex) 
+                                    {
+                                        Console.WriteLine(counter.ToString());
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                }
+                            }
+                        }
+                            
+
+                        break;
                     default:
                         break;
                 }

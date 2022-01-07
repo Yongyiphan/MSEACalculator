@@ -19,12 +19,18 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
 
         public string Grade { get; set; }
+        public List<string> EquipGrpL { get; set; }
+        public string EquipGrp {get; set;}
         public string StatIncrease { get; set; }
         public string StatType { get; set; }
-        public int StatValue { get; set; }
+
+        public string StatValue { get; set; }
         
-        public int LevelRank { get; set; }
+        public int MinLvl { get; set; }
+        public int MaxLvl { get; set; }
         public string Prime { get; set; }
+
+
         
 
 

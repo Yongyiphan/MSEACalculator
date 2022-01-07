@@ -37,6 +37,9 @@ namespace MSEACalculator.CharacterRes
         public List<string> MainWeapon { get; set; }
         public List<string> SecondaryWeapon { get; set; }
 
+        public string CurrentMainWeapon { get; set; }
+        public string CurrentSecondaryWeapon { get; set; }
+
         public int Starforce { get; set; }
 
         //EACH CHAR HAS OWN SET OF EQUIPMENT LIST

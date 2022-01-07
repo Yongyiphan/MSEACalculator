@@ -69,7 +69,16 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             }
         }
 
-        public List<string> CharacterWeapon { get; set; }
+        private List<string> _CharWeapon;
+        public List<string> CharacterWeapon
+        {
+            get => _CharWeapon;
+            set
+            {
+                _CharWeapon = value;
+                OnPropertyChanged(nameof(CharacterWeapon));
+            }
+        }
 
         public List<string> _StatTypes;
         public List<string> StatTypes
@@ -109,6 +118,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             if (CC.CurrentCharacter !=  SCharacter)
             {
                 SCharacter = CC.CurrentCharacter;
+
                 initFields();
             }
             
@@ -200,13 +210,16 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
                 ShowWeapon = SEquipSlot != null
                     && EquipSlots[SEquipSlot] == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
-
-                ShowEquipSet(SEquipSlot);
-                IsSpellTrace = false;
-                NoSlot = 0;
-                SelectedScrollStat = null;
-                ScrollRecord.Clear();
-                FlameRecord.Clear();
+                if (SEquipSlot != null)
+                {
+                    ShowEquipSet(SEquipSlot);
+                    IsSpellTrace = false;
+                    NoSlot = 0;
+                    SelectedScrollStat = null;
+                    ScrollRecord.Clear();
+                    FlameRecord.Clear();
+                }
+                
 
                 OnPropertyChanged(nameof(SEquipSlot));
             }
@@ -243,6 +256,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             set
             {
                 _SelectedWeapon = value;
+                if (SCharacter !=  null)
+                {
+                    SCharacter.CurrentMainWeapon = SelectedWeapon;
+                }
                 OnPropertyChanged(nameof(SelectedWeapon));
             }
         }
@@ -486,6 +503,9 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             {
                 //CharacterWeapon.Clear();
                 //SCharacter.MainWeapon.ForEach(weapon => CharacterWeapon.Add(weapon));
+                CharacterWeapon = new List<string>();
+                ArmorSet = ArmorSet != null ? new ObservableCollection<string>() : ArmorSet;
+                SEquipSlot = SEquipSlot!=null ? null : SEquipSlot;
                 CharacterWeapon = SCharacter.MainWeapon;
             }
         }
@@ -680,6 +700,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             {
                 if (SEquipSlot != null && SSetItem != null)
                 {
+                    if (SEquipSlot == "Weapon" && SelectedWeapon != null)
+                    {
+                        return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
+                    }
                     return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
                 }
             }
@@ -710,6 +734,15 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
                             }
                             break;
                         case "Weapon":
+
+                            foreach(EquipModel Weap in equipList)
+                            {
+                                if (Weap.EquipSlot == slot && Weap.EquipSet == set && Weap.WeaponType == character.CurrentMainWeapon)
+                                {
+                                    return equipModel = Weap;
+                                }
+                            }
+
                             break;
                         case "Accessory":
 
@@ -765,6 +798,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             //Possible types: Base | All
             string baseStatType = ""; //<- determine how to translate DB Stat to Equip stat property
 
+            
             int namingType = 0;
             switch (EquipSlots[SEquipSlot])
             {
@@ -812,6 +846,12 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
                     break;
 
                 case "Weapon":
+                    EList = AEquipM.AllWeapList;
+                    slotType = "Weapon";
+                    retreiveType = "Weapon";
+                    baseStatType = "Base";
+                    namingType = 0;
+
                     break;
                 case "Misc":
                     if (SEquipSlot == "Heart")

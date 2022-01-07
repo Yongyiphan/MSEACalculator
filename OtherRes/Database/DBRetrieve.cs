@@ -294,6 +294,43 @@ namespace MSEACalculator.OtherRes.Database
             return weapModel;
         }
 
+        public static List<PotentialStats> GetAllPotential()
+        {
+            List<PotentialStats> potentialList = new List<PotentialStats>();
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM PotentialData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PotentialStats pot = new PotentialStats();
+                            pot.EquipGrp = reader.GetString(0);
+                            pot.Grade = reader.GetString(1);
+                            pot.Prime = reader.GetString(2);
+                            pot.StatType = reader.GetString(3);
+                            pot.StatIncrease = reader.GetString(4);
+                            pot.MinLvl = reader.GetInt32(5);
+                            pot.MaxLvl = reader.GetInt32(6);
+                            pot.StatValue = reader.GetString(7);
+
+                            potentialList.Add(pot);
+
+                        }
+                    }
+                }
+
+
+            }
+
+            return potentialList;
+        }
+
 
     }
 }

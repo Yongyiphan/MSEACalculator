@@ -507,6 +507,57 @@ namespace MSEACalculator.OtherRes.Database
             return CWdict;
         }
 
+        public static async Task<List<PotentialStats>> GetPotentialCSVAsync()
+        {
+            List<PotentialStats> PotentialList = new List<PotentialStats>();
 
+            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CalculationsPath + "PotentialData.csv");
+
+            var stream = await charTable.OpenAsync(FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    var result = text.Split("\r\n");
+                    foreach (string potItem in result.Skip(1))
+                    {
+                        if (potItem == "")
+                        {
+                            Console.WriteLine("Hello");
+                            return PotentialList;
+                        }
+
+                        var temp = potItem.Split(",");
+
+                        PotentialStats Pot = new PotentialStats();
+
+                        Pot.EquipGrpL = temp[1].Contains(";") ? temp[1].Split(';').ToList() : new List<string> { temp[1]};
+                        Pot.Grade = temp[2];
+                        Pot.Prime = temp[3];
+                        Pot.StatType = temp[4];
+                        Pot.StatIncrease = temp[5];
+                        Pot.MinLvl = Convert.ToInt32(temp[6]);
+                        Pot.MaxLvl = Convert.ToInt32(temp[7]);
+                        Pot.StatValue = temp[8];
+
+
+                        PotentialList.Add(Pot);
+
+
+                    }
+                }
+            }
+
+
+            return PotentialList;
+
+
+        }
     }
 }

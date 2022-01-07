@@ -192,3 +192,9 @@ if accessories -> display item name for slot
 
 Displaying Currently Added Items
 
+Potential System DB
+Grade | Stat | StatType | Rank | Value
+Rare | STR | Flat | 0 | 1
+Rare | STR | Flat | 1 | 2
+Rare | STR | Flat | 2 | 3
+Rare | STR | Flat | 3 | 4

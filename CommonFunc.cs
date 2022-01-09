@@ -17,12 +17,14 @@ using Windows.UI.Popups;
 using Windows.UI.Core;
 using MSEACalculator.CharacterRes.EquipmentRes;
 using MSEACalculator.CharacterRes;
+using MSEACalculator.OtherRes.Database;
 
 namespace MSEACalculator
 {
     public class CommonFunc
     {
-        
+        public Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
+
 
         public static int SpellTraceTier(EquipModel selectedEquip)
         {
@@ -238,15 +240,179 @@ namespace MSEACalculator
         }
 
 
-        public static EquipModel FindEquip()
+        public static EquipModel FindEquip(List<EquipModel> FindingList, Character SCharacter, string Slot, string ESet)
         {
+            List<string> accList =  new List<string>() { "Ring", "Pendant", "Emblem", "Accessory", "Misc"};
+            
+            if (accList.Contains(Slot))
+            {
+                foreach(EquipModel equip in FindingList)
+                {
+                    if (equip.EquipSlot == Slot && equip.EquipSet == ESet)
+                    {
+                        if (Slot == "Shoulder")
+                        {
+                            if (equip.ClassType == SCharacter.ClassType)
+                            {
+                                return equip;
+                            }
+                        }
+                        return equip;
+                    }
+                }
+            }
+            else
+            {
+                switch (Slot)
+                {
+                    case "Weapon":
+                        foreach (EquipModel equip in FindingList)
+                        {
+                            if (equip.WeaponType == SCharacter?.CurrentMainWeapon && equip.EquipSet == ESet)
+                            {
+                                return equip;
+                            }
+                        }
+                        break;
+                    case "Secondary":
+                        foreach (EquipModel equip in FindingList)
+                        {
+                            if (equip.EquipName == ESet && ( equip.ClassType == SCharacter.ClassName || equip.ClassType == SCharacter.ClassType))
+                            {
+                                return equip;
+                            }
+                        }
+                        break;
+                    case "Heart":
+                        break;
+                    case "Armor":
+                        break;
+                }
+            }
+            
+            
+
             return new EquipModel();
         }
 
-        public static EquipModel FindWSE()
-        {
+        
 
-            return new EquipModel();
+        public static Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModel>>> SpellTraceDict { get; set; } = new Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModel>>>
+        {
+            ["Armor"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
+            {
+                [1] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(1, 5, 1),
+                    [70] = new ScrollingModel(2, 15, 2),
+                    [30] = new ScrollingModel(3, 30, 4)
+                },
+                [2] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(2, 20, 2),
+                    [70] = new ScrollingModel(3, 40, 4),
+                    [30] = new ScrollingModel(5, 70, 7)
+                },
+                [3] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(3, 30, 3),
+                    [70] = new ScrollingModel(4, 70, 5),
+                    [30] = new ScrollingModel(7, 120, 10)
+                }
+            },
+            ["Gloves"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
+            {
+                [1] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(0, 0, 3),
+                    [70] = new ScrollingModel(1),
+                    [30] = new ScrollingModel(2)
+                },
+                [2] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(1),
+                    [70] = new ScrollingModel(2),
+                    [30] = new ScrollingModel(3)
+                }
+            },
+            ["Accessory"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
+            {
+                [1] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(1, 0, 0),
+                    [70] = new ScrollingModel(2, 0, 0),
+                    [30] = new ScrollingModel(3, 0, 0)
+                },
+                [2] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(1, 0, 0),
+                    [70] = new ScrollingModel(2, 0, 0),
+                    [30] = new ScrollingModel(4, 0, 0)
+                },
+                [3] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(2, 0, 0),
+                    [70] = new ScrollingModel(3, 0, 0),
+                    [30] = new ScrollingModel(5, 0, 0)
+                }
+            },
+            ["Heart"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
+            {
+                [1] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(1),
+                    [70] = new ScrollingModel(2),
+                    [30] = new ScrollingModel(3)
+                },
+                [2] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(2),
+                    [70] = new ScrollingModel(3),
+                    [30] = new ScrollingModel(5)
+                }
+        ,
+                [3] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(3),
+                    [70] = new ScrollingModel(4),
+                    [30] = new ScrollingModel(7)
+                }
+            },
+            ["Weapon"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
+            {
+                [1] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(1),
+                    [70] = new ScrollingModel(2),
+                    [30] = new ScrollingModel(1, 3),
+                    [15] = new ScrollingModel(2, 5)
+                },
+                [2] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(2),
+                    [70] = new ScrollingModel(1, 3),
+                    [30] = new ScrollingModel(2, 5),
+                    [15] = new ScrollingModel(3, 7)
+                }
+        ,
+                [3] = new Dictionary<int, ScrollingModel>
+                {
+                    [100] = new ScrollingModel(1, 3),
+                    [70] = new ScrollingModel(2, 5),
+                    [30] = new ScrollingModel(3, 7),
+                    [15] = new ScrollingModel(4, 9)
+                }
+            }
+
+        };
+
+        public string returnEquipType(string ESlot)
+        {
+            if (EquipSlot[ESlot] == "Ring" || EquipSlot[ESlot] == "Pendant")
+            {
+                return EquipSlot[ESlot];
+            }
+            return ESlot;
         }
 
         //public static async Task<List<EventRecords>> retrieveEventJson()

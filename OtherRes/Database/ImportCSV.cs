@@ -433,6 +433,61 @@ namespace MSEACalculator.OtherRes.Database
 
 
         }
+        public static async Task<List<EquipModel>> GetSecondaryCSVAsync()
+        {
+            List<EquipModel> WeaponList = new List<EquipModel>();
+
+            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + "SecondaryWeapData.csv");
+
+            var stream = await charTable.OpenAsync(FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    var result = text.Split("\r\n");
+                    foreach (string weapItem in result.Skip(1))
+                    {
+                        if (weapItem == "")
+                        {
+                            return WeaponList;
+                        }
+
+                        var temp = weapItem.Split(",");
+
+                        EquipModel equip = new EquipModel();
+                        equip.ClassType = temp[1];
+                        equip.WeaponType = temp[2];
+                        equip.EquipName = temp[3];
+                        equip.EquipLevel = Convert.ToInt32(temp[4]);
+                        equip.BaseStats.MS = Convert.ToInt32(temp[5]);
+                        equip.BaseStats.SS = Convert.ToInt32(temp[6]);
+                        equip.BaseStats.ATK = Convert.ToInt32(temp[7]);
+                        equip.BaseStats.MATK = Convert.ToInt32(temp[8]);
+                        equip.BaseStats.AllStat = Convert.ToInt32(temp[9]);
+                        equip.BaseStats.DEF = Convert.ToInt32(temp[10]);
+                        equip.BaseStats.HP = Convert.ToInt32(temp[11]);
+                        equip.BaseStats.MP = Convert.ToInt32(temp[12]);
+                        equip.BaseStats.ATKSPD = Convert.ToInt32(temp[13]);
+
+
+                        WeaponList.Add(equip);
+
+
+                    }
+                }
+            }
+
+
+            return WeaponList;
+
+
+        }
 
         public static async Task<Dictionary<int, List<string>>> GetClassMWeaponCSVAsync()
         {

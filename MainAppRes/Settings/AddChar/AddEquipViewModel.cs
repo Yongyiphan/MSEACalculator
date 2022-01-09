@@ -69,6 +69,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             }
         }
 
+        public List<EquipModel> CurrentEquipList { get; set; } = new List<EquipModel>();
+
         private List<string> _CharWeapon;
         public List<string> CharacterWeapon
         {
@@ -595,6 +597,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             Func<string, ObservableCollection<string>, List<EquipModel>, ObservableCollection<string>>
                 DisplayItemNameL = (eSlot, displayList, itemList) =>
                 {
+
                     foreach (var item in itemList)
                     {
                         if (item.EquipSlot == eSlot)
@@ -608,22 +611,56 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
                     return displayList;
                 };
-            Func<List<string>, ObservableCollection<string>, List<EquipModel>, ObservableCollection<string>>
-                FilterWeapon = (weaponType, displayList, itemList) =>
+            Func<string,Character, ObservableCollection<string>, List<EquipModel>, ObservableCollection<string>>
+                FilterWeapon = (disType, character, displayList, itemList) =>
                 {
-                    foreach (var item in itemList)
+                    switch (disType)
                     {
-                        foreach(string weap in weaponType)
-                        {
-                            if (item.WeaponType == weap)
+                        case "Weapon":
+                            foreach (var item in itemList)
                             {
-                                if (!displayList.Contains(item.EquipSet))
+                                foreach (string weap in character.MainWeapon)
                                 {
-                                    displayList.Add(item.EquipSet);
+                                    if (item.WeaponType == weap)
+                                    {
+                                        if (!displayList.Contains(item.EquipSet))
+                                        {
+                                            displayList.Add(item.EquipSet);
+                                        }
+                                    }
                                 }
                             }
-                        }
+                            break;
+                        case "Secondary":
+                            foreach (var item in itemList)
+                            {
+                                foreach (string weap in character.SecondaryWeapon)
+                                {
+                                    if (weap == "Shield")
+                                    {
+                                        if (item.WeaponType == weap && item.ClassType == character.ClassType)
+                                        {
+                                            if (!displayList.Contains(item.EquipName))
+                                            {
+                                                displayList.Add(item.EquipName);
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (item.WeaponType == weap)
+                                        {
+                                            if (!displayList.Contains(item.EquipName))
+                                            {
+                                                displayList.Add(item.EquipName);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            break;
                     }
+                    
 
                     return displayList;
                 };
@@ -633,34 +670,55 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
                 {
                     case "Weapon":
                         ArmorSet.Clear();
-                        ArmorSet = FilterWeapon(SCharacter.MainWeapon, ArmorSet, AEquipM.AllWeapList);
+                        ArmorSet = FilterWeapon("Weapon", SCharacter, ArmorSet, AEquipM.AllWeapList);
+                        CurrentEquipList.Clear();
+                        CurrentEquipList = AEquipM.AllWeapList;
+                        break;
+                    case "Secondary":
+                        ArmorSet.Clear();
+                        ArmorSet = FilterWeapon("Secondary", SCharacter, ArmorSet, AEquipM.AllSecList);
+                        CurrentEquipList.Clear();
+                        CurrentEquipList = AEquipM.AllSecList;
                         break;
                     case "Gloves":
                         ArmorSet.Clear();
                         ArmorSet = FilterSet(SCharacter.ClassType, selectedESlot, ArmorSet, AEquipM.AllArmorList);
+                        CurrentEquipList.Clear();
+                        CurrentEquipList = AEquipM.AllArmorList;
                         break;
                     case "Armor":
                         ArmorSet.Clear();
                         ArmorSet = FilterSet(SCharacter.ClassType, selectedESlot, ArmorSet, AEquipM.AllArmorList);
+                        CurrentEquipList.Clear();
+                        CurrentEquipList = AEquipM.AllArmorList;
                         break;
                     case "Accessory":
                         ArmorSet.Clear();
                         ArmorSet = DisplayItemNameL(selectedESlot, ArmorSet, AEquipM.AllAccList);
+                        CurrentEquipList.Clear();
+                        CurrentEquipList = AEquipM.AllAccList;
                         break;
                     case "Ring":
                         ArmorSet.Clear();
                         ArmorSet = DisplayItemNameL(EquipSlots[selectedESlot], ArmorSet, AEquipM.AllAccList);
+                        CurrentEquipList.Clear();
+                        CurrentEquipList = AEquipM.AllAccList;
                         break;
                     case "Pendant":
                         ArmorSet.Clear();
                         ArmorSet = DisplayItemNameL(EquipSlots[selectedESlot], ArmorSet, AEquipM.AllAccList);
+                        CurrentEquipList.Clear();
+                        CurrentEquipList = AEquipM.AllAccList;
                         break;
                     case "Misc":
                         ArmorSet.Clear();
                         ArmorSet = DisplayItemNameL(selectedESlot, ArmorSet, AEquipM.AllAccList);
+                        CurrentEquipList.Clear();
+                        CurrentEquipList = AEquipM.AllAccList;
                         break;
                     default:
                         ArmorSet.Clear();
+                        CurrentEquipList.Clear();
                         break;
                 }
 
@@ -696,6 +754,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
                     return false;
                 };
+
             if (SCharacter != null)
             {
                 if (SEquipSlot != null && SSetItem != null)
@@ -714,6 +773,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
         private void AddItem()
         {
+            //adding item process
+            // retrieve base stats from list
+            // if armor => slot name
+            // if access => slot name
+            // 
             Func<Character, List<EquipModel>, string, string, string, EquipModel>
                 FindEquip = (character, equipList, set, slot, type) =>
                 {
@@ -785,98 +849,25 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             //If weapon -> EquipSet and Type
             //Else -> Set and Name. 
             Character selectedChar = SCharacter;
+            List<string> cat = new List<string>() { "Ring", "Pendant" };
+            string currentSSlot = cat.Contains(EquipSlots[SEquipSlot]) ? EquipSlots[SEquipSlot] : SEquipSlot;
+           
 
             //Blank Equp
             EquipModel selectedEquip = new EquipModel();
-            List<EquipModel> EList = new List<EquipModel>(); //<- determine which dataset to use (List<EquipModel>)
+            List<EquipModel> EList = CurrentEquipList;
 
-            string slotType = ""; //<- determine which spell trace scroll stats to apply
 
-            //Possible Retrieve types: Weapon | Armor | Accessory | Misc
-            string retreiveType = ""; //<- method / conditions used to find item
-
-            //Possible types: Base | All
-            string baseStatType = ""; //<- determine how to translate DB Stat to Equip stat property
-
-            
-            int namingType = 0;
-            switch (EquipSlots[SEquipSlot])
-            {
-
-                case "Armor":
-                    EList = AEquipM.AllArmorList;
-                    slotType = "Armor";
-                    retreiveType = "Armor";
-                    baseStatType = "Base";
-                    namingType = 0;
-                    break;
-                case "Gloves":
-                    EList = AEquipM.AllArmorList;
-                    slotType = "Gloves";
-                    retreiveType = "Armor";
-                    baseStatType = "Base";
-                    namingType = 0;
-                    break;
-
-                case "Accessory":
-                    EList = AEquipM.AllAccList;
-                    //equipname is retrieved
-                    slotType = SEquipSlot == "Shoulder" ? "Armor" : "Accessory";
-                    retreiveType = "Accessory";
-                    baseStatType = "All";
-                    namingType = 1;
-                    break;
-
-                case "Ring":
-                    EList = AEquipM.AllAccList;
-                    //equipname is retrieved
-                    slotType = "Accessory";
-                    retreiveType = "Accessory";
-                    baseStatType = "All";
-                    namingType = 1;
-                    break;
-
-                case "Pendant":
-                    EList = AEquipM.AllAccList;
-                    //equipname is retrieved
-                    slotType = "Accessory";
-                    retreiveType = "Accessory";
-                    baseStatType = "All";
-                    namingType = 1;
-                    break;
-
-                case "Weapon":
-                    EList = AEquipM.AllWeapList;
-                    slotType = "Weapon";
-                    retreiveType = "Weapon";
-                    baseStatType = "Base";
-                    namingType = 0;
-
-                    break;
-                case "Misc":
-                    if (SEquipSlot == "Heart")
-                    {
-                        EList = AEquipM.AllAccList;
-                        slotType = "Heart";
-                        retreiveType = "Accessory";
-                        baseStatType = "All";
-                        namingType = 1;
-
-                    }
-                    break;
-                default:
-                    break;
-            }
 
             //Retreive base equip stats from list
-            selectedEquip = FindEquip(selectedChar, EList, SSetItem, SEquipSlot, retreiveType);
-            if (namingType == 0) { selectedEquip.EquipName = string.Format("{0} {1}", SSetItem, SEquipSlot); }
+            selectedEquip = CommonFunc.FindEquip(EList, selectedChar, currentSSlot, SSetItem);
+            //if (namingType == 0) { selectedEquip.EquipName = string.Format("{0} {1}", SSetItem, SEquipSlot); }
             selectedEquip.EquipSlot = SEquipSlot; //<- override value of Selected slot i.e ring1... pendant1...
             selectedEquip.SlotCount = NoSlot;
             //Assign base stats to correct property
-            selectedEquip = CommonFunc.updateBaseStats(selectedChar, selectedEquip, baseStatType);
+            //selectedEquip = CommonFunc.updateBaseStats(selectedChar, selectedEquip, baseStatType);
             selectedEquip.SpellTraced = IsSpellTrace;
-            selectedEquip = updateEquipModelStats(selectedEquip, selectedChar, slotType);
+            //selectedEquip = updateEquipModelStats(selectedEquip, selectedChar, slotType);
 
             //Check for new / update of item.
             EquipModel existEquip = CItemDictT.ToList().Find(equip => equip.EquipSlot == SEquipSlot);
@@ -933,16 +924,16 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
                 string MainStat = selectedChar.MainStat;
                 int STTier = CommonFunc.SpellTraceTier(selectedEquip);
                 int perc = Convert.ToInt32(SelectedScrollStat.Remove(SelectedScrollStat.Length - 1));
-                selectedEquip.ScrollStats.HP = AEquipM.SpellTraceDict[slotType][STTier][perc].HP * NoSlot;
-                selectedEquip.ScrollStats.DEF = AEquipM.SpellTraceDict[slotType][STTier][perc].DEF * NoSlot;
+                selectedEquip.ScrollStats.HP = CommonFunc.SpellTraceDict[slotType][STTier][perc].HP * NoSlot;
+                selectedEquip.ScrollStats.DEF = CommonFunc.SpellTraceDict[slotType][STTier][perc].DEF * NoSlot;
 
                 if (MainStat == "HP")
                 {
-                    selectedEquip.ScrollStats.HP += AEquipM.SpellTraceDict[slotType][STTier][perc].MainStat * NoSlot * 50;
+                    selectedEquip.ScrollStats.HP += CommonFunc.SpellTraceDict[slotType][STTier][perc].MainStat * NoSlot * 50;
                 }
                 else
                 {
-                    selectedEquip.ScrollStats.GetType().GetProperty(MainStat).SetValue(selectedEquip.ScrollStats, AEquipM.SpellTraceDict[slotType][STTier][perc].MainStat * NoSlot, null);
+                    selectedEquip.ScrollStats.GetType().GetProperty(MainStat).SetValue(selectedEquip.ScrollStats, CommonFunc.SpellTraceDict[slotType][STTier][perc].MainStat * NoSlot, null);
                 }
                 selectedEquip.FlameStats = CommonFunc.recordToProperty(selectedEquip.FlameStats, FlameRecord);
                 selectedEquip.SpellTracePerc = SelectedScrollIndex;

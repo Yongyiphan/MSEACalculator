@@ -20,7 +20,7 @@ namespace MSEACalculator.OtherRes.Database
 
         //Codes for First initialising of Data
         //From CSV (DefaultData folder) to Sqlite Database (Maplestory.db)
-        public async static Task databaseInit()
+        public async static Task DBInit()
         {
             //string dbName = "Maplestory.db";
             await ApplicationData.Current.LocalFolder.CreateFileAsync("Maplestory.db", CreationCollisionOption.OpenIfExists);
@@ -28,7 +28,6 @@ namespace MSEACalculator.OtherRes.Database
 
 
             List<TableStats> staticTables = new List<TableStats>();
-            List<TableStats> blankTables = new List<TableStats>();
 
 
             ///////CHARACTER///////
@@ -164,6 +163,28 @@ namespace MSEACalculator.OtherRes.Database
                 "PRIMARY KEY (EquipSet, WeaponType) " +
                 ");" };
             staticTables.Add(new TableStats("WeaponData", WeapTableSpec[0], "Weapon"));
+            
+
+            string[] SecWeapTableSpec = {"(" +
+                "ClassName string," +
+                "WeaponType string," +
+                "EquipName string," +
+                "EquipLevel int," +
+                "MainStat int," +
+                "SecStat int," +
+                "ATK int," +
+                "MATK int," +
+                "AllStat int," +
+                "DEF int," +
+                "HP int," +
+                "MP int," +
+                "ATKSPD int," +
+                "PRIMARY KEY (ClassName, WeaponType, EquipName, EquipLevel) " +
+                ");" };
+            staticTables.Add(new TableStats("SecondaryWeaponData", SecWeapTableSpec[0], "Secondary"));
+
+
+
 
             //Equipment Set Effects
 
@@ -215,6 +236,46 @@ namespace MSEACalculator.OtherRes.Database
 
             /////BLANK TABLES/////
 
+
+
+
+
+
+
+            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
+            {
+                dbConnection.Open();
+                using (var trans = dbConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        //INIT Blank Tables <- Tables with foreign key FIRST
+
+                        staticTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection, trans));
+
+                        await Task.WhenAll(staticTables.ParallelForEachAsync(item => Task.Run(() => InitCSVData(item.initMode, item.tableName, dbConnection, trans))));
+
+                        trans.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        trans.Rollback();
+                    }
+
+                }
+
+
+            }
+
+
+        }
+
+        public async static Task BlankTablesInit()
+        {
+            await ApplicationData.Current.LocalFolder.CreateFileAsync("Maplestory.db", CreationCollisionOption.OpenIfExists);
+
+            List<TableStats> blankTables = new List<TableStats>();
 
 
             //TABLE FOR CHARACTER TO TRACK
@@ -283,7 +344,6 @@ namespace MSEACalculator.OtherRes.Database
             blankTables.Add(new TableStats("CharTEquipFlame", charEquipFlameSpec[0]));
 
 
-
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
             {
                 dbConnection.Open();
@@ -293,10 +353,6 @@ namespace MSEACalculator.OtherRes.Database
                     {
                         //INIT Blank Tables <- Tables with foreign key FIRST
                         blankTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection, trans));
-
-                        staticTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection, trans));
-
-                        await Task.WhenAll(staticTables.ParallelForEachAsync(item => Task.Run(() => InitCSVData(item.initMode, item.tableName, dbConnection, trans))));
 
                         trans.Commit();
                     }
@@ -310,9 +366,8 @@ namespace MSEACalculator.OtherRes.Database
 
 
             }
-
-
         }
+
 
         //public static bool testDBCon()
         //{
@@ -514,9 +569,10 @@ namespace MSEACalculator.OtherRes.Database
                             {"Pendant1", "Pendant" },{"Pendant2", "Pendant" },
                             {"Face Accessory", "Accessory" },{"Eye Decor", "Accessory" },{"Earring", "Accessory" },{"Belt", "Accessory" },
                             {"Shoulder", "Accessory"},
-                            {"Badge", "Misc" },{"Medal", "Misc" },{"Pocket", "Misc" },{"Heart", "Misc" },
-                            {"Weapon", "Weapon" },{"Secondary", "Weapon" },{"Emblem", "Weapon" },
-                            {"Hat", "Armor" },{"Top", "Armor" },{"Btm", "Armor" },{"Overall", "Armor" },{"Cape", "Armor" },{"Shoes", "Armor" },
+                            {"Badge", "Misc" },{"Medal", "Misc" },{"Pocket", "Misc" },
+                            {"Heart", "Heart" },
+                            {"Weapon", "Weapon" },{"Secondary", "Secondary" },{"Emblem", "Emblem" },
+                            {"Hat", "Armor" },{"Top", "Armor" },{"Bottom", "Armor" },{"Overall", "Armor" },{"Cape", "Armor" },{"Shoes", "Armor" },
                             {"Gloves", "Gloves" }
                         };
 
@@ -624,6 +680,48 @@ namespace MSEACalculator.OtherRes.Database
                                 insertCMD.Parameters.AddWithValue("@SPD", model.BaseStats.SPD);
                                 insertCMD.Parameters.AddWithValue("@BDMG", model.BaseStats.BD);
                                 insertCMD.Parameters.AddWithValue("@IED", model.BaseStats.IED);
+
+                                try
+                                {
+                                    insertCMD.ExecuteNonQuery();
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.ToString());
+                                    Console.WriteLine(counter.ToString());
+                                }
+                            }
+
+                        }
+                        break;
+
+                    case "Secondary":
+                        List<EquipModel> SecList = await ImportCSV.GetSecondaryCSVAsync();
+
+
+                        string insertSec = "INSERT INTO " + tableName + " (" +
+                            "ClassName, WeaponType, EquipName, EquipLevel, MainStat, SecStat, ATK, MATK, AllStat, DEF, HP, MP, ATKSPD) VALUES" +
+                            "(@ES, @WT, @EN, @EL, @MS, @SS, @ATK, @MATK, @AS, @DEF, @HP, @MP, @ATKSPD);";
+                        using (SqliteCommand insertCMD = new SqliteCommand(insertSec, connection, transaction))
+                        {
+                            foreach (EquipModel model in SecList)
+                            {
+                                counter++;
+                                insertCMD.Parameters.Clear();
+                                insertCMD.Parameters.AddWithValue("@ES", model.ClassType);
+                                insertCMD.Parameters.AddWithValue("@WT", model.WeaponType);
+                                insertCMD.Parameters.AddWithValue("@EN", model.EquipName);
+                                insertCMD.Parameters.AddWithValue("@EL", model.EquipLevel);
+                                insertCMD.Parameters.AddWithValue("@AS", model.BaseStats.AllStat);
+                                insertCMD.Parameters.AddWithValue("@MS", model.BaseStats.MS);
+                                insertCMD.Parameters.AddWithValue("@SS", model.BaseStats.SS);
+                                insertCMD.Parameters.AddWithValue("@HP", model.BaseStats.HP);
+                                insertCMD.Parameters.AddWithValue("@MP", model.BaseStats.MP);
+                                insertCMD.Parameters.AddWithValue("@DEF", model.BaseStats.DEF);
+                                insertCMD.Parameters.AddWithValue("@ATK", model.BaseStats.ATK);
+                                insertCMD.Parameters.AddWithValue("@MATK", model.BaseStats.MATK);
+                                insertCMD.Parameters.AddWithValue("@ATKSPD", model.BaseStats.ATKSPD);
+
 
                                 try
                                 {

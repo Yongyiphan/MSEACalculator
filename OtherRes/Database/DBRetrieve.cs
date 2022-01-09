@@ -293,6 +293,53 @@ namespace MSEACalculator.OtherRes.Database
 
             return weapModel;
         }
+        
+        public static List<EquipModel> GetAllSecondaryDB()
+        {
+            List<EquipModel> SecModel = new List<EquipModel>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM SecondaryWeaponData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            EquipModel equipModel = new EquipModel();
+                            equipModel.ClassType = reader.GetString(0);
+                            equipModel.WeaponType = reader.GetString(1);
+                            equipModel.EquipName = reader.GetString(2);
+                            equipModel.EquipLevel = reader.GetInt32(3);
+
+                            equipModel.BaseStats.MS = reader.GetInt32(4);
+                            equipModel.BaseStats.SS = reader.GetInt32(5);
+                            equipModel.BaseStats.ATK = reader.GetInt32(6);
+                            equipModel.BaseStats.MATK = reader.GetInt32(7);
+                            equipModel.BaseStats.AllStat = reader.GetInt32(8);
+                            equipModel.BaseStats.DEF = reader.GetInt32(9);
+                            equipModel.BaseStats.HP = reader.GetInt32(10);
+                            equipModel.BaseStats.MP = reader.GetInt32(11);
+                            equipModel.BaseStats.ATKSPD = reader.GetInt32(12);
+
+
+
+                            SecModel.Add(equipModel);
+                        }
+                    }
+                }
+
+
+            }
+
+
+
+            return SecModel;
+        }
 
         public static List<PotentialStats> GetAllPotential()
         {

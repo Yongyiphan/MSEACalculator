@@ -230,7 +230,7 @@ namespace MSEACalculator.OtherRes.Database
                     "MinLvl int," +
                     "MaxLvl int," +
                     "ValueI nvarchar," +
-                    "Duration int" +
+                    "Duration int," +
                     "PRIMARY KEY (EquipGrp, Grade, GradeT, Stat, MinLvl, MaxLvl, ValueI)" +
                     ");"};
             staticTables.Add(new TableStats("PotentialData", PotSpec[0], "Potential"));

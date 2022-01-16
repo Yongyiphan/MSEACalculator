@@ -80,12 +80,12 @@ namespace MSEACalculator
 
         public static List<string> RepeatOnePot { get; set; } = new List<string>
         {
-
+            "Decent", "Invincibility Time"
         };
 
         public static List<string> RepeatTwoPot { get; set; } = new List<string>
         {
-
+            "Boss", "Ignore Monster's DEF", "Item", "chance to ignore", "chance to be invincible"
         };
 
         public static StorageFolder storageFolder { get; set; } = ApplicationData.Current.LocalFolder;

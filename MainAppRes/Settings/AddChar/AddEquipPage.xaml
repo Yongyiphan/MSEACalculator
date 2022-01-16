@@ -38,7 +38,9 @@
                         <TextBlock Name="DEF"  Text="DEF:" />
                         <TextBlock Name="SPD"  Text="Speed:" />
                         <TextBlock Name="JUMP" Text="Jump:" />
-                        <TextBlock Name="AS"   Text="AllStat:" />
+                        <TextBlock Name="AS"   Text="AllStat%:" />
+                        <TextBlock Name="BD"   Text="BD%:"/>
+                        <TextBlock Name="DMG"   Text="DMG%:" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Vertical">
                         <TextBlock x:Name="BaseStats" Text="Base"/>
@@ -83,6 +85,8 @@
                 <TextBlock Text="{Binding SPD,Mode=TwoWay}"/>
                 <TextBlock Text="{Binding JUMP,Mode=TwoWay}"/>
                 <TextBlock Text="{Binding AllStat,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding BD,Mode=TwoWay}"/>
+                <TextBlock Text="{Binding DMG,Mode=TwoWay}"/>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
@@ -122,7 +126,7 @@
                                   ItemsSource="{Binding CharacterWeapon, Mode=TwoWay}"
                                     SelectedItem="{Binding SelectedWeapon, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>     
                 </StackPanel>
-                <Button x:Name="AddItemCMD" Content="Add Equipment" Margin="5 5 0 2" 
+                <Button x:Name="AddItemCMD" Content="Add / Update Equipment" Margin="5 5 0 2" 
                         Command="{Binding AddEquipmentCMD}"/>
                 <SplitView IsPaneOpen="True" OpenPaneLength="100" DisplayMode="Inline">
                     <SplitView.Pane>

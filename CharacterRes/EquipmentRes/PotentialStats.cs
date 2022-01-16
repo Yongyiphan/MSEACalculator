@@ -8,15 +8,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 {
     public class PotentialStats
     {
-        public int FirstLineStat { get; set; }
-        public int SecondLineStat { get; set;}
-        public int ThirdLineStat { get; set;}
-
-        public string FirstLine { get; set; }
-        public string SecondLine { get; set; }
-        public string ThirdLine { get; set; }
-
-
+        
 
         public string Grade { get; set; }
         public List<string> EquipGrpL { get; set; }
@@ -29,9 +21,9 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int MinLvl { get; set; }
         public int MaxLvl { get; set; }
         public string Prime { get; set; }
-
-
+        public int Duration { get; set; }
         
+        public string DisplayStat { get; set; }
 
 
         public PotentialStats()

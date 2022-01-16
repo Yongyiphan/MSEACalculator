@@ -230,6 +230,7 @@ namespace MSEACalculator.OtherRes.Database
                     "MinLvl int," +
                     "MaxLvl int," +
                     "ValueI nvarchar," +
+                    "Duration int" +
                     "PRIMARY KEY (EquipGrp, Grade, GradeT, Stat, MinLvl, MaxLvl, ValueI)" +
                     ");"};
             staticTables.Add(new TableStats("PotentialData", PotSpec[0], "Potential"));
@@ -874,8 +875,8 @@ namespace MSEACalculator.OtherRes.Database
                         List<PotentialStats> PotList = await ImportCSV.GetPotentialCSVAsync();
 
                         string insertPot = "INSERT INTO " + tableName +"(" +
-                            "EquipGrp, Grade, GradeT, StatT, Stat, MinLvl, MaxLvl, ValueI) VALUES " +
-                            "(@EG, @G, @GT, @ST, @S, @MinL, @MaxL, @VI);";
+                            "EquipGrp, Grade, GradeT, StatT, Stat, MinLvl, MaxLvl, ValueI, Duration) VALUES " +
+                            "(@EG, @G, @GT, @ST, @S, @MinL, @MaxL, @VI, @D);";
                         using(SqliteCommand insertCMD =  new SqliteCommand(insertPot, connection, transaction))
                         {
                             foreach (PotentialStats pot in PotList)
@@ -883,8 +884,18 @@ namespace MSEACalculator.OtherRes.Database
                                 counter+=1;
                                 foreach (string i in pot.EquipGrpL)
                                 {
+                                    string e;
+                                    if ( i.Trim() == "Shoulderpad")
+                                    {
+                                        e = "Shoulder";
+                                    }
+                                    else
+                                    {
+                                        e = i.Trim();
+                                    }
+
                                     insertCMD.Parameters.Clear();
-                                    insertCMD.Parameters.AddWithValue("@EG", i);
+                                    insertCMD.Parameters.AddWithValue("@EG", e);
                                     insertCMD.Parameters.AddWithValue("@G", pot.Grade);
                                     insertCMD.Parameters.AddWithValue("@GT", pot.Prime);
                                     insertCMD.Parameters.AddWithValue("@ST", pot.StatType);
@@ -892,6 +903,7 @@ namespace MSEACalculator.OtherRes.Database
                                     insertCMD.Parameters.AddWithValue("@MinL", pot.MinLvl);
                                     insertCMD.Parameters.AddWithValue("@MaxL", pot.MaxLvl);
                                     insertCMD.Parameters.AddWithValue("@VI", pot.StatValue);
+                                    insertCMD.Parameters.AddWithValue("@D", pot.Duration);
 
                                     try
                                     {

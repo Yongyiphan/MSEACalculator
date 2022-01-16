@@ -23,7 +23,7 @@ namespace MSEACalculator
 {
     public class CommonFunc
     {
-        public Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
+        public static Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
 
 
         public static int SpellTraceTier(EquipModel selectedEquip)
@@ -109,7 +109,7 @@ namespace MSEACalculator
            
         }
 
-        public static EquipModel updateBaseStats(Character character, EquipModel baseEquip, string type)
+        public static EquipModel updateBaseStats(Character character, EquipModel baseEquip)
         {
             //To update equip with proper values as per class
             //EquipModel equipModel = new EquipModel();
@@ -117,7 +117,15 @@ namespace MSEACalculator
             //Update from Main/Sec Stats to Stat Values STR|DEX|...
             //Keep MS/SS property
             int mainStat = baseEquip.BaseStats.MS, secStat = baseEquip.BaseStats.SS, AS = baseEquip.BaseStats.AllStat;
-            if(type == "Base")
+            if(AS > 0)
+            {
+                baseEquip.BaseStats.STR = AS;
+                baseEquip.BaseStats.DEX = AS;
+                baseEquip.BaseStats.INT = AS;
+                baseEquip.BaseStats.LUK = AS;
+                baseEquip.BaseStats.AllStat = 0;
+            }
+            else
             {
                 switch (character.MainStat)
                 {
@@ -135,6 +143,7 @@ namespace MSEACalculator
                         break;
                     case "LUK":
                         baseEquip.BaseStats.LUK = mainStat;
+                        //CADENA    DUAL BLADE
                         if (character.SecStat == "SPECIAL")
                         {
                             baseEquip.BaseStats.STR = secStat;
@@ -143,6 +152,7 @@ namespace MSEACalculator
                         break;
                     case "HP":
                         break;
+                    //XENON
                     case "SPECIAL":
                         baseEquip.BaseStats.STR = mainStat;
                         baseEquip.BaseStats.DEX = mainStat;
@@ -150,13 +160,6 @@ namespace MSEACalculator
                         break;
 
                 }
-            }
-            if (type == "All")
-            {
-                baseEquip.BaseStats.STR = AS;
-                baseEquip.BaseStats.DEX = AS;
-                baseEquip.BaseStats.INT = AS;
-                baseEquip.BaseStats.LUK = AS;
             }
 
             return baseEquip;
@@ -211,6 +214,13 @@ namespace MSEACalculator
                     case "SpecialMP":
                         RM.SpecialMP = record[R].ToString();
                         break;
+                    case "BD":
+                        RM.BD = record[R];
+                        break;
+                    case "DMG":
+                        RM.DMG = record[R];
+                        break;
+
                     default:
                         break;
                 }
@@ -243,6 +253,9 @@ namespace MSEACalculator
         public static EquipModel FindEquip(List<EquipModel> FindingList, Character SCharacter, string Slot, string ESet)
         {
             List<string> accList =  new List<string>() { "Ring", "Pendant", "Emblem", "Accessory", "Misc"};
+
+            EquipModel returnedEquip = new EquipModel();
+
             
             if (accList.Contains(Slot))
             {
@@ -254,45 +267,53 @@ namespace MSEACalculator
                         {
                             if (equip.ClassType == SCharacter.ClassType)
                             {
-                                return equip;
+                                return returnedEquip =  equip;
                             }
                         }
-                        return equip;
+                        return returnedEquip =  equip;
                     }
                 }
             }
             else
             {
-                switch (Slot)
+                switch (EquipSlot[Slot])
                 {
                     case "Weapon":
                         foreach (EquipModel equip in FindingList)
                         {
                             if (equip.WeaponType == SCharacter?.CurrentMainWeapon && equip.EquipSet == ESet)
                             {
-                                return equip;
+                                return returnedEquip =  equip;
                             }
                         }
                         break;
                     case "Secondary":
                         foreach (EquipModel equip in FindingList)
                         {
-                            if (equip.EquipName == ESet && ( equip.ClassType == SCharacter.ClassName || equip.ClassType == SCharacter.ClassType))
+                            if (equip.EquipName == ESet)
                             {
-                                return equip;
+                                if (equip.ClassType == SCharacter.Faction || equip.ClassType == SCharacter.ClassType)
+                                {
+                                    return returnedEquip =  equip;
+                                }
                             }
                         }
                         break;
                     case "Heart":
                         break;
                     case "Armor":
+                        foreach(EquipModel equip in FindingList)
+                        {
+                            if (equip.EquipSet ==  ESet && equip.EquipSlot == Slot && equip.ClassType == SCharacter.ClassType)
+                            {
+                                return returnedEquip =  equip;
+                            }
+                        }
                         break;
                 }
             }
-            
-            
 
-            return new EquipModel();
+            return returnedEquip;
         }
 
         

@@ -20,7 +20,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
         public List<string> FlameStatsTypes { get; set; } = GVar.BaseStatTypes.Concat(GVar.SpecialStatType).ToList();
 
-        
+        public List<PotentialStats> PotentialStats { get => DBRetrieve.GetAllPotential(); }
 
         public List<string> AccGrp { get; } = new List<string>
         {

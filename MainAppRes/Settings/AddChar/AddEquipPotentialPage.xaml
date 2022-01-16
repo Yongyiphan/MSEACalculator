@@ -12,20 +12,26 @@
         <!--POTENTIAL RECORDS-->
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <CheckBox Content="Add Pot?" Style="{StaticResource AddEquipCBX}"/>
+                <CheckBox Content="Add Pot?" Margin="10 0"/>
                 <TextBlock Text="Grade"/>
-                <ComboBox />
+                <ComboBox VerticalAlignment="Center"
+                    ItemsSource="{Binding PotentialGrade, Mode=TwoWay}"
+                          SelectedIndex="{Binding SPotentialG,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <Button x:Name="AddPotentialBtn" Content="Add Potential" Margin="10"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
                 
                 <TextBlock Text="1st Line"/>
-                <ComboBox />
+                <ComboBox ItemsSource="{Binding FirstPotL, Mode=TwoWay}" DisplayMemberPath="DisplayStat"
+                          SelectedItem="{Binding FirstPot, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"/>
                 <TextBlock Text="2nd Line"/>
-                <ComboBox />
+                <ComboBox ItemsSource="{Binding SecondPotL, Mode=TwoWay}"
+                          SelectedItem="{Binding SecondPot, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"/>
                 <TextBlock Text="3rd Line"/>
-                <ComboBox />
+                <ComboBox ItemsSource="{Binding ThirdPotL, Mode=TwoWay}"
+                          SelectedItem="{Binding ThirdPot, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"/>
             </StackPanel>
-            <Button x:Name="AddPotentialBtn" Content="Add Flame" Margin="10"/>
+            
         </StackPanel>
         
     </Grid>

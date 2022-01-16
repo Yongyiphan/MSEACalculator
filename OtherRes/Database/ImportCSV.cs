@@ -413,13 +413,16 @@ namespace MSEACalculator.OtherRes.Database
                         equip.BaseStats.ATKSPD = Convert.ToInt32(temp[4]);
                         equip.BaseStats.MS = Convert.ToInt32(temp[5]);
                         equip.BaseStats.SS = Convert.ToInt32(temp[6]);
-                        equip.BaseStats.ATK = Convert.ToInt32(temp[7]);
-                        equip.BaseStats.MATK = Convert.ToInt32(temp[8]);
-                        equip.BaseStats.SPD = Convert.ToInt32(temp[9]);
-                        equip.BaseStats.HP = Convert.ToInt32(temp[10]);
-                        equip.BaseStats.DEF = Convert.ToInt32(temp[11]);
+                        equip.BaseStats.HP = Convert.ToInt32(temp[7]);
+                        equip.BaseStats.DEF = Convert.ToInt32(temp[8]);
+                        equip.BaseStats.ATK = Convert.ToInt32(temp[9]);
+                        equip.BaseStats.MATK = Convert.ToInt32(temp[10]);
+                        equip.BaseStats.SPD = Convert.ToInt32(temp[11]);
                         equip.BaseStats.BD = Convert.ToInt32(temp[12]);
                         equip.BaseStats.IED = Convert.ToInt32(temp[13]);
+
+
+
 
                         WeaponList.Add(equip);
 
@@ -600,6 +603,7 @@ namespace MSEACalculator.OtherRes.Database
                         Pot.MinLvl = Convert.ToInt32(temp[6]);
                         Pot.MaxLvl = Convert.ToInt32(temp[7]);
                         Pot.StatValue = temp[8];
+                        Pot.Duration = Convert.ToInt32(temp[9]);
 
 
                         PotentialList.Add(Pot);

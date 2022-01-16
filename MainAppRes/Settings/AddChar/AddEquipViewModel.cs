@@ -44,6 +44,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         //KEY: EquipSlot | VALUE: Equip Category
         public Dictionary<string, string> EquipSlots { get => AEquipM.EquipSlot; }
         public List<string> FlameStatsTypes { get => AEquipM.FlameStatsTypes; }
+
+        public List<string> PotentialGrade { get => GVar.PotentialGrade; }
         public List<int> Slots { get => ScrollModel.Slots; } //= new Scrolling().Slots;
         public List<string> SlotSet { get; set; } = new List<string>
         {
@@ -94,6 +96,37 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         }
         public Dictionary<string, int> ScrollRecord { get; set; } = new Dictionary<string, int>();
         public Dictionary<string, int> FlameRecord { get; set; } = new Dictionary<string, int>();
+
+        private ObservableCollection<PotentialStats> _FirstPotL  = new ObservableCollection<PotentialStats>();
+        public ObservableCollection<PotentialStats> FirstPotL
+        {
+            get =>  _FirstPotL;
+            set
+            {
+                _FirstPotL = value;
+                OnPropertyChanged(nameof(FirstPotL));
+            }
+
+        }
+        private ObservableCollection<PotentialStats> _SecondPotL = new ObservableCollection<PotentialStats>();
+        public ObservableCollection<PotentialStats> SecondPotL
+        {
+            get => _SecondPotL;
+            set
+            {
+                _SecondPotL =  value;
+                OnPropertyChanged(nameof(SecondPotL));
+            }
+        }
+        private ObservableCollection<PotentialStats> _ThirdPotL = new ObservableCollection<PotentialStats>();
+        public ObservableCollection<PotentialStats> ThirdPotL
+        {
+            get { return _ThirdPotL; }
+            set { _ThirdPotL = value;
+                OnPropertyChanged(nameof(ThirdPotL));
+            }
+        }
+
         public ObservableCollection<EquipModel> CItemDictT { get; set; } = new ObservableCollection<EquipModel>();
 
 
@@ -179,6 +212,17 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             }
         }
 
+        private Visibility _ifWeapon = Visibility.Collapsed;
+
+        public Visibility ifWeapon
+        {
+            get { return _ifWeapon; }
+            set { _ifWeapon = value;
+                OnPropertyChanged(nameof(ifWeapon));
+            }
+        }
+
+
 
 
         /// <summary>
@@ -235,9 +279,25 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             {
                 _SSetItem = value;
                 AddEquipmentCMD.RaiseCanExecuteChanged();
+
+                GetCurrentEquipment();
+                FirstPotL = RetrievePot();
+                
                 OnPropertyChanged(nameof(SSetItem));
             }
         }
+
+        private EquipModel _CurrentEquipment = new EquipModel();
+
+        public EquipModel CurrentSEquip
+        {
+            get { return _CurrentEquipment; }
+            set { _CurrentEquipment = value;
+                OnPropertyChanged(nameof(CurrentSEquip));
+            }
+        }
+            
+
 
         //EITHER "SET" OR "EQUIPNAME"
         private string _ItemDisType = "Set: ";
@@ -273,7 +333,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             set
             {
                 _FrameSelection = value;
-                toDis(FrameSelection.Content.ToString());
+                toDisplayFrame(FrameSelection.Content.ToString());
                 OnPropertyChanged(nameof(FrameSelection));
 
             }
@@ -432,6 +492,46 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             }
         }
 
+        private int _SPotentialG;
+        public int SPotentialG
+        {
+            get { return _SPotentialG; }
+            set { _SPotentialG = value;
+                if (SPotentialG != -1)
+                {
+                    FirstPot =  null;
+                    SecondPot = null;
+                    ThirdPot = null;
+                    FirstPotL = RetrievePot();
+                }
+
+
+                OnPropertyChanged(nameof(SPotentialG));
+            }
+        }
+
+        private PotentialStats _FirstPot;
+        public PotentialStats FirstPot
+        {
+            get { return _FirstPot; }
+            set { _FirstPot = value; }
+        }
+
+        private PotentialStats _SecondPot;
+        public PotentialStats SecondPot
+        {
+            get { return _SecondPot; }
+            set { _SecondPot = value; }
+        }
+
+        private PotentialStats _ThirdPot;
+        public PotentialStats ThirdPot
+        {
+            get { return _ThirdPot; }
+            set { _ThirdPot = value; }
+        }
+
+
 
 
         private bool _SyncCI = false;
@@ -456,6 +556,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
                 ShowSEquipStat = CItemSelect != null ? Visibility.Visible : Visibility.Collapsed;
                 if (CItemSelect != null)
                 {
+                    ifWeapon = CItemSelect.EquipSlot == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
                     SEquipSlot = CItemSelect.EquipSlot;
                     SSetItem = AEquipM.AccGrp.Contains(EquipSlots[SEquipSlot]) ? CItemSelect.EquipName : CItemSelect.EquipSet;
                     IsSpellTrace = CItemSelect.SpellTraced;
@@ -773,81 +874,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
         private void AddItem()
         {
-            //adding item process
-            // retrieve base stats from list
-            // if armor => slot name
-            // if access => slot name
-            // 
-            Func<Character, List<EquipModel>, string, string, string, EquipModel>
-                FindEquip = (character, equipList, set, slot, type) =>
-                {
 
-                    EquipModel equipModel = new EquipModel();
-
-                    switch (type)
-                    {
-                        case "Armor":
-
-                            foreach (EquipModel equip in equipList)
-                            {
-                                if (equip.EquipSet == set && equip.ClassType == character.ClassType && equip.EquipSlot == slot)
-                                {
-                                    return equipModel = equip;
-                                }
-
-                            }
-                            break;
-                        case "Weapon":
-
-                            foreach(EquipModel Weap in equipList)
-                            {
-                                if (Weap.EquipSlot == slot && Weap.EquipSet == set && Weap.WeaponType == character.CurrentMainWeapon)
-                                {
-                                    return equipModel = Weap;
-                                }
-                            }
-
-                            break;
-                        case "Accessory":
-
-                            //Retreiving Ring Info
-
-                            foreach (EquipModel equip in equipList)
-                            {
-                                if (AEquipM.AccGrp.Contains(EquipSlots[slot]))
-                                {
-
-                                    if (equip.EquipSlot == EquipSlots[slot] && equip.EquipName == set)
-                                    {
-                                        return equipModel = equip;
-                                    }
-
-                                }
-                                else
-                                {
-                                    if (equip.EquipSlot == slot && equip.EquipName == set)
-                                    {
-                                        return equipModel = equip;
-                                    }
-                                }
-                            }
-
-                            //Retrieving Pendant Info
-                            break;
-                        default:
-
-                            break;
-                    }
-
-                    return equipModel;
-                };
-
-            //if scroll perc selected, slot >0
-            //Information to gather
-            //Selected Char
-            //If armor -> EquipSet and Slot and ClassType <- Armor Data
-            //If weapon -> EquipSet and Type
-            //Else -> Set and Name. 
             Character selectedChar = SCharacter;
             List<string> cat = new List<string>() { "Ring", "Pendant" };
             string currentSSlot = cat.Contains(EquipSlots[SEquipSlot]) ? EquipSlots[SEquipSlot] : SEquipSlot;
@@ -865,9 +892,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             selectedEquip.EquipSlot = SEquipSlot; //<- override value of Selected slot i.e ring1... pendant1...
             selectedEquip.SlotCount = NoSlot;
             //Assign base stats to correct property
-            //selectedEquip = CommonFunc.updateBaseStats(selectedChar, selectedEquip, baseStatType);
+            selectedEquip = CommonFunc.updateBaseStats(selectedChar, selectedEquip);
             selectedEquip.SpellTraced = IsSpellTrace;
-            //selectedEquip = updateEquipModelStats(selectedEquip, selectedChar, slotType);
+            string slotType = SEquipSlot == "Shoulder" ? "Armor" : EquipSlots[SEquipSlot];
+            //Update Scroll/Flame Effects
+            selectedEquip = updateEquipModelStats(selectedEquip, selectedChar, slotType);
 
             //Check for new / update of item.
             EquipModel existEquip = CItemDictT.ToList().Find(equip => equip.EquipSlot == SEquipSlot);
@@ -895,7 +924,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             AddEquipmentCMD.RaiseCanExecuteChanged();
         }
 
-        public void toDis(string targetStr)
+        public void toDisplayFrame(string targetStr)
         {
             switch (targetStr)
             {
@@ -917,6 +946,90 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         }
 
 
+        public void GetCurrentEquipment()
+        {
+            EquipModel selectedEquip = new EquipModel();
+
+            if (SCharacter != null && SSetItem != null)
+            {
+                Character selectedChar = SCharacter;
+                List<string> cat = new List<string>() { "Ring", "Pendant" };
+                string currentSSlot = cat.Contains(EquipSlots[SEquipSlot]) ? EquipSlots[SEquipSlot] : SEquipSlot;
+
+
+                //Blank Equp
+
+                List<EquipModel> EList = CurrentEquipList;
+
+
+
+                //Retreive base equip stats from list
+                selectedEquip = CommonFunc.FindEquip(EList, selectedChar, currentSSlot, SSetItem);
+
+                CurrentSEquip = selectedEquip;
+            }
+        }
+
+        public ObservableCollection<PotentialStats> RetrievePot()
+        {
+            ObservableCollection<PotentialStats> potList = new ObservableCollection<PotentialStats>();
+            if (CurrentSEquip != null && SPotentialG != -1)
+            {
+                foreach(PotentialStats lines in AEquipM.PotentialStats)
+                {
+                    if (lines.MinLvl <= CurrentSEquip.EquipLevel && CurrentSEquip.EquipLevel <= lines.MaxLvl && CurrentSEquip.EquipSlot == lines.EquipGrp)
+                    {
+                        string grade = PotentialGrade[SPotentialG];
+                        if (SPotentialG == 0)
+                        {
+                            if (lines.Grade == PotentialGrade[SPotentialG])
+                            {
+                                if (lines.Prime == "Prime" || lines.Prime == "Non prime")
+                                {
+                                    var tempPot = lines;
+                                    tempPot.DisplayStat = tempPot.StatValue == "0" ? tempPot.StatIncrease.ToString() : String.Format("{0} +{1}", tempPot.StatIncrease.TrimEnd('%'), tempPot.StatValue);
+                                    potList.Add(tempPot);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (lines.Prime == "Prime")
+                            {
+                                if (lines.Grade == grade || lines.Grade == PotentialGrade[SPotentialG-1])
+                                {
+                                    var tempPot = lines;
+                                    tempPot.DisplayStat = tempPot.StatValue == "0" ? tempPot.StatIncrease.ToString() : String.Format("{0} +{1}", tempPot.StatIncrease.TrimEnd('%'), tempPot.StatValue);
+                                    potList.Add(tempPot);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return potList;
+        }
+
+
+        public void ShowSecondPotential()
+        {
+            SecondPotL = RetrievePot();
+            bool checks = false;
+            if (SecondPot !=  null && FirstPot != null && SPotentialG != -1)
+            {
+                checks = true;
+            }
+
+            if (checks)
+            {
+                foreach (PotentialStats potentialStats in SecondPotL)
+                {
+
+                }
+            }
+            
+
+        }
         private EquipModel updateEquipModelStats(EquipModel selectedEquip, Character selectedChar, string slotType)
         {
             if (selectedEquip.SpellTraced)
@@ -926,6 +1039,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
                 int perc = Convert.ToInt32(SelectedScrollStat.Remove(SelectedScrollStat.Length - 1));
                 selectedEquip.ScrollStats.HP = CommonFunc.SpellTraceDict[slotType][STTier][perc].HP * NoSlot;
                 selectedEquip.ScrollStats.DEF = CommonFunc.SpellTraceDict[slotType][STTier][perc].DEF * NoSlot;
+
+                if (slotType == "Weapon" || slotType == "Heart" || slotType == "Gloves")
+                {
+                    selectedEquip.ScrollStats.ATK = CommonFunc.SpellTraceDict[slotType][STTier][perc].ATK * NoSlot;
+                }
 
                 if (MainStat == "HP")
                 {
@@ -946,6 +1064,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
             return selectedEquip;
         }
+
 
 
     }

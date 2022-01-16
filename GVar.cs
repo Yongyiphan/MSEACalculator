@@ -60,11 +60,33 @@ namespace MSEACalculator
             "BD","DMG", "AllStat"
         };
 
+
+        ///Potential Display Constraints
+        //Can only appear 1 time
+        //Decent Skills of any kind
+        //Invincibility time increase
+
+
+        //Can only appear 2 time
+        //Damage on boss monsters increase
+        //Ignore monster DEF increase
+        //Item Drop Rate increase
+        //Chance to ignore % damage
+        //Chance to become invincible
         public static List<string> PotentialGrade { get; set; } = new List<string>
         {
             "Rare","Epic", "Unique","Legendary"
         };
 
+        public static List<string> RepeatOnePot { get; set; } = new List<string>
+        {
+
+        };
+
+        public static List<string> RepeatTwoPot { get; set; } = new List<string>
+        {
+
+        };
 
         public static StorageFolder storageFolder { get; set; } = ApplicationData.Current.LocalFolder;
 

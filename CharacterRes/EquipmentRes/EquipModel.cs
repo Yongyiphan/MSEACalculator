@@ -22,8 +22,19 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public EquipStatsModel ScrollStats { get; set; } = new EquipStatsModel();
         public EquipStatsModel FlameStats { get; set; } = new EquipStatsModel();
 
-        public PotentialStats MainPot { get; set; }
-        public PotentialStats AddPot { get; set; }
+        public Dictionary<string, PotentialStats> MainPot { get; set; } = new Dictionary<string, PotentialStats>
+        {
+            {"First" , new PotentialStats()},
+            {"Second", new PotentialStats()},
+            {"Third" , new PotentialStats()}
+        };
+        public Dictionary<string, PotentialStats> AddPot { get; set; } = new Dictionary<string, PotentialStats>
+        {
+
+            {"First" , new PotentialStats()},
+            {"Second", new PotentialStats()},
+            {"Third" , new PotentialStats()}
+        };
 
         public bool SpellTraced { get; set; } = false;
 

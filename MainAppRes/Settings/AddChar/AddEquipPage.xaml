@@ -7,89 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.Resources>
-
-        <DataTemplate x:Key="DisplaySEquip">
-            <StackPanel>
-                <StackPanel.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Margin" Value="5 0"/>
-                        <Setter Property="TextAlignment" Value="Center"/>
-                    </Style>
-                </StackPanel.Resources>
-                <TextBlock Text="{Binding Path=EquipName, Mode=TwoWay}" FontSize="18"/>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.2*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Vertical" Grid.Column="0">
-                        <TextBlock Name="Stat" Text="Stat"/>
-                        <TextBlock Name="STR"  Text="STR:" />
-                        <TextBlock Name="DEX"  Text="DEX:" />
-                        <TextBlock Name="INT"  Text="INT:" />
-                        <TextBlock Name="LUK"  Text="LUK:" />
-                        <TextBlock Name="ATK"  Text="ATK" />
-                        <TextBlock Name="MATK" Text="MATK:" />
-                        <TextBlock Name="HP"   Text="HP:" />
-                        <TextBlock Name="MP"   Text="MP:" />
-                        <TextBlock Name="DEF"  Text="DEF:" />
-                        <TextBlock Name="SPD"  Text="Speed:" />
-                        <TextBlock Name="JUMP" Text="Jump:" />
-                        <TextBlock Name="AS"   Text="AllStat%:" />
-                        <TextBlock Name="BD"   Text="BD%:"/>
-                        <TextBlock Name="DMG"   Text="DMG%:" />
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Vertical">
-                        <TextBlock x:Name="BaseStats" Text="Base"/>
-                        <ContentControl
-                                    Content="{Binding BaseStats}"
-                                    ContentTemplate="{StaticResource EquipStat}"/>
-                    </StackPanel>
-                    <StackPanel Grid.Column="2">
-                        <TextBlock x:Name="ScrollStats" Text="Scroll"/>
-                        <ContentControl
-                                    Content="{Binding ScrollStats}"
-                                    ContentTemplate="{StaticResource EquipStat}"/>
-                    </StackPanel>
-                    <StackPanel Grid.Column="3">
-                        <TextBlock x:Name="FlameStats" Text="Flame"/>
-                        <ContentControl 
-                                    Content="{Binding FlameStats}"
-                                    ContentTemplate="{StaticResource EquipStat}"/>
-                    </StackPanel>
-
-
-                </Grid>
-            </StackPanel>
-
-        </DataTemplate>
-        <DataTemplate x:Key="EquipStat">
-            <StackPanel Orientation="Vertical">
-                <StackPanel.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="TextAlignment" Value="Center"/>
-                    </Style>
-                </StackPanel.Resources>
-                <TextBlock Text="{Binding STR,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding DEX,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding INT,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding LUK,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding ATK,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding MATK,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding HP,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding MP,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding DEF,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding SPD,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding JUMP,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding AllStat,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding BD,Mode=TwoWay}"/>
-                <TextBlock Text="{Binding DMG,Mode=TwoWay}"/>
-            </StackPanel>
-        </DataTemplate>
-    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
@@ -150,7 +68,7 @@
         
         <Grid Grid.Row="1">
                 
-        <TextBlock Text="{Binding TestVar}"/>
+        <!--<TextBlock Text="{Binding TestVar}"/>-->
         
                 <ScrollViewer VerticalScrollBarVisibility="Auto" >
                     <SplitView IsPaneOpen="True" OpenPaneLength="150" DisplayMode="Inline">
@@ -165,32 +83,38 @@
 
                             </Grid>
                         </SplitView.Pane>
-                        <SplitView.Content>
-
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                    <ContentControl Content="{Binding CItemSelect, Mode=TwoWay}"
-                                                ContentTemplate="{StaticResource DisplaySEquip}"
-                                                Visibility="{Binding ShowSEquipStat, Mode=TwoWay}"
-                                                Margin="20 0">
-
-                                    </ContentControl>
-
-                                </Grid>
-
-                                <Grid Grid.Column="1">
-                                    <ContentControl Content="{Binding CItemSelect, Mode=TwoWay}"
-                                                ContentTemplate="{StaticResource DisplaySEquip}"
-                                                Visibility="{Binding ShowSEquipStat, Mode=TwoWay}"
-                                                Margin="20 0">
-
-                                    </ContentControl>
+                    <SplitView.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Grid Grid.Column="0">
+                                <!--<ContentControl Content="{Binding CItemSelect, Mode=TwoWay}"
+                                                    ContentTemplate="{StaticResource DisplaySEquip}"
+                                                    Visibility="{Binding ShowSEquipStat, Mode=TwoWay}"
+                                                    Margin="20 0"/>-->
+                                <StackPanel Orientation="Vertical" Visibility="{Binding ShowSEquipStat, Mode=TwoWay}">
+                                    <TextBlock Text="Base + Scroll + Flame"/>
+                                    <ListView ItemsSource="{Binding TotalRecordDisplay, Mode=TwoWay}"
+                                          DisplayMemberPath="Value"/>
+                                </StackPanel>
+                                
                             </Grid>
+
+                            <Grid Grid.Column="1">
+                                <StackPanel Orientation="Vertical" Visibility="{Binding ShowSEquipStat, Mode=TwoWay}">
+                                    <TextBlock Text="Main Pot"/>
+                                    
+                                    <ListView ItemsSource="{Binding MainPotL, Mode=TwoWay}"
+                                          DisplayMemberPath="DisplayStat"/>
+                                    <TextBlock Text="Add Pot"/>
+                                    <ListView ItemsSource="{Binding DisplayPotList[Add], Mode=TwoWay}"
+                                          DisplayMemberPath="DisplayStat"/>
+                                </StackPanel>
                             </Grid>
+                        </Grid>
                             <!--<ContentControl Content="{Binding CItemSelect, Mode=TwoWay}"
                                             ContentTemplate="{StaticResource DisplaySEquip}"
                                             Visibility="{Binding ShowSEquipStat, Mode=TwoWay}"
@@ -205,4 +129,86 @@
 </Page>
 
 
+<!--<Page.Resources>
 
+    <DataTemplate x:Key="DisplaySEquip">
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="5 0"/>
+                    <Setter Property="TextAlignment" Value="Center"/>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock Text="{Binding Path=EquipName, Mode=TwoWay}" FontSize="18"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Column="0">
+                    <TextBlock Name="Stat" Text="Stat"/>
+                    <TextBlock Name="STR"  Text="STR:" />
+                    <TextBlock Name="DEX"  Text="DEX:" />
+                    <TextBlock Name="INT"  Text="INT:" />
+                    <TextBlock Name="LUK"  Text="LUK:" />
+                    <TextBlock Name="ATK"  Text="ATK" />
+                    <TextBlock Name="MATK" Text="MATK:" />
+                    <TextBlock Name="HP"   Text="HP:" />
+                    <TextBlock Name="MP"   Text="MP:" />
+                    <TextBlock Name="DEF"  Text="DEF:" />
+                    <TextBlock Name="SPD"  Text="Speed:" />
+                    <TextBlock Name="JUMP" Text="Jump:" />
+                    <TextBlock Name="AS"   Text="AllStat%:" />
+                    <TextBlock Name="BD"   Text="BD%:"/>
+                    <TextBlock Name="DMG"   Text="DMG%:" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <TextBlock x:Name="BaseStats" Text="Base"/>
+                    <ContentControl
+                                    Content="{Binding BaseStats}"
+                                    ContentTemplate="{StaticResource EquipStat}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock x:Name="ScrollStats" Text="Scroll"/>
+                    <ContentControl
+                                    Content="{Binding ScrollStats}"
+                                    ContentTemplate="{StaticResource EquipStat}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3">
+                    <TextBlock x:Name="FlameStats" Text="Flame"/>
+                    <ContentControl 
+                                    Content="{Binding FlameStats}"
+                                    ContentTemplate="{StaticResource EquipStat}"/>
+                </StackPanel>
+
+
+            </Grid>
+        </StackPanel>
+
+    </DataTemplate>
+    <DataTemplate x:Key="EquipStat">
+        <StackPanel Orientation="Vertical">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="TextAlignment" Value="Center"/>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock Text="{Binding STR,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding DEX,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding INT,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding LUK,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding ATK,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding MATK,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding HP,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding MP,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding DEF,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding SPD,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding JUMP,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding AllStat,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding BD,Mode=TwoWay}"/>
+            <TextBlock Text="{Binding DMG,Mode=TwoWay}"/>
+        </StackPanel>
+    </DataTemplate>
+</Page.Resources>-->

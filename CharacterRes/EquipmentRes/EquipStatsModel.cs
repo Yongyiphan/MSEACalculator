@@ -49,18 +49,19 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             }
             if(obj is EquipStatsModel)
             {
-                test.Add(STR ==  ((EquipStatsModel)obj).STR ? "true" : "false" );
-                test.Add(DEX ==  ((EquipStatsModel)obj).DEX ? "true" : "false" );
-                test.Add(INT ==  ((EquipStatsModel)obj).INT ? "true" : "false" );
-                test.Add(LUK ==  ((EquipStatsModel)obj).LUK ? "true" : "false" );
-                test.Add(ATK ==  ((EquipStatsModel)obj).ATK ? "true" : "false" );
-                test.Add(MATK ==  ((EquipStatsModel)obj).MATK ? "true" : "false" );
-                test.Add(DEF ==  ((EquipStatsModel)obj).DEF ? "true" : "false" );
-                test.Add(HP ==  ((EquipStatsModel)obj).HP ? "true" : "false" );
-                test.Add(MP ==  ((EquipStatsModel)obj).MP ? "true" : "false" );
-                test.Add(SPD ==  ((EquipStatsModel)obj).SPD ? "true" : "false" );
-                test.Add(JUMP ==  ((EquipStatsModel)obj).JUMP ? "true" : "false" );
-                test.Add(AllStat ==  ((EquipStatsModel)obj).AllStat ? "true" : "false" );
+                EquipStatsModel cObj = (EquipStatsModel)obj;
+                test.Add(STR ==  cObj.STR ? "true" : "false" );
+                test.Add(DEX ==  cObj.DEX ? "true" : "false" );
+                test.Add(INT ==  cObj.INT ? "true" : "false" );
+                test.Add(LUK ==  cObj.LUK ? "true" : "false" );
+                test.Add(ATK ==  cObj.ATK ? "true" : "false" );
+                test.Add(MATK ==  cObj.MATK ? "true" : "false" );
+                test.Add(DEF ==  cObj.DEF ? "true" : "false" );
+                test.Add(HP ==  cObj.HP ? "true" : "false" );
+                test.Add(MP ==  cObj.MP ? "true" : "false" );
+                test.Add(SPD ==  cObj.SPD ? "true" : "false" );
+                test.Add(JUMP ==  cObj.JUMP ? "true" : "false" );
+                test.Add(AllStat ==  cObj.AllStat ? "true" : "false" );
 
                 
             }

@@ -138,7 +138,6 @@
     <Compile Include="MainAppRes\Settings\AddChar\AddEquipScrollPage.xaml.cs">
       <DependentUpon>AddEquipScrollPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainAppRes\Settings\AddChar\AddEquipScrollViewModel.cs" />
     <Compile Include="MainAppRes\Settings\AddChar\AddEquipViewModel.cs" />
     <Compile Include="CharacterRes\EquipmentRes\EquipModel.cs" />
     <Compile Include="CharacterRes\EquipmentRes\EquipStatsModel.cs" />

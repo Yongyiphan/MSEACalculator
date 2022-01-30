@@ -22,20 +22,19 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public EquipStatsModel ScrollStats { get; set; } = new EquipStatsModel();
         public EquipStatsModel FlameStats { get; set; } = new EquipStatsModel();
 
-        public Dictionary<string, PotentialStats> MainPot { get; set; } = new Dictionary<string, PotentialStats>
+        public List<PotentialStats> MainPot { get; set; } = new List<PotentialStats>
         {
-            {"First" , new PotentialStats()},
-            {"Second", new PotentialStats()},
-            {"Third" , new PotentialStats()}
-        };
-        public Dictionary<string, PotentialStats> AddPot { get; set; } = new Dictionary<string, PotentialStats>
-        {
-
-            {"First" , new PotentialStats()},
-            {"Second", new PotentialStats()},
-            {"Third" , new PotentialStats()}
+            new PotentialStats(), new PotentialStats(), new PotentialStats()
         };
 
+        public int MPgrade { get; set; }
+
+
+        public List<PotentialStats> AddPot { get; set; } = new List<PotentialStats> 
+        {
+            new PotentialStats(), new PotentialStats(), new PotentialStats()
+        };
+        public int APgrade { get; set; }
         public bool SpellTraced { get; set; } = false;
 
         public int SpellTracePerc { get; set; } = -1;
@@ -47,21 +46,23 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public override bool Equals(object obj)
         {
             List<string> test = new List<string>();
-            if(obj == null)
+            if (obj == null)
             {
                 return false;
             }
             else
             {
-                if(obj is EquipModel)
+                if (obj is EquipModel)
                 {
-                    test.Add(EquipSet == ((EquipModel)obj).EquipSet ? "true" : "false");
-                    test.Add(EquipSlot == ((EquipModel)obj).EquipSlot ? "true" : "false");
-                    test.Add(SlotCount == ((EquipModel)obj).SlotCount ? "true" : "false");
-                    test.Add(ScrollStats.Equals(((EquipModel)obj).ScrollStats) ? "true" : "false");
-                    test.Add(FlameStats.Equals((((EquipModel)obj).FlameStats)) ? "true" : "false");
+                    EquipModel cObj = (EquipModel)obj;
+                    test.Add(EquipSet == cObj.EquipSet ? "true" : "false");
+                    test.Add(EquipSlot == cObj.EquipSlot ? "true" : "false");
+                    test.Add(SlotCount == cObj.SlotCount ? "true" : "false");
+                    test.Add(ScrollStats.Equals(cObj.ScrollStats) ? "true" : "false");
+                    test.Add(FlameStats.Equals(cObj.FlameStats) ? "true" : "false");
+                    //test.Add(new HashSet<PotentialStats>(MainPot).Equals(new HashSet<PotentialStats>(((EquipModel)obj).MainPot)) ? "true" : "false");
+                    test.Add(MainPot.Select(x => x.PotID).ToList().SequenceEqual(cObj.MainPot.Select(x => x.PotID).ToList()) ? "true" : "false");
 
-                     
                 }
             }
 

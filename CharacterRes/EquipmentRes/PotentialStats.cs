@@ -9,6 +9,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
     public class PotentialStats
     {
         
+        public int PotID { get; set; } = 0;
 
         public string Grade { get; set; }
         public List<string> EquipGrpL { get; set; }
@@ -22,6 +23,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int MaxLvl { get; set; }
         public string Prime { get; set; }
         public int Duration { get; set; }
+        public double Chance { get; set; }
         
         public string DisplayStat { get; set; }
 

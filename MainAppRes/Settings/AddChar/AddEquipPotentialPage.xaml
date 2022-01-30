@@ -12,23 +12,25 @@
         <!--POTENTIAL RECORDS-->
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <CheckBox Content="Add Pot?" Margin="10 0"/>
+                <CheckBox Content="Add Pot?" Margin="10 0" IsChecked="{Binding isAddPot}"/>
                 <TextBlock Text="Grade"/>
                 <ComboBox VerticalAlignment="Center"
                     ItemsSource="{Binding PotentialGrade, Mode=TwoWay}"
                           SelectedIndex="{Binding SPotentialG,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <Button x:Name="AddPotentialBtn" Content="Add Potential" Margin="10"/>
+                <Button x:Name="AddPotentialBtn" Content="Add Potential" Margin="10" Command="{Binding AddPotCMD, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
                 
                 <TextBlock Text="1st Line"/>
                 <ComboBox ItemsSource="{Binding FirstPotL, Mode=TwoWay}" DisplayMemberPath="DisplayStat"
-                          SelectedItem="{Binding FirstPot, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"/>
+                          SelectedItem="{Binding FirstPot, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"
+                          SelectedValuePath="DisplayStat"/>
                 <TextBlock Text="2nd Line"/>
-                <ComboBox ItemsSource="{Binding SecondPotL, Mode=TwoWay}"
+                <ComboBox ItemsSource="{Binding SecondPotL, Mode=TwoWay}" DisplayMemberPath="DisplayStat"
                           SelectedItem="{Binding SecondPot, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"/>
+                
                 <TextBlock Text="3rd Line"/>
-                <ComboBox ItemsSource="{Binding ThirdPotL, Mode=TwoWay}"
+                <ComboBox ItemsSource="{Binding ThirdPotL, Mode=TwoWay}" DisplayMemberPath="DisplayStat"
                           SelectedItem="{Binding ThirdPot, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"/>
             </StackPanel>
             

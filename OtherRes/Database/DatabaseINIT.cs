@@ -231,6 +231,7 @@ namespace MSEACalculator.OtherRes.Database
                     "MaxLvl int," +
                     "ValueI nvarchar," +
                     "Duration int," +
+                    "Chance double," +
                     "PRIMARY KEY (EquipGrp, Grade, GradeT, Stat, MinLvl, MaxLvl, ValueI)" +
                     ");"};
             staticTables.Add(new TableStats("PotentialData", PotSpec[0], "Potential"));
@@ -343,6 +344,26 @@ namespace MSEACalculator.OtherRes.Database
                 "FOREIGN KEY (CharName) REFERENCES CharacterTrack(CharName) ON DELETE CASCADE" +
                 ");" };
             blankTables.Add(new TableStats("CharTEquipFlame", charEquipFlameSpec[0]));
+
+            //EquipSet == WeaponType if recording Weapon
+            string[] charEquipMPot = { "(" +
+                    "CharName string," +
+                    "EquipSlot string," +
+                    "EqiuipSet string," +
+                    "FirstID int," +
+                    "SecondID int," +
+                    "ThirdID int" +
+                    ");" };
+            blankTables.Add(new TableStats("CharTEquipMPot", charEquipMPot[0]));
+            string[] charEquipAPot = { "(" +
+                    "CharName string," +
+                    "EquipSlot string," +
+                    "EqiuipSet string," +
+                    "FirstID int," +
+                    "SecondID int," +
+                    "ThirdID int" +
+                    ");" };
+            blankTables.Add(new TableStats("CharTEquipAPot", charEquipAPot[0]));
 
 
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
@@ -568,13 +589,13 @@ namespace MSEACalculator.OtherRes.Database
                         Dictionary<string, string> EquipmentDict = new Dictionary<string, string>(){
                             {"Ring1", "Ring" },{"Ring2", "Ring" },{"Ring3", "Ring" },{"Ring4", "Ring" },
                             {"Pendant1", "Pendant" },{"Pendant2", "Pendant" },
-                            {"Face Accessory", "Accessory" },{"Eye Decor", "Accessory" },{"Earring", "Accessory" },{"Belt", "Accessory" },
+                            {"Face Accessory", "Accessory" },{"Eye Accessory", "Accessory" },{"Earrings", "Accessory" },{"Belt", "Accessory" },
                             {"Shoulder", "Accessory"},
-                            {"Badge", "Misc" },{"Medal", "Misc" },{"Pocket", "Misc" },
-                            {"Heart", "Heart" },
-                            {"Weapon", "Weapon" },{"Secondary", "Secondary" },{"Emblem", "Emblem" },
+                            {"Badge", "Accessory" },{"Medal", "Accessory" },{"Pocket", "Accessory" },
+                            {"Heart", "Heart" },{"Emblem", "Accessory" },
+                            {"Weapon", "Weapon" },{"Secondary", "Secondary" },
                             {"Hat", "Armor" },{"Top", "Armor" },{"Bottom", "Armor" },{"Overall", "Armor" },{"Cape", "Armor" },{"Shoes", "Armor" },
-                            {"Gloves", "Gloves" }
+                            {"Gloves", "Armor" }
                         };
 
 
@@ -875,8 +896,9 @@ namespace MSEACalculator.OtherRes.Database
                         List<PotentialStats> PotList = await ImportCSV.GetPotentialCSVAsync();
 
                         string insertPot = "INSERT INTO " + tableName +"(" +
-                            "EquipGrp, Grade, GradeT, StatT, Stat, MinLvl, MaxLvl, ValueI, Duration) VALUES " +
-                            "(@EG, @G, @GT, @ST, @S, @MinL, @MaxL, @VI, @D);";
+                            "EquipGrp, Grade, GradeT, StatT, Stat, MinLvl, MaxLvl, ValueI, Duration, Chance) VALUES " +
+                            "(@EG, @G, @GT, @ST, @S, @MinL, @MaxL, @VI, @D, @C);";
+                        //int potIDc = 0;
                         using(SqliteCommand insertCMD =  new SqliteCommand(insertPot, connection, transaction))
                         {
                             foreach (PotentialStats pot in PotList)
@@ -895,6 +917,7 @@ namespace MSEACalculator.OtherRes.Database
                                     }
 
                                     insertCMD.Parameters.Clear();
+                                    //insertCMD.Parameters.AddWithValue("@P", potIDc);
                                     insertCMD.Parameters.AddWithValue("@EG", e);
                                     insertCMD.Parameters.AddWithValue("@G", pot.Grade);
                                     insertCMD.Parameters.AddWithValue("@GT", pot.Prime);
@@ -904,7 +927,8 @@ namespace MSEACalculator.OtherRes.Database
                                     insertCMD.Parameters.AddWithValue("@MaxL", pot.MaxLvl);
                                     insertCMD.Parameters.AddWithValue("@VI", pot.StatValue);
                                     insertCMD.Parameters.AddWithValue("@D", pot.Duration);
-
+                                    insertCMD.Parameters.AddWithValue("@C", pot.Chance);
+                                    //potIDc++;
                                     try
                                     {
                                         insertCMD.ExecuteNonQuery();

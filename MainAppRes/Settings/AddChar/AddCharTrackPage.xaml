@@ -103,6 +103,7 @@
                 <TextBlock Text="{Binding AllStat,Mode=TwoWay}"/>
             </StackPanel>
         </DataTemplate>
+        
     </Page.Resources>
 
     <Grid>

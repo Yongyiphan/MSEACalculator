@@ -31,15 +31,19 @@ namespace MSEACalculator
             int tier = 0;
             if(selectedEquip.EquipLevel < 75)
             {
-                tier = 1;
+                return tier = 1;
             }
             else if(selectedEquip.EquipLevel >= 75 && selectedEquip.EquipLevel < 115)
             {
-                tier = 2;
+                return tier = 2;
             }
             else if(selectedEquip.EquipLevel > 114)
             {
-                tier = 3;
+                if (selectedEquip.EquipSlot == "Gloves")
+                {
+                    return tier = 2;
+                }
+                return tier = 3;
             }
 
             return tier;
@@ -245,6 +249,9 @@ namespace MSEACalculator
             record["SPD"] = RM.SPD;
             record["JUMP"] = RM.JUMP;
             record["AllSTAT"] = RM.AllStat;
+            record["BMDG"] = RM.BD;
+            record["IED"] = RM.IED;
+            record["DMG"] = RM.DMG;
 
             return record;
         }
@@ -252,20 +259,20 @@ namespace MSEACalculator
 
         public static EquipModel FindEquip(List<EquipModel> FindingList, Character SCharacter, string Slot, string ESet)
         {
-            List<string> accList =  new List<string>() { "Ring", "Pendant", "Emblem", "Accessory", "Misc"};
+            
 
             EquipModel returnedEquip = new EquipModel();
 
             
-            if (accList.Contains(Slot))
+            if (GVar.AccEquips.Contains(Slot))
             {
                 foreach(EquipModel equip in FindingList)
                 {
-                    if (equip.EquipSlot == Slot && equip.EquipSet == ESet)
+                    if (equip.EquipSlot == Slot && (equip.EquipSet == ESet || equip.EquipName == ESet))
                     {
                         if (Slot == "Shoulder")
                         {
-                            if (equip.ClassType == SCharacter.ClassType)
+                            if (equip.ClassType == SCharacter.ClassType || equip.ClassType == "Any")
                             {
                                 return returnedEquip =  equip;
                             }
@@ -283,7 +290,9 @@ namespace MSEACalculator
                         {
                             if (equip.WeaponType == SCharacter?.CurrentMainWeapon && equip.EquipSet == ESet)
                             {
-                                return returnedEquip =  equip;
+                                returnedEquip =  equip;
+                                returnedEquip.EquipSlot = "Weapon";
+                                return returnedEquip;
                             }
                         }
                         break;
@@ -294,7 +303,22 @@ namespace MSEACalculator
                             {
                                 if (equip.ClassType == SCharacter.Faction || equip.ClassType == SCharacter.ClassType)
                                 {
-                                    return returnedEquip =  equip;
+                                    returnedEquip =  equip;
+                                    if (equip.WeaponType.Contains("Demon Aegis")){
+                                        returnedEquip.EquipSlot = "Demon Aegis";
+                                    }
+                                    else if (equip.WeaponType.Contains("Soul Ring"))
+                                    {
+                                        returnedEquip.EquipSlot = "Soul Rings";
+                                    }
+                                    else
+                                    {
+                                        returnedEquip.EquipSlot = "Secondary";
+                                    }
+
+                                    
+                                    
+                                    return returnedEquip;
                                 }
                             }
                         }
@@ -313,7 +337,7 @@ namespace MSEACalculator
                 }
             }
 
-            return returnedEquip;
+            return null;
         }
 
         
@@ -324,110 +348,118 @@ namespace MSEACalculator
             {
                 [1] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(1, 5, 1),
-                    [70] = new ScrollingModel(2, 15, 2),
-                    [30] = new ScrollingModel(3, 30, 4)
+                    [100] = new ScrollingModel{
+                        MainStat = 1,
+                        HP = 5,
+                        DEF =1
+                    },
+                    [70] = new ScrollingModel{
+                        MainStat= 2,
+                        HP = 15,
+                        DEF =2
+                    },
+                    [30] = new ScrollingModel{MainStat= 3, HP = 30, DEF =4 }
                 },
                 [2] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(2, 20, 2),
-                    [70] = new ScrollingModel(3, 40, 4),
-                    [30] = new ScrollingModel(5, 70, 7)
+                    [100] = new ScrollingModel { MainStat = 2, HP = 20, DEF = 4 },
+                    [70] = new ScrollingModel { MainStat = 3, HP = 40, DEF = 4},
+                    [30] = new ScrollingModel { MainStat = 5, HP = 70,DEF = 7}
                 },
                 [3] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(3, 30, 3),
-                    [70] = new ScrollingModel(4, 70, 5),
-                    [30] = new ScrollingModel(7, 120, 10)
+                    [100] = new ScrollingModel { MainStat = 3, HP = 30, DEF = 3 },
+                    [70] = new ScrollingModel { MainStat = 4, HP = 70, DEF = 5 },
+                    [30] = new ScrollingModel { MainStat = 7, HP = 120, DEF = 10 }
                 }
             },
             ["Gloves"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
             {
                 [1] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(0, 0, 3),
-                    [70] = new ScrollingModel(1),
-                    [30] = new ScrollingModel(2)
+                    [100] = new ScrollingModel { DEF = 3},
+                    [70] = new ScrollingModel { ATK = 1},
+                    [30] = new ScrollingModel { ATK = 2}
                 },
                 [2] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(1),
-                    [70] = new ScrollingModel(2),
-                    [30] = new ScrollingModel(3)
+                    [100] = new ScrollingModel { ATK = 1},
+                    [70] = new ScrollingModel { ATK = 2},
+                    [30] = new ScrollingModel { ATK = 3}
                 }
             },
             ["Accessory"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
             {
                 [1] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(1, 0, 0),
-                    [70] = new ScrollingModel(2, 0, 0),
-                    [30] = new ScrollingModel(3, 0, 0)
+                    [100] = new ScrollingModel { MainStat = 1},
+                    [70] = new ScrollingModel { MainStat = 2},
+                    [30] = new ScrollingModel { MainStat = 3}
                 },
                 [2] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(1, 0, 0),
-                    [70] = new ScrollingModel(2, 0, 0),
-                    [30] = new ScrollingModel(4, 0, 0)
+                    [100] = new ScrollingModel { MainStat = 1},
+                    [70] = new ScrollingModel { MainStat = 2},
+                    [30] = new ScrollingModel { MainStat = 4}
                 },
                 [3] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(2, 0, 0),
-                    [70] = new ScrollingModel(3, 0, 0),
-                    [30] = new ScrollingModel(5, 0, 0)
+                    [100] = new ScrollingModel { MainStat = 2},
+                    [70] = new ScrollingModel { MainStat = 3},
+                    [30] = new ScrollingModel { MainStat =5}
                 }
             },
             ["Heart"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
             {
                 [1] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(1),
-                    [70] = new ScrollingModel(2),
-                    [30] = new ScrollingModel(3)
+                    [100] = new ScrollingModel { ATK = 1},
+                    [70] = new ScrollingModel { ATK = 2},
+                    [30] = new ScrollingModel { ATK = 3}
                 },
                 [2] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(2),
-                    [70] = new ScrollingModel(3),
-                    [30] = new ScrollingModel(5)
+                    [100] = new ScrollingModel { ATK = 2},
+                    [70] = new ScrollingModel { ATK = 3},
+                    [30] = new ScrollingModel { ATK = 5}
                 }
         ,
                 [3] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(3),
-                    [70] = new ScrollingModel(4),
-                    [30] = new ScrollingModel(7)
+                    [100] = new ScrollingModel { ATK = 3},
+                    [70] = new ScrollingModel { ATK = 4},
+                    [30] = new ScrollingModel { ATK = 7}
                 }
             },
             ["Weapon"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
             {
                 [1] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(1),
-                    [70] = new ScrollingModel(2),
-                    [30] = new ScrollingModel(1, 3),
-                    [15] = new ScrollingModel(2, 5)
+                    [100] = new ScrollingModel { ATK = 1},
+                    [70] = new ScrollingModel { ATK = 2},
+                    [30] = new ScrollingModel { MainStat = 1, ATK = 3},
+                    [15] = new ScrollingModel { MainStat = 2, ATK = 5}
                 },
                 [2] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(2),
-                    [70] = new ScrollingModel(1, 3),
-                    [30] = new ScrollingModel(2, 5),
-                    [15] = new ScrollingModel(3, 7)
+                    [100] = new ScrollingModel { ATK = 2},
+                    [70] = new ScrollingModel { MainStat = 1, ATK = 3},
+                    [30] = new ScrollingModel { MainStat = 2, ATK = 5},
+                    [15] = new ScrollingModel { MainStat = 3, ATK = 7}
                 }
         ,
                 [3] = new Dictionary<int, ScrollingModel>
                 {
-                    [100] = new ScrollingModel(1, 3),
-                    [70] = new ScrollingModel(2, 5),
-                    [30] = new ScrollingModel(3, 7),
-                    [15] = new ScrollingModel(4, 9)
+                    [100] = new ScrollingModel { MainStat = 1, ATK = 3},
+                    [70] = new ScrollingModel { MainStat = 2, ATK = 5},
+                    [30] = new ScrollingModel { MainStat = 3, ATK = 7},
+                    [15] = new ScrollingModel { MainStat = 4, ATK = 9}
                 }
             }
 
         };
 
-        public string returnEquipType(string ESlot)
+        public static string returnRingPend(string ESlot)
         {
             if (EquipSlot[ESlot] == "Ring" || EquipSlot[ESlot] == "Pendant")
             {
@@ -436,6 +468,66 @@ namespace MSEACalculator
             return ESlot;
         }
 
+        public static string returnSetCat(string selectedESlot)
+        {
+            string eslot = returnRingPend(selectedESlot);
+            if (GVar.AccEquips.Contains(eslot))
+            {
+                return "Accessory";
+            }
+            else if (GVar.ArEquips.Contains(eslot))
+            {
+                return "Armor";
+            }
+            else
+            {
+                return eslot;
+            }
+        }
+
+
+        public static string returnScrollCat(string selectedESlot)
+        {
+            string eslot = returnRingPend(selectedESlot);
+            if (GVar.AccEquips.Contains(eslot))
+            {
+                if (eslot ==  "Shoulder")
+                {
+                    return "Armor";
+                }
+                else if (eslot == "Heart")
+                {
+                    return "Heart";
+                }
+                return "Accessory";
+            }
+            else if (GVar.ArEquips.Contains(eslot))
+            {
+                if(eslot == "Gloves")
+                {
+                    return "Gloves";
+                }
+
+                return "Armor";
+            }
+            else
+            {
+                return eslot;
+            }
+
+        }
+
+        public static bool isNUll(object obj)
+        {
+            if(obj == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         //public static async Task<List<EventRecords>> retrieveEventJson()
         //{
         //    List<EventRecords> eventList;

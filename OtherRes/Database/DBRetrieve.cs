@@ -348,7 +348,7 @@ namespace MSEACalculator.OtherRes.Database
             {
                 dbCon.Open();
 
-                string selectQuery = "SELECT * FROM PotentialData";
+                string selectQuery = "SELECT ROWID, * FROM PotentialData";
 
                 using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
                 {
@@ -357,14 +357,15 @@ namespace MSEACalculator.OtherRes.Database
                         while (reader.Read())
                         {
                             PotentialStats pot = new PotentialStats();
-                            pot.EquipGrp = reader.GetString(0);
-                            pot.Grade = reader.GetString(1);
-                            pot.Prime = reader.GetString(2);
-                            pot.StatType = reader.GetString(3);
-                            pot.StatIncrease = reader.GetString(4);
-                            pot.MinLvl = reader.GetInt32(5);
-                            pot.MaxLvl = reader.GetInt32(6);
-                            pot.StatValue = reader.GetString(7);
+                            pot.PotID = reader.GetInt32(0);
+                            pot.EquipGrp = reader.GetString(1);
+                            pot.Grade = reader.GetString(2);
+                            pot.Prime = reader.GetString(3);
+                            pot.StatType = reader.GetString(4);
+                            pot.StatIncrease = reader.GetString(5);
+                            pot.MinLvl = reader.GetInt32(6);
+                            pot.MaxLvl = reader.GetInt32(7);
+                            pot.StatValue = reader.GetString(8);
 
                             potentialList.Add(pot);
 

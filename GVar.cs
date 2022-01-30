@@ -48,6 +48,15 @@ namespace MSEACalculator
         {
             "Hat", "Top", "Bottom", "Overall", "Cape", "Ring", "Pendant", "Belt", "Shoulderpad", "Shield" ,"Weapon"
         };
+        public static List<string> AccEquips { get; set; } = new List<string>
+        {
+            "Ring", "Shoulder", "Pendant", "Face Accessory","Eye Accessory", "Earrings", "Belt", "Badge", "Medal", "Emblem", "Heart"
+        };
+
+        public static List<string> ArEquips { get; set; } = new List<string>
+        {
+            "Hat", "Bottom", "Top", "Overall", "Cape", "Gloves", "Shoes"
+        };
 
         public static List<string> BaseStatTypes { get; set; } = new List<string> {
             "STR","DEX","INT","LUK",

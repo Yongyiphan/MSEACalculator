@@ -598,13 +598,13 @@ namespace MSEACalculator.OtherRes.Database
                         Pot.EquipGrpL = temp[1].Contains(";") ? temp[1].Split(';').ToList() : new List<string> { temp[1]};
                         Pot.Grade = temp[2];
                         Pot.Prime = temp[3];
-                        Pot.StatType = temp[4];
-                        Pot.StatIncrease = temp[5];
-                        Pot.MinLvl = Convert.ToInt32(temp[6]);
-                        Pot.MaxLvl = Convert.ToInt32(temp[7]);
-                        Pot.StatValue = temp[8];
-                        Pot.Duration = Convert.ToInt32(temp[9]);
-
+                        Pot.StatIncrease = temp[4].TrimEnd('%');
+                        Pot.StatType = temp[5];
+                        Pot.Chance = Convert.ToDouble(temp[6]);
+                        Pot.Duration = Convert.ToInt32(temp[7]);
+                        Pot.MinLvl = Convert.ToInt32(temp[8]);
+                        Pot.MaxLvl = Convert.ToInt32(temp[9]);
+                        Pot.StatValue = temp[10];
 
                         PotentialList.Add(Pot);
 

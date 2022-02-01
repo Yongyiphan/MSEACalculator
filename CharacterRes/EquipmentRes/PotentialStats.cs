@@ -33,5 +33,32 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            else
+            {
+                if (obj is PotentialStats)
+                {
+                    PotentialStats cObj = (PotentialStats)obj;
+                    if (PotID ==  cObj.PotID)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+        }
+
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 }

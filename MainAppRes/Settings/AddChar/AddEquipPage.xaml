@@ -55,9 +55,12 @@
                         </ListView>
                     </SplitView.Pane>
                     <SplitView.Content>
-                        <Grid>
-                            <Frame Content="{Binding FrameDis, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </Grid>
+                        <ScrollViewer HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
+                            <Grid>
+                                <Frame Content="{Binding FrameDis, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </ScrollViewer>
+
                     </SplitView.Content>
                 </SplitView>
             </StackPanel>

@@ -359,7 +359,9 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
                 {
                     SCharacter.CurrentMainWeapon = SelectedWeapon;
                     GetCurrentEquipment();
-                    
+                    FirstPot = SecondPot = ThirdPot = null;
+                    FirstPotL = RetrievePot();
+
                 }
                 OnPropertyChanged(nameof(SelectedWeapon));
             }
@@ -651,9 +653,12 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
                     
                     if (CItemSelect.MainPot.Select(x => x.PotID).ToList().Sum() != 0)
                     {
-                        FirstPot = CItemSelect.MainPot[0];
-                        SecondPot = CItemSelect.MainPot[1];
-                        ThirdPot = CItemSelect.MainPot[2];
+                        FirstPot = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot[0].PotID);
+                        SecondPot = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot[1].PotID);
+                        ThirdPot = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot[2].PotID);
+                        //FirstPot =  CItemSelect.MainPot[0];
+                        //SecondPot = CItemSelect.MainPot[1];
+                        //ThirdPot = CItemSelect.MainPot[2];
                     }
                     ShowEnteredRecords();
                 }
@@ -848,7 +853,16 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
             //Update Scroll/Flame Effects
             selectedEquip = updateEquipModelStats(selectedEquip, selectedChar, slotType);
-
+            if (!CommonFunc.isNUll(MainPotL))
+            {
+                selectedEquip.MainPot =  MainPotL;
+            }
+            if (!CommonFunc.isNUll(AddPotL))
+            {
+                selectedEquip.AddPot =  AddPotL;
+            }
+            selectedEquip.MPgrade = SPotentialG;
+            
 
             //Check for new / update of item.
             EquipModel existEquip = CItemDictT.ToList().Find(equip => equip.EquipSlot == SEquipSlot);
@@ -866,12 +880,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
                     int existitngIndex = CItemDictT.ToList().FindIndex(item => item.EquipSlot == SEquipSlot);
                     CItemDictT[existitngIndex] = selectedEquip;
                     CItemSelect = CItemDictT[existitngIndex];
-                    isAddPot = false;
 
-                    MainPotL = CItemSelect.MainPot;
-                    AddPotL = CItemSelect.AddPot;
-
-                    ShowEnteredRecords();
                 }
             }
             else
@@ -882,6 +891,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             }
             
             AddEquipmentCMD.RaiseCanExecuteChanged();
+            ACharTrackVM.UpdateDBCMD.RaiseCanExecuteChanged();
         }
         
 

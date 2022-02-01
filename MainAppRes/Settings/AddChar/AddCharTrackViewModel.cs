@@ -206,16 +206,20 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
         protected virtual void OnChangedCharacter(CharTStore CC)
         {
-            EventHandler<CharTStore> raiseEvent = RaiseChangeChar;
-            if (raiseEvent != null)
-            {
-                raiseEvent(this, CC);
-            }
+            //EventHandler<CharTStore> raiseEvent = RaiseChangeChar;
+            //if (raiseEvent != null)
+            //{
+            //    raiseEvent(this, CC);
+            //}
+            RaiseChangeChar?.Invoke(this, CC);
         }
 
         private bool canAddCharE()
         {
-
+            if (AEquipVM.CItemDictT.Count > 0)
+            {
+                return true;
+            }
             return false;
         }
 

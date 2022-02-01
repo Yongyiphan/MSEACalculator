@@ -50,7 +50,7 @@ namespace MSEACalculator
         };
         public static List<string> AccEquips { get; set; } = new List<string>
         {
-            "Ring", "Shoulder", "Pendant", "Face Accessory","Eye Accessory", "Earrings", "Belt", "Badge", "Medal", "Emblem", "Heart"
+            "Ring", "Shoulder", "Pendant", "Face Accessory","Eye Accessory", "Earrings", "Belt", "Badge", "Medal", "Emblem", "Heart", "Pocket"
         };
 
         public static List<string> ArEquips { get; set; } = new List<string>

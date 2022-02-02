@@ -20,6 +20,7 @@ using MSEACalculator.EventRes;
 using MSEACalculator.CharacterRes;
 using MSEACalculator.CharacterRes.MesoRes;
 using Windows.Storage;
+using MSEACalculator.MainAppRes;
 
 namespace MSEACalculator
 {

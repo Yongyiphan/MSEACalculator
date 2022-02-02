@@ -1,0 +1,15 @@
+Arcane symbol planning
+
+Symbol Name
+Current Level
+Current exp / Current Limit
+
+New Level
+New Exp / New Limit
+
+Input for daily coins gains
+PQ?
+ChewChew, Lach, Arcana <- input pq gains
+VJ, Moras, Esfera <- toggle pq gains
+
+

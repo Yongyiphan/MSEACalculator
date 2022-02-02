@@ -528,6 +528,7 @@ namespace MSEACalculator
                 return false;
             }
         }
+
         //public static async Task<List<EventRecords>> retrieveEventJson()
         //{
         //    List<EventRecords> eventList;
@@ -573,6 +574,7 @@ namespace MSEACalculator
 
         //    return eventList;
         //}
+
 
 
     }

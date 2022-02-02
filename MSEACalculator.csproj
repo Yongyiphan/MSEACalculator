@@ -120,11 +120,19 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BossRes\Boss.cs" />
+    <Compile Include="CalculationRes\ViewModel\ArcaneQMViewModel.cs" />
+    <Compile Include="CalculationRes\View\ArcaneQMPage.xaml.cs">
+      <DependentUpon>ArcaneQMPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\QuickMathPage.xaml.cs">
+      <DependentUpon>QuickMathPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CharacterRes\ArcaneSymbol.cs" />
     <Compile Include="CharacterRes\CharacterPage.xaml.cs">
       <DependentUpon>CharacterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CharacterRes\CharTStore.cs" />
+    <Compile Include="MainAppRes\QuickMathViewModel.cs" />
     <Compile Include="MainAppRes\Settings\AddChar\AddEquipFlamePage.xaml.cs">
       <DependentUpon>AddEquipFlamePage.xaml</DependentUpon>
     </Compile>
@@ -151,7 +159,7 @@
     <Compile Include="CharacterRes\Character.cs" />
     <Compile Include="CharacterRes\MesoRes\MesoViewModel.cs" />
     <Compile Include="CommonFunc.cs" />
-    <Compile Include="MainAppRes\Settings\AddChar\ACTModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\AddCharTrackModel.cs" />
     <Compile Include="MainAppRes\Settings\AddChar\AddCharTrackPage.xaml.cs">
       <DependentUpon>AddCharTrackPage.xaml</DependentUpon>
     </Compile>
@@ -159,7 +167,7 @@
     <Compile Include="MainAppRes\TestingBlankPage.xaml.cs">
       <DependentUpon>TestingBlankPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OtherRes\CalculationFormulas.cs" />
+    <Compile Include="CalculationRes\CalForm.cs" />
     <Compile Include="OtherRes\Database\DatabaseINIT.cs" />
     <Compile Include="EventRes\Event.xaml.cs">
       <DependentUpon>Event.xaml</DependentUpon>
@@ -177,7 +185,7 @@
     <Compile Include="MainAppRes\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="MainAppRes\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -208,6 +216,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="CalculationRes\View\ArcaneQMPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\QuickMathPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CharacterRes\CharacterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -248,7 +264,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="MainAppRes\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

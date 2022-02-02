@@ -1,0 +1,107 @@
+﻿<Page
+    x:Class="MSEACalculator.CalculationRes.View.ArcaneQMPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MSEACalculator.CalculationRes.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <!--PURPOSE-->
+    <!--CALCULATE BASE OFF CURRENT LEVEL, ACC EXP => NEW LVL AND EXP-->
+    <!---->
+    <!---->
+    <Page.Resources>
+        <DataTemplate x:Key="ArcaneInput">
+            <Grid>
+                
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ArcanePQ">
+            
+        </DataTemplate>
+        <DataTemplate x:Key="ArcaneF">
+            
+        </DataTemplate>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Select Symbol: "/>
+                        <ComboBox Width="150"/>
+                    </StackPanel>
+                    <ContentControl ContentTemplate="{StaticResource ArcaneInput}"/>
+                    <ContentControl ContentTemplate="{StaticResource ArcanePQ}"/>
+                    <ContentControl ContentTemplate="{StaticResource ArcaneF}"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel>
+                    <CheckBox Content="Arcane Catalyst?" Margin="15 0 0 0" VerticalContentAlignment="Top"/>
+                    <TextBlock Text="Arcane Force" FontSize="17"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Current AF"/>
+                        <TextBlock Text="/"/>
+                        <TextBlock Text="Total"/>
+                    </StackPanel>
+                    <TextBlock Text="All Maxed out in" FontSize="17"/>
+                    <TextBlock Text ="N Date (N Days)"/>
+                    <Grid Margin="0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <!--GUILD SKILL DISPLAY-->
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <TextBlock Text="Guild Skills:"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <TextBox/>
+                        </Grid>
+                        <!--HYPER SKILL DISPLAY-->
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <TextBlock Text="Hyper Skills:"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <TextBox/>
+                        </Grid>
+                        <!--EXTRA STATS DISPLAY-->
+                        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                            <ComboBox SelectedIndex="{Binding ExtraStatT, Mode=TwoWay}">
+                                <ComboBoxItem Content="General"/>
+                                <ComboBoxItem Content="Xenon"/>
+                                <ComboBoxItem Content="Demon Avenger"/>
+                            </ComboBox>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0">
+                            <TextBlock Text="Extra Stats:"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="1">
+                            <TextBlock/>
+                        </Grid>
+                        
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        
+    </Grid>
+</Page>

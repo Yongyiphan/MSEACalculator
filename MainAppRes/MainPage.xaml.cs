@@ -20,11 +20,12 @@ using MSEACalculator.CharacterRes;
 using MSEACalculator.CharacterRes.MesoRes;
 using MSEACalculator.MainAppRes;
 using MSEACalculator.MainAppRes.Settings;
+using MSEACalculator.CalculationRes.View;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace MSEACalculator
+namespace MSEACalculator.MainAppRes
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -36,7 +37,6 @@ namespace MSEACalculator
         public MainPage()
         {
             this.InitializeComponent();
-
 
         }
 
@@ -67,6 +67,9 @@ namespace MSEACalculator
                         break;
                     case "Character_Page":
                         ContentFrame.Navigate(typeof(CharacterPage));
+                        break;
+                    case "Quick_Math_Page":
+                        ContentFrame.Navigate(typeof(QuickMathPage));
                         break;
 
                 }

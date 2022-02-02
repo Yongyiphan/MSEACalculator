@@ -2,7 +2,8 @@
 using System.IO;
 using Windows.Storage;
 
-using MSEACalculator.OtherRes;
+using MSEACalculator.CalculationRes;
+using MSEACalculator.CharacterRes;
 
 namespace MSEACalculator
 {
@@ -32,9 +33,9 @@ namespace MSEACalculator
         /// <summary>
         /// STATIC / CONSTANT VARIABLES
         /// </summary>
-        public const int MaxCrytalCount = 120;
+        public const int MaxCrytalCount = 180;
         public const int MaxSymbolLvl = 20;
-        public static int MaxSymbolExp { get; set; } = CalculationFormulas.CalMaxExp(MaxSymbolLvl);
+        public static int MaxSymbolExp { get; set; } = CalForm.CalMaxExp(MaxSymbolLvl);
         public static string CONN_STRING { get; set; } = $"Filename = {databasePath}";
 
 
@@ -99,10 +100,49 @@ namespace MSEACalculator
 
         public static StorageFolder storageFolder { get; set; } = ApplicationData.Current.LocalFolder;
 
+        public static List<ArcaneSymbol> Symbols { get; set; } = new List<ArcaneSymbol> {
+            new ArcaneSymbol
+            {
+                Name = "Vanishing Journey",
+                BaseSymbolGain = 8,
+                SubMap = "Reverse City",
+                PartyQuestSymbols = 6
+            },
+            new ArcaneSymbol
+            {
+                Name = "Chew Chew",
+                BaseSymbolGain = 4,
+                SubMap = "Yum Yum",
+                PartyQuestSymbols = 0,
+                PQGainLimit = 15
+            },
+            new ArcaneSymbol
+            {
+                Name = "Lachelein",
+                BaseSymbolGain = 8,
+                PartyQuestSymbols = 0,
+                PQGainLimit = 500
+            },
+            new ArcaneSymbol
+            {
+                Name = "Arcana",
+                BaseSymbolGain = 8,
+                PartyQuestSymbols = 0,
+                PQGainLimit = 30
+            },
+            new ArcaneSymbol
+            {
+                Name = "Moras",
+                BaseSymbolGain = 8,
+                PartyQuestSymbols = 6
+            },
+            new ArcaneSymbol
+            {
+                Name = "Esfera",
+                BaseSymbolGain = 8,
+                PartyQuestSymbols = 6
+            }
 
-
-        
-
-        
+        };
     }
 }

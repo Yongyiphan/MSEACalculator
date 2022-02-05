@@ -14,14 +14,56 @@
     <!---->
     <Page.Resources>
         <DataTemplate x:Key="ArcaneInput">
-            <Grid>
-                
+            <Grid Margin="0 10">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Current Level: "/>
+                        <TextBox/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox ToolTipService.ToolTip="Current Symbol Exp" FontSize="11"/>
+                        <TextBlock Text="/"/>
+                        <TextBlock Text="{Binding CurrentLimit, Mode=TwoWay}" FontSize="11"/>
+                    </StackPanel>
+                </StackPanel>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ArcanePQ">
-            
+            <Grid>
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <ContentControl ContentTemplate="{StaticResource ArcaneDSelect}"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+                
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ArcaneF">
+            
+        </DataTemplate>
+
+        <DataTemplate x:Key="ArcaneDSelect">
+            <Grid>
+                <StackPanel>
+                    <TextBlock Text="Daily Symbol Sources:"/>
+                    <StackPanel Orientation="Horizontal">
+                        <ToggleSwitch OffContent="0" OnContent="{Binding BaseSymbolGain}"
+                                      ToolTipService.ToolTip="Daily Missions"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DisplayNewArcane">
             
         </DataTemplate>
     </Page.Resources>
@@ -40,65 +82,60 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Select Symbol: "/>
-                        <ComboBox Width="150"/>
+                        <ComboBox Width="150" SelectedItem="{Binding SCurrentSymbol
+                            , UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                     </StackPanel>
                     <ContentControl ContentTemplate="{StaticResource ArcaneInput}"/>
-                    <ContentControl ContentTemplate="{StaticResource ArcanePQ}"/>
+                    <ContentControl Content="{Binding SCurrentSymbol}" ContentTemplate="{StaticResource ArcanePQ}"/>
                     <ContentControl ContentTemplate="{StaticResource ArcaneF}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1">
                 <StackPanel>
                     <CheckBox Content="Arcane Catalyst?" Margin="15 0 0 0" VerticalContentAlignment="Top"/>
-                    <TextBlock Text="Arcane Force" FontSize="17"/>
+                    <TextBlock FontSize="16">
+                        <Bold>Days to max</Bold>
+                    </TextBlock>
+                    <TextBlock Text ="N Date (N Days)"/>
+                    <TextBlock FontSize="17">
+                                <Bold>Arcane Force:</Bold>
+                    </TextBlock>
+
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Current AF"/>
                         <TextBlock Text="/"/>
-                        <TextBlock Text="Total"/>
+                        <TextBlock Text="Total AF"/>
                     </StackPanel>
-                    <TextBlock Text="All Maxed out in" FontSize="17"/>
-                    <TextBlock Text ="N Date (N Days)"/>
-                    <Grid Margin="0 10">
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <!--GUILD SKILL DISPLAY-->
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Grid.Column="0">
-                            <TextBlock Text="Guild Skills:"/>
+                            <TextBlock Text="Guild Skills: "/>
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1">
                             <TextBox/>
                         </Grid>
-                        <!--HYPER SKILL DISPLAY-->
                         <Grid Grid.Row="1" Grid.Column="0">
                             <TextBlock Text="Hyper Skills:"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
                             <TextBox/>
                         </Grid>
-                        <!--EXTRA STATS DISPLAY-->
-                        <Grid Grid.Row="2" Grid.ColumnSpan="2">
-                            <ComboBox SelectedIndex="{Binding ExtraStatT, Mode=TwoWay}">
-                                <ComboBoxItem Content="General"/>
-                                <ComboBoxItem Content="Xenon"/>
-                                <ComboBoxItem Content="Demon Avenger"/>
-                            </ComboBox>
-                        </Grid>
-                        <Grid Grid.Row="3" Grid.Column="0">
-                            <TextBlock Text="Extra Stats:"/>
-                        </Grid>
-                        <Grid Grid.Row="3" Grid.Column="1">
-                            <TextBlock/>
-                        </Grid>
-                        
                     </Grid>
+
+                    <ComboBox>
+                        <ComboBoxItem Content="General"/>
+                        <ComboBoxItem Content="Xenon"/>
+                        <ComboBoxItem Content="Demon Avenger"/>
+                    </ComboBox>
+                    <TextBlock Text="Extra Stats:"/>
+                    <TextBlock Text=""/>
                 </StackPanel>
             </Grid>
         </Grid>

@@ -26,6 +26,7 @@ namespace MSEACalculator.CharacterRes
         public int BaseSymbolGain { get; set; } = 0;
         public int PartyQuestSymbols { get; set; } = 0;
         public int PQGainLimit { get; set; }
+        public int SymbolExchangeRate { get; set; } = 0;
 
 
 
@@ -60,8 +61,6 @@ namespace MSEACalculator.CharacterRes
 
         }
 
-        
-        
 
     }
 }

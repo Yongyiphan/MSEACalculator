@@ -152,7 +152,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
                         return true;
                     }
                 }
-                CommonFunc.errorDia("Invalid Level Value");
+                ComFunc.errorDia("Invalid Level Value");
                 return false;
             }
 
@@ -168,7 +168,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             int charLvl = Convert.ToInt32(LvlInput);
                 
             int sf = Convert.ToInt32(StarF);
-            string URank = CommonFunc.returnUnionRank(SelectedAllChar.ClassName, charLvl);
+            string URank = ComFunc.returnUnionRank(SelectedAllChar.ClassName, charLvl);
 
             Character tempChar = new Character(SelectedAllChar.ClassName, URank, charLvl, sf);
             CharTrackList.Add(tempChar);
@@ -176,7 +176,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             bool insertResult = DBAccess.insertCharTrack(tempChar);
             if (insertResult == false)
             {
-                CommonFunc.errorDia("This character has been added before.");
+                ComFunc.errorDia("This character has been added before.");
             }
             SelectedAllChar = null;
                 

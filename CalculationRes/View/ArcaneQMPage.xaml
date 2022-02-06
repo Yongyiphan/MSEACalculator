@@ -12,62 +12,104 @@
     <!--CALCULATE BASE OFF CURRENT LEVEL, ACC EXP => NEW LVL AND EXP-->
     <!---->
     <!---->
+    
     <Page.Resources>
+        
         <DataTemplate x:Key="ArcaneInput">
             <Grid Margin="0 10">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Current Level: "/>
-                        <TextBox/>
+                        <TextBox Text="{Binding CurrentLevel, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
+                        
                         <TextBox ToolTipService.ToolTip="Current Symbol Exp" FontSize="11"/>
-                        <TextBlock Text="/"/>
-                        <TextBlock Text="{Binding CurrentLimit, Mode=TwoWay}" FontSize="11"/>
+                        <TextBlock Text="  /" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding CurrentLimit, Mode=TwoWay}" 
+                                   
+                                   FontSize="15" VerticalAlignment="Center" Margin="5 0"/>
+                        
                     </StackPanel>
                 </StackPanel>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="ArcanePQ">
-            <Grid>
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <ContentControl ContentTemplate="{StaticResource ArcaneDSelect}"/>
-                        </Grid>
-                        <Grid Grid.Column="1">
-                            
-                        </Grid>
-                    </Grid>
-                </StackPanel>
-                
-            </Grid>
-        </DataTemplate>
-        <DataTemplate x:Key="ArcaneF">
-            
-        </DataTemplate>
-
+        
         <DataTemplate x:Key="ArcaneDSelect">
             <Grid>
-                <StackPanel>
-                    <TextBlock Text="Daily Symbol Sources:"/>
-                    <StackPanel Orientation="Horizontal">
-                        <ToggleSwitch OffContent="0" OnContent="{Binding BaseSymbolGain}"
-                                      ToolTipService.ToolTip="Daily Missions"/>
-                    </StackPanel>
-                </StackPanel>
+                <ToggleSwitch OffContent="0" OnContent="{Binding BaseSymbolGain, Mode=TwoWay}"
+                              IsOn="{Binding ElementName=PageGrid, Path=DataContext.ResetDailyS, Mode=TwoWay}"
+                              ToolTipService.ToolTip="Daily Missions">
+                    Daily Symbol Sources:
+                </ToggleSwitch>
             </Grid>
         </DataTemplate>
+        
+        <DataTemplate x:Key="ArcanePQ">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <ContentPresenter 
+                                      ContentTemplate="{StaticResource ArcaneDSelect}"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <ToggleSwitch OffContent="0" OnContent="{Binding PartyQuestSymbols, Mode=TwoWay}"
+                                  VerticalAlignment="Bottom" 
+                                  IsOn="{Binding ElementName=PageGrid, Path=DataContext.ResetPQS, Mode=TwoWay}">
+                        PQ
+                    </ToggleSwitch>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="ArcaneFlex">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid Grid.Column="0">
+                    <ContentControl 
+                                    ContentTemplate="{StaticResource ArcaneDSelect}"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Party Quest:" VerticalAlignment="Bottom" Margin="0 10"/>
+                        <muxc:NumberBox VerticalAlignment="Bottom" SpinButtonPlacementMode="Compact">
+                            <ToolTipService.ToolTip>
+                                <ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Max value: "/>
+                                        <TextBlock Text="{Binding PQGainLimit, Mode=TwoWay}"/>
+                                        
+                                    </StackPanel>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </muxc:NumberBox>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+        
+        <!--SArcaneSymbol.PQGainLimit-->
+        
+        
 
         <DataTemplate x:Key="DisplayNewArcane">
             
         </DataTemplate>
+
     </Page.Resources>
-    <Grid>
+    <Grid x:Name="PageGrid">
+        <Grid.Resources>
+            <Style TargetType="Grid">
+                <Setter Property="Margin" Value="1"/>
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
@@ -80,16 +122,79 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <StackPanel>
+                    <!--SYMBOL SELECTION-->
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Select Symbol: "/>
-                        <ComboBox Width="150" SelectedItem="{Binding SCurrentSymbol
-                            , UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                        <ComboBox Width="150" ItemsSource="{Binding ArcaneSymbolList, Mode=TwoWay}"
+                                  DisplayMemberPath="Name"
+                                  SelectedItem="{Binding SArcaneSymbol, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                     </StackPanel>
-                    <ContentControl ContentTemplate="{StaticResource ArcaneInput}"/>
-                    <ContentControl Content="{Binding SCurrentSymbol}" ContentTemplate="{StaticResource ArcanePQ}"/>
-                    <ContentControl ContentTemplate="{StaticResource ArcaneF}"/>
+                    
+                    <!--ENTER CURRENT LEVEL AND SYMBOL EXPERIENCE-->
+                    <StackPanel Margin="0 10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Current Level: "/>
+                            <ComboBox ItemsSource="{Binding SymbolLvls, Mode=TwoWay}"
+                                      SelectedIndex="{Binding CLvlIndex, Mode=TwoWay}"
+                                      SelectedItem="{Binding CLvl, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding CExp, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                                     TextAlignment="Center" FontSize="15"
+                                     Width="70"
+                                     ToolTipService.ToolTip="Current Symbol Exp"/>
+                            <TextBlock Text="  /" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding CLimit, Mode=TwoWay}" FontSize="15" VerticalAlignment="Center" Margin="5 0"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!--DISPLAY PQ TYPE INPUT-->
+                    <ContentControl Content="{Binding SArcaneSymbol, Mode=TwoWay}"
+                                    Visibility="{Binding ShowPQ, Mode=TwoWay}"
+                                    ContentTemplate="{StaticResource ArcanePQ}"/>
+
+                    
+
+                    <!--DISPLAY FELX TYPE INPUT-->
+                    <Grid Visibility="{Binding ShowFlex, Mode=TwoWay}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <ContentControl Content="{Binding SArcaneSymbol, Mode=TwoWay}"
+                                            ContentTemplate="{StaticResource ArcaneDSelect}"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Party Quest:" VerticalAlignment="Bottom" Margin="0 10"/>
+                                <TextBox Text="{Binding PQGains, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Bottom">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Max value: "/>
+                                                <TextBlock Text="{Binding SArcaneSymbol.PQGainLimit, Mode=TwoWay}"/>
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBox>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    
+                    <!--DISPLAY SUBMAP IF EXISTS-->
+                    <CheckBox Content="{Binding SArcaneSymbol.SubMap, Mode=TwoWay}" 
+                              Visibility="{Binding ShowSubMap, Mode=TwoWay}"
+                              IsChecked="{Binding isSubMap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ToolTipService.ToolTip="Completed?"/>
+                    <Button Content="Add/ Update" Command="{Binding AddSymbolCMD, Mode=TwoWay}"/>
                 </StackPanel>
             </Grid>
+            
+            
+            
+            
+            <!--ADDITIONAL INPUT/ OPTIONAL-->
             <Grid Grid.Column="1">
                 <StackPanel>
                     <CheckBox Content="Arcane Catalyst?" Margin="15 0 0 0" VerticalContentAlignment="Top"/>
@@ -135,10 +240,18 @@
                         <ComboBoxItem Content="Demon Avenger"/>
                     </ComboBox>
                     <TextBlock Text="Extra Stats:"/>
-                    <TextBlock Text=""/>
+                    <TextBlock/>
                 </StackPanel>
             </Grid>
         </Grid>
         
     </Grid>
 </Page>
+
+<!--<ContentControl Content="{Binding SArcaneSymbol, Mode=TwoWay}"
+                                    Visibility="{Binding ShowPQ, Mode=TwoWay}"
+                                    ContentTemplate="{StaticResource ArcanePQ}"/>-->
+
+<!--<ContentControl Content="{Binding SArcaneSymbol, Mode=TwoWay}"
+                                    Visibility="{Binding ShowFlex, Mode=TwoWay}"
+                                    ContentTemplate="{StaticResource ArcaneFlex}"/>-->

@@ -121,14 +121,16 @@ namespace MSEACalculator
                 Name = "Lachelein",
                 BaseSymbolGain = 8,
                 PartyQuestSymbols = 0,
-                PQGainLimit = 500
+                PQGainLimit = 500,
+                SymbolExchangeRate = 30
             },
             new ArcaneSymbol
             {
                 Name = "Arcana",
                 BaseSymbolGain = 8,
                 PartyQuestSymbols = 0,
-                PQGainLimit = 30
+                PQGainLimit = 30,
+                SymbolExchangeRate = 3
             },
             new ArcaneSymbol
             {

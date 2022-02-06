@@ -158,7 +158,7 @@
     </Compile>
     <Compile Include="CharacterRes\Character.cs" />
     <Compile Include="CharacterRes\MesoRes\MesoViewModel.cs" />
-    <Compile Include="CommonFunc.cs" />
+    <Compile Include="OtherRes\ComFunc.cs" />
     <Compile Include="MainAppRes\Settings\AddChar\AddCharTrackModel.cs" />
     <Compile Include="MainAppRes\Settings\AddChar\AddCharTrackPage.xaml.cs">
       <DependentUpon>AddCharTrackPage.xaml</DependentUpon>

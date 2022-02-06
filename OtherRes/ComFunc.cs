@@ -21,7 +21,7 @@ using MSEACalculator.OtherRes.Database;
 
 namespace MSEACalculator
 {
-    public class CommonFunc
+    public class ComFunc
     {
         public static Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
 
@@ -517,9 +517,9 @@ namespace MSEACalculator
 
         }
 
-        public static bool isNUll(object obj)
+        public static bool notNULL(object obj)
         {
-            if(obj == null)
+            if(obj != null)
             {
                 return true;
             }

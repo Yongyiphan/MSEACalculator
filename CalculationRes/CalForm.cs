@@ -25,9 +25,9 @@ namespace MSEACalculator.CalculationRes
         public static int CalMaxExp(int MaxLvl)
         {
             int MaxExp = 0;
-            for (int i = 0; i < MaxLvl; i++)
+            for (int i = 1; i < MaxLvl; i++)
             {
-                MaxExp += i ^ 2 + 11;
+                MaxExp += CalCurrentLimit(i);
             }
 
             return MaxExp;
@@ -37,6 +37,46 @@ namespace MSEACalculator.CalculationRes
         {
             return (level * level) + 11;
         }
+
+        public static Dictionary<string, int> CalNewLvlExp(int cLvl, int cExp, int symGain, bool subMap)
+        {
+            Func<int, int, int> CalDaysLeft = (div, ctotalExp) =>
+
+            {
+                int symDiff = GVar.MaxSymbolExp - ctotalExp;
+
+
+                return symDiff/div + 1;
+            };
+
+            Dictionary<string, int> dictStore = new Dictionary<string, int>();
+            int mod = subMap == true ? 2 : 1;
+
+            int newLvl = cLvl;
+            int newExp, totalExp = 0;
+            for(int i = 1; i < cLvl + 1; i++)
+            {
+                totalExp += CalCurrentLimit(i);
+            }
+
+            totalExp += cExp>CalCurrentLimit(cLvl) ? cExp : cExp - CalCurrentLimit(cLvl);
+
+
+
+            dictStore["CurrentTotalExp"] = 1;
+
+
+
+            dictStore["NewLevel"] = 1;
+            dictStore["NewLimit"] = 1;
+            dictStore["RemainingExp"] = 1;
+
+
+
+
+            return dictStore;
+        }
+
 
 
     }

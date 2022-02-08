@@ -33,7 +33,7 @@ namespace MSEACalculator.OtherRes.Database
             ///////CHARACTER///////
 
             //TABLE FOR DEFAULT CHARACTER LIST
-            string[] CharacterTableSpec = {"(" +
+            string[] CharacterTableSpec = { "(" +
                             "ClassName string," +
                             "ClassType string," +
                             "Faction string," +
@@ -48,7 +48,7 @@ namespace MSEACalculator.OtherRes.Database
 
 
             //TABLE FOR UNION EFFECTS
-            string[] unionETableSpecs = {"(" +
+            string[] unionETableSpecs = { "(" +
                 "Effect string," +
                 "EffectType string," +
                 "B int," +
@@ -57,7 +57,7 @@ namespace MSEACalculator.OtherRes.Database
                 "SS int," +
                 "SSS int," +
                 "PRIMARY KEY(Effect, EffectType)" +
-                ");" }; 
+                ");" };
             staticTables.Add(new TableStats("UnionEffects", unionETableSpecs[0], "UnionEffect"));
 
             string ClassWeaponSpec = "(" +
@@ -102,7 +102,7 @@ namespace MSEACalculator.OtherRes.Database
             staticTables.Add(new TableStats("EquipSlot", equipSlotTS, "EquipSlot"));
 
             //TABLE FOR ALL ARMOR
-            string[] equipTableSpec = {"(" +
+            string[] equipTableSpec = { "(" +
                 "EquipSet string," +
                 "ClassType string," +
                 "EquipSlot string," +
@@ -124,7 +124,7 @@ namespace MSEACalculator.OtherRes.Database
 
 
             //TABLE FOR ACCESSORIES
-            string[] AccessoriesTableSpec = {"(" +
+            string[] AccessoriesTableSpec = { "(" +
                 "EquipName string," +
                 "EquipSet string," +
                 "ClassType  string," +
@@ -146,7 +146,7 @@ namespace MSEACalculator.OtherRes.Database
             staticTables.Add(new TableStats("AccessoriesData", AccessoriesTableSpec[0], "Accessories"));
 
             //TABLE FOR WEAPON
-            string[] WeapTableSpec = {"(" +
+            string[] WeapTableSpec = { "(" +
                 "EquipSet string," +
                 "WeaponType string," +
                 "EquipLevel int," +
@@ -163,9 +163,9 @@ namespace MSEACalculator.OtherRes.Database
                 "PRIMARY KEY (EquipSet, WeaponType) " +
                 ");" };
             staticTables.Add(new TableStats("WeaponData", WeapTableSpec[0], "Weapon"));
-            
 
-            string[] SecWeapTableSpec = {"(" +
+
+            string[] SecWeapTableSpec = { "(" +
                 "ClassName string," +
                 "WeaponType string," +
                 "EquipName string," +
@@ -191,7 +191,7 @@ namespace MSEACalculator.OtherRes.Database
             /////CALCULATIONS/////
 
             //TABLE FOR STARFORCE STATS
-            string[] sfTableSpec = {"(" +
+            string[] sfTableSpec = { "(" +
                 "SFID int," +
                 "JobStat int," +
                 "NonWeapVDef int," +
@@ -209,7 +209,7 @@ namespace MSEACalculator.OtherRes.Database
             staticTables.Add(new TableStats("StarforceList", sfTableSpec[0], "StarForce"));
 
             //TABLE FOR STARFORCE STATS ADDONS
-            string[] addSFstatSpec = {"(" +
+            string[] addSFstatSpec = { "(" +
                 "SFID int," +
                 "LevelRank int," +
                 "VStat int," +
@@ -233,11 +233,25 @@ namespace MSEACalculator.OtherRes.Database
                     "Duration int," +
                     "Chance double," +
                     "PRIMARY KEY (EquipGrp, Grade, GradeT, Stat, MinLvl, MaxLvl, ValueI)" +
-                    ");"};
+                    ");" };
             staticTables.Add(new TableStats("PotentialData", PotSpec[0], "Potential"));
 
-            /////BLANK TABLES/////
-
+            ////ARCANE SYMBOL
+            string[] arcaneSymSpec = { "(" +
+                    "Name string, " +
+                    "SubMap string, " +
+                    "CurrentLevel int," +
+                    "CurrentExp int," +
+                    "CurrentLimit int, " +
+                    "BaseGain int," +
+                    "PQGain int, " +
+                    "PQGainLimit int, " +
+                    "SymbolExchangeRate int," +
+                    "CostLvlMod int," +
+                    "CostMod int," +
+                    "PRIMARY KEY(Name)" +
+                    ");" };
+            staticTables.Add(new TableStats("ArcaneSymbol", arcaneSymSpec[0], "ArcaneSymbol"));
 
 
 
@@ -469,7 +483,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         List<Character> charTable = await ImportCSV.GetCharCSVAsync();
 
-                        
+
                         counter++;
                         string insertChar = "INSERT INTO " + tableName + "(ClassName, ClassType, Faction, MainStat, SecStat, UnionE, UnionET)" +
                             " VALUES (@CN, @CT, @Fac, @MS, @SS, @UE, @UET)";
@@ -498,7 +512,7 @@ namespace MSEACalculator.OtherRes.Database
                                 }
                             };
 
-                            
+
 
                         }
 
@@ -506,7 +520,7 @@ namespace MSEACalculator.OtherRes.Database
                         break;
                     case "UnionEffect":
                         List<UnionModel> unionList = await ImportCSV.GetUnionECSVAsync();
-                        
+
                         counter++;
                         string insertUnion = "INSERT INTO " + tableName + " (Effect, EffectType, B, A, S, SS, SSS)" +
                             " VALUES (@E, @ET, @B, @A, @S, @SS, @SSS);";
@@ -550,7 +564,7 @@ namespace MSEACalculator.OtherRes.Database
                         using (SqliteCommand insertCMD = new SqliteCommand(insertEquip, connection, transaction))
                         {
                             foreach (EquipModel equipItem in equipList)
-                            {   
+                            {
                                 insertCMD.Parameters.Clear();
                                 insertCMD.Parameters.AddWithValue("@Set", equipItem.EquipSet);
                                 insertCMD.Parameters.AddWithValue("@Job", equipItem.ClassType);
@@ -599,7 +613,7 @@ namespace MSEACalculator.OtherRes.Database
                         };
 
 
-                        
+
                         counter++;
                         string insertES = "INSERT INTO " + tableName + " VALUES(@ES, @ET);";
                         using (SqliteCommand insertCMD = new SqliteCommand(insertES, connection, transaction))
@@ -791,7 +805,7 @@ namespace MSEACalculator.OtherRes.Database
                         break;
                     case "ClassSWeapon":
 
-                        Dictionary<int, List<string>> CSWDict =  await ImportCSV.GetClassSWeaponCSVAsync();
+                        Dictionary<int, List<string>> CSWDict = await ImportCSV.GetClassSWeaponCSVAsync();
 
                         string insertSM = "INSERT INTO " + tableName + "(" +
                             "ClassName, WeaponType) VALUES (" +
@@ -823,12 +837,12 @@ namespace MSEACalculator.OtherRes.Database
 
                         List<SFGain> SFList = await ImportCSV.GetSFCSVAsync();
 
-                        string insertSF =  "INSERT INTO " + tableName + "(" +
+                        string insertSF = "INSERT INTO " + tableName + "(" +
                             "SFID, JobStat, NonWeapVDef, OverallVDef, CatAMaxHP, WeapMaxMP, WeapVATK, WeapVMATK, SJump, SSpeed, GloveVATK, GloveVMATK ) VALUES " +
                             "(@SFID, @JS, @NWD, @OD, @CMH, @WMP, @WATK, @WMATK, @SJ, @SS, @GATK, @GMATK );";
                         using (SqliteCommand insertCMD = new SqliteCommand(insertSF, connection, transaction))
                         {
-                            foreach(SFGain sF in SFList)
+                            foreach (SFGain sF in SFList)
                             {
                                 insertCMD.Parameters.Clear();
                                 insertCMD.Parameters.AddWithValue("@SFID", sF.SFLevel);
@@ -876,7 +890,7 @@ namespace MSEACalculator.OtherRes.Database
                                 insertCMD.Parameters.AddWithValue("@NWMATK", sF.NonWeapMATK);
                                 insertCMD.Parameters.AddWithValue("@WATK", sF.WeapVATK);
                                 insertCMD.Parameters.AddWithValue("@WMATK", sF.WeapVMATK);
-                               
+
 
 
                                 try
@@ -899,7 +913,7 @@ namespace MSEACalculator.OtherRes.Database
                             "EquipGrp, Grade, GradeT, StatT, Stat, MinLvl, MaxLvl, ValueI, Duration, Chance) VALUES " +
                             "(@EG, @G, @GT, @ST, @S, @MinL, @MaxL, @VI, @D, @C);";
                         //int potIDc = 0;
-                        using(SqliteCommand insertCMD =  new SqliteCommand(insertPot, connection, transaction))
+                        using (SqliteCommand insertCMD = new SqliteCommand(insertPot, connection, transaction))
                         {
                             foreach (PotentialStats pot in PotList)
                             {
@@ -907,7 +921,7 @@ namespace MSEACalculator.OtherRes.Database
                                 foreach (string i in pot.EquipGrpL)
                                 {
                                     string e;
-                                    if ( i.Trim() == "Shoulderpad")
+                                    if (i.Trim() == "Shoulderpad")
                                     {
                                         e = "Shoulder";
                                     }
@@ -933,7 +947,7 @@ namespace MSEACalculator.OtherRes.Database
                                     {
                                         insertCMD.ExecuteNonQuery();
                                     }
-                                    catch (Exception ex) 
+                                    catch (Exception ex)
                                     {
                                         Console.WriteLine(counter.ToString());
                                         Console.WriteLine(ex.Message);
@@ -941,7 +955,106 @@ namespace MSEACalculator.OtherRes.Database
                                 }
                             }
                         }
-                            
+
+
+                        break;
+                    case "ArcaneSymbol":
+
+                        List<ArcaneSymbol> Symbols = new List<ArcaneSymbol> {
+                            new ArcaneSymbol
+                            {
+                                Name = "Vanishing Journey",
+                                BaseSymbolGain = 8,
+                                SubMap = "Reverse City",
+                                PQSymbolsGain = 6,
+                                CostLvlMod = 7130000,
+                                CostMod = 2370000
+                            },
+                            new ArcaneSymbol
+                            {
+                                Name = "Chew Chew",
+                                BaseSymbolGain = 4,
+                                SubMap = "Yum Yum",
+                                PQSymbolsGain = 0,
+                                PQGainLimit = 15,
+                                SymbolExchangeRate = 1,
+                                CostLvlMod = 6600000,
+                                CostMod = 12440000
+                            },
+                            new ArcaneSymbol
+                            {
+                                Name = "Lachelein",
+                                BaseSymbolGain = 8,
+                                PQSymbolsGain = 0,
+                                PQGainLimit = 500,
+                                SymbolExchangeRate = 30,
+                                CostLvlMod = 6600000,
+                                CostMod = 12440000
+                            },
+                            new ArcaneSymbol
+                            {
+                                Name = "Arcana",
+                                BaseSymbolGain = 8,
+                                PQSymbolsGain = 0,
+                                PQGainLimit = 30,
+                                SymbolExchangeRate = 3,
+                                CostLvlMod = 6600000,
+                                CostMod = 12440000
+                            },
+                            new ArcaneSymbol
+                            {
+                                Name = "Moras",
+                                BaseSymbolGain = 8,
+                                PQSymbolsGain = 6,
+                                CostLvlMod = 6600000,
+                                CostMod = 12440000
+                            },
+                            new ArcaneSymbol
+                            {
+                                Name = "Esfera",
+                                BaseSymbolGain = 8,
+                                PQSymbolsGain = 6,
+                                CostLvlMod = 6600000,
+                                CostMod = 12440000
+                            }
+
+                        };
+
+                        counter++;
+                        string insertAS = "INSERT INTO " + tableName +
+                            "(Name, SubMap, CurrentLevel, CurrentExp, CurrentLimit, BaseGain, PQGain, PQGainLimit, SymbolExchangeRate, CostLvlMod, CostMod) " +
+                            "VALUES (@N, @SM, @CLVL, @CEXP, @CLIMIT, @BG, @PQG, @PQGL, @SER, @CLM, @CM);";
+                        using (SqliteCommand insertCMD = new SqliteCommand(insertAS, connection, transaction))
+                        {
+                            foreach (ArcaneSymbol symbol in Symbols)
+                            {
+                                insertCMD.Parameters.Clear();
+                                insertCMD.Parameters.AddWithValue("@N",symbol.Name);
+                                insertCMD.Parameters.AddWithValue("@SM",symbol.SubMap);
+                                insertCMD.Parameters.AddWithValue("@CLVL",symbol.CurrentLevel);
+                                insertCMD.Parameters.AddWithValue("@CEXP",symbol.CurrentExp);
+                                insertCMD.Parameters.AddWithValue("@CLIMIT",CalculationRes.CalForm.CalCurrentLimit(symbol.CurrentLevel));
+                                insertCMD.Parameters.AddWithValue("@BG",symbol.BaseSymbolGain);
+                                insertCMD.Parameters.AddWithValue("@PQG",symbol.PQSymbolsGain);
+                                insertCMD.Parameters.AddWithValue("@PQGL",(object)symbol.PQGainLimit ?? DBNull.Value);
+                                insertCMD.Parameters.AddWithValue("@SER",(object)symbol.SymbolExchangeRate ?? DBNull.Value);
+                                insertCMD.Parameters.AddWithValue("@CLM",symbol.CostLvlMod);
+                                insertCMD.Parameters.AddWithValue("@CM",symbol.CostMod);
+
+                                try
+                                {
+                                    insertCMD.ExecuteNonQuery();
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(counter.ToString());
+                                    Console.WriteLine(ex.Message);
+                                }
+                            }
+
+                        }
+
+
 
                         break;
                     default:

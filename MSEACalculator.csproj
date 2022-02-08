@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BossRes\Boss.cs" />
+    <Compile Include="CalculationRes\SymbolModel.cs" />
     <Compile Include="CalculationRes\ViewModel\ArcaneQMViewModel.cs" />
     <Compile Include="CalculationRes\View\ArcaneQMPage.xaml.cs">
       <DependentUpon>ArcaneQMPage.xaml</DependentUpon>

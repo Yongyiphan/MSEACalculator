@@ -20,16 +20,20 @@ namespace MSEACalculator.CharacterRes
 
         //Generated when Compiled (Initialised in GVar.cs)
         public int CurrentLimit { get; set; } //CalForm.CalCurrentLimit(CurrentLevel);
-        public int MaxExp { get; set; } = GVar.MaxSymbolExp;
-        public string SubMap { get; set; }
+
+        //public int MaxExp { get; set; } = GVar.MaxSymbolExp;
+        public string SubMap { get; set; } = "None";
         public bool unlockSubMap { get; set; } = false;
         public int BaseSymbolGain { get; set; } = 0;
-        public int PartyQuestSymbols { get; set; } = 0;
+        public int PQSymbolsGain { get; set; } = 0;
+
+
         public int PQGainLimit { get; set; }
-        public int SymbolExchangeRate { get; set; } = 0;
-        public int SymbolGainRate { get; set; } = 0;
+        public int SymbolExchangeRate { get; set; }
+        public decimal SymbolGainRate { get; set; } = 0;
 
-
+        public int CostLvlMod { get; set; } = 0;
+        public int CostMod { get; set; } = 0;
 
 
         //Result:

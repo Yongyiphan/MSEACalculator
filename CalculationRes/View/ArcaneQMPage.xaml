@@ -56,7 +56,7 @@
                                       ContentTemplate="{StaticResource ArcaneDSelect}"/>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <ToggleSwitch OffContent="0" OnContent="{Binding PartyQuestSymbols, Mode=TwoWay}"
+                    <ToggleSwitch OffContent="0" OnContent="{Binding PQSymbolsGain, Mode=TwoWay}"
                                   VerticalAlignment="Bottom" 
                                   IsOn="{Binding ElementName=PageGrid, Path=DataContext.ResetPQS, Mode=TwoWay}">
                         PQ
@@ -209,9 +209,9 @@
                     </TextBlock>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding CurrentAF, Mode=TwoWay}"/>
-                        <TextBlock Text="/"/>
-                        <TextBlock Text="{Binding TotalAF, Mode=TwoWay}"/>
+                        <TextBlock Text="{Binding CurrentAF, Mode=TwoWay}" FontSize="15"/>
+                        <TextBlock Text="/" FontSize="15"/>
+                        <TextBlock Text="{Binding TotalAF, Mode=TwoWay}" FontSize="15"/>
                     </StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>

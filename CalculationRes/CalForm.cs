@@ -51,7 +51,17 @@ namespace MSEACalculator.CalculationRes
             return totalExp;
         }
 
-        public static Dictionary<string, int> CalNewLvlExp(int accExp, int symGain)
+        public static int CalDaysLeft(int accExp, decimal symGain)
+        {
+
+            int remainingExp = GVar.MaxSymbolExp - accExp;
+
+            decimal DaysLeft = Math.Ceiling(remainingExp / symGain);
+
+            return (int)DaysLeft;
+        }
+
+        public static Dictionary<string, int> CalNewLvlExp(int accExp)
         {
             
 
@@ -67,8 +77,6 @@ namespace MSEACalculator.CalculationRes
             //totalExp += cExp - CalCurrentLimit(cLvl);
             int currentLimit = CalCurrentLimit(1);
             int cLvl = 1;
-            int symDiff = GVar.MaxSymbolExp - accExp;
-            dictStore["DaysLeft"] = (symDiff/symGain) + 1;
 
 
             dictStore["CurrentTotalExp"] = accExp;

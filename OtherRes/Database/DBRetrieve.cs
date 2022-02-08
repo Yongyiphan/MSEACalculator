@@ -378,6 +378,46 @@ namespace MSEACalculator.OtherRes.Database
 
             return potentialList;
         }
+        public static List<ArcaneSymbol> GetAllArcaneSymbol()
+        {
+            List<ArcaneSymbol> symbolList = new List<ArcaneSymbol>();
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM ArcaneSymbol";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ArcaneSymbol symbol = new ArcaneSymbol();
+                            symbol.Name = reader.GetString(0);
+                            symbol.SubMap = reader.GetString(1);
+                            symbol.CurrentLevel = reader.GetInt32(2);
+                            symbol.CurrentExp = reader.GetInt32(3);
+                            symbol.CurrentLimit = reader.GetInt32(4);
+                            symbol.BaseSymbolGain = reader.GetInt32(5);
+                            symbol.PQSymbolsGain = reader.GetInt32(6);
+                            symbol.PQGainLimit = reader.GetInt32(7);
+                            symbol.SymbolExchangeRate = reader.GetInt32(8);
+                            symbol.CostLvlMod = reader.GetInt32(9);
+                            symbol.CostMod = reader.GetInt32(10);
+
+                            symbolList.Add(symbol);
+
+
+                        }
+                    }
+                }
+
+
+            }
+
+            return symbolList;
+        }
 
 
     }

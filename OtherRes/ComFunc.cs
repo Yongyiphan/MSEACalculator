@@ -529,6 +529,17 @@ namespace MSEACalculator
             }
         }
 
+        public static bool IsInt(string number)
+        {
+            if(int.TryParse(number, out int result) == false && number != String.Empty)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         //public static async Task<List<EventRecords>> retrieveEventJson()
         //{
         //    List<EventRecords> eventList;

@@ -83,9 +83,9 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Max value: "/>
+                                        <TextBlock Text="Up to "/>
                                         <TextBlock Text="{Binding PQGainLimit, Mode=TwoWay}"/>
-                                        
+                                        <TextBlock Text=" coins daily."/>
                                     </StackPanel>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
@@ -125,8 +125,7 @@
                     <!--SYMBOL SELECTION-->
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Select Symbol: "/>
-                        <ComboBox Width="150" ItemsSource="{Binding ArcaneSymbolList, Mode=TwoWay}"
-                                  DisplayMemberPath="Name"
+                        <ComboBox Width="150" ItemsSource="{Binding SymbolNameList, Mode=TwoWay}"
                                   SelectedItem="{Binding SArcaneSymbol, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                     </StackPanel>
                     
@@ -149,7 +148,7 @@
                     </StackPanel>
                     
                     <!--DISPLAY PQ TYPE INPUT-->
-                    <ContentControl Content="{Binding SArcaneSymbol, Mode=TwoWay}"
+                    <ContentControl Content="{Binding CSymbol, Mode=TwoWay}"
                                     Visibility="{Binding ShowPQ, Mode=TwoWay}"
                                     ContentTemplate="{StaticResource ArcanePQ}"/>
 
@@ -162,7 +161,7 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <ContentControl Content="{Binding SArcaneSymbol, Mode=TwoWay}"
+                            <ContentControl Content="{Binding CSymbol, Mode=TwoWay}"
                                             ContentTemplate="{StaticResource ArcaneDSelect}"/>
                         </Grid>
                         <Grid Grid.Column="1">
@@ -173,7 +172,7 @@
                                         <ToolTip>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Max value: "/>
-                                                <TextBlock Text="{Binding SArcaneSymbol.PQGainLimit, Mode=TwoWay}"/>
+                                                <TextBlock Text="{Binding CSymbol.PQGainLimit, Mode=TwoWay}"/>
                                             </StackPanel>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
@@ -183,7 +182,7 @@
                     </Grid>
                     
                     <!--DISPLAY SUBMAP IF EXISTS-->
-                    <CheckBox Content="{Binding SArcaneSymbol.SubMap, Mode=TwoWay}" 
+                    <CheckBox Content="{Binding CSymbol.SubMap, Mode=TwoWay}" 
                               Visibility="{Binding ShowSubMap, Mode=TwoWay}"
                               IsChecked="{Binding isSubMap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               ToolTipService.ToolTip="Completed?"/>
@@ -197,19 +196,22 @@
             <!--ADDITIONAL INPUT/ OPTIONAL-->
             <Grid Grid.Column="1">
                 <StackPanel>
-                    <CheckBox Content="Arcane Catalyst?" Margin="15 0 0 0" VerticalContentAlignment="Top"/>
-                    <TextBlock FontSize="16">
-                        <Bold>Days to max</Bold>
+                    <Button Content="Reset All" Command="{Binding ResetCMD, Mode=TwoWay}"/>
+                    <CheckBox Content="Arcane Catalyst?" 
+                              IsChecked="{Binding ArcaneCatT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Margin="15 0 0 0" VerticalContentAlignment="Top"/>
+                    <TextBlock FontSize="17">
+                        <Bold>All Max Date</Bold>
                     </TextBlock>
-                    <TextBlock Text ="N Date (N Days)"/>
+                    <TextBlock Text ="{Binding DaysLeft, Mode=TwoWay}"/>
                     <TextBlock FontSize="17">
                                 <Bold>Arcane Force:</Bold>
                     </TextBlock>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Current AF"/>
+                        <TextBlock Text="{Binding CurrentAF, Mode=TwoWay}"/>
                         <TextBlock Text="/"/>
-                        <TextBlock Text="Total AF"/>
+                        <TextBlock Text="{Binding TotalAF, Mode=TwoWay}"/>
                     </StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -224,27 +226,55 @@
                             <TextBlock Text="Guild Skills: "/>
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1">
-                            <TextBox/>
+                            <TextBox Text="{Binding GSkills, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="0">
                             <TextBlock Text="Hyper Skills:"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
-                            <TextBox/>
+                            <TextBox Text="{Binding HyperSkills, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                         </Grid>
                     </Grid>
 
-                    <ComboBox>
-                        <ComboBoxItem Content="General"/>
-                        <ComboBoxItem Content="Xenon"/>
-                        <ComboBoxItem Content="Demon Avenger"/>
-                    </ComboBox>
-                    <TextBlock Text="Extra Stats:"/>
-                    <TextBlock/>
+                    <ComboBox ItemsSource="{Binding ExtraStatType, Mode=TwoWay}"
+                              SelectedIndex="{Binding ExtraStatIndex, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"/>
+                    <TextBlock FontSize="17">
+                        <Bold>Extra Stats:</Bold>
+                    </TextBlock>
+                    <TextBlock Text="{Binding TotalStat, Mode=TwoWay}" FontSize="17"/>
                 </StackPanel>
             </Grid>
         </Grid>
-        
+        <Grid Grid.Column="1">
+            <ListView ItemsSource="{Binding DisplayArcaneSymbolList, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name, Mode=TwoWay}" FontSize="14"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Lvl: "/>
+                                <TextBlock Text="{Binding CurrentLevel, Mode=TwoWay}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding CurrentExp, Mode=TwoWay}"/>
+                                <TextBlock Text=" / "/>
+                                <TextBlock Text="{Binding CurrentLimit, Mode=TwoWay}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding AccumulatedExp, Mode=TwoWay}"/>
+                                <TextBlock Text=" / "/>
+                                <TextBlock Text="{Binding ElementName=PageGrid, Path=DataContext.TotalSymbolExp, Mode=TwoWay}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Days left til completion:"/>
+                                <TextBlock Text="{Binding DaysLeft, Mode=TwoWay}"/>
+                            </StackPanel>
+                            
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>
 

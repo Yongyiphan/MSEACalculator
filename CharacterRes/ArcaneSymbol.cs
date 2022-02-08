@@ -27,15 +27,18 @@ namespace MSEACalculator.CharacterRes
         public int PartyQuestSymbols { get; set; } = 0;
         public int PQGainLimit { get; set; }
         public int SymbolExchangeRate { get; set; } = 0;
+        public int SymbolGainRate { get; set; } = 0;
+
 
 
 
         //Result:
         public int DaysLeft { get; set; }
-        public int NewCurrentLvl { get; set; }
-        public int NewCurrentExp { get; set; }
         public int AccumulatedExp { get; set; } = 1;
-        
+        public int CurrentAF { get; set; } = 0;
+        public int CurrentAFStat { get; set; } = 0;
+
+        public int BeforeCatalyst { get; set; } = 0;
 
         //Example
         //ChuChu
@@ -59,6 +62,11 @@ namespace MSEACalculator.CharacterRes
         {
             CurrentLimit = CalForm.CalCurrentLimit(CurrentLevel);
 
+        }
+
+        public ArcaneSymbol ShallowCopy()
+        {
+            return (ArcaneSymbol)this.MemberwiseClone();
         }
 
 

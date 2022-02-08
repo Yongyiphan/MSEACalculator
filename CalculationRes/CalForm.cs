@@ -38,38 +38,52 @@ namespace MSEACalculator.CalculationRes
             return (level * level) + 11;
         }
 
-        public static Dictionary<string, int> CalNewLvlExp(int cLvl, int cExp, int symGain, bool subMap)
+        public static int CalAccEXp(int cLvl, int cExp)
         {
-            Func<int, int, int> CalDaysLeft = (div, ctotalExp) =>
-
-            {
-                int symDiff = GVar.MaxSymbolExp - ctotalExp;
-
-
-                return symDiff/div + 1;
-            };
-
-            Dictionary<string, int> dictStore = new Dictionary<string, int>();
-            int mod = subMap == true ? 2 : 1;
-
-            int newLvl = cLvl;
-            int newExp, totalExp = 0;
-            for(int i = 1; i < cLvl + 1; i++)
+            int currentLimit = CalCurrentLimit(cLvl);
+            int totalExp = 0;
+            for (int i = 1; i < cLvl + 1; i++)
             {
                 totalExp += CalCurrentLimit(i);
             }
+            totalExp += cExp - currentLimit;
 
-            totalExp += cExp>CalCurrentLimit(cLvl) ? cExp : cExp - CalCurrentLimit(cLvl);
+            return totalExp;
+        }
+
+        public static Dictionary<string, int> CalNewLvlExp(int accExp, int symGain)
+        {
+            
+
+            Dictionary<string, int> dictStore = new Dictionary<string, int>();
+
+            //int currentLimit = CalCurrentLimit(cLvl);
+            //int remainingExp, totalExp = 0;
+            //for(int i = 1; i < cLvl + 1; i++)
+            //{
+            //    totalExp += CalCurrentLimit(i);
+            //}
+
+            //totalExp += cExp - CalCurrentLimit(cLvl);
+            int currentLimit = CalCurrentLimit(1);
+            int cLvl = 1;
+            int symDiff = GVar.MaxSymbolExp - accExp;
+            dictStore["DaysLeft"] = (symDiff/symGain) + 1;
 
 
+            dictStore["CurrentTotalExp"] = accExp;
 
-            dictStore["CurrentTotalExp"] = 1;
+            
+            while(accExp > currentLimit)
+            {
+                cLvl++;
+                accExp -= currentLimit;
+                currentLimit = CalCurrentLimit(cLvl);
+            }
 
-
-
-            dictStore["NewLevel"] = 1;
-            dictStore["NewLimit"] = 1;
-            dictStore["RemainingExp"] = 1;
+            dictStore["NewLevel"] = cLvl;
+            dictStore["NewLimit"] = currentLimit;
+            dictStore["RemainingExp"] = accExp;
 
 
 
@@ -77,6 +91,52 @@ namespace MSEACalculator.CalculationRes
             return dictStore;
         }
 
+
+        public static Dictionary<string,int> CalArcaneStatsForce(int symbolLvl, string mode)
+        {
+            Dictionary<string, int> dictStore = new Dictionary<string, int>();
+            int cForce = 0;
+            int cStat = 0;
+            int baseForce = 30;
+            int addForce = 10;
+
+            int addStat = 0;
+            int baseStat = 0;
+
+            
+            switch (mode)
+            {
+                case "Demon Avenger":
+                    baseStat = 5250;
+                    addStat = 1750;
+                    break;
+
+                case "Xenon":
+                    baseStat = 117;
+                    addStat = 39;
+                    break;
+
+                case "General":
+                    baseStat = 300;
+                    addStat = 100;
+                    break;
+            }
+            
+            if (symbolLvl > 1)
+            {
+                for(int i = 1; i<symbolLvl; i++)
+                {
+                    cForce += addForce;
+                    cStat += addStat;
+                }
+            }
+
+            dictStore["ArcaneForce"] = cForce + baseForce;
+            dictStore["Stat"] = cStat + baseStat;
+
+
+            return dictStore;
+        }
 
 
     }

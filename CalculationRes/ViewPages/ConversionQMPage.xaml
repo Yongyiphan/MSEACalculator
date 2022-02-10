@@ -10,9 +10,10 @@
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <RadioButton GroupName="ConversionMode" Content="From SGD" IsChecked="{Binding SGDCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <RadioButton GroupName="ConversionMode" Content="From Bil" IsChecked="{Binding BCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <RadioButton GroupName="ConversionMode" Content="From Mesos" IsChecked="{Binding MesoCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Conversion from"/>
+                <ComboBox ItemsSource="{Binding ConversionMode, Mode=TwoWay}"
+                          SelectedIndex="{Binding DefaultMode, Mode=TwoWay}"
+                          SelectedItem="{Binding CMode, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
             </StackPanel>
             <Grid>
                 <Grid.RowDefinitions>
@@ -24,7 +25,7 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Row="0" Grid.Column="0">
-                    <TextBlock Text="Meso Rate:"/>
+                    <TextBlock Text="Meso Rate/B:"/>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1">
                     <TextBox HorizontalAlignment="Left"
@@ -42,7 +43,10 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <Button Content="Convert" Command="{Binding ConvertCMD, Mode=TwoWay}"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Convert" Command="{Binding ConvertCMD, Mode=TwoWay}"/>
+                <Button Content="Reset" Command="{Binding ResetCMD, Mode=TwoWay}"/>
+            </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="SGD:" 
                            FontSize="15"/>

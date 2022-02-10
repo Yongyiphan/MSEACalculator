@@ -10,44 +10,19 @@ namespace MSEACalculator.CalculationRes.ViewModels
     public class ConversionQMViewModel : INPCObject
     {
 
-
-        private bool _SGDCheck = true;
-        public bool SGDCheck
+        public List<string> ConversionMode { get; set; } = new List<string>
         {
-            get { return _SGDCheck; }
-            set { _SGDCheck = value;
-                if(value)
-                {
-                    CMode = "SGD";
-                }
-                OnPropertyChanged(nameof(SGDCheck));
-            }
-        }
+            "SGD", "B", "Meso"
+        };
 
-        private bool _BCheck = false;
-
-        public bool BCheck
+        private int _DMode = 0;
+        public int DefaultMode
         {
-            get { return _BCheck; }
-            set { _BCheck = value;
-                if (value)
-                {
-                    CMode = "B";
-                }
-                OnPropertyChanged(nameof(BCheck));
-            }
-        }
-
-        private bool _MesoCheck = false;
-        public bool MesoCheck
-        {
-            get { return _MesoCheck; }
-            set { _MesoCheck = value;
-                if (value)
-                {
-                    CMode = "Meso";
-                }
-                OnPropertyChanged(nameof(MesoCheck));
+            get=> _DMode;
+            set
+            {
+                _DMode = value;
+                OnPropertyChanged(nameof(DefaultMode));
             }
         }
 
@@ -90,7 +65,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             }
         }
 
-        private string _MoneyOutSGD;
+        private string _MoneyOutSGD = "0";
         public string MoneyOutSGD
         {
             get => _MoneyOutSGD;
@@ -100,7 +75,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 OnPropertyChanged(nameof(MoneyOutSGD));
             }
         }
-        private string _MoneyOutB;
+        private string _MoneyOutB = "0";
         public string MoneyOutB
         {
             get => _MoneyOutB;
@@ -108,7 +83,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 OnPropertyChanged(nameof(MoneyOutB));
             }
         }
-        private string _MoneyOutMeso;
+        private string _MoneyOutMeso = "0";
         public string MoneyOutMeso
         {
             get => _MoneyOutMeso;
@@ -119,9 +94,11 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
 
         public CustomCommand ConvertCMD { get; set; }
+        public CustomCommand ResetCMD { get; set; }
         public ConversionQMViewModel()
         {
             ConvertCMD = new CustomCommand(ConvertMoney, CanConvert);
+            ResetCMD = new CustomCommand(() => ResetInput());
         }
 
         private bool CanConvert()
@@ -136,11 +113,12 @@ namespace MSEACalculator.CalculationRes.ViewModels
         private void ConvertMoney()
         {
 
+
             Dictionary<string, decimal> result = CalForm.CalMesoConversion(decimal.Parse(MesoRate), decimal.Parse(MoneyIn), CMode);
             MoneyOutSGD = string.Format("{0:N2}", result["SGD"]);
             MoneyOutB = string.Format("{0:n4}",result["B"]);
             MoneyOutMeso = string.Format("{0:n0}",result["Meso"]);
-            ResetInput();
+            
 
         }
 
@@ -150,6 +128,10 @@ namespace MSEACalculator.CalculationRes.ViewModels
         {
             MesoRate = string.Empty;
             MoneyIn = string.Empty;
+            DefaultMode = 0;
+            MoneyOutSGD = "0";
+            MoneyOutB = "0";
+            MoneyOutMeso = "0";
         }
     }
 }

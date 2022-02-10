@@ -1,12 +1,10 @@
 ﻿using MSEACalculator.OtherRes.Database;
-using MSEACalculator.MainAppRes.Settings;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MSEACalculator.CharacterRes.EquipmentRes;
+using MSEACalculator.CharacterRes;
 
-namespace MSEACalculator.CharacterRes.EquipmentRes
+namespace MSEACalculator.MainAppRes.Settings.AddChar
 {
     public class AddEquipModel
     {

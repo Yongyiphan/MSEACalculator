@@ -1,6 +1,7 @@
 ﻿using MSEACalculator.CharacterRes;
 using MSEACalculator.CharacterRes.EquipmentRes;
-using MSEACalculator.MainAppRes.Settings;
+using MSEACalculator.MainAppRes.Settings.AddChar;
+using MSEACalculator.MainAppRes.Settings.AddChar.ViewPages;
 using MSEACalculator.OtherRes;
 using MSEACalculator.OtherRes.Interface;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace MSEACalculator.MainAppRes.Settings.AddChar
+namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 {
     public class AddEquipViewModel : INPCObject
     {

@@ -1,4 +1,4 @@
-﻿using MSEACalculator.CalculationRes.View;
+﻿using MSEACalculator.CalculationRes.ViewPages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,6 +40,7 @@ namespace MSEACalculator.MainAppRes
                     QMContent.Navigate(typeof(ArcaneQMPage));
                     break;
                 case "Conversion_Page":
+                    QMContent.Navigate(typeof(ConversionQMPage));
                     break;
 
 

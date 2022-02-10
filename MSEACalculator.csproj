@@ -120,9 +120,13 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BossRes\Boss.cs" />
+    <Compile Include="CalculationRes\ViewPages\ConversionQMPage.xaml.cs">
+      <DependentUpon>ConversionQMPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CalculationRes\ViewModels\ConversionQMViewModel.cs" />
     <Compile Include="CalculationRes\SymbolModel.cs" />
-    <Compile Include="CalculationRes\ViewModel\ArcaneQMViewModel.cs" />
-    <Compile Include="CalculationRes\View\ArcaneQMPage.xaml.cs">
+    <Compile Include="CalculationRes\ViewModels\ArcaneQMViewModel.cs" />
+    <Compile Include="CalculationRes\ViewPages\ArcaneQMPage.xaml.cs">
       <DependentUpon>ArcaneQMPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainAppRes\QuickMathPage.xaml.cs">
@@ -134,20 +138,20 @@
     </Compile>
     <Compile Include="CharacterRes\CharTStore.cs" />
     <Compile Include="MainAppRes\QuickMathViewModel.cs" />
-    <Compile Include="MainAppRes\Settings\AddChar\AddEquipFlamePage.xaml.cs">
+    <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipFlamePage.xaml.cs">
       <DependentUpon>AddEquipFlamePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainAppRes\Settings\AddChar\AddEquipModel.cs" />
-    <Compile Include="MainAppRes\Settings\AddChar\AddEquipPage.xaml.cs">
+    <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipPage.xaml.cs">
       <DependentUpon>AddEquipPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainAppRes\Settings\AddChar\AddEquipPotentialPage.xaml.cs">
+    <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipPotentialPage.xaml.cs">
       <DependentUpon>AddEquipPotentialPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainAppRes\Settings\AddChar\AddEquipScrollPage.xaml.cs">
+    <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipScrollPage.xaml.cs">
       <DependentUpon>AddEquipScrollPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainAppRes\Settings\AddChar\AddEquipViewModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\ViewModels\AddEquipViewModel.cs" />
     <Compile Include="CharacterRes\EquipmentRes\EquipModel.cs" />
     <Compile Include="CharacterRes\EquipmentRes\EquipStatsModel.cs" />
     <Compile Include="CharacterRes\EquipmentRes\PotentialStats.cs" />
@@ -161,10 +165,10 @@
     <Compile Include="CharacterRes\MesoRes\MesoViewModel.cs" />
     <Compile Include="OtherRes\ComFunc.cs" />
     <Compile Include="MainAppRes\Settings\AddChar\AddCharTrackModel.cs" />
-    <Compile Include="MainAppRes\Settings\AddChar\AddCharTrackPage.xaml.cs">
+    <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddCharTrackPage.xaml.cs">
       <DependentUpon>AddCharTrackPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainAppRes\Settings\AddChar\AddCharTrackViewModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\ViewModels\AddCharTrackViewModel.cs" />
     <Compile Include="MainAppRes\TestingBlankPage.xaml.cs">
       <DependentUpon>TestingBlankPage.xaml</DependentUpon>
     </Compile>
@@ -217,7 +221,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="CalculationRes\View\ArcaneQMPage.xaml">
+    <Page Include="CalculationRes\ViewPages\ConversionQMPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CalculationRes\ViewPages\ArcaneQMPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,11 +237,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainAppRes\Settings\AddChar\AddEquipFlamePage.xaml">
+    <Page Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipFlamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainAppRes\Settings\AddChar\AddEquipPage.xaml">
+    <Page Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,15 +253,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainAppRes\Settings\AddChar\AddCharTrackPage.xaml">
+    <Page Include="MainAppRes\Settings\AddChar\ViewPages\AddCharTrackPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainAppRes\Settings\AddChar\AddEquipPotentialPage.xaml">
+    <Page Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipPotentialPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainAppRes\Settings\AddChar\AddEquipScrollPage.xaml">
+    <Page Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipScrollPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

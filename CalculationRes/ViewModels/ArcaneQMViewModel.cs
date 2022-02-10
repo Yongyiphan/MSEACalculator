@@ -8,18 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace MSEACalculator.CalculationRes.ViewModel
+namespace MSEACalculator.CalculationRes.ViewModels
 {
     public class ArcaneQMViewModel : INPCObject
     {
         public SymbolModel SymbolM { get; set; } = new SymbolModel();
-        private List<string> _SymbolNameList;
-        public List<string> SymbolNameList
-        {
-            get { return _SymbolNameList; }
-            set { _SymbolNameList = value; }
-        }
+        
 
+        private List<ArcaneSymbol> _SymbolList;
+        public List<ArcaneSymbol> SymbolList
+        {
+            get => _SymbolList;
+            set
+            {
+                _SymbolList = value;
+                OnPropertyChanged(nameof(SymbolList));
+            }
+        }
 
         private ObservableCollection<ArcaneSymbol> _DisplayArcaneSymbolList = new ObservableCollection<ArcaneSymbol>();
 
@@ -36,31 +41,20 @@ namespace MSEACalculator.CalculationRes.ViewModel
             set
             {
                 _CurrentSymbol = value;
-                OnPropertyChanged(nameof(CSymbol));
-            }
-        }
-
-        private string _SArcaneSymbol;
-        public string SArcaneSymbol
-        {
-            get { return _SArcaneSymbol; }
-            set { _SArcaneSymbol = value;
-
-                if (ComFunc.notNULL(SArcaneSymbol)) {
-                    CSymbol = FindSymbol(SArcaneSymbol);
+                if (ComFunc.notNULL(CSymbol))
+                {
                     toggleInput(CSymbol);
                     ResetDailyS = ResetPQS = false;
                     ShowSubMap = CSymbol.SubMap == "None" ? Visibility.Collapsed : Visibility.Visible;
                     CLvl = SymbolLvls.Single(x => x == CSymbol.CurrentLevel);
-                    CExp = "1";
-
+                    CExp = CSymbol.CurrentExp.ToString();
+                    AddSymbolCMD.RaiseCanExecuteChanged();
+                    DelSymbolCMD.RaiseCanExecuteChanged();
 
                 }
-                OnPropertyChanged(nameof(SArcaneSymbol));
+                OnPropertyChanged(nameof(CSymbol));
             }
         }
-
-
 
         private Visibility _ShowPQ = Visibility.Collapsed;
 
@@ -103,7 +97,7 @@ namespace MSEACalculator.CalculationRes.ViewModel
             }
         }
 
-        public List<int> SymbolLvls { get; set; } = new List<int>();
+        public List<int> SymbolLvls { get; set; } 
 
         private int _CurrentLvl;
         public int CLvl
@@ -111,7 +105,7 @@ namespace MSEACalculator.CalculationRes.ViewModel
             get { return _CurrentLvl; }
             set { _CurrentLvl = value;
 
-                if (ComFunc.notNULL(SArcaneSymbol))
+                if (ComFunc.notNULL(CSymbol))
                 {
                     CLimit = CalForm.CalCurrentLimit(CLvl).ToString();
 
@@ -160,8 +154,6 @@ namespace MSEACalculator.CalculationRes.ViewModel
             }
         }
 
-
-
         private string _CurrentLimit;
         public string CLimit
         {
@@ -195,6 +187,7 @@ namespace MSEACalculator.CalculationRes.ViewModel
                 OnPropertyChanged(nameof(ResetPQS));
             }
         }
+
 
         private string _PQGains;
         public string PQGains
@@ -276,7 +269,7 @@ namespace MSEACalculator.CalculationRes.ViewModel
             }
         }
 
-        private int _TotalStat;
+        private int _TotalStat = 0;
         public int TotalStat
         {
             get { return _TotalStat; }
@@ -285,6 +278,7 @@ namespace MSEACalculator.CalculationRes.ViewModel
             }
         }
 
+        //NOT IMPLEMENTED
         private string _GSkills;
         public string GSkills
         {
@@ -305,9 +299,11 @@ namespace MSEACalculator.CalculationRes.ViewModel
                 OnPropertyChanged(nameof(HyperSkills));
             }
         }
-
+        //NOT IMPLEMENTED
+        
 
         public CustomCommand AddSymbolCMD { get; set; }
+        public CustomCommand DelSymbolCMD { get; set; }
         public CustomCommand ResetCMD { get; set; }
 
         public ArcaneQMViewModel()
@@ -315,20 +311,38 @@ namespace MSEACalculator.CalculationRes.ViewModel
 
             InitVar();
             AddSymbolCMD = new CustomCommand(AddSymbol, CanAddSymbol);
+            DelSymbolCMD = new CustomCommand(DelSymbol, CanDelSymbol);
             ResetCMD = new CustomCommand(ResetBtn);
         }
+
+        public bool CanDelSymbol()
+        {
+            if(CSymbol!= null && DisplayArcaneSymbolList.Count>0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void DelSymbol()
+        {
+            
+            DisplayArcaneSymbolList.RemoveAt(DisplayArcaneSymbolList.ToList().FindIndex(x => x.Name == CSymbol.Name));
+            UpdateDisList();
+            ResetInputFields();
+        }
+
 
         private void ResetBtn()
         {
             InitVar();
             DisplayArcaneSymbolList.Clear();
             ResetInputFields();
-            CurrentAF = 0;
         }
 
         private bool CanAddSymbol()
         {
-            if (ComFunc.notNULL(SArcaneSymbol) == ComFunc.notNULL(CExp) == ComFunc.notNULL(CLvl) == true)
+            if (ComFunc.notNULL(CSymbol) == ComFunc.notNULL(CExp) == ComFunc.notNULL(CLvl) == true)
             {
                 return true;
             }
@@ -341,7 +355,7 @@ namespace MSEACalculator.CalculationRes.ViewModel
             //GET NEW LEVL
             //GET NEW EXP / NEW LIMIT
             //GET DAYS TO COMPLETION
-            ArcaneSymbol cSymbol = FindSymbol(SArcaneSymbol);
+            ArcaneSymbol cSymbol = CSymbol;
             cSymbol.CurrentLevel =  CLvl;
             cSymbol.CurrentExp = int.Parse(CExp);
             decimal dailyGains = ResetDailyS ? Convert.ToDecimal(cSymbol.BaseSymbolGain) : 0;
@@ -355,7 +369,7 @@ namespace MSEACalculator.CalculationRes.ViewModel
                     dailyGains += cSymbol.PQSymbolsGain;
                     break;
                 case "Flex":
-                    if (PQGains != null || PQGains == String.Empty)
+                    if (PQGains != null && PQGains != String.Empty)
                     {
 
                         int PQCoins = int.Parse(PQGains);
@@ -364,17 +378,6 @@ namespace MSEACalculator.CalculationRes.ViewModel
                             PQCoins = cSymbol.PQGainLimit;
                         }
 
-                        //if (tempGain%cSymbol.SymbolExchangeRate == 0)
-                        //{
-                        //    tempGain/=cSymbol.SymbolExchangeRate;
-                        //}
-                        //else
-                        //{
-                        //    tempGain /= cSymbol.SymbolExchangeRate;
-                        //    tempGain = tempGain -1;
-
-                        //}
-                        //decimal PQSymbols = PQCoins /cSymbol.SymbolExchangeRate;
                         decimal PQSymbols = Decimal.Divide(PQCoins, cSymbol.SymbolExchangeRate);
                         dailyGains += PQSymbols;
                     }
@@ -389,13 +392,10 @@ namespace MSEACalculator.CalculationRes.ViewModel
             cSymbol.CurrentLevel = CalculatedValues["NewLevel"];
             cSymbol.CurrentLimit = CalculatedValues["NewLimit"];
             cSymbol.AccumulatedExp = CalculatedValues["CurrentTotalExp"];
-            cSymbol.DaysLeft = CalForm.CalDaysLeft(cSymbol.AccumulatedExp, cSymbol.SymbolGainRate);
             cSymbol.CurrentExp = CalculatedValues["RemainingExp"];
 
-            //if (DisplayArcaneSymbolList == null)
-            //{
-            //    DisplayArcaneSymbolList.Add(SArcaneSymbol);
-            //}
+            cSymbol.DaysLeft = CalForm.CalDaysLeft(cSymbol.AccumulatedExp, cSymbol.SymbolGainRate);
+
 
             bool added = DisplayArcaneSymbolList.ToList().Any(x => x.Name == cSymbol.Name);
             if (!added)
@@ -420,12 +420,12 @@ namespace MSEACalculator.CalculationRes.ViewModel
                 SymbolLvls.Add(i);
             }
 
-            SymbolNameList = new List<string>();
-            foreach (ArcaneSymbol symbol in SymbolM.ArcaneList)
-            {
-                SymbolNameList.Add(symbol.Name);
-            }
+ 
+            SymbolList = new List<ArcaneSymbol>(SymbolM.ArcaneList);
+
+            CurrentAF = 0;
             TotalAF = SymbolM.MaxArcaneForce;
+            TotalStat = 0;
         }
 
         private void toggleInput(ArcaneSymbol arcaneSymbol)
@@ -468,10 +468,10 @@ namespace MSEACalculator.CalculationRes.ViewModel
         private void ReEvalSymbol()
         {
             Dictionary<string, int> dictRec = null;
+            List<ArcaneSymbol> tempList = new List<ArcaneSymbol>(DisplayArcaneSymbolList);
 
             if (ArcaneCatT == true)
             {
-                List<ArcaneSymbol> tempList = new List<ArcaneSymbol>(DisplayArcaneSymbolList);
                 foreach (ArcaneSymbol symbol in tempList)
                 {
                     if (symbol.CurrentLevel > 1)
@@ -495,7 +495,6 @@ namespace MSEACalculator.CalculationRes.ViewModel
             }
             else if (ArcaneCatT == false)
             {
-                List<ArcaneSymbol> tempList = new List<ArcaneSymbol>(DisplayArcaneSymbolList);
                 foreach (ArcaneSymbol symbol in tempList)
                 {
                     if (symbol.CurrentLevel > 1)
@@ -535,12 +534,13 @@ namespace MSEACalculator.CalculationRes.ViewModel
 
         private void ResetInputFields()
         {
-            SArcaneSymbol = null;
+            CSymbol = null;
             CLvlIndex = -1;
             CExp = String.Empty;
             ResetDailyS = ResetPQS = false;
             isSubMap = false;
             PQGains = String.Empty;
+            DelSymbolCMD.RaiseCanExecuteChanged();
         }
     }
 

@@ -6,9 +6,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using MSEACalculator.OtherRes.Database;
-using MSEACalculator.MainAppRes.Settings.AddChar;
 
-namespace MSEACalculator.MainAppRes.Settings.AddChar
+namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 {
     public class AddCharTrackViewModel : INPCObject
     {

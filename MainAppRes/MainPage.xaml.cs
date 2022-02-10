@@ -1,26 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using System.Diagnostics;
+﻿using MSEACalculator.CharacterRes;
+using MSEACalculator.CharacterRes.MesoRes;
+using MSEACalculator.MainAppRes.Settings;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using MSEACalculator.BossRes;
-using MSEACalculator.EventRes;
-using MSEACalculator.StarforceRes;
-using MSEACalculator.CharacterRes;
-using MSEACalculator.CharacterRes.MesoRes;
-using MSEACalculator.MainAppRes;
-using MSEACalculator.MainAppRes.Settings;
-using MSEACalculator.CalculationRes.View;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409

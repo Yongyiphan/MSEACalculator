@@ -147,5 +147,42 @@ namespace MSEACalculator.CalculationRes
         }
 
 
+        public static Dictionary<string, decimal> CalMesoConversion(decimal mesoRate, decimal moneyIn, string cMode)
+        {
+            Dictionary<string, decimal> dictStore = new Dictionary<string, decimal>();
+            decimal billionMod = 1000000000;
+            switch (cMode)
+            {
+                case "SGD":
+                    //MoneyIn = SGD
+                    dictStore["SGD"] = moneyIn;
+                    dictStore["B"] = decimal.Divide(moneyIn, mesoRate);
+                    dictStore["Meso"] = dictStore["B"] * billionMod;
+
+                    break;
+
+                case "B":
+                    //MoneyIn = B
+                    dictStore["SGD"] = decimal.Multiply(moneyIn, mesoRate);
+                    dictStore["B"] = moneyIn;
+                    dictStore["Meso"] = moneyIn * billionMod;
+
+                    break;
+                case "Meso":
+                    //MoneyIn = Meso
+                    dictStore["B"] = decimal.Divide(moneyIn, billionMod);
+                    dictStore["SGD"] = decimal.Multiply(dictStore["B"], mesoRate);
+                    dictStore["Meso"] = moneyIn;
+                    break;
+
+
+
+                default:
+                    break;
+            }
+
+            return dictStore;
+
+        }
     }
 }

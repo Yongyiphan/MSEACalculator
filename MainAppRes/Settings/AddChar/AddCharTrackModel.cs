@@ -1,10 +1,9 @@
 ﻿using MSEACalculator.CharacterRes;
-using MSEACalculator.CharacterRes.EquipmentRes;
 using MSEACalculator.OtherRes.Database;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MSEACalculator.MainAppRes.Settings
+namespace MSEACalculator.MainAppRes.Settings.AddChar
 {
     public class ACTModel
     {

@@ -9,7 +9,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
 {
     public class MesoViewModel : INPCObject
     {
-        readonly BossMeso bossMeso;
+        readonly BossMesoModel bossMeso;
 
 
         //Init Variables
@@ -46,8 +46,8 @@ namespace MSEACalculator.CharacterRes.MesoRes
             }
         }
 
-        private List<Boss> bossList;
-        public List<Boss> BossList
+        private List<BossCLS> bossList;
+        public List<BossCLS> BossList
         {
             get { return bossList; }
             set
@@ -129,8 +129,8 @@ namespace MSEACalculator.CharacterRes.MesoRes
             set { errorMessage = value; OnPropertyChanged("ErrorMessage"); }
         }
 
-        private Boss selectedBossItem;
-        public Boss SelectedBossItem
+        private BossCLS selectedBossItem;
+        public BossCLS SelectedBossItem
         {
             get
             {
@@ -150,7 +150,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
 
         public MesoViewModel()
         {
-            bossMeso = new BossMeso();
+            bossMeso = new BossMesoModel();
             bossNameList = bossMeso.bossNameList;
             charNameList = bossMeso.charNameList;
             daysMultiplier = bossMeso.DayMultiplier;
@@ -207,7 +207,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
             var temp = new List<string>();
             if (SelectedBoss != null)
             {
-                foreach (Boss boss in bossMeso.bossDict.Values)
+                foreach (BossCLS boss in bossMeso.bossDict.Values)
                 {
                     if (boss.BossName == SelectedBoss)
                     {
@@ -234,7 +234,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
         {
             ErrorMessage = "";
 
-            foreach(Boss boss in bossMeso.bossDict.Values)
+            foreach(BossCLS boss in bossMeso.bossDict.Values)
             {
                 if (boss.BossName == SelectedBoss && boss.Difficulty == SelectedDifficulty)
                 {

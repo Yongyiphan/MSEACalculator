@@ -15,9 +15,9 @@ namespace MSEACalculator.OtherRes.Database
 
         ///////Retrieving FULL Data from Maplestory.db
 
-        public static Dictionary<int, Boss> GetBossDB()
+        public static Dictionary<int, BossCLS> GetBossDB()
         {
-            Dictionary<int, Boss> bossDict = new Dictionary<int, Boss>();
+            Dictionary<int, BossCLS> bossDict = new Dictionary<int, BossCLS>();
 
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
@@ -31,7 +31,7 @@ namespace MSEACalculator.OtherRes.Database
 
                 while (query.Read())
                 {
-                    Boss tempBoss = new Boss();
+                    BossCLS tempBoss = new BossCLS();
                     tempBoss.BossID = query.GetInt16(0);
                     tempBoss.BossName = query.GetString(1);
                     tempBoss.Difficulty = query.GetString(2);
@@ -51,9 +51,9 @@ namespace MSEACalculator.OtherRes.Database
             return bossDict;
         }
 
-        public static Dictionary<string, Character> GetAllCharDB()
+        public static Dictionary<string, CharacterCLS> GetAllCharDB()
         {
-            Dictionary<string, Character> charDict = new Dictionary<string, Character>();
+            Dictionary<string, CharacterCLS> charDict = new Dictionary<string, CharacterCLS>();
 
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
             {
@@ -77,7 +77,7 @@ namespace MSEACalculator.OtherRes.Database
                                 continue;
                             }
 
-                            Character tempChar = new Character();
+                            CharacterCLS tempChar = new CharacterCLS();
                             tempChar.ClassName = query.GetString(0);
                             tempChar.ClassType = query.GetString(1);
                             tempChar.Faction = query.GetString(2);
@@ -97,9 +97,9 @@ namespace MSEACalculator.OtherRes.Database
             return charDict;
         }
 
-        public static Dictionary<string, Character> GetAllCharTrackDB()
+        public static Dictionary<string, CharacterCLS> GetAllCharTrackDB()
         {
-            Dictionary<string, Character> charDict = new Dictionary<string, Character>();
+            Dictionary<string, CharacterCLS> charDict = new Dictionary<string, CharacterCLS>();
 
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
@@ -113,7 +113,7 @@ namespace MSEACalculator.OtherRes.Database
                     {
                         while (result.Read())
                         {
-                            Character tempChar = new Character();
+                            CharacterCLS tempChar = new CharacterCLS();
                             tempChar.ClassName = result.GetString(0);
                             tempChar.unionRank = result.GetString(1);
                             tempChar.level = result.GetInt32(2);
@@ -127,9 +127,9 @@ namespace MSEACalculator.OtherRes.Database
             return charDict;
         }
 
-        public static List<EquipModel> GetAllArmorDB()
+        public static List<EquipCLS> GetAllArmorDB()
         {
-            List<EquipModel> equipList = new List<EquipModel>();
+            List<EquipCLS> equipList = new List<EquipCLS>();
 
             using (SqliteConnection dbCon = new SqliteConnection($"Filename ={GVar.databasePath}"))
             {
@@ -144,7 +144,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         while (result.Read())
                         {
-                            EquipModel tempEquip = new EquipModel();
+                            EquipCLS tempEquip = new EquipCLS();
                             tempEquip.EquipSet = result.GetString(0);
                             tempEquip.ClassType = result.GetString(1);
                             tempEquip.EquipSlot = result.GetString(2);
@@ -198,9 +198,9 @@ namespace MSEACalculator.OtherRes.Database
             return equipSlotDict;
         }
 
-        public static List<EquipModel> GetAllAccessoriesDB()
+        public static List<EquipCLS> GetAllAccessoriesDB()
         {
-            List<EquipModel> accModel = new List<EquipModel>();
+            List<EquipCLS> accModel = new List<EquipCLS>();
 
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
@@ -214,7 +214,7 @@ namespace MSEACalculator.OtherRes.Database
                     {
                         while (reader.Read())
                         {
-                            EquipModel equipModel = new EquipModel();
+                            EquipCLS equipModel = new EquipCLS();
                             equipModel.EquipName = reader.GetString(0);
                             equipModel.EquipSet = reader.GetString(1);
                             equipModel.ClassType = reader.GetString(2);
@@ -246,9 +246,9 @@ namespace MSEACalculator.OtherRes.Database
             return accModel;
         }
 
-        public static List<EquipModel> GetAllWeaponDB()
+        public static List<EquipCLS> GetAllWeaponDB()
         {
-            List<EquipModel> weapModel = new List<EquipModel>();
+            List<EquipCLS> weapModel = new List<EquipCLS>();
 
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
@@ -262,7 +262,7 @@ namespace MSEACalculator.OtherRes.Database
                     {
                         while (reader.Read())
                         {
-                            EquipModel equipModel = new EquipModel();
+                            EquipCLS equipModel = new EquipCLS();
                             equipModel.EquipSet = reader.GetString(0);
                             equipModel.WeaponType = reader.GetString(1);
 
@@ -294,9 +294,9 @@ namespace MSEACalculator.OtherRes.Database
             return weapModel;
         }
         
-        public static List<EquipModel> GetAllSecondaryDB()
+        public static List<EquipCLS> GetAllSecondaryDB()
         {
-            List<EquipModel> SecModel = new List<EquipModel>();
+            List<EquipCLS> SecModel = new List<EquipCLS>();
 
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
@@ -310,7 +310,7 @@ namespace MSEACalculator.OtherRes.Database
                     {
                         while (reader.Read())
                         {
-                            EquipModel equipModel = new EquipModel();
+                            EquipCLS equipModel = new EquipCLS();
                             equipModel.ClassType = reader.GetString(0);
                             equipModel.WeaponType = reader.GetString(1);
                             equipModel.EquipName = reader.GetString(2);
@@ -341,9 +341,9 @@ namespace MSEACalculator.OtherRes.Database
             return SecModel;
         }
 
-        public static List<PotentialStats> GetAllPotential()
+        public static List<PotentialStatsCLS> GetAllPotential()
         {
-            List<PotentialStats> potentialList = new List<PotentialStats>();
+            List<PotentialStatsCLS> potentialList = new List<PotentialStatsCLS>();
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
                 dbCon.Open();
@@ -356,7 +356,7 @@ namespace MSEACalculator.OtherRes.Database
                     {
                         while (reader.Read())
                         {
-                            PotentialStats pot = new PotentialStats();
+                            PotentialStatsCLS pot = new PotentialStatsCLS();
                             pot.PotID = reader.GetInt32(0);
                             pot.EquipGrp = reader.GetString(1);
                             pot.Grade = reader.GetString(2);
@@ -378,9 +378,9 @@ namespace MSEACalculator.OtherRes.Database
 
             return potentialList;
         }
-        public static List<ArcaneSymbol> GetAllArcaneSymbol()
+        public static List<ArcaneSymbolCLS> GetAllArcaneSymbol()
         {
-            List<ArcaneSymbol> symbolList = new List<ArcaneSymbol>();
+            List<ArcaneSymbolCLS> symbolList = new List<ArcaneSymbolCLS>();
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
                 dbCon.Open();
@@ -393,7 +393,7 @@ namespace MSEACalculator.OtherRes.Database
                     {
                         while (reader.Read())
                         {
-                            ArcaneSymbol symbol = new ArcaneSymbol();
+                            ArcaneSymbolCLS symbol = new ArcaneSymbolCLS();
                             symbol.Name = reader.GetString(0);
                             symbol.SubMap = reader.GetString(1);
                             symbol.CurrentLevel = reader.GetInt32(2);

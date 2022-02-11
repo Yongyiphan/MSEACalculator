@@ -7,7 +7,7 @@ using MSEACalculator.CalculationRes;
 
 namespace MSEACalculator.CharacterRes
 {
-    public class ArcaneSymbol
+    public class ArcaneSymbolCLS
     {
 
         //To be keyed in
@@ -62,15 +62,15 @@ namespace MSEACalculator.CharacterRes
 
         //Arcane Catalyst
 
-        public ArcaneSymbol()
+        public ArcaneSymbolCLS()
         {
             CurrentLimit = CalForm.CalCurrentLimit(CurrentLevel);
 
         }
 
-        public ArcaneSymbol ShallowCopy()
+        public ArcaneSymbolCLS ShallowCopy()
         {
-            return (ArcaneSymbol)this.MemberwiseClone();
+            return (ArcaneSymbolCLS)this.MemberwiseClone();
         }
 
 

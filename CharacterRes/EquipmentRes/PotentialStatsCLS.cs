@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSEACalculator.CharacterRes.EquipmentRes
 {
-    public class PotentialStats
+    public class PotentialStatsCLS
     {
         
         public int PotID { get; set; } = 0;
@@ -28,7 +28,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public string DisplayStat { get; set; }
 
 
-        public PotentialStats()
+        public PotentialStatsCLS()
         {
 
         }
@@ -41,9 +41,9 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             }
             else
             {
-                if (obj is PotentialStats)
+                if (obj is PotentialStatsCLS)
                 {
-                    PotentialStats cObj = (PotentialStats)obj;
+                    PotentialStatsCLS cObj = (PotentialStatsCLS)obj;
                     if (PotID ==  cObj.PotID)
                     {
                         return true;

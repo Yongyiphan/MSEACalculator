@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSEACalculator.CharacterRes.EquipmentRes
 {
-    public class ScrollingModel
+    public class ScrollingModelCLS
     {
 
         public int MainStat { get; set; } = 0;
@@ -14,7 +14,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int DEF { get; set; } = 0;
         public int ATK { get; set; } = 0;
 
-        public ScrollingModel()
+        public ScrollingModelCLS()
         {
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSEACalculator.CharacterRes.EquipmentRes
 {
-    public class EquipStatsModel
+    public class EquipStatsCLS
     {
         //BASE STATS
         public int MS { get; set; } = 0;
@@ -35,7 +35,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         //FLAME STATS
         public int AllStat { get; set; } = 0;
 
-        public EquipStatsModel()
+        public EquipStatsCLS()
         {
 
         }
@@ -47,9 +47,9 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             {
                 return false;
             }
-            if(obj is EquipStatsModel)
+            if(obj is EquipStatsCLS)
             {
-                EquipStatsModel cObj = (EquipStatsModel)obj;
+                EquipStatsCLS cObj = (EquipStatsCLS)obj;
                 test.Add(STR ==  cObj.STR ? "true" : "false" );
                 test.Add(DEX ==  cObj.DEX ? "true" : "false" );
                 test.Add(INT ==  cObj.INT ? "true" : "false" );

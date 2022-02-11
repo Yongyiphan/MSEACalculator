@@ -75,14 +75,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 OnPropertyChanged(nameof(MoneyOutSGD));
             }
         }
-        private string _MoneyOutB = "0";
-        public string MoneyOutB
-        {
-            get => _MoneyOutB;
-            set { _MoneyOutB = value;
-                OnPropertyChanged(nameof(MoneyOutB));
-            }
-        }
         private string _MoneyOutMeso = "0";
         public string MoneyOutMeso
         {
@@ -116,7 +108,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
             Dictionary<string, decimal> result = CalForm.CalMesoConversion(decimal.Parse(MesoRate), decimal.Parse(MoneyIn), CMode);
             MoneyOutSGD = string.Format("{0:N2}", result["SGD"]);
-            MoneyOutB = string.Format("{0:n4}",result["B"]);
             MoneyOutMeso = string.Format("{0:n0}",result["Meso"]);
             
 
@@ -130,7 +121,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
             MoneyIn = string.Empty;
             DefaultMode = 0;
             MoneyOutSGD = "0";
-            MoneyOutB = "0";
             MoneyOutMeso = "0";
         }
     }

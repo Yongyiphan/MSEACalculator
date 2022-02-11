@@ -9,10 +9,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
     {
         
 
-        public Dictionary<string, Character> AllCharDB { get; set; } = DBRetrieve.GetAllCharDB();
-        public Dictionary<string, Character> AllCharTrackDB { get; set; } = DBRetrieve.GetAllCharTrackDB();
+        public Dictionary<string, CharacterCLS> AllCharDB { get; set; } = DBRetrieve.GetAllCharDB();
+        public Dictionary<string, CharacterCLS> AllCharTrackDB { get; set; } = DBRetrieve.GetAllCharTrackDB();
 
-        public List<Character> AllCharList { get; set; } = new List<Character>();
+        public List<CharacterCLS> AllCharList { get; set; } = new List<CharacterCLS>();
 
         public ACTModel()
         {
@@ -24,7 +24,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
         public void consolAllCharWeapon()
         {
-            foreach (Character character in AllCharDB.Values)
+            foreach (CharacterCLS character in AllCharDB.Values)
             {
                 if ((character.MainWeapon.Count > 1 && character.SecondaryWeapon.Count > 1) | character.MainWeapon.Count > 1 | character.SecondaryWeapon.Count >1 )
                 {
@@ -42,7 +42,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         {
 
             List<string> trackedChar = AllCharTrackDB.Values.Select(x => x.ClassName).ToList();
-            foreach(Character character in AllCharDB.Values)
+            foreach(CharacterCLS character in AllCharDB.Values)
             {
                 if (trackedChar.Contains(character.ClassName))
                 {

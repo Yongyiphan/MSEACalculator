@@ -156,22 +156,19 @@ namespace MSEACalculator.CalculationRes
                 case "SGD":
                     //MoneyIn = SGD
                     dictStore["SGD"] = moneyIn;
-                    dictStore["B"] = decimal.Divide(moneyIn, mesoRate);
-                    dictStore["Meso"] = dictStore["B"] * billionMod;
+                    dictStore["Meso"] = decimal.Divide(moneyIn, mesoRate) * billionMod;
                     break;
 
                 case "B":
                     //MoneyIn = B
                     dictStore["SGD"] = decimal.Multiply(moneyIn, mesoRate);
-                    dictStore["B"] = moneyIn;
                     dictStore["Meso"] = moneyIn * billionMod;
                     
 
                     break;
                 case "Meso":
                     //MoneyIn = Meso
-                    dictStore["B"] = decimal.Divide(moneyIn, billionMod);
-                    dictStore["SGD"] = decimal.Multiply(dictStore["B"], mesoRate);
+                    dictStore["SGD"] = decimal.Multiply(decimal.Divide(moneyIn, billionMod), mesoRate);
                     dictStore["Meso"] = moneyIn;
                     break;
 

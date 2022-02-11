@@ -26,7 +26,7 @@ namespace MSEACalculator
         public static Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
 
 
-        public static int SpellTraceTier(EquipModel selectedEquip)
+        public static int SpellTraceTier(EquipCLS selectedEquip)
         {
             int tier = 0;
             if(selectedEquip.EquipLevel < 75)
@@ -113,7 +113,7 @@ namespace MSEACalculator
            
         }
 
-        public static EquipModel updateBaseStats(Character character, EquipModel baseEquip)
+        public static EquipCLS updateBaseStats(CharacterCLS character, EquipCLS baseEquip)
         {
             //To update equip with proper values as per class
             //EquipModel equipModel = new EquipModel();
@@ -169,7 +169,7 @@ namespace MSEACalculator
             return baseEquip;
         }
 
-        public static EquipStatsModel recordToProperty(EquipStatsModel RM, Dictionary<string, int> record)
+        public static EquipStatsCLS recordToProperty(EquipStatsCLS RM, Dictionary<string, int> record)
         {
             foreach(var R in record.Keys)
             {
@@ -234,7 +234,7 @@ namespace MSEACalculator
             return RM;
         }
         
-        public static Dictionary<string,int> propertyToRecord(EquipStatsModel RM, Dictionary<string, int> record)
+        public static Dictionary<string,int> propertyToRecord(EquipStatsCLS RM, Dictionary<string, int> record)
         {
             record.Clear();
             record["STR"] = RM.STR;
@@ -257,16 +257,16 @@ namespace MSEACalculator
         }
 
 
-        public static EquipModel FindEquip(List<EquipModel> FindingList, Character SCharacter, string Slot, string ESet)
+        public static EquipCLS FindEquip(List<EquipCLS> FindingList, CharacterCLS SCharacter, string Slot, string ESet)
         {
             
 
-            EquipModel returnedEquip = new EquipModel();
+            EquipCLS returnedEquip = new EquipCLS();
 
             
             if (GVar.AccEquips.Contains(Slot))
             {
-                foreach(EquipModel equip in FindingList)
+                foreach(EquipCLS equip in FindingList)
                 {
                     if (equip.EquipSlot == Slot && (equip.EquipSet == ESet || equip.EquipName == ESet))
                     {
@@ -286,7 +286,7 @@ namespace MSEACalculator
                 switch (EquipSlot[Slot])
                 {
                     case "Weapon":
-                        foreach (EquipModel equip in FindingList)
+                        foreach (EquipCLS equip in FindingList)
                         {
                             if (equip.WeaponType == SCharacter?.CurrentMainWeapon && equip.EquipSet == ESet)
                             {
@@ -297,7 +297,7 @@ namespace MSEACalculator
                         }
                         break;
                     case "Secondary":
-                        foreach (EquipModel equip in FindingList)
+                        foreach (EquipCLS equip in FindingList)
                         {
                             if (equip.EquipName == ESet)
                             {
@@ -326,7 +326,7 @@ namespace MSEACalculator
                     case "Heart":
                         break;
                     case "Armor":
-                        foreach(EquipModel equip in FindingList)
+                        foreach(EquipCLS equip in FindingList)
                         {
                             if (equip.EquipSet ==  ESet && equip.EquipSlot == Slot && equip.ClassType == SCharacter.ClassType)
                             {
@@ -342,118 +342,118 @@ namespace MSEACalculator
 
         
 
-        public static Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModel>>> SpellTraceDict { get; set; } = new Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModel>>>
+        public static Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModelCLS>>> SpellTraceDict { get; set; } = new Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModelCLS>>>
         {
-            ["Armor"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
+            ["Armor"] = new Dictionary<int, Dictionary<int, ScrollingModelCLS>>
             {
-                [1] = new Dictionary<int, ScrollingModel>
+                [1] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel{
+                    [100] = new ScrollingModelCLS{
                         MainStat = 1,
                         HP = 5,
                         DEF =1
                     },
-                    [70] = new ScrollingModel{
+                    [70] = new ScrollingModelCLS{
                         MainStat= 2,
                         HP = 15,
                         DEF =2
                     },
-                    [30] = new ScrollingModel{MainStat= 3, HP = 30, DEF =4 }
+                    [30] = new ScrollingModelCLS{MainStat= 3, HP = 30, DEF =4 }
                 },
-                [2] = new Dictionary<int, ScrollingModel>
+                [2] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { MainStat = 2, HP = 20, DEF = 4 },
-                    [70] = new ScrollingModel { MainStat = 3, HP = 40, DEF = 4},
-                    [30] = new ScrollingModel { MainStat = 5, HP = 70,DEF = 7}
+                    [100] = new ScrollingModelCLS { MainStat = 2, HP = 20, DEF = 4 },
+                    [70] = new ScrollingModelCLS { MainStat = 3, HP = 40, DEF = 4},
+                    [30] = new ScrollingModelCLS { MainStat = 5, HP = 70,DEF = 7}
                 },
-                [3] = new Dictionary<int, ScrollingModel>
+                [3] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { MainStat = 3, HP = 30, DEF = 3 },
-                    [70] = new ScrollingModel { MainStat = 4, HP = 70, DEF = 5 },
-                    [30] = new ScrollingModel { MainStat = 7, HP = 120, DEF = 10 }
+                    [100] = new ScrollingModelCLS { MainStat = 3, HP = 30, DEF = 3 },
+                    [70] = new ScrollingModelCLS { MainStat = 4, HP = 70, DEF = 5 },
+                    [30] = new ScrollingModelCLS { MainStat = 7, HP = 120, DEF = 10 }
                 }
             },
-            ["Gloves"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
+            ["Gloves"] = new Dictionary<int, Dictionary<int, ScrollingModelCLS>>
             {
-                [1] = new Dictionary<int, ScrollingModel>
+                [1] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { DEF = 3},
-                    [70] = new ScrollingModel { ATK = 1},
-                    [30] = new ScrollingModel { ATK = 2}
+                    [100] = new ScrollingModelCLS { DEF = 3},
+                    [70] = new ScrollingModelCLS { ATK = 1},
+                    [30] = new ScrollingModelCLS { ATK = 2}
                 },
-                [2] = new Dictionary<int, ScrollingModel>
+                [2] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { ATK = 1},
-                    [70] = new ScrollingModel { ATK = 2},
-                    [30] = new ScrollingModel { ATK = 3}
+                    [100] = new ScrollingModelCLS { ATK = 1},
+                    [70] = new ScrollingModelCLS { ATK = 2},
+                    [30] = new ScrollingModelCLS { ATK = 3}
                 }
             },
-            ["Accessory"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
+            ["Accessory"] = new Dictionary<int, Dictionary<int, ScrollingModelCLS>>
             {
-                [1] = new Dictionary<int, ScrollingModel>
+                [1] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { MainStat = 1},
-                    [70] = new ScrollingModel { MainStat = 2},
-                    [30] = new ScrollingModel { MainStat = 3}
+                    [100] = new ScrollingModelCLS { MainStat = 1},
+                    [70] = new ScrollingModelCLS { MainStat = 2},
+                    [30] = new ScrollingModelCLS { MainStat = 3}
                 },
-                [2] = new Dictionary<int, ScrollingModel>
+                [2] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { MainStat = 1},
-                    [70] = new ScrollingModel { MainStat = 2},
-                    [30] = new ScrollingModel { MainStat = 4}
+                    [100] = new ScrollingModelCLS { MainStat = 1},
+                    [70] = new ScrollingModelCLS { MainStat = 2},
+                    [30] = new ScrollingModelCLS { MainStat = 4}
                 },
-                [3] = new Dictionary<int, ScrollingModel>
+                [3] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { MainStat = 2},
-                    [70] = new ScrollingModel { MainStat = 3},
-                    [30] = new ScrollingModel { MainStat =5}
+                    [100] = new ScrollingModelCLS { MainStat = 2},
+                    [70] = new ScrollingModelCLS { MainStat = 3},
+                    [30] = new ScrollingModelCLS { MainStat =5}
                 }
             },
-            ["Heart"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
+            ["Heart"] = new Dictionary<int, Dictionary<int, ScrollingModelCLS>>
             {
-                [1] = new Dictionary<int, ScrollingModel>
+                [1] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { ATK = 1},
-                    [70] = new ScrollingModel { ATK = 2},
-                    [30] = new ScrollingModel { ATK = 3}
+                    [100] = new ScrollingModelCLS { ATK = 1},
+                    [70] = new ScrollingModelCLS { ATK = 2},
+                    [30] = new ScrollingModelCLS { ATK = 3}
                 },
-                [2] = new Dictionary<int, ScrollingModel>
+                [2] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { ATK = 2},
-                    [70] = new ScrollingModel { ATK = 3},
-                    [30] = new ScrollingModel { ATK = 5}
+                    [100] = new ScrollingModelCLS { ATK = 2},
+                    [70] = new ScrollingModelCLS { ATK = 3},
+                    [30] = new ScrollingModelCLS { ATK = 5}
                 }
         ,
-                [3] = new Dictionary<int, ScrollingModel>
+                [3] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { ATK = 3},
-                    [70] = new ScrollingModel { ATK = 4},
-                    [30] = new ScrollingModel { ATK = 7}
+                    [100] = new ScrollingModelCLS { ATK = 3},
+                    [70] = new ScrollingModelCLS { ATK = 4},
+                    [30] = new ScrollingModelCLS { ATK = 7}
                 }
             },
-            ["Weapon"] = new Dictionary<int, Dictionary<int, ScrollingModel>>
+            ["Weapon"] = new Dictionary<int, Dictionary<int, ScrollingModelCLS>>
             {
-                [1] = new Dictionary<int, ScrollingModel>
+                [1] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { ATK = 1},
-                    [70] = new ScrollingModel { ATK = 2},
-                    [30] = new ScrollingModel { MainStat = 1, ATK = 3},
-                    [15] = new ScrollingModel { MainStat = 2, ATK = 5}
+                    [100] = new ScrollingModelCLS { ATK = 1},
+                    [70] = new ScrollingModelCLS { ATK = 2},
+                    [30] = new ScrollingModelCLS { MainStat = 1, ATK = 3},
+                    [15] = new ScrollingModelCLS { MainStat = 2, ATK = 5}
                 },
-                [2] = new Dictionary<int, ScrollingModel>
+                [2] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { ATK = 2},
-                    [70] = new ScrollingModel { MainStat = 1, ATK = 3},
-                    [30] = new ScrollingModel { MainStat = 2, ATK = 5},
-                    [15] = new ScrollingModel { MainStat = 3, ATK = 7}
+                    [100] = new ScrollingModelCLS { ATK = 2},
+                    [70] = new ScrollingModelCLS { MainStat = 1, ATK = 3},
+                    [30] = new ScrollingModelCLS { MainStat = 2, ATK = 5},
+                    [15] = new ScrollingModelCLS { MainStat = 3, ATK = 7}
                 }
         ,
-                [3] = new Dictionary<int, ScrollingModel>
+                [3] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModel { MainStat = 1, ATK = 3},
-                    [70] = new ScrollingModel { MainStat = 2, ATK = 5},
-                    [30] = new ScrollingModel { MainStat = 3, ATK = 7},
-                    [15] = new ScrollingModel { MainStat = 4, ATK = 9}
+                    [100] = new ScrollingModelCLS { MainStat = 1, ATK = 3},
+                    [70] = new ScrollingModelCLS { MainStat = 2, ATK = 5},
+                    [30] = new ScrollingModelCLS { MainStat = 3, ATK = 7},
+                    [15] = new ScrollingModelCLS { MainStat = 4, ATK = 9}
                 }
             }
 
@@ -585,6 +585,7 @@ namespace MSEACalculator
 
         //    return eventList;
         //}
+
 
 
 

@@ -15,8 +15,8 @@ namespace MSEACalculator.CalculationRes.ViewModels
         public SymbolModel SymbolM { get; set; } = new SymbolModel();
         
 
-        private List<ArcaneSymbol> _SymbolList;
-        public List<ArcaneSymbol> SymbolList
+        private List<ArcaneSymbolCLS> _SymbolList;
+        public List<ArcaneSymbolCLS> SymbolList
         {
             get => _SymbolList;
             set
@@ -26,16 +26,16 @@ namespace MSEACalculator.CalculationRes.ViewModels
             }
         }
 
-        private ObservableCollection<ArcaneSymbol> _DisplayArcaneSymbolList = new ObservableCollection<ArcaneSymbol>();
+        private ObservableCollection<ArcaneSymbolCLS> _DisplayArcaneSymbolList = new ObservableCollection<ArcaneSymbolCLS>();
 
-        public ObservableCollection<ArcaneSymbol> DisplayArcaneSymbolList
+        public ObservableCollection<ArcaneSymbolCLS> DisplayArcaneSymbolList
         {
             get { return _DisplayArcaneSymbolList; }
             set { _DisplayArcaneSymbolList = value; }
         }
 
-        private ArcaneSymbol _CurrentSymbol;
-        public ArcaneSymbol CSymbol
+        private ArcaneSymbolCLS _CurrentSymbol;
+        public ArcaneSymbolCLS CSymbol
         {
             get => _CurrentSymbol;
             set
@@ -355,7 +355,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             //GET NEW LEVL
             //GET NEW EXP / NEW LIMIT
             //GET DAYS TO COMPLETION
-            ArcaneSymbol cSymbol = CSymbol;
+            ArcaneSymbolCLS cSymbol = CSymbol;
             cSymbol.CurrentLevel =  CLvl;
             cSymbol.CurrentExp = int.Parse(CExp);
             decimal dailyGains = ResetDailyS ? Convert.ToDecimal(cSymbol.BaseSymbolGain) : 0;
@@ -421,14 +421,14 @@ namespace MSEACalculator.CalculationRes.ViewModels
             }
 
  
-            SymbolList = new List<ArcaneSymbol>(SymbolM.ArcaneList);
+            SymbolList = new List<ArcaneSymbolCLS>(SymbolM.ArcaneList);
 
             CurrentAF = 0;
             TotalAF = SymbolM.MaxArcaneForce;
             TotalStat = 0;
         }
 
-        private void toggleInput(ArcaneSymbol arcaneSymbol)
+        private void toggleInput(ArcaneSymbolCLS arcaneSymbol)
         {
 
             if (arcaneSymbol.PQSymbolsGain != 0)
@@ -449,7 +449,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         private void UpdateDisList()
         {
-            foreach (ArcaneSymbol symbol in DisplayArcaneSymbolList)
+            foreach (ArcaneSymbolCLS symbol in DisplayArcaneSymbolList)
             {
                 Dictionary<string, int> dictRec = CalForm.CalArcaneStatsForce(symbol.CurrentLevel, ExtraStatType[ExtraStatIndex]);
                 symbol.CurrentAF = dictRec["ArcaneForce"];
@@ -468,11 +468,11 @@ namespace MSEACalculator.CalculationRes.ViewModels
         private void ReEvalSymbol()
         {
             Dictionary<string, int> dictRec = null;
-            List<ArcaneSymbol> tempList = new List<ArcaneSymbol>(DisplayArcaneSymbolList);
+            List<ArcaneSymbolCLS> tempList = new List<ArcaneSymbolCLS>(DisplayArcaneSymbolList);
 
             if (ArcaneCatT == true)
             {
-                foreach (ArcaneSymbol symbol in tempList)
+                foreach (ArcaneSymbolCLS symbol in tempList)
                 {
                     if (symbol.CurrentLevel > 1)
                     {
@@ -495,7 +495,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             }
             else if (ArcaneCatT == false)
             {
-                foreach (ArcaneSymbol symbol in tempList)
+                foreach (ArcaneSymbolCLS symbol in tempList)
                 {
                     if (symbol.CurrentLevel > 1)
                     {
@@ -517,10 +517,10 @@ namespace MSEACalculator.CalculationRes.ViewModels
             UpdateDisList();
         }
 
-        private ArcaneSymbol FindSymbol(string name)
+        private ArcaneSymbolCLS FindSymbol(string name)
         {
-            ArcaneSymbol Asymbol = null;
-            foreach (ArcaneSymbol symbol in SymbolM.ArcaneList)
+            ArcaneSymbolCLS Asymbol = null;
+            foreach (ArcaneSymbolCLS symbol in SymbolM.ArcaneList)
             {
                 if (symbol.Name == name)
                 {

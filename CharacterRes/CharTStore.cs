@@ -10,12 +10,12 @@ namespace MSEACalculator.CharacterRes
     public class CharTStore : EventArgs
     {
         
-        public CharTStore (Character character)
+        public CharTStore (CharacterCLS character)
         {
             //if (CurrentCharacter != null) { CurrentCharacter = character; }
             CurrentCharacter = character;
         }
 
-        public Character CurrentCharacter { get; set; }
+        public CharacterCLS CurrentCharacter { get; set; }
     }
 }

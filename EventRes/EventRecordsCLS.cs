@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSEACalculator.EventRes
 {
-    public class EventRecords
+    public class EventRecordsCLS
     {
         public string eventTitle { get; set; }
 
@@ -19,9 +19,9 @@ namespace MSEACalculator.EventRes
 
 
 
-        public EventRecords() { }
+        public EventRecordsCLS() { }
 
-        public EventRecords(string eventTitle, DateTime start, DateTime end, int duration,
+        public EventRecordsCLS(string eventTitle, DateTime start, DateTime end, int duration,
             Dictionary<string, bool> availableDays)
         {
             this.eventTitle = eventTitle;

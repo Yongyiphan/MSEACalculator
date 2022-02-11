@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSEACalculator.StarforceRes
 {
-    public class SFGain
+    public class SFGainCLS
     {
         public int SFLevel { get; set; } = 0;
         public int LevelRank { get; set; } = 0;
@@ -47,7 +47,7 @@ namespace MSEACalculator.StarforceRes
 
 
 
-        public SFGain() { }
+        public SFGainCLS() { }
         //public SFGain(int SF, int MStat, int NWDEF, int ODef, int MHP, int MMP, int Spd, int Jump, int GloveAtk, int NWATK, int WAtk = 0)
         //{
         //    this.StarForceLevel = SF;

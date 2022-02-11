@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSEACalculator.CharacterRes.EquipmentRes
 {
-    public class EquipModel
+    public class EquipCLS
     {
         public string EquipName { get; set; }
         public string EquipSet { get; set; }
@@ -18,21 +18,21 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int SlotCount { get; set; } = 0;
 
 
-        public EquipStatsModel BaseStats { get; set; } = new EquipStatsModel();
-        public EquipStatsModel ScrollStats { get; set; } = new EquipStatsModel();
-        public EquipStatsModel FlameStats { get; set; } = new EquipStatsModel();
+        public EquipStatsCLS BaseStats { get; set; } = new EquipStatsCLS();
+        public EquipStatsCLS ScrollStats { get; set; } = new EquipStatsCLS();
+        public EquipStatsCLS FlameStats { get; set; } = new EquipStatsCLS();
 
-        public List<PotentialStats> MainPot { get; set; } = new List<PotentialStats>
+        public List<PotentialStatsCLS> MainPot { get; set; } = new List<PotentialStatsCLS>
         {
-            new PotentialStats(), new PotentialStats(), new PotentialStats()
+            new PotentialStatsCLS(), new PotentialStatsCLS(), new PotentialStatsCLS()
         };
 
         public int MPgrade { get; set; }
 
 
-        public List<PotentialStats> AddPot { get; set; } = new List<PotentialStats> 
+        public List<PotentialStatsCLS> AddPot { get; set; } = new List<PotentialStatsCLS> 
         {
-            new PotentialStats(), new PotentialStats(), new PotentialStats()
+            new PotentialStatsCLS(), new PotentialStatsCLS(), new PotentialStatsCLS()
         };
         public int APgrade { get; set; }
         public bool SpellTraced { get; set; } = false;
@@ -41,7 +41,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int StarForce { get; set; } = 0;
 
         //DEFAULT CONSTRUCTOR
-        public EquipModel() { }
+        public EquipCLS() { }
 
         public override bool Equals(object obj)
         {
@@ -52,9 +52,9 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             }
             else
             {
-                if (obj is EquipModel)
+                if (obj is EquipCLS)
                 {
-                    EquipModel cObj = (EquipModel)obj;
+                    EquipCLS cObj = (EquipCLS)obj;
                     test.Add(EquipSet == cObj.EquipSet ? "true" : "false");
                     test.Add(EquipSlot == cObj.EquipSlot ? "true" : "false");
                     test.Add(SlotCount == cObj.SlotCount ? "true" : "false");

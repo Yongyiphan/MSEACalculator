@@ -446,7 +446,7 @@ namespace MSEACalculator.OtherRes.Database
                 switch (insertType)
                 {
                     case "Boss":
-                        List<Boss> bosstable = await ImportCSV.GetBossCSVAsync();
+                        List<BossCLS> bosstable = await ImportCSV.GetBossCSVAsync();
                         // update to table
 
 
@@ -455,7 +455,7 @@ namespace MSEACalculator.OtherRes.Database
                         " VALUES (@BossID,@BossName,@Difficulty,@EntryType,@Meso)";
                         using (SqliteCommand insertBosscmd = new SqliteCommand(insertBoss, connection, transaction))
                         {
-                            foreach (Boss bossItem in bosstable)
+                            foreach (BossCLS bossItem in bosstable)
                             {
                                 insertBosscmd.Parameters.Clear();
                                 insertBosscmd.Parameters.AddWithValue("@BossID", bossItem.BossID);
@@ -481,7 +481,7 @@ namespace MSEACalculator.OtherRes.Database
 
                     case "AllCharacter":
 
-                        List<Character> charTable = await ImportCSV.GetCharCSVAsync();
+                        List<CharacterCLS> charTable = await ImportCSV.GetCharCSVAsync();
 
 
                         counter++;
@@ -490,7 +490,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         using (SqliteCommand insertCMD = new SqliteCommand(insertChar, connection, transaction))
                         {
-                            foreach (Character charItem in charTable)
+                            foreach (CharacterCLS charItem in charTable)
                             {
                                 insertCMD.Parameters.Clear();
                                 insertCMD.Parameters.AddWithValue("@CN", charItem.ClassName);
@@ -519,14 +519,14 @@ namespace MSEACalculator.OtherRes.Database
 
                         break;
                     case "UnionEffect":
-                        List<UnionModel> unionList = await ImportCSV.GetUnionECSVAsync();
+                        List<UnionCLS> unionList = await ImportCSV.GetUnionECSVAsync();
 
                         counter++;
                         string insertUnion = "INSERT INTO " + tableName + " (Effect, EffectType, B, A, S, SS, SSS)" +
                             " VALUES (@E, @ET, @B, @A, @S, @SS, @SSS);";
                         using (SqliteCommand insertCMD = new SqliteCommand(insertUnion, connection, transaction))
                         {
-                            foreach (UnionModel unionItem in unionList)
+                            foreach (UnionCLS unionItem in unionList)
                             {
                                 insertCMD.Parameters.Clear();
                                 insertCMD.Parameters.AddWithValue("@E", unionItem.Effect);
@@ -554,7 +554,7 @@ namespace MSEACalculator.OtherRes.Database
                         break;
                     case "Armor":
 
-                        List<EquipModel> equipList = await ImportCSV.GetArmorCSVAsync();
+                        List<EquipCLS> equipList = await ImportCSV.GetArmorCSVAsync();
 
                         counter++;
                         string insertEquip = "INSERT INTO " + tableName + "(" +
@@ -563,7 +563,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         using (SqliteCommand insertCMD = new SqliteCommand(insertEquip, connection, transaction))
                         {
-                            foreach (EquipModel equipItem in equipList)
+                            foreach (EquipCLS equipItem in equipList)
                             {
                                 insertCMD.Parameters.Clear();
                                 insertCMD.Parameters.AddWithValue("@Set", equipItem.EquipSet);
@@ -639,7 +639,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         break;
                     case "Accessories":
-                        List<EquipModel> AccessoriesList = await ImportCSV.GetAccessoriesCSVAsync();
+                        List<EquipCLS> AccessoriesList = await ImportCSV.GetAccessoriesCSVAsync();
 
 
 
@@ -652,7 +652,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         using (SqliteCommand insertCMD = new SqliteCommand(insertAcc, connection, transaction))
                         {
-                            foreach (EquipModel Aitem in AccessoriesList)
+                            foreach (EquipCLS Aitem in AccessoriesList)
                             {
                                 counter++;
                                 insertCMD.Parameters.Clear();
@@ -691,7 +691,7 @@ namespace MSEACalculator.OtherRes.Database
                         }
                         break;
                     case "Weapon":
-                        List<EquipModel> WeapList = await ImportCSV.GetWeaponCSVAsync();
+                        List<EquipCLS> WeapList = await ImportCSV.GetWeaponCSVAsync();
 
 
                         string insertWeap = "INSERT INTO " + tableName + " (" +
@@ -699,7 +699,7 @@ namespace MSEACalculator.OtherRes.Database
                             "(@ES, @WT, @EL, @AS, @MS, @SS,@HP, @DEF, @ATK, @MATK, @SPD, @BDMG, @IED);";
                         using (SqliteCommand insertCMD = new SqliteCommand(insertWeap, connection, transaction))
                         {
-                            foreach (EquipModel model in WeapList)
+                            foreach (EquipCLS model in WeapList)
                             {
                                 counter++;
                                 insertCMD.Parameters.Clear();
@@ -732,7 +732,7 @@ namespace MSEACalculator.OtherRes.Database
                         break;
 
                     case "Secondary":
-                        List<EquipModel> SecList = await ImportCSV.GetSecondaryCSVAsync();
+                        List<EquipCLS> SecList = await ImportCSV.GetSecondaryCSVAsync();
 
 
                         string insertSec = "INSERT INTO " + tableName + " (" +
@@ -740,7 +740,7 @@ namespace MSEACalculator.OtherRes.Database
                             "(@ES, @WT, @EN, @EL, @MS, @SS, @ATK, @MATK, @AS, @DEF, @HP, @MP, @ATKSPD);";
                         using (SqliteCommand insertCMD = new SqliteCommand(insertSec, connection, transaction))
                         {
-                            foreach (EquipModel model in SecList)
+                            foreach (EquipCLS model in SecList)
                             {
                                 counter++;
                                 insertCMD.Parameters.Clear();
@@ -835,14 +835,14 @@ namespace MSEACalculator.OtherRes.Database
 
                     case "StarForce":
 
-                        List<SFGain> SFList = await ImportCSV.GetSFCSVAsync();
+                        List<SFGainCLS> SFList = await ImportCSV.GetSFCSVAsync();
 
                         string insertSF = "INSERT INTO " + tableName + "(" +
                             "SFID, JobStat, NonWeapVDef, OverallVDef, CatAMaxHP, WeapMaxMP, WeapVATK, WeapVMATK, SJump, SSpeed, GloveVATK, GloveVMATK ) VALUES " +
                             "(@SFID, @JS, @NWD, @OD, @CMH, @WMP, @WATK, @WMATK, @SJ, @SS, @GATK, @GMATK );";
                         using (SqliteCommand insertCMD = new SqliteCommand(insertSF, connection, transaction))
                         {
-                            foreach (SFGain sF in SFList)
+                            foreach (SFGainCLS sF in SFList)
                             {
                                 insertCMD.Parameters.Clear();
                                 insertCMD.Parameters.AddWithValue("@SFID", sF.SFLevel);
@@ -873,14 +873,14 @@ namespace MSEACalculator.OtherRes.Database
                         break;
 
                     case "AddStarForce":
-                        List<SFGain> ASFList = await ImportCSV.GetAddSFCSVAsync();
+                        List<SFGainCLS> ASFList = await ImportCSV.GetAddSFCSVAsync();
 
                         string insertASF = "INSERT INTO " + tableName + "(" +
                             "SFID, LevelRank, VStat, NonWeapVATK, NonWeapVMATK, WeapVATK, WeapVMATK) VALUES " +
                             "(@SFID, @LR, @VS, @NWATK, @NWMATK, @WATK, @WMATK);";
                         using (SqliteCommand insertCMD = new SqliteCommand(insertASF, connection, transaction))
                         {
-                            foreach (SFGain sF in ASFList)
+                            foreach (SFGainCLS sF in ASFList)
                             {
                                 insertCMD.Parameters.Clear();
                                 insertCMD.Parameters.AddWithValue("@SFID", sF.SFLevel);
@@ -907,7 +907,7 @@ namespace MSEACalculator.OtherRes.Database
                         break;
                     case "Potential":
 
-                        List<PotentialStats> PotList = await ImportCSV.GetPotentialCSVAsync();
+                        List<PotentialStatsCLS> PotList = await ImportCSV.GetPotentialCSVAsync();
 
                         string insertPot = "INSERT INTO " + tableName +"(" +
                             "EquipGrp, Grade, GradeT, StatT, Stat, MinLvl, MaxLvl, ValueI, Duration, Chance) VALUES " +
@@ -915,7 +915,7 @@ namespace MSEACalculator.OtherRes.Database
                         //int potIDc = 0;
                         using (SqliteCommand insertCMD = new SqliteCommand(insertPot, connection, transaction))
                         {
-                            foreach (PotentialStats pot in PotList)
+                            foreach (PotentialStatsCLS pot in PotList)
                             {
                                 counter+=1;
                                 foreach (string i in pot.EquipGrpL)
@@ -960,8 +960,8 @@ namespace MSEACalculator.OtherRes.Database
                         break;
                     case "ArcaneSymbol":
 
-                        List<ArcaneSymbol> Symbols = new List<ArcaneSymbol> {
-                            new ArcaneSymbol
+                        List<ArcaneSymbolCLS> Symbols = new List<ArcaneSymbolCLS> {
+                            new ArcaneSymbolCLS
                             {
                                 Name = "Vanishing Journey",
                                 BaseSymbolGain = 8,
@@ -970,7 +970,7 @@ namespace MSEACalculator.OtherRes.Database
                                 CostLvlMod = 7130000,
                                 CostMod = 2370000
                             },
-                            new ArcaneSymbol
+                            new ArcaneSymbolCLS
                             {
                                 Name = "Chew Chew",
                                 BaseSymbolGain = 4,
@@ -981,7 +981,7 @@ namespace MSEACalculator.OtherRes.Database
                                 CostLvlMod = 6600000,
                                 CostMod = 12440000
                             },
-                            new ArcaneSymbol
+                            new ArcaneSymbolCLS
                             {
                                 Name = "Lachelein",
                                 BaseSymbolGain = 8,
@@ -991,7 +991,7 @@ namespace MSEACalculator.OtherRes.Database
                                 CostLvlMod = 6600000,
                                 CostMod = 12440000
                             },
-                            new ArcaneSymbol
+                            new ArcaneSymbolCLS
                             {
                                 Name = "Arcana",
                                 BaseSymbolGain = 8,
@@ -1001,7 +1001,7 @@ namespace MSEACalculator.OtherRes.Database
                                 CostLvlMod = 6600000,
                                 CostMod = 12440000
                             },
-                            new ArcaneSymbol
+                            new ArcaneSymbolCLS
                             {
                                 Name = "Moras",
                                 BaseSymbolGain = 8,
@@ -1009,7 +1009,7 @@ namespace MSEACalculator.OtherRes.Database
                                 CostLvlMod = 6600000,
                                 CostMod = 12440000
                             },
-                            new ArcaneSymbol
+                            new ArcaneSymbolCLS
                             {
                                 Name = "Esfera",
                                 BaseSymbolGain = 8,
@@ -1026,7 +1026,7 @@ namespace MSEACalculator.OtherRes.Database
                             "VALUES (@N, @SM, @CLVL, @CEXP, @CLIMIT, @BG, @PQG, @PQGL, @SER, @CLM, @CM);";
                         using (SqliteCommand insertCMD = new SqliteCommand(insertAS, connection, transaction))
                         {
-                            foreach (ArcaneSymbol symbol in Symbols)
+                            foreach (ArcaneSymbolCLS symbol in Symbols)
                             {
                                 insertCMD.Parameters.Clear();
                                 insertCMD.Parameters.AddWithValue("@N",symbol.Name);

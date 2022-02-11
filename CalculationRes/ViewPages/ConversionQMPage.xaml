@@ -54,12 +54,6 @@
                            FontSize="15"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Bil:"
-                           FontSize="15"/>
-                <TextBlock Text="{Binding MoneyOutB, Mode=TwoWay}"
-                           FontSize="15"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Meso:"
                            FontSize="15"/>
                 <TextBlock Text="{Binding MoneyOutMeso, Mode=TwoWay}"

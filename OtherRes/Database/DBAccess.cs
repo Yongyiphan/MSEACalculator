@@ -13,7 +13,7 @@ namespace MSEACalculator.OtherRes.Database
     public class DBAccess
     {
 
-        public static bool insertCharTrack(Character character)
+        public static bool insertCharTrack(CharacterCLS character)
         {
             bool insertPassed;
 
@@ -45,11 +45,11 @@ namespace MSEACalculator.OtherRes.Database
             }
         }
 
-        public static List<Boss> getCharBossList(string character)
+        public static List<BossCLS> getCharBossList(string character)
         {
 
 
-            List<Boss> bossList = new List<Boss>();
+            List<BossCLS> bossList = new List<BossCLS>();
 
             string getMesoTrackQuery = @"SELECT " +
                 "BossList.BossID," +
@@ -78,7 +78,7 @@ namespace MSEACalculator.OtherRes.Database
                         while (result.Read())
                         {
 
-                            Boss tempBoss = new Boss();
+                            BossCLS tempBoss = new BossCLS();
 
                             tempBoss.BossID = result.GetInt16(0);
                             tempBoss.BossName = result.GetString(1);
@@ -129,7 +129,7 @@ namespace MSEACalculator.OtherRes.Database
 
         }
 
-        public static bool insertCharTEquip(EquipModel selectedEquip)
+        public static bool insertCharTEquip(EquipCLS selectedEquip)
         {
             bool insertPassed = false;
 
@@ -186,7 +186,7 @@ namespace MSEACalculator.OtherRes.Database
 
         }
 
-        public static bool deleteCharT(Character character)
+        public static bool deleteCharT(CharacterCLS character)
         {
             bool deletePassed = false;
             using (SqliteConnection dbCon = new SqliteConnection(GVar.CONN_STRING))

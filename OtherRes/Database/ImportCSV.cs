@@ -15,10 +15,10 @@ namespace MSEACalculator.OtherRes.Database
 {
     public class ImportCSV
     {
-        public static async Task<List<Boss>> GetBossCSVAsync()
+        public static async Task<List<BossCLS>> GetBossCSVAsync()
         {
 
-            List<Boss> AllBossList = new List<Boss>();
+            List<BossCLS> AllBossList = new List<BossCLS>();
 
             StorageFile statTable = await GVar.storageFolder.GetFileAsync(GVar.CalculationsPath + "BossListData.csv");
 
@@ -44,7 +44,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         var temp = bossEntry.Split(",");
                         counter += 1;
-                        Boss tempboss = new Boss();
+                        BossCLS tempboss = new BossCLS();
                         tempboss.BossID = counter;
                         tempboss.BossName = temp[1];
                         tempboss.Difficulty = temp[2];
@@ -66,9 +66,9 @@ namespace MSEACalculator.OtherRes.Database
             return AllBossList;
         }
 
-        public static async Task<List<SFGain>> GetSFCSVAsync()
+        public static async Task<List<SFGainCLS>> GetSFCSVAsync()
         {
-            List<SFGain> SFList = new List<SFGain>();
+            List<SFGainCLS> SFList = new List<SFGainCLS>();
 
             StorageFile statTable = await GVar.storageFolder.GetFileAsync(GVar.CalculationsPath + "StarforceGains.csv");
 
@@ -94,7 +94,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         var temp = SFEntry.Split(",");
 
-                        SFGain sFGain = new SFGain();
+                        SFGainCLS sFGain = new SFGainCLS();
                         sFGain.SFLevel = Convert.ToInt32(temp[1]);
                         sFGain.JobStat = Convert.ToInt32(temp[2]);
                         sFGain.NonWeapVDef = Convert.ToInt32(temp[3]);
@@ -117,9 +117,9 @@ namespace MSEACalculator.OtherRes.Database
 
             return SFList;
         }
-        public static async Task<List<SFGain>> GetAddSFCSVAsync()
+        public static async Task<List<SFGainCLS>> GetAddSFCSVAsync()
         {
-            List<SFGain> SFList = new List<SFGain>();
+            List<SFGainCLS> SFList = new List<SFGainCLS>();
 
             StorageFile statTable = await GVar.storageFolder.GetFileAsync(GVar.CalculationsPath + "AddStarforceGains.csv");
 
@@ -145,7 +145,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         var temp = SFEntry.Split(",");
 
-                        SFGain sFGain = new SFGain();
+                        SFGainCLS sFGain = new SFGainCLS();
                         sFGain.SFLevel = Convert.ToInt32(temp[1]);
                         sFGain.LevelRank = Convert.ToInt32(temp[2]);
                         sFGain.VStat = Convert.ToInt32(temp[3]);
@@ -165,9 +165,9 @@ namespace MSEACalculator.OtherRes.Database
             return SFList;
         }
 
-        public static async Task<List<Character>> GetCharCSVAsync()
+        public static async Task<List<CharacterCLS>> GetCharCSVAsync()
         {
-            List<Character> characterList = new List<Character>();
+            List<CharacterCLS> characterList = new List<CharacterCLS>();
 
 
             StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "CharacterData.csv");
@@ -194,7 +194,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         var temp = characterItem.Split(",");
                         counter += 1;
-                        Character tempChar = new Character();
+                        CharacterCLS tempChar = new CharacterCLS();
                         tempChar.ClassName = temp[1];
                         tempChar.Faction = temp[2];
                         tempChar.ClassType = temp[3];
@@ -213,9 +213,9 @@ namespace MSEACalculator.OtherRes.Database
             return characterList;
         }
 
-        public static async Task<List<UnionModel>> GetUnionECSVAsync()
+        public static async Task<List<UnionCLS>> GetUnionECSVAsync()
         {
-            List<UnionModel> unionList = new List<UnionModel>();
+            List<UnionCLS> unionList = new List<UnionCLS>();
 
             StorageFile UnionTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "UnionData.csv");
 
@@ -240,7 +240,7 @@ namespace MSEACalculator.OtherRes.Database
                         }
                         var temp = unionItems.Split(",");
                         counter += 1;
-                        UnionModel tempUnion = new UnionModel();
+                        UnionCLS tempUnion = new UnionCLS();
                         tempUnion.Effect = temp[1];
                         tempUnion.RankB = Convert.ToInt32(temp[2]);
                         tempUnion.RankA = Convert.ToInt32(temp[3]);
@@ -265,9 +265,9 @@ namespace MSEACalculator.OtherRes.Database
             return unionList;
         }
 
-        public static async Task<List<EquipModel>> GetArmorCSVAsync()
+        public static async Task<List<EquipCLS>> GetArmorCSVAsync()
         {
-            List<EquipModel> equipList = new List<EquipModel>();
+            List<EquipCLS> equipList = new List<EquipCLS>();
 
             StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + "ArmorData.csv");
 
@@ -293,7 +293,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         var temp = equipItem.Split(",");
                         counter += 1;
-                        EquipModel equip = new EquipModel();
+                        EquipCLS equip = new EquipCLS();
                         equip.EquipSet = temp[1];
                         equip.ClassType = temp[2];
                         equip.EquipSlot = temp[3];
@@ -319,9 +319,9 @@ namespace MSEACalculator.OtherRes.Database
 
         }
 
-        public static async Task<List<EquipModel>> GetAccessoriesCSVAsync()
+        public static async Task<List<EquipCLS>> GetAccessoriesCSVAsync()
         {
-            List<EquipModel> AccessoriesList = new List<EquipModel>();
+            List<EquipCLS> AccessoriesList = new List<EquipCLS>();
 
             StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + "AccessoriesData.csv");
 
@@ -346,7 +346,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         var temp = accItem.Split(",");
 
-                        EquipModel equip = new EquipModel();
+                        EquipCLS equip = new EquipCLS();
                         equip.EquipName = temp[1];
                         equip.EquipSet = temp[2];
                         equip.ClassType = temp[3];
@@ -379,9 +379,9 @@ namespace MSEACalculator.OtherRes.Database
             return AccessoriesList;
         }
 
-        public static async Task<List<EquipModel>> GetWeaponCSVAsync()
+        public static async Task<List<EquipCLS>> GetWeaponCSVAsync()
         {
-            List<EquipModel> WeaponList = new List<EquipModel>();
+            List<EquipCLS> WeaponList = new List<EquipCLS>();
 
             StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + "WeaponData.csv");
 
@@ -406,7 +406,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         var temp = weapItem.Split(",");
 
-                        EquipModel equip = new EquipModel();
+                        EquipCLS equip = new EquipCLS();
                         equip.EquipSet = temp[1];
                         equip.WeaponType = temp[2];
                         equip.EquipLevel = Convert.ToInt32(temp[3]);
@@ -436,9 +436,9 @@ namespace MSEACalculator.OtherRes.Database
 
 
         }
-        public static async Task<List<EquipModel>> GetSecondaryCSVAsync()
+        public static async Task<List<EquipCLS>> GetSecondaryCSVAsync()
         {
-            List<EquipModel> WeaponList = new List<EquipModel>();
+            List<EquipCLS> WeaponList = new List<EquipCLS>();
 
             StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + "SecondaryWeapData.csv");
 
@@ -463,7 +463,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         var temp = weapItem.Split(",");
 
-                        EquipModel equip = new EquipModel();
+                        EquipCLS equip = new EquipCLS();
                         equip.ClassType = temp[1];
                         equip.WeaponType = temp[2];
                         equip.EquipName = temp[3];
@@ -565,9 +565,9 @@ namespace MSEACalculator.OtherRes.Database
             return CWdict;
         }
 
-        public static async Task<List<PotentialStats>> GetPotentialCSVAsync()
+        public static async Task<List<PotentialStatsCLS>> GetPotentialCSVAsync()
         {
-            List<PotentialStats> PotentialList = new List<PotentialStats>();
+            List<PotentialStatsCLS> PotentialList = new List<PotentialStatsCLS>();
 
             StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CalculationsPath + "PotentialData.csv");
 
@@ -593,7 +593,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         var temp = potItem.Split(",");
 
-                        PotentialStats Pot = new PotentialStats();
+                        PotentialStatsCLS Pot = new PotentialStatsCLS();
 
                         Pot.EquipGrpL = temp[1].Contains(";") ? temp[1].Split(';').ToList() : new List<string> { temp[1]};
                         Pot.Grade = temp[2];

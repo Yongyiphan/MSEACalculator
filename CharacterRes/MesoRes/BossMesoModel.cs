@@ -10,11 +10,11 @@ using MSEACalculator.OtherRes.Database;
 
 namespace MSEACalculator.CharacterRes.MesoRes
 {
-    public class BossMeso :INPCObject
+    public class BossMesoModel :INPCObject
     {
 
-        public Dictionary<int, Boss> bossDict { get { return DBRetrieve.GetBossDB(); } }
-        public Dictionary<string, Character> charDict { get { return DBRetrieve.GetAllCharTrackDB(); } }
+        public Dictionary<int, BossCLS> bossDict { get { return DBRetrieve.GetBossDB(); } }
+        public Dictionary<string, CharacterCLS> charDict { get { return DBRetrieve.GetAllCharTrackDB(); } }
 
         public List<string> bossNameList { get; set; } = new List<string>();
         public List<string> charNameList { get; set; } = new List<string>();
@@ -28,7 +28,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
         private string mesoViewBy;
         public string MesoViewBy { get { return mesoViewBy = displayType[1]; } set { mesoViewBy = value; } }
 
-        public BossMeso()
+        public BossMesoModel()
         {
             InitLoadFields();
         }
@@ -36,7 +36,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
 
         public void InitLoadFields()
         {
-            foreach (Boss bossItem in bossDict.Values)
+            foreach (BossCLS bossItem in bossDict.Values)
             {
 
                 if (!bossNameList.Contains(bossItem.BossName))
@@ -44,7 +44,7 @@ namespace MSEACalculator.CharacterRes.MesoRes
                     bossNameList.Add(bossItem.BossName);
                 };
             }
-            foreach (Character charItem in charDict.Values)
+            foreach (CharacterCLS charItem in charDict.Values)
             {
                 charNameList.Add(charItem.ClassName);
             }

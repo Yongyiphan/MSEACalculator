@@ -27,7 +27,7 @@ namespace MSEACalculator.EventRes
     /// </summary>
     public sealed partial class Event : Page
     {
-        EventRecords eRec = new EventRecords();
+        EventRecordsCLS eRec = new EventRecordsCLS();
         public Event()
         {
             this.InitializeComponent();

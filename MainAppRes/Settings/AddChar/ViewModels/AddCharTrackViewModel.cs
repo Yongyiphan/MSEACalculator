@@ -40,8 +40,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             } 
         }
 
-        private ObservableCollection<Character> _AllCharList = new ObservableCollection<Character>();
-        public ObservableCollection<Character> AllCharList 
+        private ObservableCollection<CharacterCLS> _AllCharList = new ObservableCollection<CharacterCLS>();
+        public ObservableCollection<CharacterCLS> AllCharList 
         {
             get => _AllCharList; 
             set 
@@ -52,8 +52,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
         //INIT Empty List
-        private ObservableCollection<Character> _charTrackList = new ObservableCollection<Character>();
-        public ObservableCollection<Character> CharTrackList
+        private ObservableCollection<CharacterCLS> _charTrackList = new ObservableCollection<CharacterCLS>();
+        public ObservableCollection<CharacterCLS> CharTrackList
         {
             get { return _charTrackList; }
             set { _charTrackList = value; OnPropertyChanged(nameof(CharTrackList)); }
@@ -61,8 +61,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
 
         //VARAIBLES
-        private Character _SelectedAllChar;
-        public Character SelectedAllChar
+        private CharacterCLS _SelectedAllChar;
+        public CharacterCLS SelectedAllChar
         {
             get { return _SelectedAllChar; }
             set
@@ -104,8 +104,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
 
-        private Character _CharTSelect;
-        public Character CharTSelect
+        private CharacterCLS _CharTSelect;
+        public CharacterCLS CharTSelect
         {
             get { return _CharTSelect; }
             set { _CharTSelect = value;
@@ -169,7 +169,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             int sf = Convert.ToInt32(StarF);
             string URank = ComFunc.returnUnionRank(SelectedAllChar.ClassName, charLvl);
 
-            Character tempChar = new Character(SelectedAllChar.ClassName, URank, charLvl, sf);
+            CharacterCLS tempChar = new CharacterCLS(SelectedAllChar.ClassName, URank, charLvl, sf);
             CharTrackList.Add(tempChar);
             AllCharList.Remove(SelectedAllChar);
             bool insertResult = DBAccess.insertCharTrack(tempChar);

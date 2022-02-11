@@ -47,11 +47,14 @@ namespace MSEACalculator
 
 
 
-
+        //STAR FORCE
         public static List<string> CategoryAEquips { get; set; } = new List<string>
         {
             "Hat", "Top", "Bottom", "Overall", "Cape", "Ring", "Pendant", "Belt", "Shoulderpad", "Shield" ,"Weapon"
         };
+
+        //TOTAL 20 UNIQUE SLOTS
+        //EQUIPMENT SLOTS BEGIN
         public static List<string> AccEquips { get; set; } = new List<string>
         {
             "Ring", "Shoulder", "Pendant", "Face Accessory","Eye Accessory", "Earrings", "Belt", "Badge", "Medal", "Emblem", "Heart", "Pocket"
@@ -61,6 +64,8 @@ namespace MSEACalculator
         {
             "Hat", "Bottom", "Top", "Overall", "Cape", "Gloves", "Shoes"
         };
+        //EQUIPMENT SLOTS END
+
 
         public static List<string> BaseStatTypes { get; set; } = new List<string> {
             "STR","DEX","INT","LUK",

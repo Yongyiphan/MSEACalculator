@@ -1,9 +1,7 @@
 ﻿using MSEACalculator.CharacterRes;
 using MSEACalculator.CharacterRes.EquipmentRes;
-using MSEACalculator.MainAppRes.Settings.AddChar;
 using MSEACalculator.MainAppRes.Settings.AddChar.ViewPages;
 using MSEACalculator.OtherRes;
-using MSEACalculator.OtherRes.Interface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,7 +33,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         public readonly AddCharTrackViewModel ACharTrackVM;
 
         public AddEquipModel AEquipM { get; set; } = new AddEquipModel();
-        public ScrollingModel ScrollModel { get; set; } = new ScrollingModel();
+        public ScrollingModelCLS ScrollModel { get; set; } = new ScrollingModelCLS();
 
 
         /// <summary>
@@ -72,7 +70,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        public List<EquipModel> CurrentEquipList { get; set; } = new List<EquipModel>();
+        public List<EquipCLS> CurrentEquipList { get; set; } = new List<EquipCLS>();
 
         private List<string> _CharWeapon;
         public List<string> CharacterWeapon
@@ -98,8 +96,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         public Dictionary<string, int> ScrollRecord { get; set; } = new Dictionary<string, int>();
         public Dictionary<string, int> FlameRecord { get; set; } = new Dictionary<string, int>();
 
-        private ObservableCollection<PotentialStats> _FirstPotL  = new ObservableCollection<PotentialStats>();
-        public ObservableCollection<PotentialStats> FirstPotL
+        private ObservableCollection<PotentialStatsCLS> _FirstPotL  = new ObservableCollection<PotentialStatsCLS>();
+        public ObservableCollection<PotentialStatsCLS> FirstPotL
         {
             get =>  _FirstPotL;
             set
@@ -109,8 +107,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
 
         }
-        private ObservableCollection<PotentialStats> _SecondPotL = new ObservableCollection<PotentialStats>();
-        public ObservableCollection<PotentialStats> SecondPotL
+        private ObservableCollection<PotentialStatsCLS> _SecondPotL = new ObservableCollection<PotentialStatsCLS>();
+        public ObservableCollection<PotentialStatsCLS> SecondPotL
         {
             get => _SecondPotL;
             set
@@ -119,8 +117,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 OnPropertyChanged(nameof(SecondPotL));
             }
         }
-        private ObservableCollection<PotentialStats> _ThirdPotL = new ObservableCollection<PotentialStats>();
-        public ObservableCollection<PotentialStats> ThirdPotL
+        private ObservableCollection<PotentialStatsCLS> _ThirdPotL = new ObservableCollection<PotentialStatsCLS>();
+        public ObservableCollection<PotentialStatsCLS> ThirdPotL
         {
             get => _ThirdPotL;
             set 
@@ -130,7 +128,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        public ObservableCollection<EquipModel> CItemDictT { get; set; } = new ObservableCollection<EquipModel>();
+        public ObservableCollection<EquipCLS> CItemDictT { get; set; } = new ObservableCollection<EquipCLS>();
 
 
 
@@ -146,16 +144,16 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
         
-        private List<PotentialStats> _MainPotL;
-        public List<PotentialStats> MainPotL
+        private List<PotentialStatsCLS> _MainPotL;
+        public List<PotentialStatsCLS> MainPotL
         {
             get => _MainPotL;
             set { _MainPotL = value;
                 OnPropertyChanged(nameof(MainPotL));
             }
         }
-        private List<PotentialStats> _AddPotL;
-        public List<PotentialStats> AddPotL
+        private List<PotentialStatsCLS> _AddPotL;
+        public List<PotentialStatsCLS> AddPotL
         {
             get => _AddPotL;
             set { _AddPotL = value;
@@ -260,8 +258,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         /// <summary>
         /// VARIABLES
         /// </summary>
-        private Character _SCharacter;
-        public Character SCharacter
+        private CharacterCLS _SCharacter;
+        public CharacterCLS SCharacter
         {
             get => _SCharacter;
             set
@@ -326,8 +324,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private EquipModel _CurrentEquipment;
-        public EquipModel CurrentSEquip
+        private EquipCLS _CurrentEquipment;
+        public EquipCLS CurrentSEquip
         {
             get { return _CurrentEquipment; }
             set { _CurrentEquipment = value;
@@ -575,8 +573,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private PotentialStats _FirstPot;
-        public PotentialStats FirstPot
+        private PotentialStatsCLS _FirstPot;
+        public PotentialStatsCLS FirstPot
         {
             get => _FirstPot;
             set { _FirstPot = value;
@@ -588,8 +586,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private PotentialStats _SecondPot;
-        public PotentialStats SecondPot
+        private PotentialStatsCLS _SecondPot;
+        public PotentialStatsCLS SecondPot
         {
             get => _SecondPot; 
             set { _SecondPot = value;
@@ -599,8 +597,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private PotentialStats _ThirdPot;
-        public PotentialStats ThirdPot
+        private PotentialStatsCLS _ThirdPot;
+        public PotentialStatsCLS ThirdPot
         {
             get => _ThirdPot;
             set { _ThirdPot = value;
@@ -624,8 +622,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
 
-        private EquipModel _CItemSelect;
-        public EquipModel CItemSelect
+        private EquipCLS _CItemSelect;
+        public EquipCLS CItemSelect
         {
             get => _CItemSelect;
             set
@@ -769,13 +767,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
         private void AddPotential()
         {
-            PotentialStats thirdPot = ThirdPot == null ? new PotentialStats() : ThirdPot;
+            PotentialStatsCLS thirdPot = ThirdPot == null ? new PotentialStatsCLS() : ThirdPot;
             if (isAddPot)
             {
                 if (ComFunc.notNULL(CurrentSEquip))
                 {
                     CurrentSEquip.APgrade = SPotentialG;
-                    CurrentSEquip.AddPot = new List<PotentialStats> { FirstPot, SecondPot, thirdPot };
+                    CurrentSEquip.AddPot = new List<PotentialStatsCLS> { FirstPot, SecondPot, thirdPot };
                 }
             }
             else
@@ -783,7 +781,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 if (ComFunc.notNULL(CurrentSEquip))
                 {
                     CurrentSEquip.MPgrade = SPotentialG;
-                    CurrentSEquip.MainPot = new List<PotentialStats> { FirstPot, SecondPot, thirdPot };
+                    CurrentSEquip.MainPot = new List<PotentialStatsCLS> { FirstPot, SecondPot, thirdPot };
                 }
             }
 
@@ -835,12 +833,12 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         private void AddItem()
         {
 
-            Character selectedChar = SCharacter;
+            CharacterCLS selectedChar = SCharacter;
             string currentSSlot = ComFunc.returnRingPend(SEquipSlot);
            
 
             //Blank Equp
-            EquipModel selectedEquip = new EquipModel();
+            EquipCLS selectedEquip = new EquipCLS();
             selectedEquip = CurrentSEquip;
 
             //if (namingType == 0) { selectedEquip.EquipName = string.Format("{0} {1}", SSetItem, SEquipSlot); }
@@ -866,7 +864,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             
 
             //Check for new / update of item.
-            EquipModel existEquip = CItemDictT.ToList().Find(equip => equip.EquipSlot == SEquipSlot);
+            EquipCLS existEquip = CItemDictT.ToList().Find(equip => equip.EquipSlot == SEquipSlot);
             //if slot added before
             if (existEquip != null)
             {
@@ -898,7 +896,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         private void ShowEquipSet(string selectedESlot)
         {
-            Func<string, string, ObservableCollection<string>, List<EquipModel>, ObservableCollection<string>>
+            Func<string, string, ObservableCollection<string>, List<EquipCLS>, ObservableCollection<string>>
                 FilterSet = (classtype, eSlot, displayList, itemList) =>
                 {
 
@@ -929,7 +927,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     return displayList;
                 };
 
-            Func<string, ObservableCollection<string>, List<EquipModel>, ObservableCollection<string>>
+            Func<string, ObservableCollection<string>, List<EquipCLS>, ObservableCollection<string>>
                 DisplayItemNameL = (eSlot, displayList, itemList) =>
                 {
 
@@ -947,7 +945,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                     return displayList;
                 };
-            Func<string, Character, ObservableCollection<string>, List<EquipModel>, ObservableCollection<string>>
+            Func<string, CharacterCLS, ObservableCollection<string>, List<EquipCLS>, ObservableCollection<string>>
                 FilterWeapon = (disType, character, displayList, itemList) =>
                 {
                     switch (disType)
@@ -1064,15 +1062,15 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         public void GetCurrentEquipment()
         {
-            EquipModel selectedEquip = new EquipModel();
+            EquipCLS selectedEquip = new EquipCLS();
 
             if (SCharacter != null && SSetItem != null)
             {
-                Character selectedChar = SCharacter;
+                CharacterCLS selectedChar = SCharacter;
                 string currentSSlot = ComFunc.returnRingPend(SEquipSlot);
                 //Blank Equp
 
-                List<EquipModel> EList = CurrentEquipList;
+                List<EquipCLS> EList = CurrentEquipList;
 
                 //Retreive base equip stats from list
                 selectedEquip = ComFunc.FindEquip(EList, selectedChar, currentSSlot, SSetItem);
@@ -1081,12 +1079,12 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        public ObservableCollection<PotentialStats> RetrievePot()
+        public ObservableCollection<PotentialStatsCLS> RetrievePot()
         {
-            ObservableCollection<PotentialStats> potList = new ObservableCollection<PotentialStats>();
+            ObservableCollection<PotentialStatsCLS> potList = new ObservableCollection<PotentialStatsCLS>();
             if (CurrentSEquip != null && SPotentialG != -1)
             {
-                foreach(PotentialStats lines in AEquipM.AllPotDict)
+                foreach(PotentialStatsCLS lines in AEquipM.AllPotDict)
                 {
                     if (lines.MinLvl <= CurrentSEquip.EquipLevel && CurrentSEquip.EquipLevel <= lines.MaxLvl && CurrentSEquip.EquipSlot == lines.EquipGrp)
                     {
@@ -1123,7 +1121,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         private void ShowSecondPot()
         {
-            ObservableCollection<PotentialStats> tempList = new ObservableCollection<PotentialStats>(FirstPotL);
+            ObservableCollection<PotentialStatsCLS> tempList = new ObservableCollection<PotentialStatsCLS>(FirstPotL);
 
             bool checks = false;
             if (FirstPot != null && SPotentialG != -1)
@@ -1147,7 +1145,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         private void ShowThirdPot()
         {
-            ObservableCollection<PotentialStats> tempList = new ObservableCollection<PotentialStats>(FirstPotL);
+            ObservableCollection<PotentialStatsCLS> tempList = new ObservableCollection<PotentialStatsCLS>(FirstPotL);
 
             bool checks = false;
 
@@ -1167,13 +1165,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                         }
                     }
                 }
-                tempList.Add(new PotentialStats());
+                tempList.Add(new PotentialStatsCLS());
                 ThirdPotL = tempList;
             }
 
         }
 
-        private EquipModel updateEquipModelStats(EquipModel selectedEquip, Character selectedChar, string slotType)
+        private EquipCLS updateEquipModelStats(EquipCLS selectedEquip, CharacterCLS selectedChar, string slotType)
         {
             if (selectedEquip.SpellTraced)
             {

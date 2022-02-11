@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSEACalculator.UnionRes
 {
-    public class UnionModel
+    public class UnionCLS
     {
 
         public string Effect { get; set; }
@@ -17,12 +17,12 @@ namespace MSEACalculator.UnionRes
         public int RankSS { get; set; }
         public int RankSSS { get; set; }
 
-        public UnionModel()
+        public UnionCLS()
         {
 
         }
 
-        public UnionModel(string Stat, string ST, int B, int A, int S, int SS, int SSS)
+        public UnionCLS(string Stat, string ST, int B, int A, int S, int SS, int SSS)
         {
             this.Effect = Stat;
             this.EffectType = ST;

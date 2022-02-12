@@ -184,6 +184,7 @@
     <Compile Include="OtherRes\Database\DBRetrieve.cs" />
     <Compile Include="OtherRes\Database\ImportCSV.cs" />
     <Compile Include="OtherRes\INPCObject.cs" />
+    <Compile Include="OtherRes\Interface\StringFormatConverter.cs" />
     <Compile Include="OtherRes\ScrapCode.cs" />
     <Compile Include="UnionRes\UnionCLS.cs" />
     <Compile Include="MainAppRes\HomePage.xaml.cs">

@@ -3,6 +3,7 @@ using MSEACalculator.OtherRes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,8 @@ namespace MSEACalculator.CalculationRes.ViewModels
     public class ArcaneQMViewModel : INPCObject
     {
         public SymbolModel SymbolM { get; set; } = new SymbolModel();
-        
+
+        public int TotalSymbolExp { get; set; } = GVar.MaxSymbolExp;
 
         private List<ArcaneSymbolCLS> _SymbolList;
         public List<ArcaneSymbolCLS> SymbolList
@@ -31,7 +33,9 @@ namespace MSEACalculator.CalculationRes.ViewModels
         public ObservableCollection<ArcaneSymbolCLS> DisplayArcaneSymbolList
         {
             get { return _DisplayArcaneSymbolList; }
-            set { _DisplayArcaneSymbolList = value; }
+            set { _DisplayArcaneSymbolList = value;
+                OnPropertyChanged(nameof(DisplayArcaneSymbolList));
+            }
         }
 
         private ArcaneSymbolCLS _CurrentSymbol;
@@ -44,8 +48,21 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 if (ComFunc.notNULL(CSymbol))
                 {
                     toggleInput(CSymbol);
-                    ResetDailyS = ResetPQS = false;
+                    ResetDailyS = CSymbol.IsGainsDaily;
+
+                    switch (GainsType)
+                    {
+                        case "PQ":
+                            ResetPQS = CSymbol.IsGainsPQ;
+                            break;
+                        case "Flex":
+                            PQGains = CSymbol.PQCoins.ToString();
+                            break;
+                    }
+                    
                     ShowSubMap = CSymbol.SubMap == "None" ? Visibility.Collapsed : Visibility.Visible;
+                    isSubMap = CSymbol.unlockSubMap;
+
                     CLvl = SymbolLvls.Single(x => x == CSymbol.CurrentLevel);
                     CExp = CSymbol.CurrentExp.ToString();
                     AddSymbolCMD.RaiseCanExecuteChanged();
@@ -165,7 +182,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
             }
         }
 
-        public string TotalSymbolExp { get; set; } = GVar.MaxSymbolExp.ToString();
 
 
         private bool _ResetDailyS = false;
@@ -189,7 +205,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
         }
 
 
-        private string _PQGains;
+        private string _PQGains = "0";
         public string PQGains
         {
             get { return _PQGains; }
@@ -317,7 +333,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         public bool CanDelSymbol()
         {
-            if(CSymbol!= null && DisplayArcaneSymbolList.Count>0)
+            if(CSymbol!= null && DisplayArcaneSymbolList?.Count>0)
             {
                 return true;
             }
@@ -328,7 +344,14 @@ namespace MSEACalculator.CalculationRes.ViewModels
         {
             
             DisplayArcaneSymbolList.RemoveAt(DisplayArcaneSymbolList.ToList().FindIndex(x => x.Name == CSymbol.Name));
-            UpdateDisList();
+            if (DisplayArcaneSymbolList.Count>0)
+            {
+                UpdateDisList();
+            }
+            else
+            {
+                ResetBtn();
+            }
             ResetInputFields();
         }
 
@@ -337,6 +360,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
         {
             InitVar();
             DisplayArcaneSymbolList.Clear();
+            
             ResetInputFields();
         }
 
@@ -359,14 +383,20 @@ namespace MSEACalculator.CalculationRes.ViewModels
             cSymbol.CurrentLevel =  CLvl;
             cSymbol.CurrentExp = int.Parse(CExp);
             decimal dailyGains = ResetDailyS ? Convert.ToDecimal(cSymbol.BaseSymbolGain) : 0;
+            cSymbol.IsGainsDaily = ResetDailyS;
+            cSymbol.IsGainsPQ = ResetPQS;
             cSymbol.unlockSubMap = isSubMap;
+
             int mod = isSubMap == true ? 2 : 1;
             dailyGains *= mod;
 
             switch (GainsType)
             {
                 case "PQ":
-                    dailyGains += cSymbol.PQSymbolsGain;
+                    if (ResetPQS)
+                    {
+                        dailyGains += cSymbol.PQSymbolsGain;
+                    }
                     break;
                 case "Flex":
                     if (PQGains != null && PQGains != String.Empty)
@@ -377,6 +407,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                         {
                             PQCoins = cSymbol.PQGainLimit;
                         }
+                        cSymbol.PQCoins =  PQCoins;
 
                         decimal PQSymbols = Decimal.Divide(PQCoins, cSymbol.SymbolExchangeRate);
                         dailyGains += PQSymbols;
@@ -384,11 +415,12 @@ namespace MSEACalculator.CalculationRes.ViewModels
                     break;
             }
 
+            //CALCULATION BEGIN
             int accExp = CalForm.CalAccEXp(cSymbol.CurrentLevel, cSymbol.CurrentExp);
             cSymbol.SymbolGainRate = dailyGains;
             Dictionary<string, int> CalculatedValues = CalForm.CalNewLvlExp(accExp);
 
-            
+
             cSymbol.CurrentLevel = CalculatedValues["NewLevel"];
             cSymbol.CurrentLimit = CalculatedValues["NewLimit"];
             cSymbol.AccumulatedExp = CalculatedValues["CurrentTotalExp"];
@@ -396,20 +428,33 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
             cSymbol.DaysLeft = CalForm.CalDaysLeft(cSymbol.AccumulatedExp, cSymbol.SymbolGainRate);
 
+            //CALCULATION END
+            cSymbol.CostSpent = CalForm.CalCostSymbol(1, cSymbol.CurrentLevel, cSymbol.CostLvlMod, cSymbol.CostMod);
+            cSymbol.CostToSpend = CalForm.CalCostSymbol(cSymbol.CurrentLevel, GVar.MaxArcaneSymbolLevel , cSymbol.CostLvlMod, cSymbol.CostMod);
+
+            if (cSymbol.DaysLeft == -1)
+            {
+                ComFunc.errorDia("Impossible to complete symbol. Add method to get more symbols");
+            }
 
             bool added = DisplayArcaneSymbolList.ToList().Any(x => x.Name == cSymbol.Name);
             if (!added)
             {
                 DisplayArcaneSymbolList.Add(cSymbol);
             }
-            else
-            {
-                int symbIndex = DisplayArcaneSymbolList.ToList().FindIndex(x => x.Name == cSymbol.Name);
-                DisplayArcaneSymbolList[symbIndex] = cSymbol;
-            }
+            //else
+            //{
+            //    ObservableCollection<ArcaneSymbolCLS> tempL = new ObservableCollection<ArcaneSymbolCLS>(DisplayArcaneSymbolList);
+            //    int symbIndex = tempL.ToList().FindIndex(x => x.Name == cSymbol.Name);
+            //    tempL[symbIndex] = cSymbol;
+            //    DisplayArcaneSymbolList = new ObservableCollection<ArcaneSymbolCLS>(tempL);
 
+            //}
             UpdateDisList();
             ResetInputFields();
+
+
+            
         }
 
         public void InitVar()
@@ -423,6 +468,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
  
             SymbolList = new List<ArcaneSymbolCLS>(SymbolM.ArcaneList);
 
+            DaysLeft = String.Empty;
             CurrentAF = 0;
             TotalAF = SymbolM.MaxArcaneForce;
             TotalStat = 0;
@@ -462,6 +508,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             DaysLeft = String.Format("{0:MM/dd/yyyy} ({1} days)", today.AddDays(maxDate), maxDate);
             CurrentAF = DisplayArcaneSymbolList.Select(symbol => symbol.CurrentAF).ToList().Sum();
             TotalStat = DisplayArcaneSymbolList.Select(symbol => symbol.CurrentAFStat).ToList().Sum();
+            DisplayArcaneSymbolList = new ObservableCollection<ArcaneSymbolCLS>(DisplayArcaneSymbolList);
 
         }
 
@@ -487,8 +534,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
                         symbol.DaysLeft = CalForm.CalDaysLeft(symbol.AccumulatedExp, symbol.SymbolGainRate);
 
 
-                        int fIndex = tempList.FindIndex(x => x.Name == symbol.Name);
-                        DisplayArcaneSymbolList[fIndex] = symbol;
                     }
                 }
                     
@@ -509,8 +554,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
                         symbol.DaysLeft = CalForm.CalDaysLeft(symbol.AccumulatedExp, symbol.SymbolGainRate);
 
 
-                        int fIndex = tempList.FindIndex(x => x.Name == symbol.Name);
-                        DisplayArcaneSymbolList[fIndex] = symbol;
                     }
                 }
             }

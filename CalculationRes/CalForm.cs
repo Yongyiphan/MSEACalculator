@@ -51,14 +51,34 @@ namespace MSEACalculator.CalculationRes
             return totalExp;
         }
 
+ 
         public static int CalDaysLeft(int accExp, decimal symGain)
         {
 
             int remainingExp = GVar.MaxSymbolExp - accExp;
+            decimal DaysLeft = 0;
+            try
+            {
+                DaysLeft = Math.Ceiling(remainingExp / symGain);
 
-            decimal DaysLeft = Math.Ceiling(remainingExp / symGain);
+            }
+            catch (DivideByZeroException)
+            {
+                DaysLeft = -1;
+            }
 
             return (int)DaysLeft;
+        }
+
+        public static int CalCostSymbol(int CLvl,int MLvl, int CostlvlMod, int CostMod)
+        {
+            int Cost = 0;
+            for (int i = CLvl; i < MLvl+1; i++)
+            {
+                Cost += (i * CostlvlMod) + CostMod;
+            }
+
+            return Cost;
         }
 
         public static Dictionary<string, int> CalNewLvlExp(int accExp)

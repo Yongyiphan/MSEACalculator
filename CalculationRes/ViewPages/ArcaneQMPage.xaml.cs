@@ -15,5 +15,7 @@ namespace MSEACalculator.CalculationRes.ViewPages
             this.InitializeComponent();
             this.DataContext = new ArcaneQMViewModel();
         }
+
+
     }
 }

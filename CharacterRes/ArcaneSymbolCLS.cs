@@ -25,16 +25,27 @@ namespace MSEACalculator.CharacterRes
         public string SubMap { get; set; } = "None";
         public bool unlockSubMap { get; set; } = false;
         public int BaseSymbolGain { get; set; } = 0;
+        public bool IsGainsDaily { get; set; } = false;
+
+        //QP Party
         public int PQSymbolsGain { get; set; } = 0;
+        public bool IsGainsPQ { get; set; } = false;
 
 
+        //PQ Flex
         public int PQGainLimit { get; set; }
         public int SymbolExchangeRate { get; set; }
+        public int PQCoins { get; set; } = 0;
         public decimal SymbolGainRate { get; set; } = 0;
 
+
+
+        //COST
         public int CostLvlMod { get; set; } = 0;
         public int CostMod { get; set; } = 0;
 
+        public int CostSpent { get; set; } = 0;
+        public int CostToSpend { get; set; } = 0;
 
         //Result:
         public int DaysLeft { get; set; }

@@ -169,7 +169,14 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             int sf = Convert.ToInt32(StarF);
             string URank = ComFunc.returnUnionRank(SelectedAllChar.ClassName, charLvl);
 
-            CharacterCLS tempChar = new CharacterCLS(SelectedAllChar.ClassName, URank, charLvl, sf);
+            CharacterCLS tempChar = new CharacterCLS()
+            {
+                ClassName = SelectedAllChar.ClassName,
+                UnionRank = URank,
+                Level = charLvl,
+                Starforce = sf
+            };
+
             CharTrackList.Add(tempChar);
             AllCharList.Remove(SelectedAllChar);
             bool insertResult = DBAccess.insertCharTrack(tempChar);

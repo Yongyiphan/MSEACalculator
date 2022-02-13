@@ -8,7 +8,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 {
     public class AddEquipModel
     {
-        
+        //ONLY RETREIVE
         public List<EquipCLS> AllArmorList { get => DBRetrieve.GetAllArmorDB(); }
         public List<EquipCLS> AllAccList { get => DBRetrieve.GetAllAccessoriesDB(); }
         public List<EquipCLS> AllWeapList { get => DBRetrieve.GetAllWeaponDB(); }

@@ -53,6 +53,9 @@ namespace MSEACalculator
             "Hat", "Top", "Bottom", "Overall", "Cape", "Ring", "Pendant", "Belt", "Shoulderpad", "Shield" ,"Weapon"
         };
 
+
+
+
         //TOTAL 20 UNIQUE SLOTS
         //EQUIPMENT SLOTS BEGIN
         public static List<string> AccEquips { get; set; } = new List<string>

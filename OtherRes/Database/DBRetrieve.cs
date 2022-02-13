@@ -83,8 +83,8 @@ namespace MSEACalculator.OtherRes.Database
                             tempChar.Faction = query.GetString(2);
                             tempChar.MainStat = query.GetString(3);
                             tempChar.SecStat = query.GetString(4);
-                            tempChar.unionEffect = query.GetString(5);
-                            tempChar.unionEffectType = query.GetString(6);
+                            tempChar.UnionEffect = query.GetString(5);
+                            tempChar.UnionEffectType = query.GetString(6);
 
                             tempChar.MainWeapon = new List<string> { query.GetString(7) };
                             tempChar.SecondaryWeapon = new List<string> { query.GetString(8) };
@@ -115,8 +115,8 @@ namespace MSEACalculator.OtherRes.Database
                         {
                             CharacterCLS tempChar = new CharacterCLS();
                             tempChar.ClassName = result.GetString(0);
-                            tempChar.unionRank = result.GetString(1);
-                            tempChar.level = result.GetInt32(2);
+                            tempChar.UnionRank = result.GetString(1);
+                            tempChar.Level = result.GetInt32(2);
                             tempChar.Starforce = result.GetInt32(3);
 
                             charDict.Add(result.GetString(0), tempChar);

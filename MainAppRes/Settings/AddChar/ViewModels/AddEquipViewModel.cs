@@ -30,234 +30,15 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         /// 
         /// </summary>
 
-        public readonly AddCharTrackViewModel ACharTrackVM;
-
-        public AddEquipModel AEquipM { get; set; } = new AddEquipModel();
-        public ScrollingModelCLS ScrollModel { get; set; } = new ScrollingModelCLS();
-
-
-        /// <summary>
-        /// RETRIEVING DATA FROM MODEL
-        /// </summary>
-
-        //KEY: EquipSlot | VALUE: Equip Category
-        public Dictionary<string, string> EquipSlots { get => AEquipM.EquipSlot; }
-        public List<string> FlameStatsTypes { get => AEquipM.FlameStatsTypes; }
-
-        public List<string> PotentialGrade { get => GVar.PotentialGrade; }
-        public List<int> Slots { get => ScrollModel.Slots; } //= new Scrolling().Slots;
-        public List<string> SlotSet { get; set; } = new List<string>
-        {
-            "Weapon", "Gloves", "Armor"
-        };
-        public List<string> WSE { get; set; } = new List<string>
-        {
-            "Weapon", "Secondary", "Emblem"
-        };
-
-        /// <summary>
-        /// INITIALISE EMPTY COLLECTIONS
-        /// </summary>
-
-        private ObservableCollection<string> _ArmorSet = new ObservableCollection<string>();
-        public ObservableCollection<string> ArmorSet
-        {
-            get { return _ArmorSet; }
-            set
-            {
-                _ArmorSet = value;
-                OnPropertyChanged(nameof(ArmorSet));
-            }
-        }
-
-        public List<EquipCLS> CurrentEquipList { get; set; } = new List<EquipCLS>();
-
-        private List<string> _CharWeapon;
-        public List<string> CharacterWeapon
-        {
-            get => _CharWeapon;
-            set
-            {
-                _CharWeapon = value;
-                OnPropertyChanged(nameof(CharacterWeapon));
-            }
-        }
-
-        public List<string> _StatTypes;
-        public List<string> StatTypes
-        {
-            get { return _StatTypes; }
-            set
-            {
-                _StatTypes = value;
-                OnPropertyChanged(nameof(StatTypes));
-            }
-        }
-        public Dictionary<string, int> ScrollRecord { get; set; } = new Dictionary<string, int>();
-        public Dictionary<string, int> FlameRecord { get; set; } = new Dictionary<string, int>();
-
-        private ObservableCollection<PotentialStatsCLS> _FirstPotL  = new ObservableCollection<PotentialStatsCLS>();
-        public ObservableCollection<PotentialStatsCLS> FirstPotL
-        {
-            get =>  _FirstPotL;
-            set
-            {
-                _FirstPotL = value;
-                OnPropertyChanged(nameof(FirstPotL));
-            }
-
-        }
-        private ObservableCollection<PotentialStatsCLS> _SecondPotL = new ObservableCollection<PotentialStatsCLS>();
-        public ObservableCollection<PotentialStatsCLS> SecondPotL
-        {
-            get => _SecondPotL;
-            set
-            {
-                _SecondPotL =  value;
-                OnPropertyChanged(nameof(SecondPotL));
-            }
-        }
-        private ObservableCollection<PotentialStatsCLS> _ThirdPotL = new ObservableCollection<PotentialStatsCLS>();
-        public ObservableCollection<PotentialStatsCLS> ThirdPotL
-        {
-            get => _ThirdPotL;
-            set 
-            {
-                _ThirdPotL = value;
-                OnPropertyChanged(nameof(ThirdPotL));
-            }
-        }
-
-        public ObservableCollection<EquipCLS> CItemDictT { get; set; } = new ObservableCollection<EquipCLS>();
-
-
-
-        private Dictionary<string, string> _TotalRecordDisplay;
-        public Dictionary<string, string> TotalRecordDisplay
-        {
-            get => _TotalRecordDisplay;
-            set
-            {
-                _TotalRecordDisplay = value;
-                OnPropertyChanged(nameof(TotalRecordDisplay));
-            }
-        }
 
         
-        private List<PotentialStatsCLS> _MainPotL;
-        public List<PotentialStatsCLS> MainPotL
-        {
-            get => _MainPotL;
-            set { _MainPotL = value;
-                OnPropertyChanged(nameof(MainPotL));
-            }
-        }
-        private List<PotentialStatsCLS> _AddPotL;
-        public List<PotentialStatsCLS> AddPotL
-        {
-            get => _AddPotL;
-            set { _AddPotL = value;
-                OnPropertyChanged(nameof(AddPotL)); 
-            }
-        }
-
-
-        public AddEquipViewModel(AddCharTrackViewModel aCharTrackVM)
-        {
-            
-            ACharTrackVM = aCharTrackVM;
-            SCharacter = ACharTrackVM?.SelectedAllChar;
-            initFields();
-            ACharTrackVM.RaiseChangeChar += HandleCharChange;
-            AddScrollCMD = new CustomCommand(AddStat, canAddStat);
-            AddFlameCMD = new CustomCommand(AddFlame, canAddFlame);
-            AddPotCMD = new CustomCommand(AddPotential, canAddPot);
-
-
-            AddEquipmentCMD = new CustomCommand(AddItem, canAddItem);
-        }
-
-        void HandleCharChange(object sender, CharTStore CC)
-        {
-
-            if (CC.CurrentCharacter !=  SCharacter)
-            {
-                SCharacter = CC.CurrentCharacter;
-
-                initFields();
-            }
-            
-            
-        }
-
-        /// <summary>
-        /// VISIBILITY CONTROLS
-        /// </summary>
-
-        private Visibility _ShowWeapon = Visibility.Collapsed;
-        public Visibility ShowWeapon
-        {
-            get { return _ShowWeapon; }
-            set
-            {
-                _ShowWeapon = value;
-                OnPropertyChanged(nameof(ShowWeapon));
-            }
-        }
-
-        private Visibility _ShowSlot = Visibility.Collapsed;
-        public Visibility ShoWSlot
-        {
-            get
-            {
-                return _ShowSlot;
-            }
-            set
-            {
-                _ShowSlot = value;
-                OnPropertyChanged(nameof(ShoWSlot));
-            }
-        }
-
-        private Visibility _ShowScrollValue = Visibility.Collapsed;
-        public Visibility ShowScrollValue
-        {
-            get { return _ShowScrollValue; }
-            set
-            {
-                _ShowScrollValue = value;
-                OnPropertyChanged(nameof(ShowScrollValue));
-            }
-        }
-
-        private Visibility _ShowSEquipStat = Visibility.Collapsed;
-
-        public Visibility ShowSEquipStat
-        {
-            get { return _ShowSEquipStat; }
-            set
-            {
-                _ShowSEquipStat = value;
-                OnPropertyChanged(nameof(ShowSEquipStat));
-            }
-        }
-
-        private Visibility _ifWeapon = Visibility.Collapsed;
-
-        public Visibility ifWeapon
-        {
-            get { return _ifWeapon; }
-            set { _ifWeapon = value;
-                OnPropertyChanged(nameof(ifWeapon));
-            }
-        }
-
-
-
-
-        /// <summary>
-        /// VARIABLES
-        /// </summary>
+        //INIT MODELS BEGIN
+        public readonly AddCharTrackViewModel ACharTrackVM;
+        public AddEquipModel AEquipM { get; set; } = new AddEquipModel();
+        public ScrollingModelCLS ScrollModel { get; set; } = new ScrollingModelCLS();
+        //INIT MODELS END
+        
+        //CURRENT SELECTED CHARACTER
         private CharacterCLS _SCharacter;
         public CharacterCLS SCharacter
         {
@@ -270,7 +51,27 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         }
 
+        /// <summary>
+        /// BASE EQUIPMENT SELECTION
+        /// </summary>
+        //KEY: EquipSlot | VALUE: Equip Category
+        public Dictionary<string, string> EquipSlots { get => AEquipM.EquipSlot; }
 
+        //private ObservableCollection<string> _ArmorSet = new ObservableCollection<string>();
+        public ObservableCollection<string> ArmorSet { get; set; } = new ObservableCollection<string>();
+        public List<EquipCLS> CurrentEquipList { get; set; } = new List<EquipCLS>();
+
+        private List<string> _CharWeapon;
+        public List<string> CharacterWeapon
+        {
+            get => _CharWeapon;
+            set
+            {
+                _CharWeapon = value;
+                OnPropertyChanged(nameof(CharacterWeapon));
+            }
+        }
+        
 
         private string _SEquipSlot;
         public string SEquipSlot
@@ -287,53 +88,22 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
 
                     ShowWeapon = EquipSlots[SEquipSlot] == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
-                   
+
                     ShowEquipSet(SEquipSlot);
                     IsSpellTrace = false;
                     NoSlot = 0;
                     SelectedScrollStat = null;
                     ScrollRecord.Clear();
                     FlameRecord.Clear();
-                    
-                    
+
+
                 }
-                
-                
+
+
 
                 OnPropertyChanged(nameof(SEquipSlot));
             }
         }
-
-        private string _SSetItem;
-        public string SSetItem
-        {
-            get { return _SSetItem; }
-            set
-            {
-                _SSetItem = value;
-                
-
-                GetCurrentEquipment();
-                if (CurrentSEquip != null)
-                {
-                    FirstPot = SecondPot = ThirdPot = null;
-                    FirstPotL = RetrievePot();
-                }
-                AddEquipmentCMD.RaiseCanExecuteChanged();
-                OnPropertyChanged(nameof(SSetItem));
-            }
-        }
-
-        private EquipCLS _CurrentEquipment;
-        public EquipCLS CurrentSEquip
-        {
-            get { return _CurrentEquipment; }
-            set { _CurrentEquipment = value;
-                OnPropertyChanged(nameof(CurrentSEquip));
-            }
-        }
-            
-
 
         //EITHER "SET" OR "EQUIPNAME"
         private string _ItemDisType = "Set: ";
@@ -344,6 +114,26 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             {
                 _ItemDisType = value;
                 OnPropertyChanged(nameof(ItemDisType));
+            }
+        }
+
+        private string _SSetItem;
+        public string SSetItem
+        {
+            get { return _SSetItem; }
+            set
+            {
+                _SSetItem = value;
+
+
+                GetCurrentEquipment();
+                if (CurrentSEquip != null)
+                {
+                    FirstPot = SecondPot = ThirdPot = null;
+                    FirstPotL = RetrievePot();
+                }
+                AddEquipmentCMD.RaiseCanExecuteChanged();
+                OnPropertyChanged(nameof(SSetItem));
             }
         }
 
@@ -366,19 +156,37 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private ListViewItem _FrameSelection;
-        public ListViewItem FrameSelection
+
+        //EQUPMENT IN FOCUS
+        private EquipCLS _CurrentEquipment;
+        public EquipCLS CurrentSEquip
         {
-            get { return _FrameSelection; }
+            get { return _CurrentEquipment; }
             set
             {
-                _FrameSelection = value;
-                toDisplayFrame(FrameSelection.Content.ToString());
-                OnPropertyChanged(nameof(FrameSelection));
-
+                _CurrentEquipment = value;
+                OnPropertyChanged(nameof(CurrentSEquip));
             }
         }
-        public Frame FrameDis { get; set; } = new Frame();
+
+
+
+        /// <summary>
+        /// SCROLLING SELECTION
+        /// </summary>
+        public Dictionary<string, int> ScrollRecord { get; set; } = new Dictionary<string, int>();
+        public List<int> Slots { get => ScrollModel.Slots; } //= new Scrolling().Slots;
+
+        public List<string> _StatTypes;
+        public List<string> StatTypes
+        {
+            get { return _StatTypes; }
+            set
+            {
+                _StatTypes = value;
+                OnPropertyChanged(nameof(StatTypes));
+            }
+        }
 
         private int _NoSlot;
         public int NoSlot
@@ -395,7 +203,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private bool _IsSpellTrace;
+        private bool _IsSpellTrace = false;
         public bool IsSpellTrace
         {
             get
@@ -405,15 +213,14 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _IsSpellTrace = value;
+                ScrollTypeTxt = IsSpellTrace ? "Perc:" : "Stat:";
                 ShoWSlot = IsSpellTrace ? Visibility.Visible : Visibility.Collapsed;
                 ShowScrollValue = IsSpellTrace ? Visibility.Collapsed : Visibility.Visible;
-                ScrollTypeTxt = IsSpellTrace ? "Perc:" : "Stat:";
-                StatTypes = IsSpellTrace ? ScrollModel.SpellTraceTypes : GVar.BaseStatTypes;
+                
+                StatTypes = IsSpellTrace ? ScrollModel.SpellTracePercTypes : GVar.BaseStatTypes;
                 OnPropertyChanged(nameof(IsSpellTrace));
             }
         }
-
-
 
         private string _ScrollTypeTxt = "Stat:";
         public string ScrollTypeTxt
@@ -462,7 +269,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     if (SelectedScrollStat != null)
                     {
 
-                        ShowScrollValue = ScrollModel.SpellTraceTypes.Contains(SelectedScrollStat) ? Visibility.Collapsed : Visibility.Visible;
+                        ShowScrollValue = ScrollModel.SpellTracePercTypes.Contains(SelectedScrollStat) ? Visibility.Collapsed : Visibility.Visible;
 
                         if (ScrollRecord.ContainsKey(SelectedScrollStat))
                         {
@@ -481,6 +288,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
+
         private string _ScrollStatvalue = string.Empty;
         public string ScrollStatValue
         {
@@ -494,6 +302,12 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 OnPropertyChanged(nameof(ScrollStatValue));
             }
         }
+
+        /// <summary>
+        /// FLAME SELECTION
+        /// </summary>
+        public List<string> FlameStatsTypes { get => AEquipM.FlameStatsTypes; }
+        public Dictionary<string, int> FlameRecord { get; set; } = new Dictionary<string, int>();
 
         private string _SelectedFlame;
         public string SelectedFlame
@@ -532,11 +346,79 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
+
+        /// <summary>
+        /// POTENTIAL SELECTION
+        /// </summary>
+
+
+        public List<string> PotentialGrade { get => GVar.PotentialGrade; }
+        
+
+        private ObservableCollection<PotentialStatsCLS> _FirstPotL = new ObservableCollection<PotentialStatsCLS>();
+        public ObservableCollection<PotentialStatsCLS> FirstPotL
+        {
+            get => _FirstPotL;
+            set
+            {
+                _FirstPotL = value;
+                OnPropertyChanged(nameof(FirstPotL));
+            }
+
+        }
+
+        private ObservableCollection<PotentialStatsCLS> _SecondPotL = new ObservableCollection<PotentialStatsCLS>();
+        public ObservableCollection<PotentialStatsCLS> SecondPotL
+        {
+            get => _SecondPotL;
+            set
+            {
+                _SecondPotL =  value;
+                OnPropertyChanged(nameof(SecondPotL));
+            }
+        }
+
+        private ObservableCollection<PotentialStatsCLS> _ThirdPotL = new ObservableCollection<PotentialStatsCLS>();
+        public ObservableCollection<PotentialStatsCLS> ThirdPotL
+        {
+            get => _ThirdPotL;
+            set
+            {
+                _ThirdPotL = value;
+                OnPropertyChanged(nameof(ThirdPotL));
+            }
+        }
+
+
+        private List<PotentialStatsCLS> _MainPotL;
+        public List<PotentialStatsCLS> MainPotL
+        {
+            get => _MainPotL;
+            set
+            {
+                _MainPotL = value;
+                OnPropertyChanged(nameof(MainPotL));
+            }
+        }
+
+        private List<PotentialStatsCLS> _AddPotL;
+        public List<PotentialStatsCLS> AddPotL
+        {
+            get => _AddPotL;
+            set
+            {
+                _AddPotL = value;
+                OnPropertyChanged(nameof(AddPotL));
+            }
+        }
+
         private bool _isAddPot = false;
         public bool isAddPot
         {
             get => _isAddPot;
-            set { _isAddPot = value; 
+            set
+            {
+                _isAddPot = value;
 
                 if (isAddPot == true && CItemSelect != null)
                 {
@@ -553,12 +435,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-
         private int _SPotentialG;
         public int SPotentialG
         {
             get { return _SPotentialG; }
-            set { _SPotentialG = value;
+            set
+            {
+                _SPotentialG = value;
                 if (SPotentialG != -1)
                 {
                     FirstPot = SecondPot = ThirdPot = null;
@@ -577,20 +460,24 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         public PotentialStatsCLS FirstPot
         {
             get => _FirstPot;
-            set { _FirstPot = value;
-                
+            set
+            {
+                _FirstPot = value;
+
                 ShowSecondPot();
                 AddPotCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(FirstPot));
-                
+
             }
         }
 
         private PotentialStatsCLS _SecondPot;
         public PotentialStatsCLS SecondPot
         {
-            get => _SecondPot; 
-            set { _SecondPot = value;
+            get => _SecondPot;
+            set
+            {
+                _SecondPot = value;
                 ShowThirdPot();
                 AddPotCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(SecondPot));
@@ -601,14 +488,160 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         public PotentialStatsCLS ThirdPot
         {
             get => _ThirdPot;
-            set { _ThirdPot = value;
+            set
+            {
+                _ThirdPot = value;
                 AddPotCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(ThirdPot));
             }
         }
 
 
+        public List<string> SlotSet { get; set; } = new List<string>
+        {
+            "Weapon", "Gloves", "Armor"
+        };
+        public List<string> WSE { get; set; } = new List<string>
+        {
+            "Weapon", "Secondary", "Emblem"
+        };
 
+        /// <summary>
+        /// VISIBILITY CONTROL
+        /// </summary>
+        private Visibility _ShowWeapon = Visibility.Collapsed;
+        public Visibility ShowWeapon
+        {
+            get { return _ShowWeapon; }
+            set
+            {
+                _ShowWeapon = value;
+                OnPropertyChanged(nameof(ShowWeapon));
+            }
+        }
+
+
+        private Visibility _ShowSlot = Visibility.Collapsed;
+        public Visibility ShoWSlot
+        {
+            get
+            {
+                return _ShowSlot;
+            }
+            set
+            {
+                _ShowSlot = value;
+                OnPropertyChanged(nameof(ShoWSlot));
+            }
+        }
+        
+
+        private Visibility _ShowScrollValue = Visibility.Visible;
+        public Visibility ShowScrollValue
+        {
+            get { return _ShowScrollValue; }
+            set
+            {
+                _ShowScrollValue = value;
+                OnPropertyChanged(nameof(ShowScrollValue));
+            }
+        }
+
+
+        private Visibility _ShowSEquipStat = Visibility.Collapsed;
+        public Visibility ShowSEquipStat
+        {
+            get { return _ShowSEquipStat; }
+            set
+            {
+                _ShowSEquipStat = value;
+                OnPropertyChanged(nameof(ShowSEquipStat));
+            }
+        }
+
+
+        private Visibility _ifWeapon = Visibility.Collapsed;
+        public Visibility ifWeapon
+        {
+            get { return _ifWeapon; }
+            set
+            {
+                _ifWeapon = value;
+                OnPropertyChanged(nameof(ifWeapon));
+            }
+        }
+
+        
+
+        
+
+        
+        
+
+        
+
+        public ObservableCollection<EquipCLS> CItemDictT { get; set; } = new ObservableCollection<EquipCLS>();
+
+
+
+        private Dictionary<string, string> _TotalRecordDisplay;
+        public Dictionary<string, string> TotalRecordDisplay
+        {
+            get => _TotalRecordDisplay;
+            set
+            {
+                _TotalRecordDisplay = value;
+                OnPropertyChanged(nameof(TotalRecordDisplay));
+            }
+        }
+
+        
+        /// <summary>
+        /// Main Constructor
+        /// </summary>
+        /// <param name="aCharTrackVM"></param>
+        public AddEquipViewModel(AddCharTrackViewModel aCharTrackVM)
+        {
+            
+            ACharTrackVM = aCharTrackVM;
+            SCharacter = ACharTrackVM?.SelectedAllChar;
+            initFields();
+            ACharTrackVM.RaiseChangeChar += HandleCharChange;
+            AddScrollCMD = new CustomCommand(AddStat, canAddStat);
+            AddFlameCMD = new CustomCommand(AddFlame, canAddFlame);
+            AddPotCMD = new CustomCommand(AddPotential, canAddPot);
+
+
+            AddEquipmentCMD = new CustomCommand(AddItem, canAddItem);
+        }
+
+        void HandleCharChange(object sender, CharTStore CC)
+        {
+
+            if (CC.CurrentCharacter !=  SCharacter)
+            {
+                SCharacter = CC.CurrentCharacter;
+
+                initFields();
+            }            
+        }
+
+        //TOGGLE DIFFERENT INPUT FRAMES
+        private ListViewItem _FrameSelection;
+        public ListViewItem FrameSelection
+        {
+            get { return _FrameSelection; }
+            set
+            {
+                _FrameSelection = value;
+                toDisplayFrame(FrameSelection.Content.ToString());
+                OnPropertyChanged(nameof(FrameSelection));
+
+            }
+        }
+        public Frame FrameDis { get; set; } = new Frame();
+
+        
 
         private bool _SyncCI = false;
         public bool SyncCI

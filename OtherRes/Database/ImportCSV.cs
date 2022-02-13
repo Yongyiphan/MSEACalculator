@@ -200,8 +200,8 @@ namespace MSEACalculator.OtherRes.Database
                         tempChar.ClassType = temp[3];
                         tempChar.MainStat = temp[4];
                         tempChar.SecStat = temp[5];
-                        tempChar.unionEffect = temp[6];
-                        tempChar.unionEffectType = temp[7];
+                        tempChar.UnionEffect = temp[6];
+                        tempChar.UnionEffectType = temp[7];
 
                         characterList.Add(tempChar);
 

@@ -496,8 +496,8 @@ namespace MSEACalculator.OtherRes.Database
                                 insertCMD.Parameters.AddWithValue("@CN", charItem.ClassName);
                                 insertCMD.Parameters.AddWithValue("@CT", charItem.ClassType);
                                 insertCMD.Parameters.AddWithValue("@Fac", charItem.Faction);
-                                insertCMD.Parameters.AddWithValue("@UE", charItem.unionEffect);
-                                insertCMD.Parameters.AddWithValue("@UET", charItem.unionEffectType);
+                                insertCMD.Parameters.AddWithValue("@UE", charItem.UnionEffect);
+                                insertCMD.Parameters.AddWithValue("@UET", charItem.UnionEffectType);
                                 insertCMD.Parameters.AddWithValue("@MS", charItem.MainStat);
                                 insertCMD.Parameters.AddWithValue("@SS", charItem.SecStat);
 

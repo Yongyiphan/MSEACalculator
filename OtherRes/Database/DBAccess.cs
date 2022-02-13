@@ -28,8 +28,8 @@ namespace MSEACalculator.OtherRes.Database
                     using (SqliteCommand insertCMD = new SqliteCommand(insertQueryStr, dbCon))
                     {
                         insertCMD.Parameters.AddWithValue("@CN", character.ClassName);
-                        insertCMD.Parameters.AddWithValue("@UR", character.unionRank);
-                        insertCMD.Parameters.AddWithValue("@Lvl", character.level);
+                        insertCMD.Parameters.AddWithValue("@UR", character.UnionRank);
+                        insertCMD.Parameters.AddWithValue("@Lvl", character.Level);
                         insertCMD.Parameters.AddWithValue("@SF", character.Starforce);
 
                         insertCMD.ExecuteNonQuery();

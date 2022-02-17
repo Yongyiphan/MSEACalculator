@@ -60,7 +60,11 @@ namespace MSEACalculator
         //EQUIPMENT SLOTS BEGIN
         public static List<string> AccEquips { get; set; } = new List<string>
         {
-            "Ring", "Shoulder", "Pendant", "Face Accessory","Eye Accessory", "Earrings", "Belt", "Badge", "Medal", "Emblem", "Heart", "Pocket"
+            "Ring", "Pocket",
+            "Pendant", "Belt",
+            "Face Accessory", "Eye Accessory", 
+            "Earrings", "Shoulder",
+            "Emblem", "Medal", "Badge", "Heart"
         };
 
         public static List<string> ArEquips { get; set; } = new List<string>

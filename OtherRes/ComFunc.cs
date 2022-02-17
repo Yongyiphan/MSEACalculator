@@ -277,6 +277,7 @@ namespace MSEACalculator
                                 return returnedEquip =  equip;
                             }
                         }
+                        
                         return returnedEquip =  equip;
                     }
                 }
@@ -322,8 +323,6 @@ namespace MSEACalculator
                                 }
                             }
                         }
-                        break;
-                    case "Heart":
                         break;
                     case "Armor":
                         foreach(EquipCLS equip in FindingList)

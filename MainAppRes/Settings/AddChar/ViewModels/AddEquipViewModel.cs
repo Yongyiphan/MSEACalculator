@@ -158,16 +158,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
 
         //EQUPMENT IN FOCUS
-        private EquipCLS _CurrentEquipment;
-        public EquipCLS CurrentSEquip
-        {
-            get { return _CurrentEquipment; }
-            set
-            {
-                _CurrentEquipment = value;
-                OnPropertyChanged(nameof(CurrentSEquip));
-            }
-        }
+        public EquipCLS CurrentSEquip { get; set; }
 
 
 
@@ -177,6 +168,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         public Dictionary<string, int> ScrollRecord { get; set; } = new Dictionary<string, int>();
         public List<int> Slots { get => ScrollModel.Slots; } //= new Scrolling().Slots;
 
+
+        //Spell trace types OR Stats for special scrolls
         public List<string> _StatTypes;
         public List<string> StatTypes
         {
@@ -202,6 +195,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 OnPropertyChanged(nameof(NoSlot));
             }
         }
+
 
         private bool _IsSpellTrace = false;
         public bool IsSpellTrace
@@ -252,37 +246,33 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             {
                 _SelectedScrollStat = value;
 
-                if (IsSpellTrace)
+                if (SelectedScrollStat != null)
                 {
-                    if (SelectedScrollStat != null)
+                    if (IsSpellTrace)
                     {
                         if (NoSlot == 0)
                         {
                             ComFunc.errorDia("Slot cannot be 0.");
                             SelectedScrollIndex = -1;
-
                         }
+                        
                     }
-                }
-                else
-                {
-                    if (SelectedScrollStat != null)
+                    else
                     {
-
                         ShowScrollValue = ScrollModel.SpellTracePercTypes.Contains(SelectedScrollStat) ? Visibility.Collapsed : Visibility.Visible;
 
                         if (ScrollRecord.ContainsKey(SelectedScrollStat))
                         {
                             ScrollStatValue = ScrollRecord[SelectedScrollStat].ToString();
-
                         }
                         else
                         {
                             ScrollStatValue = string.Empty;
                         }
-
                     }
                 }
+
+                
                 AddEquipmentCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(SelectedScrollStat));
             }
@@ -296,12 +286,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _ScrollStatvalue = value;
-
-                AddScrollCMD.RaiseCanExecuteChanged();
+                AddRecordValue("Scroll", value);
+                //AddScrollCMD.RaiseCanExecuteChanged();
                 AddEquipmentCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(ScrollStatValue));
             }
         }
+
 
         /// <summary>
         /// FLAME SELECTION
@@ -321,12 +312,12 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                     if (FlameRecord.ContainsKey(SelectedFlame))
                     {
-                        FlameStat = FlameRecord[SelectedFlame].ToString();
+                        FlameStatValue = FlameRecord[SelectedFlame].ToString();
 
                     }
                     else
                     {
-                        FlameStat = string.Empty;
+                        FlameStatValue = string.Empty;
                     }
 
                 }
@@ -334,15 +325,16 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private string _FlameStat = string.Empty;
-        public string FlameStat
+        private string _FlameStatValue = string.Empty;
+        public string FlameStatValue
         {
-            get { return _FlameStat; }
+            get { return _FlameStatValue; }
             set
             {
-                _FlameStat = value;
-                AddFlameCMD.RaiseCanExecuteChanged();
-                OnPropertyChanged(nameof(FlameStat));
+                _FlameStatValue = value;
+                //AddFlameCMD.RaiseCanExecuteChanged();
+                AddEquipmentCMD.RaiseCanExecuteChanged();
+                OnPropertyChanged(nameof(FlameStatValue));
             }
         }
 
@@ -580,7 +572,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         
 
-        public ObservableCollection<EquipCLS> CItemDictT { get; set; } = new ObservableCollection<EquipCLS>();
+        public ObservableCollection<EquipCLS> CItemDictT { get; set; }
 
 
 
@@ -595,6 +587,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
+
+        ///BUTTON CONTRSUCTOR
         
         /// <summary>
         /// Main Constructor
@@ -604,11 +598,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         {
             
             ACharTrackVM = aCharTrackVM;
+            
+            
+            ACharTrackVM.RaiseChangeChar += HandleCharChange;
             SCharacter = ACharTrackVM?.SelectedAllChar;
             initFields();
-            ACharTrackVM.RaiseChangeChar += HandleCharChange;
-            AddScrollCMD = new CustomCommand(AddStat, canAddStat);
-            AddFlameCMD = new CustomCommand(AddFlame, canAddFlame);
+            //AddScrollCMD = new CustomCommand(AddScrollStat, canAddScrollStat);
+            //AddFlameCMD = new CustomCommand(AddFlame, canAddFlame);
             AddPotCMD = new CustomCommand(AddPotential, canAddPot);
 
 
@@ -713,6 +709,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         private void initFields()
         {
 
+            
+
             StatTypes = GVar.BaseStatTypes;
             if (SCharacter == null)
             {
@@ -726,38 +724,38 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 ArmorSet = ArmorSet != null ? new ObservableCollection<string>() : ArmorSet;
                 SEquipSlot = SEquipSlot!=null ? null : SEquipSlot;
                 CharacterWeapon = SCharacter.MainWeapon;
+                CItemDictT = new ObservableCollection<EquipCLS>(SCharacter?.EquipmentList);
             }
         }
 
-        private bool canAddStat()
+        private bool canAddScrollStat()
         {
-            bool canAdd = false;
             //Check if stat is selected
             //Check if int value is keyed into value textbox
-            if (SelectedScrollStat != null && ScrollStatValue != null)
+            if (SelectedScrollStat != null && ScrollStatValue != null && ScrollStatValue  != String.Empty)
             {
                 if (int.TryParse(ScrollStatValue.ToString(), out int value))
                 {
-                    canAdd = true;
+                    return true;
                 }
                 else
                 {
                     if (ScrollStatValue != string.Empty)
                     {
                         ComFunc.errorDia("Invalid");
-                        canAdd = false;
+                        return false;
                     }
                 }
             }
+            return false;
 
-            return canAdd;
         }
-        private void AddStat()
+        private void AddScrollStat()
         {
             //Stat selected, Int value inserted
             ScrollRecord[SelectedScrollStat] = int.Parse(ScrollStatValue);
 
-            SelectedScrollStat = null;
+            SelectedScrollStat = String.Empty;
             AddEquipmentCMD.RaiseCanExecuteChanged();
         }
 
@@ -769,13 +767,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             if (SelectedFlame != null)
             {
                 //Check Value is INT
-                if (int.TryParse(FlameStat, out int value))
+                if (int.TryParse(FlameStatValue, out int value))
                 {
                     canAdd = true;
                 }
                 else
                 {
-                    if (FlameStat != string.Empty)
+                    if (FlameStatValue != string.Empty)
                     {
                         canAdd = false;
                     }
@@ -785,8 +783,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
         private void AddFlame()
         {
-            FlameRecord[SelectedFlame] = int.Parse(FlameStat);
-            SelectedFlame = null;
+            FlameRecord[SelectedFlame] = int.Parse(FlameStatValue);
+            SelectedFlame = String.Empty;
             AddEquipmentCMD.RaiseCanExecuteChanged();
         }
 
@@ -822,42 +820,48 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
         private bool canAddItem()
         {
-            Func<bool, string, Dictionary<string, int>, Dictionary<string, int>, bool>
-                checkAddStatAdded = (isSpellTraced, scrollStat, scrollRecord, flameRecord) =>
-                {
-                    //Spell trace, check slots, spell trace perc
-                    //check scrollrecord, flamerecords
-                    if (isSpellTraced)
-                    {
-                        //scrollstat null == slotcount = 0
-                        if (scrollStat != null && flameRecord.Count >= 0)
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        //if flameRecord = 0 && scrollRecord = 0 == clean equip, no flame, no scroll
-                        if (flameRecord.Count >= 0 && scrollRecord.Count >= 0)
-                        {
-                            return true;
-                        }
-                    }
+            //Func<bool, string, Dictionary<string, int>, Dictionary<string, int>, bool>
+            //    checkAddStatAdded = (isSpellTraced, scrollStat, scrollRecord, flameRecord) =>
+            //    {
+            //        //Spell trace, check slots, spell trace perc
+            //        //check scrollrecord, flamerecords
+            //        if (isSpellTraced)
+            //        {
+            //            //scrollstat null == slotcount = 0
+            //            if (scrollStat != null && flameRecord.Count >= 0)
+            //            {
+            //                return true;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            //if flameRecord = 0 && scrollRecord = 0 == clean equip, no flame, no scroll
+            //            if (flameRecord.Count >= 0 && scrollRecord.Count >= 0)
+            //            {
+            //                return true;
+            //            }
+            //        }
 
-                    return false;
-                };
+            //        return false;
+            //    };
 
-            if (SCharacter != null)
+            //if (SCharacter != null)
+            //{
+            //    if (SEquipSlot != null && SSetItem != null)
+            //    {
+            //        if (SEquipSlot == "Weapon" && SelectedWeapon != null)
+            //        {
+            //            return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
+            //        }
+            //        return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
+            //    }
+            //}
+
+            if(SCharacter != null && CurrentSEquip != null)
             {
-                if (SEquipSlot != null && SSetItem != null)
-                {
-                    if (SEquipSlot == "Weapon" && SelectedWeapon != null)
-                    {
-                        return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
-                    }
-                    return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
-                }
+
             }
+
             SyncCI = CItemDictT.Count == 0 ? true : false;
 
             return false;
@@ -1110,6 +1114,34 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 CurrentSEquip = selectedEquip;
             }
+
+
+        }
+
+        private void AddRecordValue(string type, string value)
+        {
+            if(value != string.Empty && int.TryParse(value, out int result))
+            {
+                switch (type)
+                {
+                    case "Scroll":
+                        ScrollRecord[SelectedScrollStat] = result;
+                        SelectedScrollIndex = -1;
+                        ScrollStatValue = String.Empty;
+                        break;
+
+                    case "Flame":
+                        FlameRecord[SelectedFlame] = result;
+                        FlameStatValue = String.Empty;
+                        break;
+                }
+            }
+            else
+            {
+                ComFunc.errorDia("Enter valid number.");
+            }
+            
+
         }
 
         public ObservableCollection<PotentialStatsCLS> RetrievePot()

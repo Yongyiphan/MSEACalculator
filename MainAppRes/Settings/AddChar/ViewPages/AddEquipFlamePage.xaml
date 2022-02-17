@@ -16,7 +16,7 @@
                 <ComboBox ItemsSource="{Binding FlameStatsTypes}"
                             SelectedItem="{Binding SelectedFlame, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <TextBlock Text="Value"/>
-                <TextBox Text="{Binding FlameStat, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                <TextBox Text="{Binding FlameStatValue, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                 <Button x:Name="AddFlameBtn" Content="Add Flame"
                         Command="{Binding AddFlameCMD, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </StackPanel>

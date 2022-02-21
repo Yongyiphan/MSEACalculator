@@ -52,10 +52,10 @@ namespace MSEACalculator.CalculationRes
         }
 
  
-        public static int CalDaysLeft(int accExp, decimal symGain)
+        public static int CalDaysLeft(int accExp, decimal symGain, int ceiling)
         {
 
-            int remainingExp = GVar.MaxSymbolExp - accExp;
+            int remainingExp = ceiling - accExp;
             decimal DaysLeft = 0;
             try
             {

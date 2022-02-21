@@ -145,7 +145,13 @@
             <!--ADDITIONAL INPUT/ OPTIONAL-->
             <Grid Grid.Column="1">
                 <StackPanel>
+                    
                     <Button Content="Reset All" Command="{Binding ResetCMD, Mode=TwoWay}"/>
+                    <RadioButton GroupName="EndGoal" Content="To Max?" 
+                                 HorizontalAlignment="Center"
+                                 IsChecked="{Binding EndGoal, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <RadioButton GroupName="EndGoal" Content="To Transfer?"
+                                 HorizontalAlignment="Center"/>
                     <CheckBox Content="Arcane Catalyst?" 
                               IsChecked="{Binding ArcaneCatT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Margin="15 0 0 0" VerticalContentAlignment="Top"/>

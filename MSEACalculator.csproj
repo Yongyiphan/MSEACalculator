@@ -183,8 +183,22 @@
     <Compile Include="OtherRes\Database\DBAccess.cs" />
     <Compile Include="OtherRes\Database\DBRetrieve.cs" />
     <Compile Include="OtherRes\Database\ImportCSV.cs" />
+    <Compile Include="OtherRes\Database\Tables\BossListTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\ClassWeaponTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\EquipAccessoriesTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\AllCharacterTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\EquipArmorTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\BaseDBTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\EquipMainWeaponTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\EquipSecWeaponTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\EquipSlotTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\PotentialTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\StarForceTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\SymbolsTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\UnionTable.cs" />
     <Compile Include="OtherRes\INPCObject.cs" />
-    <Compile Include="OtherRes\Interface\StringFormatConverter.cs" />
+    <Compile Include="OtherRes\Interface\ITableUpload.cs" />
+    <Compile Include="OtherRes\Interface\IStringFormatConverter.cs" />
     <Compile Include="OtherRes\ScrapCode.cs" />
     <Compile Include="UnionRes\UnionCLS.cs" />
     <Compile Include="MainAppRes\HomePage.xaml.cs">
@@ -195,7 +209,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StarforceRes\SFGainCLS.cs" />
-    <Compile Include="OtherRes\TableStats.cs" />
     <Compile Include="MainAppRes\Settings\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>

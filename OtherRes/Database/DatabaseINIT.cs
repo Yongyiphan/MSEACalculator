@@ -3,6 +3,8 @@ using Microsoft.Data.Sqlite;
 using MSEACalculator.BossRes;
 using MSEACalculator.CharacterRes;
 using MSEACalculator.CharacterRes.EquipmentRes;
+using MSEACalculator.OtherRes.Database.Tables;
+using MSEACalculator.OtherRes.Interface;
 using MSEACalculator.StarforceRes;
 using MSEACalculator.UnionRes;
 using System;
@@ -27,10 +29,9 @@ namespace MSEACalculator.OtherRes.Database
 
 
 
-            List<TableStats> staticTables = new List<TableStats>();
+            List<BaseDBTable> StaticTable = new List<BaseDBTable>();
 
-
-            ///////CHARACTER///////
+            /////CHARACTER///////
 
             //TABLE FOR DEFAULT CHARACTER LIST
             string[] CharacterTableSpec = { "(" +
@@ -43,31 +44,33 @@ namespace MSEACalculator.OtherRes.Database
                             "UnionET string," +
                             "PRIMARY KEY (ClassName)" +
                             ");" };
-            staticTables.Add(new TableStats("AllCharacter", CharacterTableSpec[0], "AllCharacter"));
-
-
+            StaticTable.Add(new AllCharacterTable("AllCharacterData", CharacterTableSpec[0]));
 
             //TABLE FOR UNION EFFECTS
             string[] unionETableSpecs = { "(" +
-                "Effect string," +
-                "EffectType string," +
-                "B int," +
-                "A int," +
-                "S int," +
-                "SS int," +
-                "SSS int," +
-                "PRIMARY KEY(Effect, EffectType)" +
-                ");" };
-            staticTables.Add(new TableStats("UnionEffects", unionETableSpecs[0], "UnionEffect"));
+                    "Effect string," +
+                    "EffectType string," +
+                    "B int," +
+                    "A int," +
+                    "S int," +
+                    "SS int," +
+                    "SSS int," +
+                    "PRIMARY KEY(Effect, EffectType)" +
+                    ");" };
+            StaticTable.Add(new UnionTable("UnionEffects", unionETableSpecs[0]));
 
+
+            //TABLE FOR CLASS WEAP ASSOC
+            
+            //****SPECIAL IMPLEMENTATION 2 IN ONE TABLE CLASS****
             string ClassWeaponSpec = "(" +
                 "ClassName string," +
                 "WeaponType string," +
                 "PRIMARY KEY (ClassName, WeaponType)" +
                 ");";
+            StaticTable.Add(new ClassWeaponTable("ClassMainWeapon", ClassWeaponSpec));
+            StaticTable.Add(new ClassWeaponTable("ClassSecWeapon", ClassWeaponSpec));
 
-            staticTables.Add(new TableStats("ClassMainWeap", ClassWeaponSpec, "ClassMWeapon"));
-            staticTables.Add(new TableStats("ClassSecWeap", ClassWeaponSpec, "ClassSWeapon"));
 
 
 
@@ -75,15 +78,15 @@ namespace MSEACalculator.OtherRes.Database
             ///////BOSSING///////
 
 
-            string bossListSpec = "(" +
+            string BossListSpec = "(" +
                 "BossID int," +
-                "BossName varchar(50) NOT NULL," +
-                "Difficulty varchar(10) NOT NULL," +
-                "EntryType varchar(10) NOT NULL," +
+                "BossName string NOT NULL," +
+                "Difficulty string NOT NULL," +
+                "EntryType string NOT NULL," +
                 "Meso int NOT NULL," +
                 "PRIMARY KEY(BossID)" +
                 ");";
-            staticTables.Add(new TableStats("BossList", bossListSpec, "Boss"));
+            StaticTable.Add(new BossListTable("BossListData", BossListSpec));
 
 
 
@@ -94,168 +97,163 @@ namespace MSEACalculator.OtherRes.Database
             ///////INVENTORY////////
 
             //TABLE FOR EQUIP SLOT AND TYPES
-            string equipSlotTS = "(" +
+            string EquipSlotTableSpec = "(" +
                 "EquipSlot string," +
                 "EquipType string," +
                 "PRIMARY KEY(EquipSlot)" +
                 ");";
-            staticTables.Add(new TableStats("EquipSlot", equipSlotTS, "EquipSlot"));
+            StaticTable.Add(new EquipSlotTable("EquipSlot", EquipSlotTableSpec));
 
             //TABLE FOR ALL ARMOR
-            string[] equipTableSpec = { "(" +
-                "EquipSet string," +
-                "ClassType string," +
-                "EquipSlot string," +
-                "EquipLevel int," +
-                "MainStat int," +
-                "SecStat int," +
-                "AllStat int," +
-                "HP int," +
-                "MP int," +
-                "DEF int," +
-                "ATK int," +
-                "MATK int," +
-                "SPD int," +
-                "JUMP int," +
-                "IED int," +
-                "PRIMARY KEY (EquipSet, ClassType, EquipSlot)" +
-                ");" };
-            staticTables.Add(new TableStats("ArmorStats", equipTableSpec[0], "Armor"));
-
+            string[] ArmorTableSpec = { "(" +
+                    "EquipSet string," +
+                    "ClassType string," +
+                    "EquipSlot string," +
+                    "EquipLevel int," +
+                    "MainStat int," +
+                    "SecStat int," +
+                    "AllStat int," +
+                    "HP int," +
+                    "MP int," +
+                    "DEF int," +
+                    "ATK int," +
+                    "MATK int," +
+                    "SPD int," +
+                    "JUMP int," +
+                    "IED int," +
+                    "PRIMARY KEY (EquipSet, ClassType, EquipSlot)" +
+                    ");" };
+            StaticTable.Add(new EquipArmorTable("ArmorData", ArmorTableSpec[0]));
 
             //TABLE FOR ACCESSORIES
             string[] AccessoriesTableSpec = { "(" +
-                "EquipName string," +
-                "EquipSet string," +
-                "ClassType  string," +
-                "EquipSlot string," +
-                "EquipLevel int," +
-                "MainStat int," +
-                "SecStat int," +
-                "AllStat int," +
-                "HP string," +
-                "MP string," +
-                "DEF int," +
-                "ATK int," +
-                "MATK int," +
-                "SPD int," +
-                "JUMP int," +
-                "IED int," +
-                "PRIMARY KEY (EquipName, EquipSet, ClassType, EquipSlot) " +
-                ");" };
-            staticTables.Add(new TableStats("AccessoriesData", AccessoriesTableSpec[0], "Accessories"));
+                    "EquipName string," +
+                    "EquipSet string," +
+                    "ClassType  string," +
+                    "EquipSlot string," +
+                    "EquipLevel int," +
+                    "MainStat int," +
+                    "SecStat int," +
+                    "AllStat int," +
+                    "HP string," +
+                    "MP string," +
+                    "DEF int," +
+                    "ATK int," +
+                    "MATK int," +
+                    "SPD int," +
+                    "JUMP int," +
+                    "IED int," +
+                    "PRIMARY KEY (EquipName, EquipSet, ClassType, EquipSlot) " +
+                    ");" };
+            StaticTable.Add(new EquipAccessoriesTable("AccessoriesData", AccessoriesTableSpec[0]));
 
             //TABLE FOR WEAPON
-            string[] WeapTableSpec = { "(" +
-                "EquipSet string," +
-                "WeaponType string," +
-                "EquipLevel int," +
-                "ATKSPD int," +
-                "MainStat int," +
-                "SecStat int," +
-                "HP int," +
-                "DEF int," +
-                "ATK int," +
-                "MATK int," +
-                "SPD int," +
-                "BDMG int," +
-                "IED int," +
-                "PRIMARY KEY (EquipSet, WeaponType) " +
-                ");" };
-            staticTables.Add(new TableStats("WeaponData", WeapTableSpec[0], "Weapon"));
+            //MAIN WEAPON
+            string[] MainWeapTableSpec = { "(" +
+                    "EquipSet string," +
+                    "WeaponType string," +
+                    "EquipLevel int," +
+                    "ATKSPD int," +
+                    "MainStat int," +
+                    "SecStat int," +
+                    "HP int," +
+                    "DEF int," +
+                    "ATK int," +
+                    "MATK int," +
+                    "SPD int," +
+                    "BDMG int," +
+                    "IED int," +
+                    "PRIMARY KEY (EquipSet, WeaponType) " +
+                    ");" };
+            StaticTable.Add(new EquipMainWeaponTable("WeaponData", MainWeapTableSpec[0]));
 
-
+            //SECONDARY WEAPON
             string[] SecWeapTableSpec = { "(" +
-                "ClassName string," +
-                "WeaponType string," +
-                "EquipName string," +
-                "EquipLevel int," +
-                "MainStat int," +
-                "SecStat int," +
-                "ATK int," +
-                "MATK int," +
-                "AllStat int," +
-                "DEF int," +
-                "HP int," +
-                "MP int," +
-                "ATKSPD int," +
-                "PRIMARY KEY (ClassName, WeaponType, EquipName, EquipLevel) " +
-                ");" };
-            staticTables.Add(new TableStats("SecondaryWeaponData", SecWeapTableSpec[0], "Secondary"));
-
-
-
-
-            //Equipment Set Effects
+                    "ClassName string," +
+                    "EquipName string," +
+                    "WeaponType string," +
+                    "EquipLevel int," +
+                    "MainStat int," +
+                    "SecStat int," +
+                    "ATK int," +
+                    "MATK int," +
+                    "AllStat int," +
+                    "DEF int," +
+                    "HP int," +
+                    "MP int," +
+                    "ATKSPD int," +
+                    "PRIMARY KEY (ClassName, EquipName, WeaponType, EquipLevel) " +
+                    ");" };
+            StaticTable.Add(new EquipSecWeaponTable("SecondaryData", SecWeapTableSpec[0]));
 
             /////CALCULATIONS/////
 
+            //SPECIAL IMPLEMENTATION FOR STARFORCE DATA 2 IN 1
             //TABLE FOR STARFORCE STATS
             string[] sfTableSpec = { "(" +
-                "SFID int," +
-                "JobStat int," +
-                "NonWeapVDef int," +
-                "OverallVDef int," +
-                "CatAMaxHP int," +
-                "WeapMaxMP int," +
-                "WeapVATK int," +
-                "WeapVMATK int," +
-                "SJump int," +
-                "SSpeed int," +
-                "GloveVATK int, " +
-                "GloveVMATK int," +
-                "PRIMARY KEY (SFID)" +
-                ");" };
-            staticTables.Add(new TableStats("StarforceList", sfTableSpec[0], "StarForce"));
+                    "SFID int," +
+                    "JobStat int," +
+                    "NonWeapVDef int," +
+                    "OverallVDef int," +
+                    "CatAMaxHP int," +
+                    "WeapMaxMP int," +
+                    "WeapVATK int," +
+                    "WeapVMATK int," +
+                    "SJump int," +
+                    "SSpeed int," +
+                    "GloveVATK int, " +
+                    "GloveVMATK int," +
+                    "PRIMARY KEY (SFID)" +
+                    ");" };
+            StaticTable.Add(new StarForceTable("StarForceBaseData", sfTableSpec[0]));
 
             //TABLE FOR STARFORCE STATS ADDONS
             string[] addSFstatSpec = { "(" +
-                "SFID int," +
-                "LevelRank int," +
-                "VStat int," +
-                "NonWeapVATK int," +
-                "NonWeapVMATK int," +
-                "WeapVATK int," +
-                "WeapVMATK int," +
-                "PRIMARY KEY (SFID, LevelRank)" +
-                ");" };
-            staticTables.Add(new TableStats("AddSFStat", addSFstatSpec[0], "AddStarForce"));
-
-            string[] PotSpec = { "(" +
-                    "EquipGrp string," +
-                    "Grade string," +
-                    "GradeT string," +
-                    "StatT string," +
-                    "Stat nvarchar," +
-                    "MinLvl int," +
-                    "MaxLvl int," +
-                    "ValueI nvarchar," +
-                    "Duration int," +
-                    "Chance double," +
-                    "PRIMARY KEY (EquipGrp, Grade, GradeT, Stat, MinLvl, MaxLvl, ValueI)" +
+                    "SFID int," +
+                    "LevelRank int," +
+                    "VStat int," +
+                    "NonWeapVATK int," +
+                    "NonWeapVMATK int," +
+                    "WeapVATK int," +
+                    "WeapVMATK int," +
+                    "PRIMARY KEY (SFID, LevelRank)" +
                     ");" };
-            staticTables.Add(new TableStats("PotentialData", PotSpec[0], "Potential"));
+            StaticTable.Add(new StarForceTable("StarForceAddData", addSFstatSpec[0]));
 
             ////ARCANE SYMBOL
-            string[] arcaneSymSpec = { "(" +
-                    "Name string, " +
-                    "SubMap string, " +
-                    "CurrentLevel int," +
-                    "CurrentExp int," +
-                    "CurrentLimit int, " +
-                    "BaseGain int," +
-                    "PQGain int, " +
-                    "PQGainLimit int, " +
-                    "SymbolExchangeRate int," +
-                    "CostLvlMod int," +
-                    "CostMod int," +
-                    "PRIMARY KEY(Name)" +
-                    ");" };
-            staticTables.Add(new TableStats("ArcaneSymbol", arcaneSymSpec[0], "ArcaneSymbol"));
+            string[] ArcaneSymSpec = { "(" +
+                        "Name string, " +
+                        "SubMap string, " +
+                        "CurrentLevel int," +
+                        "CurrentExp int," +
+                        "CurrentLimit int, " +
+                        "BaseGain int," +
+                        "PQGain int, " +
+                        "PQGainLimit int, " +
+                        "SymbolExchangeRate int," +
+                        "CostLvlMod int," +
+                        "CostMod int," +
+                        "PRIMARY KEY(Name)" +
+                        ");" };
+            StaticTable.Add(new SymbolsTable("ArcaneSymbolData", ArcaneSymSpec[0]));
+
+            string[] PotSpec = { "(" +
+                        "EquipGrp string," +
+                        "Grade string," +
+                        "GradeT string," +
+                        "StatT string," +
+                        "Stat nvarchar," +
+                        "MinLvl int," +
+                        "MaxLvl int," +
+                        "ValueI nvarchar," +
+                        "Duration int," +
+                        "Chance double," +
+                        "PRIMARY KEY (EquipGrp, Grade, GradeT, Stat, MinLvl, MaxLvl, ValueI)" +
+                        ");" };
+            StaticTable.Add(new PotentialTable("PotentialData", PotSpec[0]));
 
 
-
-
+            await Task.WhenAll(StaticTable.ParallelForEachAsync(ST => Task.Run(() =>((ITableUpload)ST).RetrieveData())));
 
 
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
@@ -265,11 +263,17 @@ namespace MSEACalculator.OtherRes.Database
                 {
                     try
                     {
-                        //INIT Blank Tables <- Tables with foreign key FIRST
 
-                        staticTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection, trans));
+                        foreach(BaseDBTable table in StaticTable)
+                        {
+                            table.InitTable(dbConnection, trans);
+                            ((ITableUpload)table).UploadTable(dbConnection, trans);
 
-                        await Task.WhenAll(staticTables.ParallelForEachAsync(item => Task.Run(() => InitCSVData(item.initMode, item.tableName, dbConnection, trans))));
+                        }
+                        
+                        //staticTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection, trans));
+
+                        //await Task.WhenAll(staticTables.ParallelForEachAsync(item => Task.Run(() => InitCSVData(item.initMode, item.tableName, dbConnection, trans))));
 
                         trans.Commit();
                     }
@@ -291,8 +295,7 @@ namespace MSEACalculator.OtherRes.Database
         {
             await ApplicationData.Current.LocalFolder.CreateFileAsync("Maplestory.db", CreationCollisionOption.OpenIfExists);
 
-            List<TableStats> blankTables = new List<TableStats>();
-
+            List<BaseDBTable> BlankTables = new List<BaseDBTable>();
 
             //TABLE FOR CHARACTER TO TRACK
             string charTrackSpec = "(" +
@@ -302,7 +305,7 @@ namespace MSEACalculator.OtherRes.Database
                 "Starforce int," +
                 "PRIMARY KEY(CharName)" +
                 ");";
-            blankTables.Add(new TableStats("CharacterTrack", charTrackSpec));
+            BlankTables.Add(new BaseDBTable("TrackCharacter", charTrackSpec));
 
             //TABLE FOR CHAR'S BOSS TRACKING
             string bossMesoGainsTableSpec = "(" +
@@ -313,8 +316,7 @@ namespace MSEACalculator.OtherRes.Database
                 "FOREIGN KEY (CharName) REFERENCES CharacterTrack(CharName) ON DELETE CASCADE," +
                 "FOREIGN KEY (BossID) REFERENCES BossList(BossID)" +
                 ");";
-            blankTables.Add(new TableStats("BossMesoGains", bossMesoGainsTableSpec));
-
+            BlankTables.Add(new BaseDBTable("TrackBossMesoGains", bossMesoGainsTableSpec));
 
             string[] charEquipScrollSpec = {"(" +
                 "CharName string," +
@@ -334,7 +336,7 @@ namespace MSEACalculator.OtherRes.Database
                 "PRIMARY KEY (CharName, EquipSlot, EquipSet)," +
                 "FOREIGN KEY (CharName) REFERENCES CharacterTrack(CharName) ON DELETE CASCADE" +
                 ");" };
-            blankTables.Add(new TableStats("CharTEquipScroll", charEquipScrollSpec[0]));
+            BlankTables.Add(new BaseDBTable("TrackCharEquipScroll", charEquipScrollSpec[0]));
 
             string[] charEquipFlameSpec = {"(" +
                 "CharName string," +
@@ -352,32 +354,24 @@ namespace MSEACalculator.OtherRes.Database
                 "SPD int," +
                 "JUMP int," +
                 "AllStat int," +
-                "BossDMG, int" +
+                "BossDMG int," +
                 "DMG int," +
                 "PRIMARY KEY (CharName, EquipSlot, EquipSet)," +
                 "FOREIGN KEY (CharName) REFERENCES CharacterTrack(CharName) ON DELETE CASCADE" +
                 ");" };
-            blankTables.Add(new TableStats("CharTEquipFlame", charEquipFlameSpec[0]));
+            BlankTables.Add(new BaseDBTable("TrackCharEquipFlame", charEquipFlameSpec[0]));
 
             //EquipSet == WeaponType if recording Weapon
-            string[] charEquipMPot = { "(" +
+            string[] CharEquipPot = { "(" +
                     "CharName string," +
                     "EquipSlot string," +
                     "EqiuipSet string," +
+                    "PotType string," +
                     "FirstID int," +
                     "SecondID int," +
                     "ThirdID int" +
                     ");" };
-            blankTables.Add(new TableStats("CharTEquipMPot", charEquipMPot[0]));
-            string[] charEquipAPot = { "(" +
-                    "CharName string," +
-                    "EquipSlot string," +
-                    "EqiuipSet string," +
-                    "FirstID int," +
-                    "SecondID int," +
-                    "ThirdID int" +
-                    ");" };
-            blankTables.Add(new TableStats("CharTEquipAPot", charEquipAPot[0]));
+            BlankTables.Add(new BaseDBTable("TrackCharEquipPot", CharEquipPot[0]));
 
 
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
@@ -388,8 +382,9 @@ namespace MSEACalculator.OtherRes.Database
                     try
                     {
                         //INIT Blank Tables <- Tables with foreign key FIRST
-                        blankTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection, trans));
+                        //blankTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection, trans));
 
+                        BlankTables.ForEach(T => T.InitTable(dbConnection, trans));
                         trans.Commit();
                     }
                     catch (Exception ex)
@@ -416,687 +411,11 @@ namespace MSEACalculator.OtherRes.Database
         //    return false;
         //}
 
-        private static void initTable(string tableName, string tableParameters, SqliteConnection connection, SqliteTransaction transaction)
-        {
-            if (connection.State == ConnectionState.Open)
-            {
-                //delete table if exist
-                string dropT = "DROP TABLE IF EXISTS " + tableName;
-                using (SqliteCommand dropCmd = new SqliteCommand(dropT, connection, transaction))
-                {
-                    dropCmd.ExecuteNonQuery();
-                };
-                // create table if not exist
-
-                string createTable = "CREATE TABLE IF NOT EXISTS " + tableName + tableParameters;
-                using (SqliteCommand createCmd = new SqliteCommand(createTable, connection, transaction))
-                {
-                    createCmd.ExecuteNonQuery();
-                };
-            }
-
-        }
-
-
-        public static async Task InitCSVData(string insertType, string tableName, SqliteConnection connection, SqliteTransaction transaction)
-        {
-            if (connection.State == ConnectionState.Open)
-            {
-                int counter = 0;
-                switch (insertType)
-                {
-                    case "Boss":
-                        List<BossCLS> bosstable = await ImportCSV.GetBossCSVAsync();
-                        // update to table
-
-
-                        counter++;
-                        string insertBoss = "INSERT INTO " + tableName + " (BossID, BossName, Difficulty, EntryType, Meso)" +
-                        " VALUES (@BossID,@BossName,@Difficulty,@EntryType,@Meso)";
-                        using (SqliteCommand insertBosscmd = new SqliteCommand(insertBoss, connection, transaction))
-                        {
-                            foreach (BossCLS bossItem in bosstable)
-                            {
-                                insertBosscmd.Parameters.Clear();
-                                insertBosscmd.Parameters.AddWithValue("@BossID", bossItem.BossID);
-                                insertBosscmd.Parameters.AddWithValue("@BossName", bossItem.BossName);
-                                insertBosscmd.Parameters.AddWithValue("@Difficulty", bossItem.Difficulty);
-                                insertBosscmd.Parameters.AddWithValue("@EntryType", bossItem.EntryType);
-                                insertBosscmd.Parameters.AddWithValue("@Meso", bossItem.Meso);
-
-                                try
-                                {
-                                    insertBosscmd.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(counter.ToString());
-                                    Console.WriteLine(ex.ToString());
-                                }
-
-                            }
-                        }
-
-                        break;
-
-                    case "AllCharacter":
-
-                        List<CharacterCLS> charTable = await ImportCSV.GetCharCSVAsync();
-
-
-                        counter++;
-                        string insertChar = "INSERT INTO " + tableName + "(ClassName, ClassType, Faction, MainStat, SecStat, UnionE, UnionET)" +
-                            " VALUES (@CN, @CT, @Fac, @MS, @SS, @UE, @UET)";
-
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertChar, connection, transaction))
-                        {
-                            foreach (CharacterCLS charItem in charTable)
-                            {
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@CN", charItem.ClassName);
-                                insertCMD.Parameters.AddWithValue("@CT", charItem.ClassType);
-                                insertCMD.Parameters.AddWithValue("@Fac", charItem.Faction);
-                                insertCMD.Parameters.AddWithValue("@UE", charItem.UnionEffect);
-                                insertCMD.Parameters.AddWithValue("@UET", charItem.UnionEffectType);
-                                insertCMD.Parameters.AddWithValue("@MS", charItem.MainStat);
-                                insertCMD.Parameters.AddWithValue("@SS", charItem.SecStat);
-
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(counter.ToString());
-                                    Console.WriteLine(ex.ToString());
-                                }
-                            };
-
-
-
-                        }
-
-
-                        break;
-                    case "UnionEffect":
-                        List<UnionCLS> unionList = await ImportCSV.GetUnionECSVAsync();
-
-                        counter++;
-                        string insertUnion = "INSERT INTO " + tableName + " (Effect, EffectType, B, A, S, SS, SSS)" +
-                            " VALUES (@E, @ET, @B, @A, @S, @SS, @SSS);";
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertUnion, connection, transaction))
-                        {
-                            foreach (UnionCLS unionItem in unionList)
-                            {
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@E", unionItem.Effect);
-                                insertCMD.Parameters.AddWithValue("@ET", unionItem.EffectType);
-                                insertCMD.Parameters.AddWithValue("@B", unionItem.RankB);
-                                insertCMD.Parameters.AddWithValue("@A", unionItem.RankA);
-                                insertCMD.Parameters.AddWithValue("@S", unionItem.RankS);
-                                insertCMD.Parameters.AddWithValue("@SS", unionItem.RankSS);
-                                insertCMD.Parameters.AddWithValue("@SSS", unionItem.RankSSS);
-
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(ex.ToString());
-                                    Console.WriteLine(counter.ToString());
-                                }
-                            }
-                        }
-
-
-
-                        break;
-                    case "Armor":
-
-                        List<EquipCLS> equipList = await ImportCSV.GetArmorCSVAsync();
-
-                        counter++;
-                        string insertEquip = "INSERT INTO " + tableName + "(" +
-                            " EquipSet, ClassType, EquipSlot, EquipLevel, MainStat, SecStat, AllStat, HP, MP, DEF, ATK, MATK, SPD, JUMP, IED)" +
-                            " VALUES (@Set, @Job, @Slot, @Lvl, @MS, @SS, @AllS, @HP, @MP, @DEF, @ATK, @MATK, @SPD,@JUMP,@IED);";
-
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertEquip, connection, transaction))
-                        {
-                            foreach (EquipCLS equipItem in equipList)
-                            {
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@Set", equipItem.EquipSet);
-                                insertCMD.Parameters.AddWithValue("@Job", equipItem.ClassType);
-                                insertCMD.Parameters.AddWithValue("@Slot", equipItem.EquipSlot);
-                                insertCMD.Parameters.AddWithValue("@Lvl", equipItem.EquipLevel);
-                                insertCMD.Parameters.AddWithValue("@MS", equipItem.BaseStats.MS);
-                                insertCMD.Parameters.AddWithValue("@SS", equipItem.BaseStats.SS);
-                                insertCMD.Parameters.AddWithValue("@HP", equipItem.BaseStats.HP);
-                                insertCMD.Parameters.AddWithValue("@MP", equipItem.BaseStats.MP);
-                                insertCMD.Parameters.AddWithValue("@DEF", equipItem.BaseStats.DEF);
-                                insertCMD.Parameters.AddWithValue("@ATK", equipItem.BaseStats.ATK);
-                                insertCMD.Parameters.AddWithValue("@MATK", equipItem.BaseStats.MATK);
-                                insertCMD.Parameters.AddWithValue("@AllS", equipItem.BaseStats.AllStat);
-                                insertCMD.Parameters.AddWithValue("@SPD", equipItem.BaseStats.SPD);
-                                insertCMD.Parameters.AddWithValue("@JUMP", equipItem.BaseStats.JUMP);
-                                insertCMD.Parameters.AddWithValue("@IED", equipItem.BaseStats.IED);
-
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(counter.ToString());
-                                    Console.WriteLine(ex.ToString());
-                                }
-                            }
-
-                        }
-
-                        break;
-                    case "EquipSlot":
-
-                        //Dictionary<EquipSlot,EquipType>
-                        Dictionary<string, string> EquipmentDict = new Dictionary<string, string>(){
-                            {"Ring1", "Ring" },{"Ring2", "Ring" },{"Ring3", "Ring" },{"Ring4", "Ring" },
-                            {"Pendant1", "Pendant" },{"Pendant2", "Pendant" },
-                            {"Face Accessory", "Accessory" },{"Eye Accessory", "Accessory" },{"Earrings", "Accessory" },{"Belt", "Accessory" },
-                            {"Shoulder", "Accessory"},
-                            {"Badge", "Accessory" },{"Medal", "Accessory" },{"Pocket", "Accessory" },
-                            {"Heart", "Heart" },{"Emblem", "Accessory" },
-                            {"Weapon", "Weapon" },{"Secondary", "Secondary" },
-                            {"Hat", "Armor" },{"Top", "Armor" },{"Bottom", "Armor" },{"Overall", "Armor" },{"Cape", "Armor" },{"Shoes", "Armor" },
-                            {"Gloves", "Armor" }
-                        };
-
-
-
-                        counter++;
-                        string insertES = "INSERT INTO " + tableName + " VALUES(@ES, @ET);";
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertES, connection, transaction))
-                        {
-                            foreach (string Eitem in EquipmentDict.Keys)
-                            {
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@ES", Eitem);
-                                insertCMD.Parameters.AddWithValue("@ET", EquipmentDict[Eitem]);
-
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(counter.ToString());
-                                    Console.WriteLine(ex.Message);
-                                }
-                            }
-
-                        }
-
-                        break;
-                    case "Accessories":
-                        List<EquipCLS> AccessoriesList = await ImportCSV.GetAccessoriesCSVAsync();
-
-
-
-                        string insertAcc = "INSERT INTO " + tableName + " (" +
-                        "EquipName, EquipSet,ClassType, EquipSlot, EquipLevel, " +
-                        "MainStat, SecStat,AllStat, HP, MP, DEF, ATK, MATK, SPD, JUMP, IED) VALUES" +
-                        "(@EN, @ESet,@CT, @ESlot, @EL" +
-                        ",@MS, @SS, @AS, @HP, @MP, @DEF, @ATK, @MATK, @SPD, @JUMP, @IED);";
-
-
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertAcc, connection, transaction))
-                        {
-                            foreach (EquipCLS Aitem in AccessoriesList)
-                            {
-                                counter++;
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@EN", Aitem.EquipName);
-                                insertCMD.Parameters.AddWithValue("@ESet", Aitem.EquipSet);
-                                insertCMD.Parameters.AddWithValue("@ESlot", Aitem.EquipSlot);
-                                insertCMD.Parameters.AddWithValue("@CT", Aitem.ClassType);
-                                insertCMD.Parameters.AddWithValue("@EL", Aitem.EquipLevel);
-
-                                insertCMD.Parameters.AddWithValue("@MS", Aitem.BaseStats.MS);
-                                insertCMD.Parameters.AddWithValue("@SS", Aitem.BaseStats.SS);
-                                insertCMD.Parameters.AddWithValue("@AS", Aitem.BaseStats.AllStat);
-                                insertCMD.Parameters.AddWithValue("@HP", Aitem.BaseStats.SpecialHP);
-                                insertCMD.Parameters.AddWithValue("@MP", Aitem.BaseStats.SpecialMP);
-                                insertCMD.Parameters.AddWithValue("@DEF", Aitem.BaseStats.DEF);
-                                insertCMD.Parameters.AddWithValue("@ATK", Aitem.BaseStats.ATK);
-                                insertCMD.Parameters.AddWithValue("@MATK", Aitem.BaseStats.MATK);
-                                insertCMD.Parameters.AddWithValue("@SPD", Aitem.BaseStats.SPD);
-                                insertCMD.Parameters.AddWithValue("@JUMP", Aitem.BaseStats.JUMP);
-                                insertCMD.Parameters.AddWithValue("@IED", Aitem.BaseStats.IED);
-
-                                try
-                                {
-
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(counter.ToString());
-                                    Console.WriteLine(ex.ToString());
-
-                                }
-                            }
-
-
-                        }
-                        break;
-                    case "Weapon":
-                        List<EquipCLS> WeapList = await ImportCSV.GetWeaponCSVAsync();
-
-
-                        string insertWeap = "INSERT INTO " + tableName + " (" +
-                            "EquipSet, WeaponType, EquipLevel, ATKSPD, MainStat, SecStat, HP, DEF, ATK, MATK, SPD, BDMG, IED) VALUES" +
-                            "(@ES, @WT, @EL, @AS, @MS, @SS,@HP, @DEF, @ATK, @MATK, @SPD, @BDMG, @IED);";
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertWeap, connection, transaction))
-                        {
-                            foreach (EquipCLS model in WeapList)
-                            {
-                                counter++;
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@ES", model.EquipSet);
-                                insertCMD.Parameters.AddWithValue("@WT", model.WeaponType);
-                                insertCMD.Parameters.AddWithValue("@EL", model.EquipLevel);
-                                insertCMD.Parameters.AddWithValue("@AS", model.BaseStats.ATKSPD);
-                                insertCMD.Parameters.AddWithValue("@MS", model.BaseStats.MS);
-                                insertCMD.Parameters.AddWithValue("@SS", model.BaseStats.SS);
-                                insertCMD.Parameters.AddWithValue("@HP", model.BaseStats.HP);
-                                insertCMD.Parameters.AddWithValue("@DEF", model.BaseStats.DEF);
-                                insertCMD.Parameters.AddWithValue("@ATK", model.BaseStats.ATK);
-                                insertCMD.Parameters.AddWithValue("@MATK", model.BaseStats.MATK);
-                                insertCMD.Parameters.AddWithValue("@SPD", model.BaseStats.SPD);
-                                insertCMD.Parameters.AddWithValue("@BDMG", model.BaseStats.BD);
-                                insertCMD.Parameters.AddWithValue("@IED", model.BaseStats.IED);
-
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(ex.ToString());
-                                    Console.WriteLine(counter.ToString());
-                                }
-                            }
-
-                        }
-                        break;
-
-                    case "Secondary":
-                        List<EquipCLS> SecList = await ImportCSV.GetSecondaryCSVAsync();
-
-
-                        string insertSec = "INSERT INTO " + tableName + " (" +
-                            "ClassName, WeaponType, EquipName, EquipLevel, MainStat, SecStat, ATK, MATK, AllStat, DEF, HP, MP, ATKSPD) VALUES" +
-                            "(@ES, @WT, @EN, @EL, @MS, @SS, @ATK, @MATK, @AS, @DEF, @HP, @MP, @ATKSPD);";
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertSec, connection, transaction))
-                        {
-                            foreach (EquipCLS model in SecList)
-                            {
-                                counter++;
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@ES", model.ClassType);
-                                insertCMD.Parameters.AddWithValue("@WT", model.WeaponType);
-                                insertCMD.Parameters.AddWithValue("@EN", model.EquipName);
-                                insertCMD.Parameters.AddWithValue("@EL", model.EquipLevel);
-                                insertCMD.Parameters.AddWithValue("@AS", model.BaseStats.AllStat);
-                                insertCMD.Parameters.AddWithValue("@MS", model.BaseStats.MS);
-                                insertCMD.Parameters.AddWithValue("@SS", model.BaseStats.SS);
-                                insertCMD.Parameters.AddWithValue("@HP", model.BaseStats.HP);
-                                insertCMD.Parameters.AddWithValue("@MP", model.BaseStats.MP);
-                                insertCMD.Parameters.AddWithValue("@DEF", model.BaseStats.DEF);
-                                insertCMD.Parameters.AddWithValue("@ATK", model.BaseStats.ATK);
-                                insertCMD.Parameters.AddWithValue("@MATK", model.BaseStats.MATK);
-                                insertCMD.Parameters.AddWithValue("@ATKSPD", model.BaseStats.ATKSPD);
-
-
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(ex.ToString());
-                                    Console.WriteLine(counter.ToString());
-                                }
-                            }
-
-                        }
-
-                        break;
-
-                    case "ClassMWeapon":
-
-                        Dictionary<int, List<string>> CMWDict = await ImportCSV.GetClassMWeaponCSVAsync();
-
-                        string insertMW = "INSERT INTO " + tableName + "(" +
-                            "ClassName, WeaponType) VALUES (" +
-                            "@CN, @WT );";
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertMW, connection, transaction))
-                        {
-                            foreach (int CN in CMWDict.Keys)
-                            {
-                                counter++;
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@CN", CMWDict[CN][0]);
-                                insertCMD.Parameters.AddWithValue("@WT", CMWDict[CN][1]);
-
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(ex.ToString());
-                                    Console.WriteLine(counter.ToString());
-                                }
-                            }
-                        }
-
-                        break;
-                    case "ClassSWeapon":
-
-                        Dictionary<int, List<string>> CSWDict = await ImportCSV.GetClassSWeaponCSVAsync();
-
-                        string insertSM = "INSERT INTO " + tableName + "(" +
-                            "ClassName, WeaponType) VALUES (" +
-                            "@CN, @WT );";
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertSM, connection, transaction))
-                        {
-                            foreach (int CN in CSWDict.Keys)
-                            {
-                                counter++;
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@CN", CSWDict[CN][0]);
-                                insertCMD.Parameters.AddWithValue("@WT", CSWDict[CN][1]);
-
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(ex.ToString());
-                                    Console.WriteLine(counter.ToString());
-                                }
-                            }
-                        }
-
-                        break;
-
-                    case "StarForce":
-
-                        List<SFGainCLS> SFList = await ImportCSV.GetSFCSVAsync();
-
-                        string insertSF = "INSERT INTO " + tableName + "(" +
-                            "SFID, JobStat, NonWeapVDef, OverallVDef, CatAMaxHP, WeapMaxMP, WeapVATK, WeapVMATK, SJump, SSpeed, GloveVATK, GloveVMATK ) VALUES " +
-                            "(@SFID, @JS, @NWD, @OD, @CMH, @WMP, @WATK, @WMATK, @SJ, @SS, @GATK, @GMATK );";
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertSF, connection, transaction))
-                        {
-                            foreach (SFGainCLS sF in SFList)
-                            {
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@SFID", sF.SFLevel);
-                                insertCMD.Parameters.AddWithValue("@JS", sF.JobStat);
-                                insertCMD.Parameters.AddWithValue("@NWD", sF.NonWeapVDef);
-                                insertCMD.Parameters.AddWithValue("@OD", sF.OverallVDef);
-                                insertCMD.Parameters.AddWithValue("@CMH", sF.CatAMaxHP);
-                                insertCMD.Parameters.AddWithValue("@WMP", sF.WeapMaxMP);
-                                insertCMD.Parameters.AddWithValue("@WATK", sF.WeapVATK);
-                                insertCMD.Parameters.AddWithValue("@WMATK", sF.WeapVMATK);
-                                insertCMD.Parameters.AddWithValue("@SJ", sF.SJump);
-                                insertCMD.Parameters.AddWithValue("@SS", sF.SSpeed);
-                                insertCMD.Parameters.AddWithValue("GATK", sF.GloveVATK);
-                                insertCMD.Parameters.AddWithValue("@GMATK", sF.GloveVMATK);
-
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(counter.ToString());
-                                    Console.WriteLine(ex.Message);
-                                }
-                            }
-                        }
-
-                        break;
-
-                    case "AddStarForce":
-                        List<SFGainCLS> ASFList = await ImportCSV.GetAddSFCSVAsync();
-
-                        string insertASF = "INSERT INTO " + tableName + "(" +
-                            "SFID, LevelRank, VStat, NonWeapVATK, NonWeapVMATK, WeapVATK, WeapVMATK) VALUES " +
-                            "(@SFID, @LR, @VS, @NWATK, @NWMATK, @WATK, @WMATK);";
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertASF, connection, transaction))
-                        {
-                            foreach (SFGainCLS sF in ASFList)
-                            {
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@SFID", sF.SFLevel);
-                                insertCMD.Parameters.AddWithValue("@LR", sF.LevelRank);
-                                insertCMD.Parameters.AddWithValue("@VS", sF.VStat);
-                                insertCMD.Parameters.AddWithValue("@NWATK", sF.NonWeapATK);
-                                insertCMD.Parameters.AddWithValue("@NWMATK", sF.NonWeapMATK);
-                                insertCMD.Parameters.AddWithValue("@WATK", sF.WeapVATK);
-                                insertCMD.Parameters.AddWithValue("@WMATK", sF.WeapVMATK);
-
-
-
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(counter.ToString());
-                                    Console.WriteLine(ex.Message);
-                                }
-                            }
-                        }
-                        break;
-                    case "Potential":
-
-                        List<PotentialStatsCLS> PotList = await ImportCSV.GetPotentialCSVAsync();
-
-                        string insertPot = "INSERT INTO " + tableName +"(" +
-                            "EquipGrp, Grade, GradeT, StatT, Stat, MinLvl, MaxLvl, ValueI, Duration, Chance) VALUES " +
-                            "(@EG, @G, @GT, @ST, @S, @MinL, @MaxL, @VI, @D, @C);";
-                        //int potIDc = 0;
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertPot, connection, transaction))
-                        {
-                            foreach (PotentialStatsCLS pot in PotList)
-                            {
-                                counter+=1;
-                                foreach (string i in pot.EquipGrpL)
-                                {
-                                    string e;
-                                    if (i.Trim() == "Shoulderpad")
-                                    {
-                                        e = "Shoulder";
-                                    }
-                                    else
-                                    {
-                                        e = i.Trim();
-                                    }
-
-                                    insertCMD.Parameters.Clear();
-                                    //insertCMD.Parameters.AddWithValue("@P", potIDc);
-                                    insertCMD.Parameters.AddWithValue("@EG", e);
-                                    insertCMD.Parameters.AddWithValue("@G", pot.Grade);
-                                    insertCMD.Parameters.AddWithValue("@GT", pot.Prime);
-                                    insertCMD.Parameters.AddWithValue("@ST", pot.StatType);
-                                    insertCMD.Parameters.AddWithValue("@S", pot.StatIncrease);
-                                    insertCMD.Parameters.AddWithValue("@MinL", pot.MinLvl);
-                                    insertCMD.Parameters.AddWithValue("@MaxL", pot.MaxLvl);
-                                    insertCMD.Parameters.AddWithValue("@VI", pot.StatValue);
-                                    insertCMD.Parameters.AddWithValue("@D", pot.Duration);
-                                    insertCMD.Parameters.AddWithValue("@C", pot.Chance);
-                                    //potIDc++;
-                                    try
-                                    {
-                                        insertCMD.ExecuteNonQuery();
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        Console.WriteLine(counter.ToString());
-                                        Console.WriteLine(ex.Message);
-                                    }
-                                }
-                            }
-                        }
-
-
-                        break;
-                    case "ArcaneSymbol":
-
-                        List<ArcaneSymbolCLS> Symbols = new List<ArcaneSymbolCLS> {
-                            new ArcaneSymbolCLS
-                            {
-                                Name = "Vanishing Journey",
-                                BaseSymbolGain = 8,
-                                SubMap = "Reverse City",
-                                PQSymbolsGain = 6,
-                                CostLvlMod = 7130000,
-                                CostMod = 2370000
-                            },
-                            new ArcaneSymbolCLS
-                            {
-                                Name = "Chew Chew",
-                                BaseSymbolGain = 4,
-                                SubMap = "Yum Yum",
-                                PQSymbolsGain = 0,
-                                PQGainLimit = 15,
-                                SymbolExchangeRate = 1,
-                                CostLvlMod = 6600000,
-                                CostMod = 12440000
-                            },
-                            new ArcaneSymbolCLS
-                            {
-                                Name = "Lachelein",
-                                BaseSymbolGain = 8,
-                                PQSymbolsGain = 0,
-                                PQGainLimit = 500,
-                                SymbolExchangeRate = 30,
-                                CostLvlMod = 6600000,
-                                CostMod = 12440000
-                            },
-                            new ArcaneSymbolCLS
-                            {
-                                Name = "Arcana",
-                                BaseSymbolGain = 8,
-                                PQSymbolsGain = 0,
-                                PQGainLimit = 30,
-                                SymbolExchangeRate = 3,
-                                CostLvlMod = 6600000,
-                                CostMod = 12440000
-                            },
-                            new ArcaneSymbolCLS
-                            {
-                                Name = "Moras",
-                                BaseSymbolGain = 8,
-                                PQSymbolsGain = 6,
-                                CostLvlMod = 6600000,
-                                CostMod = 12440000
-                            },
-                            new ArcaneSymbolCLS
-                            {
-                                Name = "Esfera",
-                                BaseSymbolGain = 8,
-                                PQSymbolsGain = 6,
-                                CostLvlMod = 6600000,
-                                CostMod = 12440000
-                            }
-
-                        };
-
-                        counter++;
-                        string insertAS = "INSERT INTO " + tableName +
-                            "(Name, SubMap, CurrentLevel, CurrentExp, CurrentLimit, BaseGain, PQGain, PQGainLimit, SymbolExchangeRate, CostLvlMod, CostMod) " +
-                            "VALUES (@N, @SM, @CLVL, @CEXP, @CLIMIT, @BG, @PQG, @PQGL, @SER, @CLM, @CM);";
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertAS, connection, transaction))
-                        {
-                            foreach (ArcaneSymbolCLS symbol in Symbols)
-                            {
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@N",symbol.Name);
-                                insertCMD.Parameters.AddWithValue("@SM",symbol.SubMap);
-                                insertCMD.Parameters.AddWithValue("@CLVL",symbol.CurrentLevel);
-                                insertCMD.Parameters.AddWithValue("@CEXP",symbol.CurrentExp);
-                                insertCMD.Parameters.AddWithValue("@CLIMIT",CalculationRes.CalForm.CalCurrentLimit(symbol.CurrentLevel));
-                                insertCMD.Parameters.AddWithValue("@BG",symbol.BaseSymbolGain);
-                                insertCMD.Parameters.AddWithValue("@PQG",symbol.PQSymbolsGain);
-                                insertCMD.Parameters.AddWithValue("@PQGL",(object)symbol.PQGainLimit ?? DBNull.Value);
-                                insertCMD.Parameters.AddWithValue("@SER",(object)symbol.SymbolExchangeRate ?? DBNull.Value);
-                                insertCMD.Parameters.AddWithValue("@CLM",symbol.CostLvlMod);
-                                insertCMD.Parameters.AddWithValue("@CM",symbol.CostMod);
-
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(counter.ToString());
-                                    Console.WriteLine(ex.Message);
-                                }
-                            }
-
-                        }
-
-
-
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-
-        }
-
 
     }
 
-
+    
 }
 
 
 
-//public async static Task writetoEventJson(string m, List<EventRecords> eventRecords)
-//{
-//    string jsonFP = Path.Combine(ApplicationData.Current.LocalFolder.Path, @"Data\");
-
-//    string filename = "Event.json";
-//    switch (m)
-//    {
-//        case "init":
-
-//            string jsonString = JsonSerializer.Serialize<List<EventRecords>>(eventRecords);
-//            using (FileStream createStream = File.Create(filename))
-//            {
-//                await JsonSerializer.SerializeAsync(createStream, eventRecords);
-
-//            }
-
-//            File.WriteAllText(jsonFP,filename);
-
-//                break;
-
-//        case "update":
-//            break;
-//    }
-
-
-
-//}

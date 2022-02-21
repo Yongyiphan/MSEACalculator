@@ -45,7 +45,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 _MesoRate = value;
                 if (decimal.TryParse(value, out decimal result) == false && value !=  string.Empty)
                 {
-                    ComFunc.errorDia("Enter valid meso rate");
+                    ComFunc.ErrorDia("Enter valid meso rate");
                 }
                 OnPropertyChanged(nameof(MesoRate));
             }
@@ -58,7 +58,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             set { _MoneyIn = value;
                 if (decimal.TryParse(value, out decimal result) == false && value != string.Empty)
                 {
-                    ComFunc.errorDia("Enter value number");
+                    ComFunc.ErrorDia("Enter value number");
                 }
                 ConvertCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(MoneyIn));

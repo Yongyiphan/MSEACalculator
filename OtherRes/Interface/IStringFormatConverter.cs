@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Data;
 
 namespace MSEACalculator.OtherRes.Interface
 {
-    public class StringFormatConverter :IValueConverter
+    public class IStringFormatConverter :IValueConverter
     {
         public string StringFormat { get; set; }
 

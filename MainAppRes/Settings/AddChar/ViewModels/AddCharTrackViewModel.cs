@@ -151,7 +151,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                         return true;
                     }
                 }
-                ComFunc.errorDia("Invalid Level Value");
+                ComFunc.ErrorDia("Invalid Level Value");
                 return false;
             }
 
@@ -182,7 +182,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             bool insertResult = DBAccess.insertCharTrack(tempChar);
             if (insertResult == false)
             {
-                ComFunc.errorDia("This character has been added before.");
+                ComFunc.ErrorDia("This character has been added before.");
             }
             SelectedAllChar = null;
                 

@@ -31,8 +31,6 @@
                             SelectedItem="{Binding SelectedScrollStat, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                 <TextBlock Text="Value" Visibility="{Binding ShowScrollValue}"/>
                 <TextBox Visibility="{Binding ShowScrollValue}" Text="{Binding ScrollStatValue, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
-                <Button x:Name="AddStatValueBtn" Content="Add Stat" Visibility="{Binding ShowScrollValue, Mode=TwoWay}"
-                        Command="{Binding AddScrollCMD, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </StackPanel>
         </StackPanel>
 

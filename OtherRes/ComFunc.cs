@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ using Windows.UI.Core;
 using MSEACalculator.CharacterRes.EquipmentRes;
 using MSEACalculator.CharacterRes;
 using MSEACalculator.OtherRes.Database;
+using Microsoft.Data.Sqlite;
 
 namespace MSEACalculator
 {
@@ -25,6 +27,46 @@ namespace MSEACalculator
     {
         public static Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
 
+        public static bool IsOpenConnection(SqliteConnection connection)
+        {
+            return connection.State == ConnectionState.Open ? true : false;
+        }
+        public static string InsertSQLStringBuilder(string TableName, string TablePara)
+        {
+            List<string> ToRemove = new List<string>() { "int", "string", "(", ");", "NOT NULL","double", "nvarchar" };
+            StringBuilder SB = new StringBuilder(TablePara);
+            StringBuilder Result = new StringBuilder("INSERT INTO " + TableName + " ( ");
+            foreach(string Type in ToRemove)
+            {
+                SB.Replace(Type, "");
+            }
+            string[] deliSplit = SB.ToString().Split(",");
+            foreach(string deli in deliSplit)
+            {
+                if (deli.Contains("PRIMARY") || deli.Contains("FOREIGN"))
+                {
+                    break;
+                }
+                Result.Append(String.Format("{0},", deli.Trim()));
+
+            }
+            Result = new StringBuilder(Result.ToString().TrimEnd(','));
+            Result.Append(") VALUES ( ");
+
+            foreach (string deli in deliSplit)
+            {
+                if (deli.Contains("PRIMARY") || deli.Contains("FOREIGN"))
+                {
+                    break;
+                }
+                Result.Append(String.Format("@{0},", deli.Trim()));
+
+            }
+            Result = new StringBuilder(Result.ToString().TrimEnd(','));
+            Result.Append(");");
+            return Result.ToString();
+
+        }
 
         public static int SpellTraceTier(EquipCLS selectedEquip)
         {
@@ -105,7 +147,7 @@ namespace MSEACalculator
             return rank;
         }
 
-        public static async void errorDia(string message)
+        public static async void ErrorDia(string message)
         {
             var errorDia = new MessageDialog(message);
 
@@ -113,7 +155,7 @@ namespace MSEACalculator
            
         }
 
-        public static EquipCLS updateBaseStats(CharacterCLS character, EquipCLS baseEquip)
+        public static EquipCLS UpdateBaseStats(CharacterCLS character, EquipCLS baseEquip)
         {
             //To update equip with proper values as per class
             //EquipModel equipModel = new EquipModel();
@@ -169,7 +211,7 @@ namespace MSEACalculator
             return baseEquip;
         }
 
-        public static EquipStatsCLS recordToProperty(EquipStatsCLS RM, Dictionary<string, int> record)
+        public static EquipStatsCLS RecordToProperty(EquipStatsCLS RM, Dictionary<string, int> record)
         {
             foreach(var R in record.Keys)
             {
@@ -234,7 +276,7 @@ namespace MSEACalculator
             return RM;
         }
         
-        public static Dictionary<string,int> propertyToRecord(EquipStatsCLS RM, Dictionary<string, int> record)
+        public static Dictionary<string,int> PropertyToRecord(EquipStatsCLS RM, Dictionary<string, int> record)
         {
             record.Clear();
             record["STR"] = RM.STR;
@@ -282,6 +324,16 @@ namespace MSEACalculator
                     }
                 }
             }
+            else if (GVar.ArmorEquips.Contains(Slot))
+            {
+                foreach (EquipCLS equip in FindingList)
+                {
+                    if (equip.EquipSet ==  ESet && equip.EquipSlot == Slot && equip.ClassType == SCharacter.ClassType)
+                    {
+                        return returnedEquip =  equip;
+                    }
+                }
+            }
             else
             {
                 switch (EquipSlot[Slot])
@@ -302,7 +354,7 @@ namespace MSEACalculator
                         {
                             if (equip.EquipName == ESet)
                             {
-                                if (equip.ClassType == SCharacter.Faction || equip.ClassType == SCharacter.ClassType)
+                                if (equip.ClassType == SCharacter.ClassName || equip.ClassType == SCharacter.ClassType)
                                 {
                                     returnedEquip =  equip;
                                     if (equip.WeaponType.Contains("Demon Aegis")){
@@ -321,15 +373,6 @@ namespace MSEACalculator
                                     
                                     return returnedEquip;
                                 }
-                            }
-                        }
-                        break;
-                    case "Armor":
-                        foreach(EquipCLS equip in FindingList)
-                        {
-                            if (equip.EquipSet ==  ESet && equip.EquipSlot == Slot && equip.ClassType == SCharacter.ClassType)
-                            {
-                                return returnedEquip =  equip;
                             }
                         }
                         break;
@@ -458,7 +501,7 @@ namespace MSEACalculator
 
         };
 
-        public static string returnRingPend(string ESlot)
+        public static string ReturnRingPend(string ESlot)
         {
             if (EquipSlot[ESlot] == "Ring" || EquipSlot[ESlot] == "Pendant")
             {
@@ -467,14 +510,15 @@ namespace MSEACalculator
             return ESlot;
         }
 
-        public static string returnSetCat(string selectedESlot)
+        public static string ReturnSetCat(string selectedESlot)
         {
-            string eslot = returnRingPend(selectedESlot);
+            string eslot = ReturnRingPend(selectedESlot);
+
             if (GVar.AccEquips.Contains(eslot))
             {
                 return "Accessory";
             }
-            else if (GVar.ArEquips.Contains(eslot))
+            else if (GVar.ArmorEquips.Contains(eslot))
             {
                 return "Armor";
             }
@@ -487,7 +531,7 @@ namespace MSEACalculator
 
         public static string returnScrollCat(string selectedESlot)
         {
-            string eslot = returnRingPend(selectedESlot);
+            string eslot = ReturnRingPend(selectedESlot);
             if (GVar.AccEquips.Contains(eslot))
             {
                 if (eslot ==  "Shoulder")
@@ -500,7 +544,7 @@ namespace MSEACalculator
                 }
                 return "Accessory";
             }
-            else if (GVar.ArEquips.Contains(eslot))
+            else if (GVar.ArmorEquips.Contains(eslot))
             {
                 if(eslot == "Gloves")
                 {

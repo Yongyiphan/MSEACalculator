@@ -22,7 +22,7 @@ namespace MSEACalculator.OtherRes.Database
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
                 dbConnection.Open();
-                string getBossCmd = "SELECT * FROM BossList";
+                string getBossCmd = "SELECT * FROM BossListData";
 
                 SqliteCommand selectCmd = new SqliteCommand(getBossCmd, dbConnection);
 
@@ -59,10 +59,10 @@ namespace MSEACalculator.OtherRes.Database
             {
                 dbConnection.Open();
                 string getCharCmd = "SELECT " +
-                    "AC.ClassName, AC.ClassType, AC.Faction, AC.MainStat, AC.SecStat, AC.UnionE, AC.UnionET, ClassMainWeap.WeaponType, ClassSecWeap.WeaponType " +
-                    "FROM AllCharacter AS AC " +
-                    "INNER JOIN ClassMainWeap ON AC.ClassName = ClassMainWeap.ClassName " +
-                    "INNER JOIN ClassSecWeap ON AC.ClassName = ClassSecWeap.ClassName";
+                    "AC.ClassName, AC.ClassType, AC.Faction, AC.MainStat, AC.SecStat, AC.UnionE, AC.UnionET, ClassMainWeapon.WeaponType, ClassSecWeapon.WeaponType " +
+                    "FROM AllCharacterData AS AC " +
+                    "INNER JOIN ClassMainWeapon ON AC.ClassName = ClassMainWeapon.ClassName " +
+                    "INNER JOIN ClassSecWeapon ON AC.ClassName = ClassSecWeapon.ClassName";
 
                 using (SqliteCommand selectCmd = new SqliteCommand(getCharCmd, dbConnection))
                 {
@@ -105,7 +105,7 @@ namespace MSEACalculator.OtherRes.Database
             {
                 dbCon.Open();
 
-                string getCharCMD = "SELECT * FROM CharacterTrack";
+                string getCharCMD = "SELECT * FROM TrackCharacter";
 
                 using (SqliteCommand selectCMD = new SqliteCommand(getCharCMD, dbCon))
                 {
@@ -135,7 +135,7 @@ namespace MSEACalculator.OtherRes.Database
             {
                 dbCon.Open();
 
-                string getArmor = "SELECT * FROM ArmorStats";
+                string getArmor = "SELECT * FROM ArmorData";
 
                 using (SqliteCommand selectCMD = new SqliteCommand(getArmor, dbCon))
                 {
@@ -149,9 +149,11 @@ namespace MSEACalculator.OtherRes.Database
                             tempEquip.ClassType = result.GetString(1);
                             tempEquip.EquipSlot = result.GetString(2);
                             tempEquip.EquipLevel = result.GetInt32(3);
+
                             tempEquip.BaseStats.MS = result.GetInt32(4);
                             tempEquip.BaseStats.SS = result.GetInt32(5);
                             tempEquip.BaseStats.AllStat = result.GetInt32(6);
+                            
                             tempEquip.BaseStats.HP = result.GetInt32(7);
                             tempEquip.BaseStats.MP = result.GetInt32(8);
                             tempEquip.BaseStats.DEF = result.GetInt32(9);
@@ -219,16 +221,18 @@ namespace MSEACalculator.OtherRes.Database
                             equipModel.EquipSet = reader.GetString(1);
                             equipModel.ClassType = reader.GetString(2);
                             equipModel.EquipSlot = reader.GetString(3);
-
                             equipModel.EquipLevel = reader.GetInt32(4);
+
                             equipModel.BaseStats.MS = reader.GetInt32(5);
                             equipModel.BaseStats.SS = reader.GetInt32(6);
                             equipModel.BaseStats.AllStat = reader.GetInt32(7);
+                            
                             equipModel.BaseStats.SpecialHP = reader.GetString(8);
                             equipModel.BaseStats.SpecialMP = reader.GetString(9);
                             equipModel.BaseStats.DEF = reader.GetInt32(10);
                             equipModel.BaseStats.ATK = reader.GetInt32(11);
                             equipModel.BaseStats.MATK = reader.GetInt32(12);
+                            
                             equipModel.BaseStats.SPD = reader.GetInt32(13);
                             equipModel.BaseStats.JUMP = reader.GetInt32(14);
                             equipModel.BaseStats.IED = reader.GetInt32(15);
@@ -265,11 +269,13 @@ namespace MSEACalculator.OtherRes.Database
                             EquipCLS equipModel = new EquipCLS();
                             equipModel.EquipSet = reader.GetString(0);
                             equipModel.WeaponType = reader.GetString(1);
-
                             equipModel.EquipLevel = reader.GetInt32(2);
+
                             equipModel.BaseStats.ATKSPD = reader.GetInt32(3);
+                            
                             equipModel.BaseStats.MS = reader.GetInt32(4);
                             equipModel.BaseStats.SS = reader.GetInt32(5);
+                            
                             equipModel.BaseStats.HP = reader.GetInt32(6);
                             equipModel.BaseStats.DEF = reader.GetInt32(7);
                             equipModel.BaseStats.ATK = reader.GetInt32(8);
@@ -302,7 +308,7 @@ namespace MSEACalculator.OtherRes.Database
             {
                 dbCon.Open();
 
-                string selectQuery = "SELECT * FROM SecondaryWeaponData";
+                string selectQuery = "SELECT * FROM SecondaryData";
 
                 using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
                 {
@@ -311,19 +317,22 @@ namespace MSEACalculator.OtherRes.Database
                         while (reader.Read())
                         {
                             EquipCLS equipModel = new EquipCLS();
+
                             equipModel.ClassType = reader.GetString(0);
-                            equipModel.WeaponType = reader.GetString(1);
-                            equipModel.EquipName = reader.GetString(2);
+                            equipModel.EquipName = reader.GetString(1);
+                            equipModel.WeaponType = reader.GetString(2);
                             equipModel.EquipLevel = reader.GetInt32(3);
 
                             equipModel.BaseStats.MS = reader.GetInt32(4);
                             equipModel.BaseStats.SS = reader.GetInt32(5);
+
                             equipModel.BaseStats.ATK = reader.GetInt32(6);
                             equipModel.BaseStats.MATK = reader.GetInt32(7);
                             equipModel.BaseStats.AllStat = reader.GetInt32(8);
                             equipModel.BaseStats.DEF = reader.GetInt32(9);
                             equipModel.BaseStats.HP = reader.GetInt32(10);
                             equipModel.BaseStats.MP = reader.GetInt32(11);
+                            
                             equipModel.BaseStats.ATKSPD = reader.GetInt32(12);
 
 
@@ -385,7 +394,7 @@ namespace MSEACalculator.OtherRes.Database
             {
                 dbCon.Open();
 
-                string selectQuery = "SELECT * FROM ArcaneSymbol";
+                string selectQuery = "SELECT * FROM ArcaneSymbolData";
 
                 using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
                 {

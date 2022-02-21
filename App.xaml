@@ -33,7 +33,7 @@
             <Setter Property="Margin" Value="5"/>
         </Style>
 
-        <interface:StringFormatConverter x:Key="ThousandsConverter" StringFormat= " {0:N0} "/>
+        <interface:IStringFormatConverter x:Key="ThousandsConverter" StringFormat= " {0:N0} "/>
     </Application.Resources>
 
 </Application>

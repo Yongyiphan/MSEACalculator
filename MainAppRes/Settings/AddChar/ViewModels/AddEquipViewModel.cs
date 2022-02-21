@@ -83,22 +83,16 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 if (SEquipSlot != null)
                 {
+
                     ItemDisType = SlotSet.Contains(EquipSlots[SEquipSlot]) ? "Set: " : "Name: ";
-
-
 
                     ShowWeapon = EquipSlots[SEquipSlot] == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
 
-                    ShowEquipSet(SEquipSlot);
-                    IsSpellTrace = false;
-                    NoSlot = 0;
-                    SelectedScrollStat = null;
-                    ScrollRecord.Clear();
-                    FlameRecord.Clear();
-
-
+                    ShowEquipSet(SEquipSlot);                    
+                    ResetInput();
                 }
 
+                AddEquipmentCMD.RaiseCanExecuteChanged();
 
 
                 OnPropertyChanged(nameof(SEquipSlot));
@@ -125,11 +119,20 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             {
                 _SSetItem = value;
 
+                if(value != String.Empty)
+                {
+                    CurrentSEquip = null;
+                    GetCurrentEquipment();
+                }
 
-                GetCurrentEquipment();
                 if (CurrentSEquip != null)
                 {
-                    FirstPot = SecondPot = ThirdPot = null;
+                    if(SEquipSlot == "Secondary")
+                    {
+                        SCharacter.CurrentSecondaryWeapon = SSetItem;
+                    }
+
+                    FirstLine = SecondLine = ThirdLine = null;
                     FirstPotL = RetrievePot();
                 }
                 AddEquipmentCMD.RaiseCanExecuteChanged();
@@ -144,14 +147,16 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _SelectedWeapon = value;
-                if (SCharacter !=  null)
+                if (SCharacter !=  null && value != String.Empty)
                 {
+                    CurrentSEquip = null;
                     SCharacter.CurrentMainWeapon = SelectedWeapon;
                     GetCurrentEquipment();
-                    FirstPot = SecondPot = ThirdPot = null;
+                    FirstLine = SecondLine = ThirdLine = null;
                     FirstPotL = RetrievePot();
 
                 }
+                AddEquipmentCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(SelectedWeapon));
             }
         }
@@ -252,15 +257,12 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     {
                         if (NoSlot == 0)
                         {
-                            ComFunc.errorDia("Slot cannot be 0.");
+                            ComFunc.ErrorDia("Slot cannot be 0.");
                             SelectedScrollIndex = -1;
-                        }
-                        
+                        }   
                     }
                     else
                     {
-                        ShowScrollValue = ScrollModel.SpellTracePercTypes.Contains(SelectedScrollStat) ? Visibility.Collapsed : Visibility.Visible;
-
                         if (ScrollRecord.ContainsKey(SelectedScrollStat))
                         {
                             ScrollStatValue = ScrollRecord[SelectedScrollStat].ToString();
@@ -286,8 +288,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _ScrollStatvalue = value;
-                AddRecordValue("Scroll", value);
-                //AddScrollCMD.RaiseCanExecuteChanged();
+                if(value != string.Empty)
+                {
+                    AddRecordValue("Scroll", value);
+                }
                 AddEquipmentCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(ScrollStatValue));
             }
@@ -313,7 +317,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     if (FlameRecord.ContainsKey(SelectedFlame))
                     {
                         FlameStatValue = FlameRecord[SelectedFlame].ToString();
-
                     }
                     else
                     {
@@ -332,7 +335,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _FlameStatValue = value;
-                //AddFlameCMD.RaiseCanExecuteChanged();
+                if(value != string.Empty)
+                {
+                    AddRecordValue("Flame", value);
+                }
+
                 AddEquipmentCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(FlameStatValue));
             }
@@ -382,48 +389,26 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
 
-        private List<PotentialStatsCLS> _MainPotL;
-        public List<PotentialStatsCLS> MainPotL
-        {
-            get => _MainPotL;
-            set
-            {
-                _MainPotL = value;
-                OnPropertyChanged(nameof(MainPotL));
-            }
-        }
-
-        private List<PotentialStatsCLS> _AddPotL;
-        public List<PotentialStatsCLS> AddPotL
-        {
-            get => _AddPotL;
-            set
-            {
-                _AddPotL = value;
-                OnPropertyChanged(nameof(AddPotL));
-            }
-        }
-
         private bool _isAddPot = false;
-        public bool isAddPot
+        public bool IsAddPot
         {
             get => _isAddPot;
             set
             {
                 _isAddPot = value;
 
-                if (isAddPot == true && CItemSelect != null)
+                if (SPotentialG != -1 && CurrentSEquip != null)
                 {
-                    if (AddPotL.Select(x => x.PotID).ToList().Sum() != 0)
-                    {
-                        FirstPot = AddPotL[0];
-                        SecondPot = AddPotL[1];
-                        ThirdPot = AddPotL[2];
+                    FirstLine = SecondLine = ThirdLine = null;
+                    FirstPotL.Clear();
+                    SecondPotL.Clear();
+                    ThirdPotL.Clear();
+                    RecordPotential("Grade", SPotentialG);
 
-                    }
+                    FirstPotL = RetrievePot();
                 }
 
-                OnPropertyChanged(nameof(isAddPot));
+                OnPropertyChanged(nameof(IsAddPot));
             }
         }
 
@@ -434,12 +419,14 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _SPotentialG = value;
-                if (SPotentialG != -1)
+                if (SPotentialG != -1 && CurrentSEquip != null)
                 {
-                    FirstPot = SecondPot = ThirdPot = null;
+                    FirstLine = SecondLine = ThirdLine = null;
                     FirstPotL.Clear();
                     SecondPotL.Clear();
                     ThirdPotL.Clear();
+                    RecordPotential("Grade", value);
+
                     FirstPotL = RetrievePot();
                 }
 
@@ -448,43 +435,45 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private PotentialStatsCLS _FirstPot;
-        public PotentialStatsCLS FirstPot
+        private PotentialStatsCLS _FirstLine;
+        public PotentialStatsCLS FirstLine
         {
-            get => _FirstPot;
+            get => _FirstLine;
             set
             {
-                _FirstPot = value;
-
+                _FirstLine = value;
+                RecordPotential("First", value.PotID);
                 ShowSecondPot();
                 AddPotCMD.RaiseCanExecuteChanged();
-                OnPropertyChanged(nameof(FirstPot));
+                OnPropertyChanged(nameof(FirstLine));
 
             }
         }
 
-        private PotentialStatsCLS _SecondPot;
-        public PotentialStatsCLS SecondPot
+        private PotentialStatsCLS _SecondLine;
+        public PotentialStatsCLS SecondLine
         {
-            get => _SecondPot;
+            get => _SecondLine;
             set
             {
-                _SecondPot = value;
+                _SecondLine = value;
+                RecordPotential("Second", value.PotID);
                 ShowThirdPot();
                 AddPotCMD.RaiseCanExecuteChanged();
-                OnPropertyChanged(nameof(SecondPot));
+                OnPropertyChanged(nameof(SecondLine));
             }
         }
 
-        private PotentialStatsCLS _ThirdPot;
-        public PotentialStatsCLS ThirdPot
+        private PotentialStatsCLS _ThirdLine;
+        public PotentialStatsCLS ThirdLine
         {
-            get => _ThirdPot;
+            get => _ThirdLine;
             set
             {
-                _ThirdPot = value;
+                _ThirdLine = value;
+                RecordPotential("Third", value.PotID);
                 AddPotCMD.RaiseCanExecuteChanged();
-                OnPropertyChanged(nameof(ThirdPot));
+                OnPropertyChanged(nameof(ThirdLine));
             }
         }
 
@@ -563,16 +552,9 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        
 
-        
 
-        
-        
-
-        
-
-        public ObservableCollection<EquipCLS> CItemDictT { get; set; }
+        public ObservableCollection<EquipCLS> CItemDictT { get; set; } = new ObservableCollection<EquipCLS>();
 
 
 
@@ -605,7 +587,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             initFields();
             //AddScrollCMD = new CustomCommand(AddScrollStat, canAddScrollStat);
             //AddFlameCMD = new CustomCommand(AddFlame, canAddFlame);
-            AddPotCMD = new CustomCommand(AddPotential, canAddPot);
+            //AddPotCMD = new CustomCommand(AddPotential, canAddPot);
 
 
             AddEquipmentCMD = new CustomCommand(AddItem, canAddItem);
@@ -664,7 +646,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     ifWeapon = CItemSelect.EquipSlot == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
                     SEquipSlot = CItemSelect.EquipSlot;
                     //SSetItem = AEquipM.AccGrp.Contains(EquipSlots[SEquipSlot]) ? CItemSelect.EquipName : CItemSelect.EquipSet;
-                    SSetItem = ComFunc.returnSetCat(SEquipSlot) == "Accessory" ? CItemSelect.EquipName : CItemSelect.EquipSet;
+                    SSetItem = ComFunc.ReturnSetCat(SEquipSlot) == "Accessory" ? CItemSelect.EquipName : CItemSelect.EquipSet;
                     SelectedWeapon = CItemSelect?.WeaponType;
                     IsSpellTrace = CItemSelect.SpellTraced;
                     if (CItemSelect.SpellTraced)
@@ -672,22 +654,19 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                         NoSlot = CItemSelect.SlotCount;
                         SelectedScrollIndex = CItemSelect.SpellTracePerc;
                     }
-                    ScrollRecord = ComFunc.propertyToRecord(CItemSelect.ScrollStats, ScrollRecord);
-                    FlameRecord = ComFunc.propertyToRecord(CItemSelect.FlameStats, FlameRecord);
-                    SPotentialG = CItemSelect.MPgrade;
-
-                    MainPotL = CItemSelect.MainPot;
-                    AddPotL = CItemSelect.AddPot;
+                    ScrollRecord = ComFunc.PropertyToRecord(CItemSelect.ScrollStats, ScrollRecord);
+                    FlameRecord = ComFunc.PropertyToRecord(CItemSelect.FlameStats, FlameRecord);
                     
-                    if (CItemSelect.MainPot.Select(x => x.PotID).ToList().Sum() != 0)
-                    {
-                        FirstPot = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot[0].PotID);
-                        SecondPot = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot[1].PotID);
-                        ThirdPot = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot[2].PotID);
-                        //FirstPot =  CItemSelect.MainPot[0];
-                        //SecondPot = CItemSelect.MainPot[1];
-                        //ThirdPot = CItemSelect.MainPot[2];
-                    }
+                    
+                    //if (CItemSelect.MainPot.Select(x => x.Value).ToList().Sum() != 0)
+                    //{
+                    //    FirstLine = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot["FirstLine"]);
+                    //    SecondLine = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot["SecondLine"]);
+                    //    ThirdLine = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot["ThirdLine"]);
+                    //    //FirstPot =  CItemSelect.MainPot[0];
+                    //    //SecondPot = CItemSelect.MainPot[1];
+                    //    //ThirdPot = CItemSelect.MainPot[2];
+                    //}
                     ShowEnteredRecords();
                 }
                 OnPropertyChanged(nameof(CItemSelect));
@@ -696,9 +675,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
 
-
-        public CustomCommand AddScrollCMD { get; private set; }
-        public CustomCommand AddFlameCMD { get; private set; }
         public CustomCommand AddPotCMD { get; private set; }
         public CustomCommand AddEquipmentCMD { get; private set; }
 
@@ -728,138 +704,44 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private bool canAddScrollStat()
-        {
-            //Check if stat is selected
-            //Check if int value is keyed into value textbox
-            if (SelectedScrollStat != null && ScrollStatValue != null && ScrollStatValue  != String.Empty)
-            {
-                if (int.TryParse(ScrollStatValue.ToString(), out int value))
-                {
-                    return true;
-                }
-                else
-                {
-                    if (ScrollStatValue != string.Empty)
-                    {
-                        ComFunc.errorDia("Invalid");
-                        return false;
-                    }
-                }
-            }
-            return false;
 
-        }
-        private void AddScrollStat()
-        {
-            //Stat selected, Int value inserted
-            ScrollRecord[SelectedScrollStat] = int.Parse(ScrollStatValue);
-
-            SelectedScrollStat = String.Empty;
-            AddEquipmentCMD.RaiseCanExecuteChanged();
-        }
+        //private bool canAddPot()
+        //{
+        //    if (FirstLine != null && SecondLine != null)
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
+        //private void AddPotential()
+        //{
+        //    PotentialStatsCLS thirdPot = ThirdLine == null ? new PotentialStatsCLS() : ThirdLine;
+        //    if (IsAddPot)
+        //    {
+        //        if (ComFunc.notNULL(CurrentSEquip))
+        //        {
+        //            CurrentSEquip.APgrade = SPotentialG;
+        //            CurrentSEquip.AddPot = new List<PotentialStatsCLS> { FirstLine, SecondLine, thirdPot };
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (ComFunc.notNULL(CurrentSEquip))
+        //        {
+        //            CurrentSEquip.MPgrade = SPotentialG;
+        //            CurrentSEquip.MainPot = new List<PotentialStatsCLS> { FirstLine, SecondLine, thirdPot };
+        //        }
+        //    }
 
 
-        private bool canAddFlame()
-        {
-            bool canAdd = false;
-            //Flame Stat selected
-            if (SelectedFlame != null)
-            {
-                //Check Value is INT
-                if (int.TryParse(FlameStatValue, out int value))
-                {
-                    canAdd = true;
-                }
-                else
-                {
-                    if (FlameStatValue != string.Empty)
-                    {
-                        canAdd = false;
-                    }
-                }
-            }
-            return canAdd;
-        }
-        private void AddFlame()
-        {
-            FlameRecord[SelectedFlame] = int.Parse(FlameStatValue);
-            SelectedFlame = String.Empty;
-            AddEquipmentCMD.RaiseCanExecuteChanged();
-        }
-
-        private bool canAddPot()
-        {
-            if (FirstPot != null && SecondPot != null)
-            {
-                return true;
-            }
-            return false;
-        }
-        private void AddPotential()
-        {
-            PotentialStatsCLS thirdPot = ThirdPot == null ? new PotentialStatsCLS() : ThirdPot;
-            if (isAddPot)
-            {
-                if (ComFunc.notNULL(CurrentSEquip))
-                {
-                    CurrentSEquip.APgrade = SPotentialG;
-                    CurrentSEquip.AddPot = new List<PotentialStatsCLS> { FirstPot, SecondPot, thirdPot };
-                }
-            }
-            else
-            {
-                if (ComFunc.notNULL(CurrentSEquip))
-                {
-                    CurrentSEquip.MPgrade = SPotentialG;
-                    CurrentSEquip.MainPot = new List<PotentialStatsCLS> { FirstPot, SecondPot, thirdPot };
-                }
-            }
-
-
-        }
+        //}
         private bool canAddItem()
         {
-            //Func<bool, string, Dictionary<string, int>, Dictionary<string, int>, bool>
-            //    checkAddStatAdded = (isSpellTraced, scrollStat, scrollRecord, flameRecord) =>
-            //    {
-            //        //Spell trace, check slots, spell trace perc
-            //        //check scrollrecord, flamerecords
-            //        if (isSpellTraced)
-            //        {
-            //            //scrollstat null == slotcount = 0
-            //            if (scrollStat != null && flameRecord.Count >= 0)
-            //            {
-            //                return true;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            //if flameRecord = 0 && scrollRecord = 0 == clean equip, no flame, no scroll
-            //            if (flameRecord.Count >= 0 && scrollRecord.Count >= 0)
-            //            {
-            //                return true;
-            //            }
-            //        }
-
-            //        return false;
-            //    };
-
-            //if (SCharacter != null)
-            //{
-            //    if (SEquipSlot != null && SSetItem != null)
-            //    {
-            //        if (SEquipSlot == "Weapon" && SelectedWeapon != null)
-            //        {
-            //            return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
-            //        }
-            //        return checkAddStatAdded(IsSpellTrace, SelectedScrollStat, ScrollRecord, FlameRecord);
-            //    }
-            //}
+            
 
             if(SCharacter != null && CurrentSEquip != null)
             {
-
+                return true;
             }
 
             SyncCI = CItemDictT.Count == 0 ? true : false;
@@ -871,7 +753,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         {
 
             CharacterCLS selectedChar = SCharacter;
-            string currentSSlot = ComFunc.returnRingPend(SEquipSlot);
+            string currentSSlot = ComFunc.ReturnRingPend(SEquipSlot);
            
 
             //Blank Equp
@@ -883,21 +765,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             selectedEquip.SlotCount = NoSlot;
             selectedEquip.SpellTraced = IsSpellTrace;
             //Assign base stats to correct property
-            selectedEquip = ComFunc.updateBaseStats(selectedChar, selectedEquip);
+            selectedEquip = ComFunc.UpdateBaseStats(selectedChar, selectedEquip);
             
             string slotType = ComFunc.returnScrollCat(currentSSlot);
 
             //Update Scroll/Flame Effects
             selectedEquip = updateEquipModelStats(selectedEquip, selectedChar, slotType);
-            if (ComFunc.notNULL(MainPotL))
-            {
-                selectedEquip.MainPot =  MainPotL;
-            }
-            if (ComFunc.notNULL(AddPotL))
-            {
-                selectedEquip.AddPot =  AddPotL;
-            }
-            selectedEquip.MPgrade = SPotentialG;
+            
             
 
             //Check for new / update of item.
@@ -907,7 +781,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             {
                 if (existEquip.Equals(selectedEquip))
                 {
-                    ComFunc.errorDia("Equip added before");
+                    ComFunc.ErrorDia("Equip added before");
                     CItemSelect = selectedEquip;
                 }
                 //update
@@ -923,7 +797,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             {
                 CItemDictT.Add(selectedEquip);
                 NoSlot = 0;
-                FirstPot = SecondPot = ThirdPot = null;
+                FirstLine = SecondLine = ThirdLine = null;
             }
             
             AddEquipmentCMD.RaiseCanExecuteChanged();
@@ -936,7 +810,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             Func<string, string, ObservableCollection<string>, List<EquipCLS>, ObservableCollection<string>>
                 FilterSet = (classtype, eSlot, displayList, itemList) =>
                 {
-
                     foreach (var item in itemList)
                     {
                         if (item.EquipSlot == eSlot && (item.ClassType == classtype ||item.ClassType == "Any" ))
@@ -954,9 +827,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                                 {
                                     displayList.Add(item.EquipSet);
                                 }
-                            }
-
-                            
+                            }                            
                         }
                     }
 
@@ -1037,7 +908,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 };
             if (SCharacter != null)
             {
-                string slotCat = ComFunc.returnSetCat(selectedESlot);
+                string slotCat = ComFunc.ReturnSetCat(selectedESlot);
                 switch (slotCat)
                 {
                     case "Weapon":
@@ -1060,7 +931,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                         break;
                     case "Accessory":
                         ArmorSet.Clear();
-                        string eslot = ComFunc.returnRingPend(selectedESlot);
+                        string eslot = ComFunc.ReturnRingPend(selectedESlot);
                         ArmorSet = selectedESlot == "Shoulder" ? FilterSet(SCharacter.ClassType, eslot, ArmorSet, AEquipM.AllAccList) :
                             DisplayItemNameL(eslot, ArmorSet, AEquipM.AllAccList);
                         CurrentEquipList.Clear();
@@ -1104,13 +975,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             if (SCharacter != null && SSetItem != null)
             {
                 CharacterCLS selectedChar = SCharacter;
-                string currentSSlot = ComFunc.returnRingPend(SEquipSlot);
+                string currentSSlot = ComFunc.ReturnRingPend(SEquipSlot);
                 //Blank Equp
 
-                List<EquipCLS> EList = CurrentEquipList;
-
                 //Retreive base equip stats from list
-                selectedEquip = ComFunc.FindEquip(EList, selectedChar, currentSSlot, SSetItem);
+                selectedEquip = ComFunc.FindEquip(CurrentEquipList, selectedChar, currentSSlot, SSetItem);
 
                 CurrentSEquip = selectedEquip;
             }
@@ -1120,30 +989,64 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         private void AddRecordValue(string type, string value)
         {
-            if(value != string.Empty && int.TryParse(value, out int result))
+            if (int.TryParse(value, out int result))
             {
                 switch (type)
                 {
                     case "Scroll":
                         ScrollRecord[SelectedScrollStat] = result;
-                        SelectedScrollIndex = -1;
-                        ScrollStatValue = String.Empty;
                         break;
 
                     case "Flame":
                         FlameRecord[SelectedFlame] = result;
-                        FlameStatValue = String.Empty;
                         break;
                 }
             }
             else
             {
-                ComFunc.errorDia("Enter valid number.");
+                ComFunc.ErrorDia("Enter valid number.");
+                ScrollStatValue = string.Empty;
             }
-            
-
         }
 
+        private void RecordPotential(string PotType, int value)
+        {
+            if(CurrentSEquip != null)
+            {
+                if (IsAddPot)
+                {
+                    switch (PotType)
+                    {
+                        case "Grade":
+                            break;
+                        case "First":
+                            break;
+                        case "Second":
+                            break;
+                        case "Third":
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (PotType)
+                    {
+                        case "Grade":
+                            CurrentSEquip.MPotGrade = value;
+                            break;
+                        case "First":
+                            CurrentSEquip.MainPot["First"] = value;
+                            break;
+                        case "Second":
+                            CurrentSEquip.MainPot["Second"] = value;
+                            break;
+                        case "Third":
+                            CurrentSEquip.MainPot["Third"] = value;
+                            break;
+                    }
+                }
+            }
+        }
         public ObservableCollection<PotentialStatsCLS> RetrievePot()
         {
             ObservableCollection<PotentialStatsCLS> potList = new ObservableCollection<PotentialStatsCLS>();
@@ -1189,7 +1092,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             ObservableCollection<PotentialStatsCLS> tempList = new ObservableCollection<PotentialStatsCLS>(FirstPotL);
 
             bool checks = false;
-            if (FirstPot != null && SPotentialG != -1)
+            if (FirstLine != null && SPotentialG != -1)
             {
                 checks = true;
             }
@@ -1198,9 +1101,9 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             {
                 foreach(string sC in GVar.RepeatOnePot)
                 {
-                    if (FirstPot.StatIncrease.Contains(sC))
+                    if (FirstLine.StatIncrease.Contains(sC))
                     {
-                        tempList.Remove(FirstPot);
+                        tempList.Remove(FirstLine);
                         
                     }
                 }
@@ -1214,7 +1117,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
             bool checks = false;
 
-            if(SecondPot != null && FirstPot != null && SPotentialG != -1)
+            if(SecondLine != null && FirstLine != null && SPotentialG != -1)
             {
                 checks = true;
             }
@@ -1222,7 +1125,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             {
                 foreach(string sC in GVar.RepeatTwoPot)
                 {
-                    if (SecondPot.StatIncrease.Contains(sC) && FirstPot.StatIncrease.Contains(sC))
+                    if (SecondLine.StatIncrease.Contains(sC) && FirstLine.StatIncrease.Contains(sC))
                     {
                         foreach(var pot in tempList.Where(x => x.StatIncrease.Contains(sC)).ToList())
                         {
@@ -1266,13 +1169,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 {
                     selectedEquip.ScrollStats.GetType().GetProperty(MainStat).SetValue(selectedEquip.ScrollStats, ComFunc.SpellTraceDict[slotType][STTier][perc].MainStat * selectedEquip.SlotCount, null);
                 }
-                selectedEquip.FlameStats = ComFunc.recordToProperty(selectedEquip.FlameStats, FlameRecord);
+                selectedEquip.FlameStats = ComFunc.RecordToProperty(selectedEquip.FlameStats, FlameRecord);
                 selectedEquip.SpellTracePerc = SelectedScrollIndex;
             }
             else
             {
-                selectedEquip.ScrollStats = ComFunc.recordToProperty(selectedEquip.ScrollStats, ScrollRecord);
-                selectedEquip.FlameStats = ComFunc.recordToProperty(selectedEquip.FlameStats, FlameRecord);
+                selectedEquip.ScrollStats = ComFunc.RecordToProperty(selectedEquip.ScrollStats, ScrollRecord);
+                selectedEquip.FlameStats = ComFunc.RecordToProperty(selectedEquip.FlameStats, FlameRecord);
             }
 
             return selectedEquip;
@@ -1281,7 +1184,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         private void ShowEnteredRecords()
         {
-            Dictionary<string, int> BaseStat = ComFunc.propertyToRecord(CItemSelect.BaseStats, new Dictionary<string, int>());
+            Dictionary<string, int> BaseStat = ComFunc.PropertyToRecord(CItemSelect.BaseStats, new Dictionary<string, int>());
             Dictionary<string, string> DisplayDict = new Dictionary<string, string>();
             foreach(string dictKey in BaseStat.Keys)
             {
@@ -1349,6 +1252,19 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
 
             TotalRecordDisplay = DisplayDict;
+        }
+
+
+        private void ResetInput()
+        {
+            SSetItem = String.Empty;
+            SelectedWeapon = String.Empty;
+            CurrentSEquip = null;
+            IsSpellTrace = false;
+            NoSlot = 0;
+            SelectedScrollStat = null;
+            ScrollRecord.Clear();
+            FlameRecord.Clear();
         }
     }
 }

@@ -36,8 +36,9 @@ namespace MSEACalculator
         
         public const int MaxCrytalCount = 180;
         public const int MaxArcaneSymbolLevel = 20;
+        public const int TransferSymbolExp = 2467;
         public static int MaxSymbolExp = CalForm.CalMaxExp(MaxArcaneSymbolLevel);
-       
+
         
         public static string CONN_STRING { get; set; } = $"Filename = {databasePath}";
 
@@ -56,8 +57,10 @@ namespace MSEACalculator
 
 
 
-        //TOTAL 20 UNIQUE SLOTS
+        //TOTAL 20 UNIQUE SLOTS + 3 EXTRA RING + 1 EXTRA PENDANT = 24 SLOTS
         //EQUIPMENT SLOTS BEGIN
+
+        //12 UNIQUE SLOTS IN ACC EQUIPS
         public static List<string> AccEquips { get; set; } = new List<string>
         {
             "Ring", "Pocket",
@@ -67,10 +70,17 @@ namespace MSEACalculator
             "Emblem", "Medal", "Badge", "Heart"
         };
 
-        public static List<string> ArEquips { get; set; } = new List<string>
+        //6 SLOT (TOP, BTM) / 5 SLOTS (OVERALLS)
+        public static List<string> ArmorEquips { get; set; } = new List<string>
         {
-            "Hat", "Bottom", "Top", "Overall", "Cape", "Gloves", "Shoes"
+            "Hat", 
+            "Bottom", "Top", "Overall", 
+            "Cape", "Gloves", "Shoes"
         };
+        
+        //+ WEAPON
+        //+ SECONDARY/ SHIELD
+
         //EQUIPMENT SLOTS END
 
 

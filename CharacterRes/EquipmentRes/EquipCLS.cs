@@ -22,19 +22,22 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public EquipStatsCLS ScrollStats { get; set; } = new EquipStatsCLS();
         public EquipStatsCLS FlameStats { get; set; } = new EquipStatsCLS();
 
-        public List<PotentialStatsCLS> MainPot { get; set; } = new List<PotentialStatsCLS>
+        public int MPotGrade { get; set; } = 0;
+        public Dictionary<string, int> MainPot { get; set; } = new Dictionary<string, int>
         {
-            new PotentialStatsCLS(), new PotentialStatsCLS(), new PotentialStatsCLS()
+            {"First", 0 },
+            {"Second", 0 },
+            {"Third", 0 },
         };
 
-        public int MPgrade { get; set; }
-
-
-        public List<PotentialStatsCLS> AddPot { get; set; } = new List<PotentialStatsCLS> 
+        public int APotGrade { get; set;} = 0;  
+        public Dictionary<string, int> AddPot { get; set; } = new Dictionary<string, int>
         {
-            new PotentialStatsCLS(), new PotentialStatsCLS(), new PotentialStatsCLS()
+            {"First", 0 },
+            {"Second", 0 },
+            {"Third", 0 },
         };
-        public int APgrade { get; set; }
+
         public bool SpellTraced { get; set; } = false;
 
         public int SpellTracePerc { get; set; } = -1;
@@ -61,7 +64,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                     test.Add(ScrollStats.Equals(cObj.ScrollStats) ? "true" : "false");
                     test.Add(FlameStats.Equals(cObj.FlameStats) ? "true" : "false");
                     //test.Add(new HashSet<PotentialStats>(MainPot).Equals(new HashSet<PotentialStats>(((EquipModel)obj).MainPot)) ? "true" : "false");
-                    test.Add(MainPot.Select(x => x.PotID).ToList().SequenceEqual(cObj.MainPot.Select(x => x.PotID).ToList()) ? "true" : "false");
+                    test.Add(MainPot.Select(x => x.Value).ToList().SequenceEqual(cObj.MainPot.Select(x => x.Value).ToList()) ? "true" : "false");
 
                 }
             }

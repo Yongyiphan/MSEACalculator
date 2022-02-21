@@ -15,7 +15,8 @@ namespace MSEACalculator.CalculationRes.ViewModels
     {
         public SymbolModel SymbolM { get; set; } = new SymbolModel();
 
-        public int TotalSymbolExp { get; set; } = GVar.MaxSymbolExp;
+
+        public int ExpCeiling { get; set; } = GVar.MaxSymbolExp;
 
         private List<ArcaneSymbolCLS> _SymbolList;
         public List<ArcaneSymbolCLS> SymbolList
@@ -150,7 +151,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
                 if (int.TryParse(value, out int result) == false && value != String.Empty)
                 {
-                    ComFunc.errorDia("Enter valid number");
+                    ComFunc.ErrorDia("Enter valid number");
                     CExp = "1";
                 }
                 else
@@ -160,7 +161,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                         int tempExp = int.Parse(CExp);
                         if (tempExp > GVar.MaxSymbolExp || tempExp<1)
                         {
-                            ComFunc.errorDia(String.Format("Enter number within 1 to {0}", GVar.MaxSymbolExp));
+                            ComFunc.ErrorDia(String.Format("Enter number within 1 to {0}", GVar.MaxSymbolExp));
                             CExp = "1";
                         }
                     }
@@ -213,7 +214,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
                 if (ComFunc.IsInt(PQGains) == false)
                 {
-                    ComFunc.errorDia("Enter valid number");
+                    ComFunc.ErrorDia("Enter valid number");
                     PQGains = "0";
                 }
                 else
@@ -222,7 +223,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                     {
                         if (int.Parse(PQGains) > CSymbol?.PQGainLimit)
                         {
-                            ComFunc.errorDia(String.Format("Enter number less than {0}", CSymbol?.PQGainLimit));
+                            ComFunc.ErrorDia(String.Format("Enter number less than {0}", CSymbol?.PQGainLimit));
                             PQGains = "0";
                         }
                     }
@@ -265,7 +266,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 _ArcaenCat = value;
                 if(DisplayArcaneSymbolList.Count > 0 && DisplayArcaneSymbolList != null)
                 {
-                    ReEvalSymbol();
+                    ReEvalSymbolArcaneCatalyst();
                 }
                 OnPropertyChanged(nameof(ArcaneCatT));
             }
@@ -317,6 +318,25 @@ namespace MSEACalculator.CalculationRes.ViewModels
         }
         //NOT IMPLEMENTED
         
+
+        //True = To Max?
+        //False = To Transfer?
+        private bool _EndGoal = true;
+        public bool EndGoal
+        {
+            get { return _EndGoal; }
+            set { _EndGoal = value;
+
+                ExpCeiling = value == true ? GVar.MaxSymbolExp : GVar.TransferSymbolExp;
+
+                if (DisplayArcaneSymbolList.Count > 0 && DisplayArcaneSymbolList != null)
+                {
+                    ReEvalSymbolArcaneCatalyst();
+                }
+                OnPropertyChanged(nameof(EndGoal));
+            }
+        }
+
 
         public CustomCommand AddSymbolCMD { get; set; }
         public CustomCommand DelSymbolCMD { get; set; }
@@ -424,9 +444,11 @@ namespace MSEACalculator.CalculationRes.ViewModels
             cSymbol.CurrentLevel = CalculatedValues["NewLevel"];
             cSymbol.CurrentLimit = CalculatedValues["NewLimit"];
             cSymbol.AccumulatedExp = CalculatedValues["CurrentTotalExp"];
+            CSymbol.BeforeCatalyst = cSymbol.AccumulatedExp;
             cSymbol.CurrentExp = CalculatedValues["RemainingExp"];
 
-            cSymbol.DaysLeft = CalForm.CalDaysLeft(cSymbol.AccumulatedExp, cSymbol.SymbolGainRate);
+            
+            cSymbol.DaysLeft = CalForm.CalDaysLeft(cSymbol.AccumulatedExp, cSymbol.SymbolGainRate, ExpCeiling);
 
             //CALCULATION END
             cSymbol.CostSpent = CalForm.CalCostSymbol(1, cSymbol.CurrentLevel, cSymbol.CostLvlMod, cSymbol.CostMod);
@@ -434,7 +456,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
             if (cSymbol.DaysLeft == -1)
             {
-                ComFunc.errorDia("Impossible to complete symbol. Add method to get more symbols");
+                ComFunc.ErrorDia("Impossible to complete symbol. Add method to get more symbols");
             }
 
             bool added = DisplayArcaneSymbolList.ToList().Any(x => x.Name == cSymbol.Name);
@@ -512,7 +534,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         }
 
-        private void ReEvalSymbol()
+        private void ReEvalSymbolArcaneCatalyst()
         {
             Dictionary<string, int> dictRec = null;
             List<ArcaneSymbolCLS> tempList = new List<ArcaneSymbolCLS>(DisplayArcaneSymbolList);
@@ -531,7 +553,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                         symbol.CurrentLimit = dictRec["NewLimit"];
                         symbol.AccumulatedExp = dictRec["CurrentTotalExp"];
                         symbol.CurrentExp = dictRec["RemainingExp"];
-                        symbol.DaysLeft = CalForm.CalDaysLeft(symbol.AccumulatedExp, symbol.SymbolGainRate);
+                        symbol.DaysLeft = CalForm.CalDaysLeft(symbol.AccumulatedExp, symbol.SymbolGainRate, ExpCeiling);
 
 
                     }
@@ -541,9 +563,10 @@ namespace MSEACalculator.CalculationRes.ViewModels
             else if (ArcaneCatT == false)
             {
                 foreach (ArcaneSymbolCLS symbol in tempList)
-                {
+                 {
                     if (symbol.CurrentLevel > 1)
                     {
+
                         symbol.AccumulatedExp = symbol.BeforeCatalyst;
                         dictRec = CalForm.CalNewLvlExp(symbol.AccumulatedExp);
 
@@ -551,14 +574,16 @@ namespace MSEACalculator.CalculationRes.ViewModels
                         symbol.CurrentLimit = dictRec["NewLimit"];
                         symbol.AccumulatedExp = dictRec["CurrentTotalExp"];
                         symbol.CurrentExp = dictRec["RemainingExp"];
-                        symbol.DaysLeft = CalForm.CalDaysLeft(symbol.AccumulatedExp, symbol.SymbolGainRate);
-
 
                     }
+                    symbol.DaysLeft = CalForm.CalDaysLeft(symbol.AccumulatedExp, symbol.SymbolGainRate, ExpCeiling);
+
                 }
             }
+            
             UpdateDisList();
         }
+
 
         private ArcaneSymbolCLS FindSymbol(string name)
         {

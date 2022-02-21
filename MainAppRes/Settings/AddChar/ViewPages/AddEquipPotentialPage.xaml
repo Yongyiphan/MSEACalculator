@@ -36,7 +36,7 @@
         </Grid>
         <Grid Grid.Column="1">
             <StackPanel>
-                <CheckBox Content="Add Pot?" Margin="10 0" IsChecked="{Binding isAddPot}"/>
+                <CheckBox Content="Add Pot?" Margin="10 0" IsChecked="{Binding IsAddPot}"/>
 
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Name="txtGrade" Text="Grade"/>

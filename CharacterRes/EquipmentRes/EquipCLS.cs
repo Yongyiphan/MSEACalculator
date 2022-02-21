@@ -23,23 +23,24 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public EquipStatsCLS FlameStats { get; set; } = new EquipStatsCLS();
 
         public int MPotGrade { get; set; } = 0;
-        public Dictionary<string, int> MainPot { get; set; } = new Dictionary<string, int>
+        public Dictionary<string, PotentialStatsCLS> MainPot { get; set; } = new Dictionary<string, PotentialStatsCLS>
         {
-            {"First", 0 },
-            {"Second", 0 },
-            {"Third", 0 },
+            {"First", new PotentialStatsCLS() },
+            {"Second", new PotentialStatsCLS() },
+            {"Third", new PotentialStatsCLS() },
         };
 
         public int APotGrade { get; set;} = 0;  
-        public Dictionary<string, int> AddPot { get; set; } = new Dictionary<string, int>
+        public Dictionary<string, PotentialStatsCLS> AddPot { get; set; } = new Dictionary<string, PotentialStatsCLS>
         {
-            {"First", 0 },
-            {"Second", 0 },
-            {"Third", 0 },
+            {"First", new PotentialStatsCLS() },
+            {"Second", new PotentialStatsCLS() },
+            {"Third", new PotentialStatsCLS() },
         };
 
         public bool SpellTraced { get; set; } = false;
 
+        //STORE BY INDEX
         public int SpellTracePerc { get; set; } = -1;
         public int StarForce { get; set; } = 0;
 

@@ -83,13 +83,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 if (SEquipSlot != null)
                 {
-
+                    ResetInput();
                     ItemDisType = SlotSet.Contains(EquipSlots[SEquipSlot]) ? "Set: " : "Name: ";
 
                     ShowWeapon = EquipSlots[SEquipSlot] == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
 
                     ShowEquipSet(SEquipSlot);                    
-                    ResetInput();
+                    
                 }
 
                 AddEquipmentCMD.RaiseCanExecuteChanged();
@@ -119,9 +119,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             {
                 _SSetItem = value;
 
-                if(value != String.Empty)
+                if(value != String.Empty && SEquipSlot != "Weapon")
                 {
-                    CurrentSEquip = null;
                     GetCurrentEquipment();
                 }
 
@@ -132,6 +131,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                         SCharacter.CurrentSecondaryWeapon = SSetItem;
                     }
 
+                    RecordPotential("Grade", new PotentialStatsCLS(), SPotentialG);
                     FirstLine = SecondLine = ThirdLine = null;
                     FirstPotL = RetrievePot();
                 }
@@ -149,9 +149,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 _SelectedWeapon = value;
                 if (SCharacter !=  null && value != String.Empty)
                 {
-                    CurrentSEquip = null;
                     SCharacter.CurrentMainWeapon = SelectedWeapon;
                     GetCurrentEquipment();
+
+                    RecordPotential("Grade", new PotentialStatsCLS(), SPotentialG);
                     FirstLine = SecondLine = ThirdLine = null;
                     FirstPotL = RetrievePot();
 
@@ -163,9 +164,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
 
         //EQUPMENT IN FOCUS
+
         public EquipCLS CurrentSEquip { get; set; }
-
-
+        
+        
 
         /// <summary>
         /// SCROLLING SELECTION
@@ -388,6 +390,27 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
+        private Dictionary<string, PotentialStatsCLS> _MainPotL;
+        public Dictionary<string, PotentialStatsCLS> MainPotL
+        {
+            get => _MainPotL;
+            set
+            {
+                _MainPotL = value;
+                OnPropertyChanged(nameof(MainPotL));
+            }
+        }
+
+        private Dictionary<string, PotentialStatsCLS> _AddPotL;
+        public Dictionary<string, PotentialStatsCLS> AddPotL
+        {
+            get => _AddPotL;
+            set
+            {
+                _MainPotL = value;
+                OnPropertyChanged(nameof(AddPotL));
+            }
+        }
 
         private bool _isAddPot = false;
         public bool IsAddPot
@@ -403,9 +426,14 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     FirstPotL.Clear();
                     SecondPotL.Clear();
                     ThirdPotL.Clear();
-                    RecordPotential("Grade", SPotentialG);
+
+                    SPotentialG = IsAddPot ? CurrentSEquip.APotGrade : CurrentSEquip.MPotGrade;
+
+                    RecordPotential("Grade",new PotentialStatsCLS(), SPotentialG);
 
                     FirstPotL = RetrievePot();
+
+                    ShowPotential("First");
                 }
 
                 OnPropertyChanged(nameof(IsAddPot));
@@ -425,7 +453,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     FirstPotL.Clear();
                     SecondPotL.Clear();
                     ThirdPotL.Clear();
-                    RecordPotential("Grade", value);
+                    RecordPotential("Grade", new PotentialStatsCLS(), value);
 
                     FirstPotL = RetrievePot();
                 }
@@ -442,9 +470,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _FirstLine = value;
-                RecordPotential("First", value.PotID);
-                ShowSecondPot();
-                AddPotCMD.RaiseCanExecuteChanged();
+
+                if (FirstLine != null)
+                {
+                    RecordPotential("First", value, 0);
+                    ShowSecondPot();
+                    ShowPotential("Second");
+                }
                 OnPropertyChanged(nameof(FirstLine));
 
             }
@@ -457,9 +489,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _SecondLine = value;
-                RecordPotential("Second", value.PotID);
-                ShowThirdPot();
-                AddPotCMD.RaiseCanExecuteChanged();
+
+                if (SecondLine != null)
+                {
+                    RecordPotential("Second", value, 0);
+                    ShowThirdPot();
+                    ShowPotential("Third");
+                }
                 OnPropertyChanged(nameof(SecondLine));
             }
         }
@@ -471,8 +507,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _ThirdLine = value;
-                RecordPotential("Third", value.PotID);
-                AddPotCMD.RaiseCanExecuteChanged();
+                if (ThirdLine != null)
+                {
+                    RecordPotential("Third", value, 0);
+                }
                 OnPropertyChanged(nameof(ThirdLine));
             }
         }
@@ -541,20 +579,81 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
 
-        private Visibility _ifWeapon = Visibility.Collapsed;
-        public Visibility ifWeapon
-        {
-            get { return _ifWeapon; }
-            set
-            {
-                _ifWeapon = value;
-                OnPropertyChanged(nameof(ifWeapon));
-            }
-        }
-
 
 
         public ObservableCollection<EquipCLS> CItemDictT { get; set; } = new ObservableCollection<EquipCLS>();
+
+        private EquipCLS _CItemSelect;
+
+        public EquipCLS CItemSelect
+        {
+            get { return _CItemSelect; }
+            set { _CItemSelect = value;
+
+
+                ShowSEquipStat = CItemSelect != null ? Visibility.Visible : Visibility.Collapsed;
+
+                if (CItemSelect != null)
+                {
+                    SEquipSlot = CItemSelect?.EquipSlot;
+                    SSetItem = ComFunc.ReturnSetCat(SEquipSlot) == "Accessory" ? CItemSelect?.EquipName : CItemSelect?.EquipSet;
+                    SelectedWeapon = CItemSelect?.WeaponType;
+                    IsSpellTrace = CItemSelect.SpellTraced;
+
+                    if (CItemSelect.SpellTraced)
+                    {
+                        NoSlot = CItemSelect.SlotCount;
+                        SelectedScrollIndex = CItemSelect.SpellTracePerc;
+                    }
+                    ScrollRecord = ComFunc.PropertyToRecord(CItemSelect.ScrollStats, ScrollRecord);
+                    FlameRecord = ComFunc.PropertyToRecord(CItemSelect.FlameStats, FlameRecord);
+                    MainPotL = CItemSelect.MainPot;
+                    AddPotL = CItemSelect.AddPot;
+
+
+
+                    ShowEnteredRecords();
+                    ShowPotential("First");
+                    ShowPotential("Second");
+                    ShowPotential("Third");
+                }
+
+                OnPropertyChanged(nameof(CItemSelect));
+            }
+        }
+
+        //{
+        //    get => _CEquip; set
+        //    {
+        //        _CEquip = value;
+
+        //        ShowSEquipStat = CurrentSEquip != null ? Visibility.Visible : Visibility.Collapsed;
+
+        //        if (CurrentSEquip != null)
+        //        {
+        //            if(SEquipSlot != CurrentSEquip.EquipSlot)
+        //            {
+        //                SEquipSlot = CurrentSEquip.EquipSlot;
+        //            }
+        //            SSetItem = ComFunc.ReturnSetCat(SEquipSlot) == "Accessory" ? CurrentSEquip?.EquipName : CurrentSEquip?.EquipSet;
+        //            SelectedWeapon = CurrentSEquip?.WeaponType;
+        //            IsSpellTrace = CurrentSEquip.SpellTraced;
+
+        //            if (CurrentSEquip.SpellTraced)
+        //            {
+        //                NoSlot = CurrentSEquip.SlotCount;
+        //                SelectedScrollIndex = CurrentSEquip.SpellTracePerc;
+        //            }
+        //            ScrollRecord = ComFunc.PropertyToRecord(CurrentSEquip.ScrollStats, ScrollRecord);
+        //            FlameRecord = ComFunc.PropertyToRecord(CurrentSEquip.FlameStats, FlameRecord);
+
+
+
+        //            ShowEnteredRecords();
+
+        //        }
+        //    }
+        //}
 
 
 
@@ -585,9 +684,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             ACharTrackVM.RaiseChangeChar += HandleCharChange;
             SCharacter = ACharTrackVM?.SelectedAllChar;
             initFields();
-            //AddScrollCMD = new CustomCommand(AddScrollStat, canAddScrollStat);
-            //AddFlameCMD = new CustomCommand(AddFlame, canAddFlame);
-            //AddPotCMD = new CustomCommand(AddPotential, canAddPot);
 
 
             AddEquipmentCMD = new CustomCommand(AddItem, canAddItem);
@@ -633,49 +729,9 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
 
-        private EquipCLS _CItemSelect;
-        public EquipCLS CItemSelect
-        {
-            get => _CItemSelect;
-            set
-            {
-                _CItemSelect = value;
-                ShowSEquipStat = CItemSelect != null ? Visibility.Visible : Visibility.Collapsed;
-                if (CItemSelect != null)
-                {
-                    ifWeapon = CItemSelect.EquipSlot == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
-                    SEquipSlot = CItemSelect.EquipSlot;
-                    //SSetItem = AEquipM.AccGrp.Contains(EquipSlots[SEquipSlot]) ? CItemSelect.EquipName : CItemSelect.EquipSet;
-                    SSetItem = ComFunc.ReturnSetCat(SEquipSlot) == "Accessory" ? CItemSelect.EquipName : CItemSelect.EquipSet;
-                    SelectedWeapon = CItemSelect?.WeaponType;
-                    IsSpellTrace = CItemSelect.SpellTraced;
-                    if (CItemSelect.SpellTraced)
-                    {
-                        NoSlot = CItemSelect.SlotCount;
-                        SelectedScrollIndex = CItemSelect.SpellTracePerc;
-                    }
-                    ScrollRecord = ComFunc.PropertyToRecord(CItemSelect.ScrollStats, ScrollRecord);
-                    FlameRecord = ComFunc.PropertyToRecord(CItemSelect.FlameStats, FlameRecord);
-                    
-                    
-                    //if (CItemSelect.MainPot.Select(x => x.Value).ToList().Sum() != 0)
-                    //{
-                    //    FirstLine = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot["FirstLine"]);
-                    //    SecondLine = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot["SecondLine"]);
-                    //    ThirdLine = FirstPotL.Single(x => x.PotID == CItemSelect.MainPot["ThirdLine"]);
-                    //    //FirstPot =  CItemSelect.MainPot[0];
-                    //    //SecondPot = CItemSelect.MainPot[1];
-                    //    //ThirdPot = CItemSelect.MainPot[2];
-                    //}
-                    ShowEnteredRecords();
-                }
-                OnPropertyChanged(nameof(CItemSelect));
-
-            }
-        }
+        
 
 
-        public CustomCommand AddPotCMD { get; private set; }
         public CustomCommand AddEquipmentCMD { get; private set; }
 
         /// <summary>
@@ -705,40 +761,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
 
-        //private bool canAddPot()
-        //{
-        //    if (FirstLine != null && SecondLine != null)
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
-        //private void AddPotential()
-        //{
-        //    PotentialStatsCLS thirdPot = ThirdLine == null ? new PotentialStatsCLS() : ThirdLine;
-        //    if (IsAddPot)
-        //    {
-        //        if (ComFunc.notNULL(CurrentSEquip))
-        //        {
-        //            CurrentSEquip.APgrade = SPotentialG;
-        //            CurrentSEquip.AddPot = new List<PotentialStatsCLS> { FirstLine, SecondLine, thirdPot };
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (ComFunc.notNULL(CurrentSEquip))
-        //        {
-        //            CurrentSEquip.MPgrade = SPotentialG;
-        //            CurrentSEquip.MainPot = new List<PotentialStatsCLS> { FirstLine, SecondLine, thirdPot };
-        //        }
-        //    }
-
-
-        //}
         private bool canAddItem()
         {
-            
-
             if(SCharacter != null && CurrentSEquip != null)
             {
                 return true;
@@ -756,21 +780,19 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             string currentSSlot = ComFunc.ReturnRingPend(SEquipSlot);
            
 
-            //Blank Equp
-            EquipCLS selectedEquip = new EquipCLS();
-            selectedEquip = CurrentSEquip;
+            
 
             //if (namingType == 0) { selectedEquip.EquipName = string.Format("{0} {1}", SSetItem, SEquipSlot); }
-            selectedEquip.EquipSlot = SEquipSlot; //<- override value of Selected slot i.e ring1... pendant1...
-            selectedEquip.SlotCount = NoSlot;
-            selectedEquip.SpellTraced = IsSpellTrace;
+            CurrentSEquip.EquipSlot = SEquipSlot; //<- override value of Selected slot i.e ring1... pendant1...
+            CurrentSEquip.SlotCount = NoSlot;
+            CurrentSEquip.SpellTraced = IsSpellTrace;
             //Assign base stats to correct property
-            selectedEquip = ComFunc.UpdateBaseStats(selectedChar, selectedEquip);
+            CurrentSEquip = ComFunc.UpdateBaseStats(selectedChar, CurrentSEquip);
             
             string slotType = ComFunc.returnScrollCat(currentSSlot);
 
             //Update Scroll/Flame Effects
-            selectedEquip = updateEquipModelStats(selectedEquip, selectedChar, slotType);
+            CurrentSEquip = updateEquipModelStats(CurrentSEquip, selectedChar, slotType);
             
             
 
@@ -779,25 +801,23 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             //if slot added before
             if (existEquip != null)
             {
-                if (existEquip.Equals(selectedEquip))
+                if (existEquip.Equals(CurrentSEquip))
                 {
                     ComFunc.ErrorDia("Equip added before");
-                    CItemSelect = selectedEquip;
                 }
                 //update
                 else
                 {
                     int existitngIndex = CItemDictT.ToList().FindIndex(item => item.EquipSlot == SEquipSlot);
-                    CItemDictT[existitngIndex] = selectedEquip;
-                    CItemSelect = CItemDictT[existitngIndex];
+                    CItemDictT[existitngIndex] = CurrentSEquip;
+                    CItemSelect = CurrentSEquip;
 
                 }
             }
             else
             {
-                CItemDictT.Add(selectedEquip);
-                NoSlot = 0;
-                FirstLine = SecondLine = ThirdLine = null;
+                CItemDictT.Add(CurrentSEquip);
+                ResetInput();
             }
             
             AddEquipmentCMD.RaiseCanExecuteChanged();
@@ -980,6 +1000,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 //Retreive base equip stats from list
                 selectedEquip = ComFunc.FindEquip(CurrentEquipList, selectedChar, currentSSlot, SSetItem);
+                selectedEquip.EquipSlot = SEquipSlot;
 
                 CurrentSEquip = selectedEquip;
             }
@@ -1009,7 +1030,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private void RecordPotential(string PotType, int value)
+        private void RecordPotential(string PotType, PotentialStatsCLS value, int grade)
         {
             if(CurrentSEquip != null)
             {
@@ -1032,7 +1053,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     switch (PotType)
                     {
                         case "Grade":
-                            CurrentSEquip.MPotGrade = value;
+                            CurrentSEquip.MPotGrade = grade;
                             break;
                         case "First":
                             CurrentSEquip.MainPot["First"] = value;
@@ -1054,9 +1075,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             {
                 foreach(PotentialStatsCLS lines in AEquipM.AllPotDict)
                 {
+
+                    string ESlot = ComFunc.ReturnRingPend(CurrentSEquip.EquipSlot); //<= converts ring1 to ring
                     if (lines.MinLvl <= CurrentSEquip.EquipLevel && CurrentSEquip.EquipLevel <= lines.MaxLvl && CurrentSEquip.EquipSlot == lines.EquipGrp)
                     {
-                        string grade = PotentialGrade[SPotentialG];
+                        string grade = PotentialGrade[CurrentSEquip.MPotGrade];
                         if (SPotentialG == 0)
                         {
                             if (lines.Grade == PotentialGrade[SPotentialG])
@@ -1184,7 +1207,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         private void ShowEnteredRecords()
         {
-            Dictionary<string, int> BaseStat = ComFunc.PropertyToRecord(CItemSelect.BaseStats, new Dictionary<string, int>());
+            Dictionary<string, int> BaseStat = ComFunc.PropertyToRecord(CurrentSEquip.BaseStats, new Dictionary<string, int>());
             Dictionary<string, string> DisplayDict = new Dictionary<string, string>();
             foreach(string dictKey in BaseStat.Keys)
             {
@@ -1248,18 +1271,64 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 }
             }
 
+
             
 
 
             TotalRecordDisplay = DisplayDict;
         }
+        
+        private void ShowPotential(string target)
+        {
+            if(CurrentSEquip != null)
+            {
+                if (IsAddPot)
+                {
+                    switch (target)
+                    {
+                        case "First":
+                            break;
+                        case "Second":
+                            break;
+                        case "Third":
+                            break;
+                    }
 
+                }
+                else
+                {
+                    int CPotID = CurrentSEquip.MainPot[target].PotID;
+                    switch (target)
+                    {
+                        
+                        case "First":
+                            if( CPotID != 0 && FirstPotL != null)
+                            {
+                                FirstLine =  FirstPotL.Single(x => x.PotID == CPotID);
+                            }
+                            break;
+                        case "Second":
+                            if (CPotID != 0 && SecondPotL != null)
+                            {
+                                SecondLine =  SecondPotL.Single(x => x.PotID == CPotID);
+                            }
+                            break;
+                        case "Third":
+                            if (CPotID != 0 && ThirdPotL != null)
+                            {
+                                ThirdLine =  ThirdPotL.Single(x => x.PotID == CPotID);
+                            }
+                            break;
+                    }
+                }
+            }
+            
+        }
 
         private void ResetInput()
         {
             SSetItem = String.Empty;
             SelectedWeapon = String.Empty;
-            CurrentSEquip = null;
             IsSpellTrace = false;
             NoSlot = 0;
             SelectedScrollStat = null;

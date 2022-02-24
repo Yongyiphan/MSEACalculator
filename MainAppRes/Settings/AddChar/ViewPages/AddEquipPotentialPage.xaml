@@ -14,6 +14,20 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
+            <StackPanel>
+                <CheckBox Content="Add Pot?" Margin="10 0" IsChecked="{Binding IsAddPot}"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="txtGrade" Text="Grade"/>
+                    <ComboBox VerticalAlignment="Center"
+                    ItemsSource="{Binding PotentialGrade, Mode=TwoWay}"
+                          SelectedIndex="{Binding SPotentialG,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          RelativePanel.RightOf="txtGrade"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Column="1">
             <StackPanel Style="{StaticResource SP}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Line 1"/>
@@ -34,24 +48,7 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="1">
-            <StackPanel>
-                <CheckBox Content="Add Pot?" Margin="10 0" IsChecked="{Binding IsAddPot}"/>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="txtGrade" Text="Grade"/>
-                    <ComboBox VerticalAlignment="Center"
-                    ItemsSource="{Binding PotentialGrade, Mode=TwoWay}"
-                          SelectedIndex="{Binding SPotentialG,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                          RelativePanel.RightOf="txtGrade"/>
-                </StackPanel>
-                <Button x:Name="AddPotentialBtn" Content="Add Potential" Margin="10" Command="{Binding AddPotCMD, Mode=TwoWay}"/>
-            </StackPanel>
-            
-        </Grid>
         
-            
-
         
     </Grid>
 </Page>

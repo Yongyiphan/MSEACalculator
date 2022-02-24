@@ -65,13 +65,20 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                     test.Add(ScrollStats.Equals(cObj.ScrollStats) ? "true" : "false");
                     test.Add(FlameStats.Equals(cObj.FlameStats) ? "true" : "false");
                     //test.Add(new HashSet<PotentialStats>(MainPot).Equals(new HashSet<PotentialStats>(((EquipModel)obj).MainPot)) ? "true" : "false");
-                    test.Add(MainPot.Select(x => x.Value).ToList().SequenceEqual(cObj.MainPot.Select(x => x.Value).ToList()) ? "true" : "false");
+                    test.Add(MainPot.Values.ToList().Select(x => x.PotID).ToList().SequenceEqual(cObj.MainPot.Values.ToList().Select(x => x.PotID).ToList()) ? "true" : "false");
+
 
                 }
             }
 
             return test.Contains("false") ? false : true;
         }
+
+        public object ShallowCopy()
+        {
+            return this.MemberwiseClone();
+        }
+
 
         public override int GetHashCode()
         {

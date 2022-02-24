@@ -69,6 +69,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                     AddSymbolCMD.RaiseCanExecuteChanged();
                     DelSymbolCMD.RaiseCanExecuteChanged();
 
+
                 }
                 OnPropertyChanged(nameof(CSymbol));
             }

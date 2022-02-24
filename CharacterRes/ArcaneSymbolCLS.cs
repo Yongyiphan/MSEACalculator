@@ -15,7 +15,6 @@ namespace MSEACalculator.CharacterRes
 
         public int CurrentLevel { get; set; } = 1;
         public int CurrentExp { get; set; } = 1;
-        
 
 
         //Generated when Compiled (Initialised in GVar.cs)
@@ -46,6 +45,8 @@ namespace MSEACalculator.CharacterRes
 
         public int CostSpent { get; set; } = 0;
         public int CostToSpend { get; set; } = 0;
+
+
 
         //Result:
         public int DaysLeft { get; set; }

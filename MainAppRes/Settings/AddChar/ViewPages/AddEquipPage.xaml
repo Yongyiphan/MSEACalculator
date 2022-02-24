@@ -82,7 +82,7 @@
                                           ItemsSource="{Binding CItemDictT, Mode=TwoWay}"
                                           DisplayMemberPath="EquipSlot"
                                           IsSynchronizedWithCurrentItem="{Binding SyncCI, Mode=TwoWay}"
-                                          SelectedItem="{Binding CurrentSEquip, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                          SelectedItem="{Binding CItemSelect, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
 
                             </Grid>
                         </SplitView.Pane>
@@ -109,12 +109,10 @@
                             <Grid Grid.Column="1">
                                 <StackPanel Orientation="Vertical" Visibility="{Binding ShowSEquipStat, Mode=TwoWay}">
                                     <TextBlock Text="Main Pot"/>
-                                    
-                                    <ListView ItemsSource="{Binding MainPotL, Mode=TwoWay}"
-                                          DisplayMemberPath="DisplayStat"/>
+
+                                    <ListView ItemsSource="{Binding DisplayMainPotL, Mode=TwoWay}"/>
                                     <TextBlock Text="Add Pot"/>
-                                    <ListView ItemsSource="{Binding AddPotL, Mode=TwoWay}"
-                                          DisplayMemberPath="DisplayStat"/>
+                                    <ListView ItemsSource="{Binding DisplayAddPotL, Mode=TwoWay}"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>

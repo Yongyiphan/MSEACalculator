@@ -16,6 +16,13 @@ namespace MSEACalculator
     //EDITABLE DATA TABLE
     //CHARNAME <- WINDARCHER, KANNA....
 
+
+    //STRING NAMING CONVERSION FOR REUSE
+    //ACCESSORIES => Accessory
+    //ARMOR => Armor
+    //WEAPON => Weapon
+    //SECONDARY => Secondary
+
     public static class GVar
     {
         /// <summary>

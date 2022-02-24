@@ -19,13 +19,14 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         public void RetrieveData()
         {
+            //ASSIGNED ACCORDING TO DATABASE TABLES
             EquipmentDict  = new Dictionary<string, string>(){
                             {"Ring1", "Ring" },{"Ring2", "Ring" },{"Ring3", "Ring" },{"Ring4", "Ring" },
                             {"Pendant1", "Pendant" },{"Pendant2", "Pendant" },
                             {"Face Accessory", "Accessory" },{"Eye Accessory", "Accessory" },{"Earrings", "Accessory" },{"Belt", "Accessory" },
                             {"Shoulder", "Accessory"},
                             {"Badge", "Accessory" },{"Medal", "Accessory" },{"Pocket", "Accessory" },
-                            {"Heart", "Heart" },{"Emblem", "Accessory" },
+                            {"Heart", "Accessory" },{"Emblem", "Accessory" },
                             {"Weapon", "Weapon" },{"Secondary", "Secondary" },
                             {"Hat", "Armor" },{"Top", "Armor" },{"Bottom", "Armor" },{"Overall", "Armor" },{"Cape", "Armor" },{"Shoes", "Armor" },
                             {"Gloves", "Armor" }

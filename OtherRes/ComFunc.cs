@@ -20,6 +20,7 @@ using MSEACalculator.CharacterRes.EquipmentRes;
 using MSEACalculator.CharacterRes;
 using MSEACalculator.OtherRes.Database;
 using Microsoft.Data.Sqlite;
+using System.Collections.ObjectModel;
 
 namespace MSEACalculator
 {
@@ -299,7 +300,7 @@ namespace MSEACalculator
         }
 
 
-        public static EquipCLS FindEquip(List<EquipCLS> FindingList, CharacterCLS SCharacter, string Slot, string ESet)
+        public static EquipCLS FindEquip(ReadOnlyCollection<EquipCLS> FindingList, CharacterCLS SCharacter, string Slot, string ESet)
         {
             
 
@@ -382,8 +383,89 @@ namespace MSEACalculator
             return null;
         }
 
-        
 
+
+        public static List<string> FilterBy(string slotCat, CharacterCLS Character, string eSlot, ReadOnlyCollection<EquipCLS> SearchList)
+        {
+            List<string> result = new List<string>();
+            string format = slotCat == "Accessory" || slotCat == "Secondary" ? "Name" : "Set";
+            
+            switch (format)
+            {
+                case "Set":
+                    foreach (var item in SearchList)
+                    {
+                        if (eSlot == "Weapon")
+                        {
+                            foreach (string weap in Character.MainWeapon)
+                            {
+                                if (item.WeaponType == weap)
+                                {
+                                    if (!result.Contains(item.EquipSet))
+                                    {
+                                        result.Add(item.EquipSet);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (item.EquipSlot == eSlot && (item.ClassType == Character.ClassType ||item.ClassType == "Any"))
+                            {
+                                if (!result.Contains(item.EquipSet))
+                                {
+                                    result.Add(item.EquipSet);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Name":
+                    foreach (var item in SearchList)
+                    {
+                        if (eSlot == "Secondary")
+                        {
+                            foreach (string weap in Character.SecondaryWeapon)
+                            {
+                                if (weap == "Shield")
+                                {
+                                    if (item.WeaponType == weap && item.ClassType == Character.ClassType)
+                                    {
+                                        if (!result.Contains(item.EquipName))
+                                        {
+                                            result.Add(item.EquipName);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (item.WeaponType == weap)
+                                    {
+                                        if (!result.Contains(item.EquipName))
+                                        {
+                                            result.Add(item.EquipName);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (item.EquipSlot == eSlot && (item.ClassType == Character.ClassType ||item.ClassType == "Any"))
+                            {
+                                if (!result.Contains(item.EquipName))
+                                {
+                                    result.Add(item.EquipName);
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+
+
+            return result;
+        }
         public static Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModelCLS>>> SpellTraceDict { get; set; } = new Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModelCLS>>>
         {
             ["Armor"] = new Dictionary<int, Dictionary<int, ScrollingModelCLS>>
@@ -503,13 +585,23 @@ namespace MSEACalculator
 
         public static string ReturnRingPend(string ESlot)
         {
-            if (EquipSlot[ESlot] == "Ring" || EquipSlot[ESlot] == "Pendant")
+            try
             {
-                return EquipSlot[ESlot];
+                if (EquipSlot[ESlot] == "Ring" || EquipSlot[ESlot] == "Pendant")
+                {
+                    return EquipSlot[ESlot];
+                }
             }
+            catch(KeyNotFoundException)
+            {
+                return ESlot;
+            }
+            
             return ESlot;
         }
 
+
+        //RETURNS TABLE TO FIND EQUIPS FROM
         public static string ReturnSetCat(string selectedESlot)
         {
             string eslot = ReturnRingPend(selectedESlot);
@@ -529,7 +621,7 @@ namespace MSEACalculator
         }
 
 
-        public static string returnScrollCat(string selectedESlot)
+        public static string ReturnScrollCat(string selectedESlot)
         {
             string eslot = ReturnRingPend(selectedESlot);
             if (GVar.AccEquips.Contains(eslot))

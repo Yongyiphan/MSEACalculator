@@ -59,7 +59,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         //private ObservableCollection<string> _ArmorSet = new ObservableCollection<string>();
         public ObservableCollection<string> ArmorSet { get; set; } = new ObservableCollection<string>();
-        public List<EquipCLS> CurrentEquipList { get; set; } = new List<EquipCLS>();
+        public string CurrentEquipList { get; set; } = string.Empty;
 
         private List<string> _CharWeapon;
         public List<string> CharacterWeapon
@@ -163,7 +163,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
 
-        //EQUPMENT IN FOCUS
+        //STORE EQUPMENT IN FOCUS
 
         public EquipCLS CurrentSEquip { get; set; }
         
@@ -390,27 +390,19 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private Dictionary<string, PotentialStatsCLS> _MainPotL;
-        public Dictionary<string, PotentialStatsCLS> MainPotL
+        public Dictionary<string, PotentialStatsCLS> MainPotRecord { get; set; } = new Dictionary<string, PotentialStatsCLS>
         {
-            get => _MainPotL;
-            set
-            {
-                _MainPotL = value;
-                OnPropertyChanged(nameof(MainPotL));
-            }
-        }
+            { "First", new PotentialStatsCLS() },
+            {"Second", new PotentialStatsCLS() },
+            { "Third", new PotentialStatsCLS() },
+        };
+        public Dictionary<string, PotentialStatsCLS> AddPotRecord { get; set; } = new Dictionary<string, PotentialStatsCLS>
+        {
+            { "First", new PotentialStatsCLS() },
+            {"Second", new PotentialStatsCLS() },
+            { "Third", new PotentialStatsCLS() },
+        };
 
-        private Dictionary<string, PotentialStatsCLS> _AddPotL;
-        public Dictionary<string, PotentialStatsCLS> AddPotL
-        {
-            get => _AddPotL;
-            set
-            {
-                _MainPotL = value;
-                OnPropertyChanged(nameof(AddPotL));
-            }
-        }
 
         private bool _isAddPot = false;
         public bool IsAddPot
@@ -432,8 +424,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     RecordPotential("Grade",new PotentialStatsCLS(), SPotentialG);
 
                     FirstPotL = RetrievePot();
-
-                    ShowPotential("First");
                 }
 
                 OnPropertyChanged(nameof(IsAddPot));
@@ -473,9 +463,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 if (FirstLine != null)
                 {
-                    RecordPotential("First", value, 0);
                     ShowSecondPot();
-                    ShowPotential("Second");
+                    RecordPotential("First", value, SPotentialG);
                 }
                 OnPropertyChanged(nameof(FirstLine));
 
@@ -492,9 +481,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 if (SecondLine != null)
                 {
-                    RecordPotential("Second", value, 0);
-                    ShowThirdPot();
-                    ShowPotential("Third");
+                    ShowThirdPot(); 
+                    RecordPotential("Second", value, SPotentialG);
                 }
                 OnPropertyChanged(nameof(SecondLine));
             }
@@ -507,9 +495,9 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _ThirdLine = value;
-                if (ThirdLine != null)
+                if(ThirdLine != null)
                 {
-                    RecordPotential("Third", value, 0);
+                    RecordPotential("Third", value, SPotentialG);
                 }
                 OnPropertyChanged(nameof(ThirdLine));
             }
@@ -595,6 +583,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 if (CItemSelect != null)
                 {
+                    CurrentSEquip = CItemSelect;
                     SEquipSlot = CItemSelect?.EquipSlot;
                     SSetItem = ComFunc.ReturnSetCat(SEquipSlot) == "Accessory" ? CItemSelect?.EquipName : CItemSelect?.EquipSet;
                     SelectedWeapon = CItemSelect?.WeaponType;
@@ -607,15 +596,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     }
                     ScrollRecord = ComFunc.PropertyToRecord(CItemSelect.ScrollStats, ScrollRecord);
                     FlameRecord = ComFunc.PropertyToRecord(CItemSelect.FlameStats, FlameRecord);
-                    MainPotL = CItemSelect.MainPot;
-                    AddPotL = CItemSelect.AddPot;
+                    MainPotRecord = CItemSelect.MainPot;
+                    AddPotRecord = CItemSelect.AddPot;
 
-
-
-                    ShowEnteredRecords();
-                    ShowPotential("First");
-                    ShowPotential("Second");
-                    ShowPotential("Third");
+                    UpdateDisplay();
                 }
 
                 OnPropertyChanged(nameof(CItemSelect));
@@ -668,9 +652,30 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
+        private List<string> _MainPotL;
+        public List<string> DisplayMainPotL
+        {
+            get => _MainPotL;
+            set
+            {
+                _MainPotL = value;
+                OnPropertyChanged(nameof(DisplayMainPotL));
+            }
+        }
 
+
+        private List<string> _AddPotL;
+        public List<string> DisplayAddPotL
+        {
+            get => _AddPotL;
+            set
+            {
+                _AddPotL = value;
+                OnPropertyChanged(nameof(DisplayAddPotL));
+            }
+        }
         ///BUTTON CONTRSUCTOR
-        
+
         /// <summary>
         /// Main Constructor
         /// </summary>
@@ -778,7 +783,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
             CharacterCLS selectedChar = SCharacter;
             string currentSSlot = ComFunc.ReturnRingPend(SEquipSlot);
-           
 
             
 
@@ -789,11 +793,12 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             //Assign base stats to correct property
             CurrentSEquip = ComFunc.UpdateBaseStats(selectedChar, CurrentSEquip);
             
-            string slotType = ComFunc.returnScrollCat(currentSSlot);
+            string slotType = ComFunc.ReturnScrollCat(currentSSlot);
 
             //Update Scroll/Flame Effects
             CurrentSEquip = updateEquipModelStats(CurrentSEquip, selectedChar, slotType);
-            
+            CurrentSEquip.MainPot = MainPotRecord;
+            CurrentSEquip.AddPot = AddPotRecord;
             
 
             //Check for new / update of item.
@@ -801,18 +806,20 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             //if slot added before
             if (existEquip != null)
             {
-                if (existEquip.Equals(CurrentSEquip))
-                {
-                    ComFunc.ErrorDia("Equip added before");
-                }
-                //update
-                else
-                {
+                //if (existEquip.Equals(CurrentSEquip))
+                //{
+                //    ComFunc.ErrorDia("Equip added before");
+                //}
+                ////update
+                //else
+                //{
                     int existitngIndex = CItemDictT.ToList().FindIndex(item => item.EquipSlot == SEquipSlot);
                     CItemDictT[existitngIndex] = CurrentSEquip;
                     CItemSelect = CurrentSEquip;
+                    UpdateDisplay();
 
-                }
+
+                //}
             }
             else
             {
@@ -822,148 +829,22 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             
             AddEquipmentCMD.RaiseCanExecuteChanged();
             ACharTrackVM.UpdateDBCMD.RaiseCanExecuteChanged();
+            CurrentSEquip = null;
+
         }
         
 
         private void ShowEquipSet(string selectedESlot)
         {
-            Func<string, string, ObservableCollection<string>, List<EquipCLS>, ObservableCollection<string>>
-                FilterSet = (classtype, eSlot, displayList, itemList) =>
-                {
-                    foreach (var item in itemList)
-                    {
-                        if (item.EquipSlot == eSlot && (item.ClassType == classtype ||item.ClassType == "Any" ))
-                        {
-                            if(eSlot == "Shoulder")
-                            {
-                                if (!displayList.Contains(item.EquipName))
-                                {
-                                    displayList.Add(item.EquipName);
-                                }
-                            }
-                            else
-                            {
-                                if (!displayList.Contains(item.EquipSet))
-                                {
-                                    displayList.Add(item.EquipSet);
-                                }
-                            }                            
-                        }
-                    }
-
-
-                    return displayList;
-                };
-
-            Func<string, ObservableCollection<string>, List<EquipCLS>, ObservableCollection<string>>
-                DisplayItemNameL = (eSlot, displayList, itemList) =>
-                {
-
-                    foreach (var item in itemList)
-                    {
-                        if (item.EquipSlot == eSlot)
-                        {
-
-                            if (!displayList.Contains(item.EquipName))
-                            {
-                                displayList.Add(item.EquipName);
-                            }
-                        }
-                    }
-
-                    return displayList;
-                };
-            Func<string, CharacterCLS, ObservableCollection<string>, List<EquipCLS>, ObservableCollection<string>>
-                FilterWeapon = (disType, character, displayList, itemList) =>
-                {
-                    switch (disType)
-                    {
-                        case "Weapon":
-                            foreach (var item in itemList)
-                            {
-                                foreach (string weap in character.MainWeapon)
-                                {
-                                    if (item.WeaponType == weap)
-                                    {
-                                        if (!displayList.Contains(item.EquipSet))
-                                        {
-                                            displayList.Add(item.EquipSet);
-                                        }
-                                    }
-                                }
-                            }
-                            break;
-                        case "Secondary":
-                            foreach (var item in itemList)
-                            {
-                                foreach (string weap in character.SecondaryWeapon)
-                                {
-                                    if (weap == "Shield")
-                                    {
-                                        if (item.WeaponType == weap && item.ClassType == character.ClassType)
-                                        {
-                                            if (!displayList.Contains(item.EquipName))
-                                            {
-                                                displayList.Add(item.EquipName);
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (item.WeaponType == weap)
-                                        {
-                                            if (!displayList.Contains(item.EquipName))
-                                            {
-                                                displayList.Add(item.EquipName);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            break;
-                    }
-
-
-                    return displayList;
-                };
+            
             if (SCharacter != null)
             {
+                selectedESlot = ComFunc.ReturnRingPend(selectedESlot);
                 string slotCat = ComFunc.ReturnSetCat(selectedESlot);
-                switch (slotCat)
-                {
-                    case "Weapon":
-                        ArmorSet.Clear();
-                        ArmorSet = FilterWeapon("Weapon", SCharacter, ArmorSet, AEquipM.AllWeapList);
-                        CurrentEquipList.Clear();
-                        CurrentEquipList = AEquipM.AllWeapList;
-                        break;
-                    case "Secondary":
-                        ArmorSet.Clear();
-                        ArmorSet = FilterWeapon("Secondary", SCharacter, ArmorSet, AEquipM.AllSecList);
-                        CurrentEquipList.Clear();
-                        CurrentEquipList = AEquipM.AllSecList;
-                        break;
-                    case "Armor":
-                        ArmorSet.Clear();
-                        ArmorSet = FilterSet(SCharacter.ClassType, selectedESlot, ArmorSet, AEquipM.AllArmorList);
-                        CurrentEquipList.Clear();
-                        CurrentEquipList = AEquipM.AllArmorList;
-                        break;
-                    case "Accessory":
-                        ArmorSet.Clear();
-                        string eslot = ComFunc.ReturnRingPend(selectedESlot);
-                        ArmorSet = selectedESlot == "Shoulder" ? FilterSet(SCharacter.ClassType, eslot, ArmorSet, AEquipM.AllAccList) :
-                            DisplayItemNameL(eslot, ArmorSet, AEquipM.AllAccList);
-                        CurrentEquipList.Clear();
-                        CurrentEquipList = AEquipM.AllAccList;
-                        break;
-                    default:
-                        ArmorSet.Clear();
-                        CurrentEquipList.Clear();
-                        break;
-                }
-
-
+                ArmorSet.Clear();
+                ComFunc.FilterBy(slotCat, SCharacter, selectedESlot, AEquipM.AllEquipStore[slotCat]).ForEach(x => ArmorSet.Add(x));
+                CurrentEquipList = slotCat;
+             
             }
 
         }
@@ -996,10 +877,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             {
                 CharacterCLS selectedChar = SCharacter;
                 string currentSSlot = ComFunc.ReturnRingPend(SEquipSlot);
+                
                 //Blank Equp
 
                 //Retreive base equip stats from list
-                selectedEquip = ComFunc.FindEquip(CurrentEquipList, selectedChar, currentSSlot, SSetItem);
+                selectedEquip = ComFunc.FindEquip(AEquipM.AllEquipStore[CurrentEquipList], selectedChar, currentSSlot, SSetItem);
                 selectedEquip.EquipSlot = SEquipSlot;
 
                 CurrentSEquip = selectedEquip;
@@ -1030,13 +912,15 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private void RecordPotential(string PotType, PotentialStatsCLS value, int grade)
+        private void RecordPotential(string PotLine, PotentialStatsCLS value, int grade)
         {
+            value = value == null ? new PotentialStatsCLS() : value;
+
             if(CurrentSEquip != null)
             {
                 if (IsAddPot)
                 {
-                    switch (PotType)
+                    switch (PotLine)
                     {
                         case "Grade":
                             break;
@@ -1050,19 +934,19 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 }
                 else
                 {
-                    switch (PotType)
+                    switch (PotLine)
                     {
                         case "Grade":
                             CurrentSEquip.MPotGrade = grade;
                             break;
                         case "First":
-                            CurrentSEquip.MainPot["First"] = value;
+                            MainPotRecord["First"] = value;
                             break;
                         case "Second":
-                            CurrentSEquip.MainPot["Second"] = value;
+                            MainPotRecord["Second"] = value;
                             break;
                         case "Third":
-                            CurrentSEquip.MainPot["Third"] = value;
+                            MainPotRecord["Third"] = value;
                             break;
                     }
                 }
@@ -1270,11 +1154,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     }
                 }
             }
-
-
-            
-
-
             TotalRecordDisplay = DisplayDict;
         }
         
@@ -1293,36 +1172,45 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                         case "Third":
                             break;
                     }
-
                 }
                 else
                 {
-                    int CPotID = CurrentSEquip.MainPot[target].PotID;
                     switch (target)
                     {
                         
-                        case "First":
-                            if( CPotID != 0 && FirstPotL != null)
+                        case "Fields":
+                            if (CurrentSEquip.MainPot.Values.ToList().Select(x => x.PotID).ToList().Sum() != 0)
                             {
-                                FirstLine =  FirstPotL.Single(x => x.PotID == CPotID);
+                                FirstLine = FirstPotL.Single(x => x.PotID == MainPotRecord["First"].PotID);
+                                SecondLine = SecondPotL.Single(x => x.PotID == MainPotRecord["Second"].PotID);
+                                ThirdLine = ThirdPotL.Single(x => x.PotID == MainPotRecord["Third"].PotID);
+                                //FirstPot =  CItemSelect.MainPot[0];
+                                //SecondPot = CItemSelect.MainPot[1];
+                                //ThirdPot = CItemSelect.MainPot[2];
                             }
                             break;
-                        case "Second":
-                            if (CPotID != 0 && SecondPotL != null)
+                        case "Display":
+                            List<string> DMP = new List<string>();
+                            foreach (string pot in CurrentSEquip.MainPot.Keys)
                             {
-                                SecondLine =  SecondPotL.Single(x => x.PotID == CPotID);
+                                if(!CurrentSEquip.MainPot[pot].Equals(new PotentialStatsCLS()))
+                                {
+                                    DMP.Add(string.Format("{0} Line: {1}", pot, CurrentSEquip.MainPot[pot].DisplayStat));
+                                }
                             }
-                            break;
-                        case "Third":
-                            if (CPotID != 0 && ThirdPotL != null)
-                            {
-                                ThirdLine =  ThirdPotL.Single(x => x.PotID == CPotID);
-                            }
+                            DisplayMainPotL = DMP;
                             break;
                     }
                 }
             }
             
+        }
+
+        private void UpdateDisplay()
+        {
+            ShowEnteredRecords();
+            ShowPotential("Fields");
+            ShowPotential("Display");
         }
 
         private void ResetInput()

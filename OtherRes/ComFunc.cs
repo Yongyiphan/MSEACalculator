@@ -26,7 +26,8 @@ namespace MSEACalculator
 {
     public class ComFunc
     {
-        public static Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
+        public static Dictionary<string, string> EquipSlot  = DBRetrieve.GetEquipSlotDB();
+        public static List<string> PotentialGrade = GVar.PotentialGrade;
 
         public static bool IsOpenConnection(SqliteConnection connection)
         {
@@ -370,8 +371,6 @@ namespace MSEACalculator
                                         returnedEquip.EquipSlot = "Secondary";
                                     }
 
-                                    
-                                    
                                     return returnedEquip;
                                 }
                             }
@@ -621,6 +620,7 @@ namespace MSEACalculator
         }
 
 
+        //RETURN SCROLL TABLE TO FOLLOW
         public static string ReturnScrollCat(string selectedESlot)
         {
             string eslot = ReturnRingPend(selectedESlot);
@@ -652,29 +652,33 @@ namespace MSEACalculator
 
         }
 
-        public static bool notNULL(object obj)
-        {
-            if(obj != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
-        public static bool IsInt(string number)
-        {
-            if(int.TryParse(number, out int result) == false && number != String.Empty)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+
+
+
+        //public static bool notNULL(object obj)
+        //{
+        //    if(obj != null)
+        //    {
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
+
+        //public static bool IsInt(string number)
+        //{
+        //    if(int.TryParse(number, out int result) == false && number != String.Empty)
+        //    {
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        return true;
+        //    }
+        //}
         //public static async Task<List<EventRecords>> retrieveEventJson()
         //{
         //    List<EventRecords> eventList;

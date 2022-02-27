@@ -9,7 +9,7 @@ using MSEACalculator.OtherRes.Database;
 
 namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 {
-    public class AddCharTrackViewModel : INPCObject
+    public class AddCharTrackVM : INPCObject
     {
         /// <summary>
         /// CHECKLIST FOR THIS FUNCTION
@@ -29,8 +29,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         public event EventHandler<CharTStore> RaiseChangeChar;
 
-        private AddEquipViewModel _AEquipVM;
-        public AddEquipViewModel AEquipVM 
+        private AddEquipVM _AEquipVM;
+        public AddEquipVM AEquipVM 
         {
             get=> _AEquipVM;
             set 
@@ -120,10 +120,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         public CustomCommand removeCharTrackCMD { get; set; }   
         public CustomCommand UpdateDBCMD { get; set;} 
      
-        public AddCharTrackViewModel()
+        public AddCharTrackVM()
         {
             initFields();
-            AEquipVM = new AddEquipViewModel(this);
+            AEquipVM = new AddEquipVM(this);
             addCharTrackCMD = new CustomCommand(addChar, canAddChar);
             removeCharTrackCMD = new CustomCommand(removeChar, canRemoveChar);
             UpdateDBCMD = new CustomCommand(AddCharE, canAddCharE);
@@ -153,9 +153,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 }
                 ComFunc.ErrorDia("Invalid Level Value");
                 return false;
-            }
-
-           
+            }           
 
             return false;
         }

@@ -12,7 +12,12 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public string EquipSet { get; set; }
         public string ClassType { get; set; }
         public string WeaponType { get; set; }
+
+        //BASE SLOT TYPE
         public string EquipSlot { get; set; }
+
+        //SLOT POSITION i.e RING 1, RING 2
+        public string EquipListSlot { get; set; }
         public int EquipLevel { get; set; }
         public string StatType { get; set; } //PERC OR FLAT 
         public int SlotCount { get; set; } = 0;
@@ -60,12 +65,15 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                 {
                     EquipCLS cObj = (EquipCLS)obj;
                     test.Add(EquipSet == cObj.EquipSet ? "true" : "false");
+                    test.Add(EquipName == cObj.EquipName ? "true" : "false");
                     test.Add(EquipSlot == cObj.EquipSlot ? "true" : "false");
                     test.Add(SlotCount == cObj.SlotCount ? "true" : "false");
+                    test.Add(WeaponType == cObj.WeaponType ? "true" : "false");
                     test.Add(ScrollStats.Equals(cObj.ScrollStats) ? "true" : "false");
                     test.Add(FlameStats.Equals(cObj.FlameStats) ? "true" : "false");
                     //test.Add(new HashSet<PotentialStats>(MainPot).Equals(new HashSet<PotentialStats>(((EquipModel)obj).MainPot)) ? "true" : "false");
                     test.Add(MainPot.Values.ToList().Select(x => x.PotID).ToList().SequenceEqual(cObj.MainPot.Values.ToList().Select(x => x.PotID).ToList()) ? "true" : "false");
+                    test.Add(AddPot.Values.ToList().Select(x => x.PotID).ToList().SequenceEqual(cObj.AddPot.Values.ToList().Select(x => x.PotID).ToList()) ? "true" : "false");
 
 
                 }

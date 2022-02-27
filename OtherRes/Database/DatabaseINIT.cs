@@ -251,6 +251,7 @@ namespace MSEACalculator.OtherRes.Database
                         "PRIMARY KEY (EquipGrp, Grade, GradeT, Stat, MinLvl, MaxLvl, ValueI)" +
                         ");" };
             StaticTable.Add(new PotentialTable("PotentialData", PotSpec[0]));
+            StaticTable.Add(new PotentialTable("PotentialBonusData", PotSpec[0]));
 
 
             await Task.WhenAll(StaticTable.ParallelForEachAsync(ST => Task.Run(() =>((ITableUpload)ST).RetrieveData())));

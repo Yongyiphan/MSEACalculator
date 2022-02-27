@@ -11,14 +11,14 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewPages
     /// </summary>
     public sealed partial class AddCharTrackPage : Page
     {
-        public AddCharTrackViewModel ACTViewModel;
+        public AddCharTrackVM ACTViewModel;
 
 
         public AddCharTrackPage()
         {
             this.InitializeComponent();
             
-            ACTViewModel = new AddCharTrackViewModel();
+            ACTViewModel = new AddCharTrackVM();
             this.DataContext = ACTViewModel;
         }
 

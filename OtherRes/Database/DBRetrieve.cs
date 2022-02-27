@@ -386,6 +386,42 @@ namespace MSEACalculator.OtherRes.Database
             }
 
             return potentialList;
+        }public static List<PotentialStatsCLS> GetAllBonusPotential()
+        {
+            List<PotentialStatsCLS> potentialList = new List<PotentialStatsCLS>();
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT ROWID, * FROM PotentialBonusData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PotentialStatsCLS pot = new PotentialStatsCLS();
+                            pot.PotID = reader.GetInt32(0);
+                            pot.EquipGrp = reader.GetString(1);
+                            pot.Grade = reader.GetString(2);
+                            pot.Prime = reader.GetString(3);
+                            pot.StatType = reader.GetString(4);
+                            pot.StatIncrease = reader.GetString(5);
+                            pot.MinLvl = reader.GetInt32(6);
+                            pot.MaxLvl = reader.GetInt32(7);
+                            pot.StatValue = reader.GetString(8);
+
+                            potentialList.Add(pot);
+
+                        }
+                    }
+                }
+
+
+            }
+
+            return potentialList;
         }
         public static List<ArcaneSymbolCLS> GetAllArcaneSymbol()
         {

@@ -11,10 +11,10 @@ using Windows.UI.Xaml;
 
 namespace MSEACalculator.CalculationRes.ViewModels
 {
-    public class ArcaneQMViewModel : INPCObject
+    public class QMArcaneVM : INPCObject
     {
         public SymbolModel SymbolM { get; set; } = new SymbolModel();
-
+        public CheckTypes Vali { get; set; } = new CheckTypes();
 
         public int ExpCeiling { get; set; } = GVar.MaxSymbolExp;
 
@@ -46,7 +46,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             set
             {
                 _CurrentSymbol = value;
-                if (ComFunc.notNULL(CSymbol))
+                if (CSymbol != null)
                 {
                     toggleInput(CSymbol);
                     ResetDailyS = CSymbol.IsGainsDaily;
@@ -74,6 +74,9 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 OnPropertyChanged(nameof(CSymbol));
             }
         }
+
+        //VISIBILITY CONTROL   
+        #region
 
         private Visibility _ShowPQ = Visibility.Collapsed;
 
@@ -104,7 +107,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 OnPropertyChanged(nameof(ShowSubMap));
             }
         }
-
+        #endregion
         public string GainsType { get; set; } = "";
 
         private bool _isSubMap = false;
@@ -124,7 +127,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             get { return _CurrentLvl; }
             set { _CurrentLvl = value;
 
-                if (ComFunc.notNULL(CSymbol))
+                if (CSymbol != null)
                 {
                     CLimit = CalForm.CalCurrentLimit(CLvl).ToString();
 
@@ -150,7 +153,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             get { return _CurrentExp; }
             set { _CurrentExp = value;
 
-                if (int.TryParse(value, out int result) == false && value != String.Empty)
+                if (Vali.NotInt(value))
                 {
                     ComFunc.ErrorDia("Enter valid number");
                     CExp = "1";
@@ -213,7 +216,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             get { return _PQGains; }
             set { _PQGains = value;
 
-                if (ComFunc.IsInt(PQGains) == false)
+                if (Vali.NotInt(PQGains))
                 {
                     ComFunc.ErrorDia("Enter valid number");
                     PQGains = "0";
@@ -343,7 +346,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
         public CustomCommand DelSymbolCMD { get; set; }
         public CustomCommand ResetCMD { get; set; }
 
-        public ArcaneQMViewModel()
+        public QMArcaneVM()
         {
 
             InitVar();
@@ -387,7 +390,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         private bool CanAddSymbol()
         {
-            if (ComFunc.notNULL(CSymbol) == ComFunc.notNULL(CExp) == ComFunc.notNULL(CLvl) == true)
+            if (Vali.NotNull(CSymbol) == Vali.NotNull(CExp) == Vali.NotNull(CLvl) == true)
             {
                 return true;
             }

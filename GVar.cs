@@ -40,18 +40,18 @@ namespace MSEACalculator
         /// <summary>
         /// STATIC / CONSTANT VARIABLES
         /// </summary>
-        
+
         public const int MaxCrytalCount = 180;
         public const int MaxArcaneSymbolLevel = 20;
         public const int TransferSymbolExp = 2467;
         public static int MaxSymbolExp = CalForm.CalMaxExp(MaxArcaneSymbolLevel);
 
-        
+
         public static string CONN_STRING { get; set; } = $"Filename = {databasePath}";
 
 
-        public const int minLevel  = 1;
-        public const int maxLevel  = 300;
+        public const int minLevel = 1;
+        public const int maxLevel = 300;
 
 
 
@@ -72,7 +72,7 @@ namespace MSEACalculator
         {
             "Ring", "Pocket",
             "Pendant", "Belt",
-            "Face Accessory", "Eye Accessory", 
+            "Face Accessory", "Eye Accessory",
             "Earrings", "Shoulder",
             "Emblem", "Medal", "Badge", "Heart"
         };
@@ -80,11 +80,11 @@ namespace MSEACalculator
         //6 SLOT (TOP, BTM) / 5 SLOTS (OVERALLS)
         public static List<string> ArmorEquips { get; set; } = new List<string>
         {
-            "Hat", 
-            "Bottom", "Top", "Overall", 
+            "Hat",
+            "Bottom", "Top", "Overall",
             "Cape", "Gloves", "Shoes"
         };
-        
+
         //+ WEAPON
         //+ SECONDARY/ SHIELD
 
@@ -120,14 +120,19 @@ namespace MSEACalculator
             "Rare","Epic", "Unique","Legendary"
         };
 
-        public static List<string> RepeatOnePot { get; set; } = new List<string>
+        public static List<string> RepeatOneMPot { get; set; } = new List<string>
         {
             "Decent", "Invincibility Time"
         };
 
-        public static List<string> RepeatTwoPot { get; set; } = new List<string>
+        public static List<string> RepeatTwoMPot { get; set; } = new List<string>
         {
             "Boss", "Ignore Monster's DEF", "Item", "chance to ignore", "chance to be invincible"
+        };
+
+        public static List<string> RepeatTwoAPot { get; set; } = new List<string>
+        {
+            "Boss", "Ignore Monster's DEF", "Item"
         };
 
         public static StorageFolder storageFolder { get; set; } = ApplicationData.Current.LocalFolder;

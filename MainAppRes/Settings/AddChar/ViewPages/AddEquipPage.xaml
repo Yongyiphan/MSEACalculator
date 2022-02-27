@@ -80,7 +80,7 @@
 
                                 <ListView SelectionMode="Single"
                                           ItemsSource="{Binding CItemDictT, Mode=TwoWay}"
-                                          DisplayMemberPath="EquipSlot"
+                                          DisplayMemberPath="EquipListSlot"
                                           IsSynchronizedWithCurrentItem="{Binding SyncCI, Mode=TwoWay}"
                                           SelectedItem="{Binding CItemSelect, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
 
@@ -99,14 +99,14 @@
                                                     Visibility="{Binding ShowSEquipStat, Mode=TwoWay}"
                                                     Margin="20 0"/>-->
                                 <StackPanel Orientation="Vertical" Visibility="{Binding ShowSEquipStat, Mode=TwoWay}">
-                                    <TextBlock Text="Base + Scroll + Flame"/>
+                                    <TextBlock Text="Base + Scroll + Flame + SF"/>
                                     <ListView ItemsSource="{Binding TotalRecordDisplay, Mode=TwoWay}"
                                           DisplayMemberPath="Value"/>
                                 </StackPanel>
                                 
                             </Grid>
 
-                            <Grid Grid.Column="1">
+                            <Grid Grid.Column="1" Margin="10 0">
                                 <StackPanel Orientation="Vertical" Visibility="{Binding ShowSEquipStat, Mode=TwoWay}">
                                     <TextBlock Text="Main Pot"/>
 

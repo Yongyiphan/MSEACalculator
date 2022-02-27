@@ -11,9 +11,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
     {
         //ONLY RETREIVE
 
-
-
-
         //private List<EquipCLS> AllArmorList { get => DBRetrieve.GetAllArmorDB(); }
         //private List<EquipCLS> AllAccList { get => DBRetrieve.GetAllAccessoriesDB(); }
         //private List<EquipCLS> AllWeapList { get => DBRetrieve.GetAllWeaponDB(); }
@@ -27,6 +24,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             {"Secondary",DBRetrieve.GetAllSecondaryDB().AsReadOnly()}
         };
         public List<PotentialStatsCLS> AllPotDict { get => DBRetrieve.GetAllPotential(); }
+        public List<PotentialStatsCLS> AllBonusPotDict { get => DBRetrieve.GetAllBonusPotential(); }
+
         public Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
         public List<string> FlameStatsTypes { get; set; } = GVar.BaseStatTypes.Concat(GVar.SpecialStatType).ToList();
 

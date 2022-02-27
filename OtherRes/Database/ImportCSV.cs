@@ -617,6 +617,58 @@ namespace MSEACalculator.OtherRes.Database
             return PotentialList;
 
 
+        }public static async Task<List<PotentialStatsCLS>> GetPotentialBonusCSVAsync()
+        {
+            List<PotentialStatsCLS> PotentialList = new List<PotentialStatsCLS>();
+
+            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CalculationsPath + "BonusPotentialData.csv");
+
+            var stream = await charTable.OpenAsync(FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    var result = text.Split("\r\n");
+                    foreach (string potItem in result.Skip(1))
+                    {
+                        if (potItem == "")
+                        {
+                            Console.WriteLine("Hello");
+                            return PotentialList;
+                        }
+
+                        var temp = potItem.Split(",");
+
+                        PotentialStatsCLS Pot = new PotentialStatsCLS();
+
+                        Pot.EquipGrpL = temp[1].Contains(";") ? temp[1].Split(';').ToList() : new List<string> { temp[1]};
+                        Pot.Grade = temp[2];
+                        Pot.Prime = temp[3];
+                        Pot.StatIncrease = temp[4].TrimEnd('%');
+                        Pot.StatType = temp[5];
+                        Pot.Chance = Convert.ToDouble(temp[6]);
+                        Pot.Duration = Convert.ToInt32(temp[7]);
+                        Pot.MinLvl = Convert.ToInt32(temp[8]);
+                        Pot.MaxLvl = Convert.ToInt32(temp[9]);
+                        Pot.StatValue = temp[10];
+
+                        PotentialList.Add(Pot);
+
+
+                    }
+                }
+            }
+
+
+            return PotentialList;
+
+
         }
     }
 }

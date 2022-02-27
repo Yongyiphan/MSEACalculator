@@ -13,7 +13,7 @@ namespace MSEACalculator.CalculationRes.ViewPages
         public ArcaneQMPage()
         {
             this.InitializeComponent();
-            this.DataContext = new ArcaneQMViewModel();
+            this.DataContext = new QMArcaneVM();
         }
 
 

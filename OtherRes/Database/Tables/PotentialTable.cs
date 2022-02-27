@@ -19,7 +19,15 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         public async void RetrieveData()
         {
-            PotList = await ImportCSV.GetPotentialCSVAsync();
+            switch (TableName)
+            {
+                case "PotentialData":
+                    PotList = await ImportCSV.GetPotentialCSVAsync();
+                    break;
+                case "PotentialBonusData":
+                    PotList = await ImportCSV.GetPotentialBonusCSVAsync();
+                    break;
+            }
         }
 
         public void UploadTable(SqliteConnection connection, SqliteTransaction transaction)

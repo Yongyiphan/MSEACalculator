@@ -33,6 +33,11 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
         }
 
+        public object ShallowCopy()
+        {
+            return this.MemberwiseClone();
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null)

@@ -123,9 +123,9 @@
     <Compile Include="CalculationRes\ViewPages\ConversionQMPage.xaml.cs">
       <DependentUpon>ConversionQMPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CalculationRes\ViewModels\ConversionQMViewModel.cs" />
+    <Compile Include="CalculationRes\ViewModels\QMConversionVM.cs" />
     <Compile Include="CalculationRes\SymbolModel.cs" />
-    <Compile Include="CalculationRes\ViewModels\ArcaneQMViewModel.cs" />
+    <Compile Include="CalculationRes\ViewModels\QMArcaneVM.cs" />
     <Compile Include="CalculationRes\ViewPages\ArcaneQMPage.xaml.cs">
       <DependentUpon>ArcaneQMPage.xaml</DependentUpon>
     </Compile>
@@ -151,7 +151,7 @@
     <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipScrollPage.xaml.cs">
       <DependentUpon>AddEquipScrollPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainAppRes\Settings\AddChar\ViewModels\AddEquipViewModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\ViewModels\AddEquipVM.cs" />
     <Compile Include="CharacterRes\EquipmentRes\EquipCLS.cs" />
     <Compile Include="CharacterRes\EquipmentRes\EquipStatsCLS.cs" />
     <Compile Include="CharacterRes\EquipmentRes\PotentialStatsCLS.cs" />
@@ -163,12 +163,13 @@
     </Compile>
     <Compile Include="CharacterRes\CharacterCLS.cs" />
     <Compile Include="CharacterRes\MesoRes\MesoViewModel.cs" />
+    <Compile Include="OtherRes\CheckTypes.cs" />
     <Compile Include="OtherRes\ComFunc.cs" />
     <Compile Include="MainAppRes\Settings\AddChar\AddCharTrackModel.cs" />
     <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddCharTrackPage.xaml.cs">
       <DependentUpon>AddCharTrackPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainAppRes\Settings\AddChar\ViewModels\AddCharTrackViewModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\ViewModels\AddCharTrackVM.cs" />
     <Compile Include="MainAppRes\TestingBlankPage.xaml.cs">
       <DependentUpon>TestingBlankPage.xaml</DependentUpon>
     </Compile>
@@ -199,6 +200,7 @@
     <Compile Include="OtherRes\INPCObject.cs" />
     <Compile Include="OtherRes\Interface\ITableUpload.cs" />
     <Compile Include="OtherRes\Interface\IStringFormatConverter.cs" />
+    <Compile Include="OtherRes\Interface\IValidateTypes.cs" />
     <Compile Include="OtherRes\ScrapCode.cs" />
     <Compile Include="UnionRes\UnionCLS.cs" />
     <Compile Include="MainAppRes\HomePage.xaml.cs">

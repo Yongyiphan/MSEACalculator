@@ -1,0 +1,5 @@
+Passed Tests
+Able to Find Equipment / Update CurrentSEquip
+Able to update scroll from spell trace to stat specific
+Able to update equip at selected slot
+

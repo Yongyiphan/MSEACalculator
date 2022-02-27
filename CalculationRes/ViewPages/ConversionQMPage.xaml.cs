@@ -26,7 +26,7 @@ namespace MSEACalculator.CalculationRes.ViewPages
         public ConversionQMPage()
         {
             this.InitializeComponent();
-            this.DataContext = new ConversionQMViewModel();
+            this.DataContext = new QMConversionVM();
         }
     }
 }

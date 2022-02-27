@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <StackPanel>
-                <CheckBox Content="Add Pot?" Margin="10 0" IsChecked="{Binding IsAddPot}"/>
+                <CheckBox Content="Add Pot?" Margin="10 0" IsChecked="{Binding IsAddPot, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Name="txtGrade" Text="Grade"/>

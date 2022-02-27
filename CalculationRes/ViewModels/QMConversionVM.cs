@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MSEACalculator.CalculationRes.ViewModels
 {
-    public class ConversionQMViewModel : INPCObject
+    public class QMConversionVM : INPCObject
     {
 
         public List<string> ConversionMode { get; set; } = new List<string>
@@ -87,7 +87,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         public CustomCommand ConvertCMD { get; set; }
         public CustomCommand ResetCMD { get; set; }
-        public ConversionQMViewModel()
+        public QMConversionVM()
         {
             ConvertCMD = new CustomCommand(ConvertMoney, CanConvert);
             ResetCMD = new CustomCommand(() => ResetInput());

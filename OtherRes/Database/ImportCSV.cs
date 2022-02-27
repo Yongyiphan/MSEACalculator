@@ -66,9 +66,9 @@ namespace MSEACalculator.OtherRes.Database
             return AllBossList;
         }
 
-        public static async Task<List<SFGainCLS>> GetSFCSVAsync()
+        public static async Task<List<StarforceCLS>> GetSFCSVAsync()
         {
-            List<SFGainCLS> SFList = new List<SFGainCLS>();
+            List<StarforceCLS> SFList = new List<StarforceCLS>();
 
             StorageFile statTable = await GVar.storageFolder.GetFileAsync(GVar.CalculationsPath + "StarforceGains.csv");
 
@@ -94,7 +94,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         var temp = SFEntry.Split(",");
 
-                        SFGainCLS sFGain = new SFGainCLS();
+                        StarforceCLS sFGain = new StarforceCLS();
                         sFGain.SFLevel = Convert.ToInt32(temp[1]);
                         sFGain.JobStat = Convert.ToInt32(temp[2]);
                         sFGain.NonWeapVDef = Convert.ToInt32(temp[3]);
@@ -117,9 +117,9 @@ namespace MSEACalculator.OtherRes.Database
 
             return SFList;
         }
-        public static async Task<List<SFGainCLS>> GetAddSFCSVAsync()
+        public static async Task<List<StarforceCLS>> GetAddSFCSVAsync()
         {
-            List<SFGainCLS> SFList = new List<SFGainCLS>();
+            List<StarforceCLS> SFList = new List<StarforceCLS>();
 
             StorageFile statTable = await GVar.storageFolder.GetFileAsync(GVar.CalculationsPath + "AddStarforceGains.csv");
 
@@ -145,7 +145,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         var temp = SFEntry.Split(",");
 
-                        SFGainCLS sFGain = new SFGainCLS();
+                        StarforceCLS sFGain = new StarforceCLS();
                         sFGain.SFLevel = Convert.ToInt32(temp[1]);
                         sFGain.LevelRank = Convert.ToInt32(temp[2]);
                         sFGain.VStat = Convert.ToInt32(temp[3]);

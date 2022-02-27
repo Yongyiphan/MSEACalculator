@@ -93,7 +93,7 @@ namespace MSEACalculator
             return tier;
         }
 
-        public static string returnUnionRank(string charName,int lvl)
+        public static string ReturnUnionRank(string charName,int lvl)
         {
             string rank = "";
 
@@ -148,6 +148,16 @@ namespace MSEACalculator
 
             return rank;
         }
+        public static int ReturnSFLevelRank(int lvl)
+        {
+            int result = 0;
+
+
+
+
+            return result;
+        }
+
 
         public static async void ErrorDia(string message)
         {

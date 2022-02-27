@@ -2,6 +2,7 @@
 using MSEACalculator.BossRes;
 using MSEACalculator.CharacterRes.EquipmentRes;
 using MSEACalculator.CharacterRes;
+using MSEACalculator.CalculationRes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -350,7 +351,7 @@ namespace MSEACalculator.OtherRes.Database
             return SecModel;
         }
 
-        public static List<PotentialStatsCLS> GetAllPotential()
+        public static List<PotentialStatsCLS> GetAllPotentialDB()
         {
             List<PotentialStatsCLS> potentialList = new List<PotentialStatsCLS>();
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
@@ -386,7 +387,8 @@ namespace MSEACalculator.OtherRes.Database
             }
 
             return potentialList;
-        }public static List<PotentialStatsCLS> GetAllBonusPotential()
+        }
+        public static List<PotentialStatsCLS> GetAllBonusPotentialDB()
         {
             List<PotentialStatsCLS> potentialList = new List<PotentialStatsCLS>();
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
@@ -423,7 +425,7 @@ namespace MSEACalculator.OtherRes.Database
 
             return potentialList;
         }
-        public static List<ArcaneSymbolCLS> GetAllArcaneSymbol()
+        public static List<ArcaneSymbolCLS> GetAllArcaneSymbolDB()
         {
             List<ArcaneSymbolCLS> symbolList = new List<ArcaneSymbolCLS>();
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
@@ -439,17 +441,17 @@ namespace MSEACalculator.OtherRes.Database
                         while (reader.Read())
                         {
                             ArcaneSymbolCLS symbol = new ArcaneSymbolCLS();
-                            symbol.Name = reader.GetString(0);
-                            symbol.SubMap = reader.GetString(1);
-                            symbol.CurrentLevel = reader.GetInt32(2);
-                            symbol.CurrentExp = reader.GetInt32(3);
-                            symbol.CurrentLimit = reader.GetInt32(4);
-                            symbol.BaseSymbolGain = reader.GetInt32(5);
-                            symbol.PQSymbolsGain = reader.GetInt32(6);
-                            symbol.PQGainLimit = reader.GetInt32(7);
-                            symbol.SymbolExchangeRate = reader.GetInt32(8);
-                            symbol.CostLvlMod = reader.GetInt32(9);
-                            symbol.CostMod = reader.GetInt32(10);
+                            symbol.Name               =  reader.GetString(0);
+                            symbol.SubMap             =  reader.GetString(1);
+                            symbol.CurrentLevel       =  reader.GetInt32(2);
+                            symbol.CurrentExp         =  reader.GetInt32(3);
+                            symbol.CurrentLimit       =  reader.GetInt32(4);
+                            symbol.BaseSymbolGain     =  reader.GetInt32(5);
+                            symbol.PQSymbolsGain      =  reader.GetInt32(6);
+                            symbol.PQGainLimit        =  reader.GetInt32(7);
+                            symbol.SymbolExchangeRate =  reader.GetInt32(8);
+                            symbol.CostLvlMod         =  reader.GetInt32(9);
+                            symbol.CostMod            = reader.GetInt32(10);
 
                             symbolList.Add(symbol);
 
@@ -464,6 +466,70 @@ namespace MSEACalculator.OtherRes.Database
             return symbolList;
         }
 
+
+        public static List<StarforceCLS> GetAllStarforceDB()
+        {
+            List<StarforceCLS> result = new List<StarforceCLS>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM StarForceBaseData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if(reader.GetInt32(0) == 16)
+                            {
+                                break;
+                            }
+
+                            StarforceCLS SF = new StarforceCLS();
+
+                            SF.SFLevel     =  reader.GetInt32(0);
+                            SF.JobStat     =  reader.GetInt32(1);
+                            SF.NonWeapVDef =  reader.GetInt32(2);
+                            SF.OverallVDef =  reader.GetInt32(3);
+                            SF.CatAMaxHP   =  reader.GetInt32(4);
+                            SF.WeapMaxMP   =  reader.GetInt32(5);
+                            SF.WeapVATK    =  reader.GetInt32(6);
+                            SF.WeapVMATK   =  reader.GetInt32(7);
+                            SF.SJump       =  reader.GetInt32(8);
+                            SF.SSpeed      =  reader.GetInt32(9);
+                            SF.GloveVATK   = reader.GetInt32(10);
+                            SF.GloveVMATK  = reader.GetInt32(11);
+
+                            result.Add(SF);
+                        }
+                    }
+                }
+
+                string addQuery = "SELECT * FROM StarForceAddData";
+                using (SqliteCommand selectCMD = new SqliteCommand(addQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        int lvlStore = 0;
+                        while (reader.Read())
+                        {
+                            int currentLvl =  reader.GetInt32(0);
+
+
+                        }
+                    }
+                }
+
+
+            }
+
+
+
+            return result;
+        }
 
     }
 }

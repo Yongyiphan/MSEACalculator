@@ -165,7 +165,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             int charLvl = Convert.ToInt32(LvlInput);
                 
             int sf = Convert.ToInt32(StarF);
-            string URank = ComFunc.returnUnionRank(SelectedAllChar.ClassName, charLvl);
+            string URank = ComFunc.ReturnUnionRank(SelectedAllChar.ClassName, charLvl);
 
             CharacterCLS tempChar = new CharacterCLS()
             {

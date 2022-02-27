@@ -11,7 +11,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
 {
     public class StarForceTable : BaseDBTable, ITableUpload
     {
-        public List<SFGainCLS> SFList { get; set; } 
+        public List<StarforceCLS> SFList { get; set; } 
         public StarForceTable(string TableName, string TablePara) : base(TableName, TablePara)
         {
         }
@@ -38,7 +38,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         string insertSF = ComFunc.InsertSQLStringBuilder(TableName, TableParameters);
                         using (SqliteCommand insertCMD = new SqliteCommand(insertSF, connection, transaction))
                         {
-                            foreach (SFGainCLS sF in SFList)
+                            foreach (StarforceCLS sF in SFList)
                             {
                                 ErrorCounter++;
                                 insertCMD.Parameters.Clear();
@@ -76,7 +76,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         string insertASF = ComFunc.InsertSQLStringBuilder(TableName, TableParameters);
                         using (SqliteCommand insertCMD = new SqliteCommand(insertASF, connection, transaction))
                         {
-                            foreach (SFGainCLS sF in SFList)
+                            foreach (StarforceCLS sF in SFList)
                             {   
                                 ErrorCounter++;
                                 insertCMD.Parameters.Clear();

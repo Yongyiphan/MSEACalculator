@@ -23,8 +23,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             {"Weapon", DBRetrieve.GetAllWeaponDB().AsReadOnly()},
             {"Secondary",DBRetrieve.GetAllSecondaryDB().AsReadOnly()}
         };
-        public List<PotentialStatsCLS> AllPotDict { get => DBRetrieve.GetAllPotential(); }
-        public List<PotentialStatsCLS> AllBonusPotDict { get => DBRetrieve.GetAllBonusPotential(); }
+        public List<PotentialStatsCLS> AllPotDict { get => DBRetrieve.GetAllPotentialDB(); }
+        public List<PotentialStatsCLS> AllBonusPotDict { get => DBRetrieve.GetAllBonusPotentialDB(); }
 
         public Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
         public List<string> FlameStatsTypes { get; set; } = GVar.BaseStatTypes.Concat(GVar.SpecialStatType).ToList();

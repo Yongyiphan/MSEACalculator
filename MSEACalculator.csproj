@@ -210,7 +210,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StarforceRes\SFGainCLS.cs" />
+    <Compile Include="CalculationRes\StarforceCLS.cs" />
     <Compile Include="MainAppRes\Settings\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>

@@ -13,8 +13,14 @@ namespace MSEACalculator.OtherRes.Database.Tables
     {
         Dictionary<string, string> EquipmentDict { get; set; }
 
-        public EquipSlotTable(string TableName, string TablePara) : base(TableName, TablePara)
+        private string EquipSlotTableSpec = "(" +
+                "EquipSlot string," +
+                "EquipType string," +
+                "PRIMARY KEY(EquipSlot)" +
+                ");";
+        public EquipSlotTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
+            TableParameters = EquipSlotTableSpec;
         }
 
         public void RetrieveData()
@@ -62,5 +68,33 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 }
             }
         }
+
+        public static Dictionary<string, string> GetEquipSlotDB()
+        {
+            Dictionary<string, string> equipSlotDict = new Dictionary<string, string>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM EquipSlot";
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            equipSlotDict.Add(reader.GetString(0), reader.GetString(1));
+                        }
+
+
+                    }
+                }
+            }
+
+            return equipSlotDict;
+        }
+
+
     }
 }

@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using MSEACalculator.CalculationRes;
+using System.Collections.Generic;
 using System.IO;
 using Windows.Storage;
-
-using MSEACalculator.CalculationRes;
-using MSEACalculator.CharacterRes;
 
 namespace MSEACalculator
 {

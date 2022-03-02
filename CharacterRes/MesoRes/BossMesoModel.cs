@@ -7,13 +7,14 @@ using MSEACalculator.BossRes;
 using MSEACalculator.CharacterRes;
 using MSEACalculator.OtherRes;
 using MSEACalculator.OtherRes.Database;
+using MSEACalculator.OtherRes.Database.Tables;
 
 namespace MSEACalculator.CharacterRes.MesoRes
 {
     public class BossMesoModel :INPCObject
     {
 
-        public Dictionary<int, BossCLS> bossDict { get { return DBRetrieve.GetBossDB(); } }
+        public Dictionary<int, BossCLS> bossDict { get { return BossListTable.GetBossDB(); } }
         public Dictionary<string, CharacterCLS> charDict { get { return DBRetrieve.GetAllCharTrackDB(); } }
 
         public List<string> bossNameList { get; set; } = new List<string>();

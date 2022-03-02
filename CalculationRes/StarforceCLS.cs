@@ -20,6 +20,8 @@ namespace MSEACalculator.CalculationRes
         public int NonWeapVDef { get; set; } = 0; //NON WEAPON DEF
         public int OverallVDef { get; set; } = 0; //(OVERALL**) VISIBLE DEF
 
+        public int VDef { get; set; } = 0;
+
         public int CatAMaxHP { get; set; } = 0; //CAT A (GVAR) MAX HP
         public int WeapMaxMP { get; set; } = 0; //WEAPON MAX MP
 
@@ -43,11 +45,12 @@ namespace MSEACalculator.CalculationRes
 
         //DEPENDS ON LEVEL RANK
         public int LevelRank { get; set; } = 0;
-        public Dictionary<int, int> VStatL { get; set; }
-        public Dictionary<int, int> NonWeapVATKL { get; set; }
-        public Dictionary<int, int> NonWeapVMATKL { get; set; }
-        public Dictionary<int, int> WeapVATKL { get; set; }
-        public Dictionary<int, int> WeapVMATKL { get; set; }
+        public Dictionary<int, int> VStatL { get; set; } = new Dictionary<int, int>();
+        public Dictionary<int, int> NonWeapVATKL { get; set; } = new Dictionary<int, int>();
+        public Dictionary<int, int> NonWeapVMATKL { get; set; } = new Dictionary<int, int>();
+        public Dictionary<int, int> WeapVATKL { get; set; } = new Dictionary<int, int>();
+        public Dictionary<int, int> WeapVMATKL { get; set; } = new Dictionary<int, int>();
+
 
 
 

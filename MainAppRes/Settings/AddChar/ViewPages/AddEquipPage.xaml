@@ -17,8 +17,6 @@
         <Grid Grid.Row="0">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Starforce: "/>
-                    <TextBox />
                     <TextBlock Text="Equip Slot"/>
                     <ComboBox x:Name="EquipmentSlot"
                             ItemsSource="{Binding EquipSlots}" 
@@ -42,7 +40,11 @@
                     <TextBlock Text="Type: " Visibility="{Binding ShowWeapon, Mode=TwoWay}"/>
                         <ComboBox x:Name="WeapType" Visibility="{Binding ShowWeapon, Mode=TwoWay}"
                                   ItemsSource="{Binding CharacterWeapon, Mode=TwoWay}"
-                                    SelectedItem="{Binding SelectedWeapon, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>     
+                                    SelectedItem="{Binding SelectedWeapon, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBlock Text="Starforce: "/>
+                    <ComboBox ItemsSource="{Binding StarforceLevels, Mode=TwoWay}"
+                              SelectedValue="{Binding StarforceI, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+
                 </StackPanel>
                 <Button x:Name="AddItemCMD" Content="Add / Update Equipment" Margin="5 5 0 2" 
                         Command="{Binding AddEquipmentCMD}"/>

@@ -13,6 +13,5 @@ namespace MSEACalculator.OtherRes.Interface
         void RetrieveData();
         void UploadTable(SqliteConnection connection, SqliteTransaction transaction);
 
-
     }
 }

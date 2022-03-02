@@ -1,5 +1,6 @@
 ﻿using MSEACalculator.CharacterRes;
 using MSEACalculator.OtherRes.Database;
+using MSEACalculator.OtherRes.Database.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace MSEACalculator.CalculationRes
 {
     public class SymbolModel
     {
-        public List<ArcaneSymbolCLS>  ArcaneList { get => DBRetrieve.GetAllArcaneSymbolDB(); }
+        public List<ArcaneSymbolCLS>  ArcaneList { get => SymbolsTable.GetAllArcaneSymbolDB(); }
 
         public int MaxSymbolExp { get; set; }
         public int MaxArcaneForce { get; set; }

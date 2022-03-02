@@ -6,24 +6,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage.Streams;
+using Windows.Storage;
 
 namespace MSEACalculator.OtherRes.Database.Tables
 {
     public class ClassWeaponTable : BaseDBTable, ITableUpload
     {
         public Dictionary<int, List<string>> CurrentDict { get; set; }
-        public ClassWeaponTable(string TableName, string TablePara) : base(TableName, TablePara)
+
+        private string ClassWeaponSpec = "(" +
+                "ClassName string," +
+                "WeaponType string," +
+                "PRIMARY KEY (ClassName, WeaponType)" +
+                ");";
+        public ClassWeaponTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
+            TableParameters = ClassWeaponSpec;
         }
         public async void RetrieveData()
         {
             switch (TableName)
             {
                 case "ClassMainWeapon":
-                    CurrentDict = await ImportCSV.GetClassMWeaponCSVAsync();
+                    CurrentDict = await GetClassMWeaponCSVAsync();
                     break;
                 case "ClassSecWeapon":
-                    CurrentDict = await ImportCSV.GetClassSWeaponCSVAsync();
+                    CurrentDict = await GetClassSWeaponCSVAsync();
                     break;
 
             }
@@ -58,5 +67,82 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 }
             }
         }
+
+        public static async Task<Dictionary<int, List<string>>> GetClassMWeaponCSVAsync()
+        {
+            Dictionary<int, List<string>> CWdict = new Dictionary<int, List<string>>();
+            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "ClassMainWeapon.csv");
+
+            var stream = await charTable.OpenAsync(FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    var result = text.Split("\r\n");
+                    int counter = 0;
+                    foreach (string CI in result.Skip(1))
+                    {
+                        if (CI == "")
+                        {
+                            return CWdict;
+                        }
+                        var temp = CI.Split(',');
+                        var tempL = new List<string>() { temp[1], temp[2] };
+                        CWdict.Add(counter, tempL);
+
+                        counter++;
+                    }
+                }
+            }
+
+
+            return CWdict;
+        }
+        public static async Task<Dictionary<int, List<string>>> GetClassSWeaponCSVAsync()
+        {
+            Dictionary<int, List<string>> CWdict = new Dictionary<int, List<string>>();
+            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "ClassSecWeapon.csv");
+
+            var stream = await charTable.OpenAsync(FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    var result = text.Split("\r\n");
+                    int counter = 0;
+                    foreach (string CI in result.Skip(1))
+                    {
+                        if (CI == "")
+                        {
+                            return CWdict;
+                        }
+                        var temp = CI.Split(',');
+                        var tempL = new List<string>() { temp[1], temp[2] };
+                        CWdict.Add(counter, tempL);
+
+                        counter++;
+                    }
+                }
+            }
+
+
+            return CWdict;
+        }
+
+
+
+
     }
 }

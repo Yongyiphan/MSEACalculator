@@ -1,32 +1,20 @@
-﻿using System;
-using System.Data;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.Storage;
-using Windows.Storage.Pickers;
-using Windows.UI;
-using MSEACalculator.BossRes;
-using MSEACalculator.StarforceRes;
-using MSEACalculator.EventRes;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Windows.UI.Popups;
-using Windows.UI.Core;
-using MSEACalculator.CharacterRes.EquipmentRes;
+﻿using Microsoft.Data.Sqlite;
 using MSEACalculator.CharacterRes;
+using MSEACalculator.CharacterRes.EquipmentRes;
 using MSEACalculator.OtherRes.Database;
-using Microsoft.Data.Sqlite;
+using MSEACalculator.OtherRes.Database.Tables;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Text;
+using Windows.UI.Popups;
 
 namespace MSEACalculator
 {
     public class ComFunc
     {
-        public static Dictionary<string, string> EquipSlot  = DBRetrieve.GetEquipSlotDB();
+        public static Dictionary<string, string> EquipSlot  = EquipSlotTable.GetEquipSlotDB();
         public static List<string> PotentialGrade = GVar.PotentialGrade;
 
         public static bool IsOpenConnection(SqliteConnection connection)

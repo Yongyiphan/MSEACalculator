@@ -17,7 +17,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         public int ErrorCounter = 0;
 
-        public BaseDBTable(string TableName, string TablePara)
+        public BaseDBTable(string TableName, string TablePara = "")
         {
             this.TableName = TableName;
             TableParameters = TablePara;

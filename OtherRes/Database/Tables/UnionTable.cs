@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MSEACalculator.UnionRes;
+using Windows.Storage.Streams;
+using Windows.Storage;
 
 namespace MSEACalculator.OtherRes.Database.Tables
 {
@@ -14,12 +16,27 @@ namespace MSEACalculator.OtherRes.Database.Tables
     {
         List<UnionCLS> UnionList { get; set; }
 
-        public UnionTable(string TableName, string TablePara) : base(TableName, TablePara)
+        private string[] unionETableSpecs = { "(" +
+                    "Effect string," +
+                    "EffectType string," +
+                    "B int," +
+                    "A int," +
+                    "S int," +
+                    "SS int," +
+                    "SSS int," +
+                    "PRIMARY KEY(Effect, EffectType)" +
+                    ");" };
+
+        public UnionTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
+            TableParameters = unionETableSpecs[0];
         }
+
+
+        
         public async void RetrieveData()
         {
-            UnionList = await ImportCSV.GetUnionECSVAsync();
+            UnionList = await GetUnionECSVAsync();
         }
 
         public void UploadTable(SqliteConnection connection, SqliteTransaction transaction)
@@ -56,5 +73,59 @@ namespace MSEACalculator.OtherRes.Database.Tables
             }
             
         }
+
+        public static async Task<List<UnionCLS>> GetUnionECSVAsync()
+        {
+            List<UnionCLS> unionList = new List<UnionCLS>();
+
+            StorageFile UnionTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "UnionData.csv");
+
+            var stream = await UnionTable.OpenAsync(FileAccessMode.Read);
+
+            ulong size = stream.Size;
+
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    var result = text.Split("\r\n");
+                    int counter = 0;
+                    foreach (string unionItems in result.Skip(1))
+                    {
+                        if (unionItems == "")
+                        {
+                            return unionList;
+                        }
+                        var temp = unionItems.Split(",");
+                        counter += 1;
+                        UnionCLS tempUnion = new UnionCLS();
+                        tempUnion.Effect = temp[1];
+                        tempUnion.RankB = Convert.ToInt32(temp[2]);
+                        tempUnion.RankA = Convert.ToInt32(temp[3]);
+                        tempUnion.RankS = Convert.ToInt32(temp[4]);
+                        tempUnion.RankSS = Convert.ToInt32(temp[5]);
+                        tempUnion.RankSSS = Convert.ToInt32(temp[6]);
+                        tempUnion.EffectType = temp[7];
+
+
+                        //Stat = temp[0],
+                        //    StatType = temp[1],
+                        //    RankB = Convert.ToInt32(temp[2]),
+                        //    RankA = Convert.ToInt32(temp[3]),
+                        //    RankS = Convert.ToInt32(temp[4]),
+                        //    RankSS = Convert.ToInt32(temp[5]),
+                        //    RankSSS = Convert.ToInt32(temp[6])
+                        unionList.Add(tempUnion);
+                    }
+                }
+            }
+
+            return unionList;
+        }
+
+
     }
 }

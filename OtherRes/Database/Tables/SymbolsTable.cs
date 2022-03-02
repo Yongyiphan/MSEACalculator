@@ -13,8 +13,24 @@ namespace MSEACalculator.OtherRes.Database.Tables
     public class SymbolsTable : BaseDBTable, ITableUpload
     {
         public List<ArcaneSymbolCLS> SymbolList { get; set; }
-        public SymbolsTable(string TableName, string TablePara) : base(TableName, TablePara)
+
+        private string[] ArcaneSymSpec = { "(" +
+                        "Name string, " +
+                        "SubMap string, " +
+                        "CurrentLevel int," +
+                        "CurrentExp int," +
+                        "CurrentLimit int, " +
+                        "BaseGain int," +
+                        "PQGain int, " +
+                        "PQGainLimit int, " +
+                        "SymbolExchangeRate int," +
+                        "CostLvlMod int," +
+                        "CostMod int," +
+                        "PRIMARY KEY(Name)" +
+                        ");" };
+        public SymbolsTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
+            TableParameters = ArcaneSymSpec[0];
         }
 
         public void RetrieveData()
@@ -77,10 +93,6 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
             };
         }
-        public void RetrieveDataAsync()
-        {
-            throw new NotImplementedException();
-        }
         public void UploadTable(SqliteConnection connection, SqliteTransaction transaction)
         {
             if (ComFunc.IsOpenConnection(connection))
@@ -119,6 +131,46 @@ namespace MSEACalculator.OtherRes.Database.Tables
             }
         }
 
-        
+        public static List<ArcaneSymbolCLS> GetAllArcaneSymbolDB()
+        {
+            List<ArcaneSymbolCLS> symbolList = new List<ArcaneSymbolCLS>();
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM ArcaneSymbolData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ArcaneSymbolCLS symbol = new ArcaneSymbolCLS();
+                            symbol.Name               =  reader.GetString(0);
+                            symbol.SubMap             =  reader.GetString(1);
+                            symbol.CurrentLevel       =  reader.GetInt32(2);
+                            symbol.CurrentExp         =  reader.GetInt32(3);
+                            symbol.CurrentLimit       =  reader.GetInt32(4);
+                            symbol.BaseSymbolGain     =  reader.GetInt32(5);
+                            symbol.PQSymbolsGain      =  reader.GetInt32(6);
+                            symbol.PQGainLimit        =  reader.GetInt32(7);
+                            symbol.SymbolExchangeRate =  reader.GetInt32(8);
+                            symbol.CostLvlMod         =  reader.GetInt32(9);
+                            symbol.CostMod            = reader.GetInt32(10);
+
+                            symbolList.Add(symbol);
+
+
+                        }
+                    }
+                }
+
+
+            }
+
+            return symbolList;
+        }
+
     }
 }

@@ -54,6 +54,25 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         }
 
+        private List<int> _SFLvlList;
+        public List<int> StarforceLevels 
+        { get => _SFLvlList; set
+            {
+                _SFLvlList = value;
+                OnPropertyChanged(nameof(StarforceLevels));
+            }
+        }
+
+        private string _StarforceInput;
+        public string StarforceI
+        {
+            get { return _StarforceInput; }
+            set { _StarforceInput = value;
+                OnPropertyChanged(nameof(StarforceI));
+            }
+        }
+
+
         //BASE EQUIPMENT SELECTION
         #region
 
@@ -852,6 +871,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     NewEquip  = ComFunc.UpdateBaseStats(SCharacter, NewEquip);
                 }
                 NewEquip.EquipListSlot = SEquipSlot;
+                StarforceLevels = NewEquip.EquipSet == "Tyrant" ? new List<int>() : AEquipM.BasicStarforceList.Select(x => x.SFLevel).ToList();
+
 
                 CurrentSEquip = NewEquip;
             }

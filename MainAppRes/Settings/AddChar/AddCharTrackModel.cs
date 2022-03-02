@@ -1,5 +1,6 @@
 ﻿using MSEACalculator.CharacterRes;
 using MSEACalculator.OtherRes.Database;
+using MSEACalculator.OtherRes.Database.Tables;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
     {
         
 
-        public Dictionary<string, CharacterCLS> AllCharDB { get; set; } = DBRetrieve.GetAllCharDB();
+        public Dictionary<string, CharacterCLS> AllCharDB { get; set; } = AllCharacterTable.GetAllCharDB();
         public Dictionary<string, CharacterCLS> AllCharTrackDB { get; set; } = DBRetrieve.GetAllCharTrackDB();
 
         public List<CharacterCLS> AllCharList { get; set; } = new List<CharacterCLS>();

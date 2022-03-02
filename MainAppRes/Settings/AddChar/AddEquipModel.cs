@@ -4,6 +4,8 @@ using System.Linq;
 using MSEACalculator.CharacterRes.EquipmentRes;
 using MSEACalculator.CharacterRes;
 using System.Collections.ObjectModel;
+using MSEACalculator.CalculationRes;
+using MSEACalculator.OtherRes.Database.Tables;
 
 namespace MSEACalculator.MainAppRes.Settings.AddChar
 {
@@ -18,18 +20,20 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
         public IReadOnlyDictionary<string, ReadOnlyCollection<EquipCLS>> AllEquipStore { get;} = new Dictionary<string, ReadOnlyCollection<EquipCLS>>
         {
-            {"Armor", DBRetrieve.GetAllArmorDB().AsReadOnly() },
-            {"Accessory", DBRetrieve.GetAllAccessoriesDB().AsReadOnly()},
-            {"Weapon", DBRetrieve.GetAllWeaponDB().AsReadOnly()},
-            {"Secondary",DBRetrieve.GetAllSecondaryDB().AsReadOnly()}
+            {"Armor", EquipArmorTable.GetAllArmorDB().AsReadOnly() },
+            {"Accessory", EquipAccessoriesTable.GetAllAccessoriesDB().AsReadOnly()},
+            {"Weapon", EquipMainWeaponTable.GetAllWeaponDB().AsReadOnly()},
+            {"Secondary",EquipSecWeaponTable.GetAllSecondaryDB().AsReadOnly()}
         };
-        public List<PotentialStatsCLS> AllPotDict { get => DBRetrieve.GetAllPotentialDB(); }
-        public List<PotentialStatsCLS> AllBonusPotDict { get => DBRetrieve.GetAllBonusPotentialDB(); }
+        public List<PotentialStatsCLS> AllPotDict { get => PotentialTable.GetAllPotentialDB(); }
+        public List<PotentialStatsCLS> AllBonusPotDict { get => PotentialTable.GetAllBonusPotentialDB(); }
 
-        public Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
+        public Dictionary<string, string> EquipSlot { get; set; } = EquipSlotTable.GetEquipSlotDB();
         public List<string> FlameStatsTypes { get; set; } = GVar.BaseStatTypes.Concat(GVar.SpecialStatType).ToList();
 
+        public List<StarforceCLS> BasicStarforceList { get => StarForceTable.GetAllStarforceDB(); }
 
 
+        public List<StarforceCLS> TyrantStarforceList { get; set; }
     }
 }

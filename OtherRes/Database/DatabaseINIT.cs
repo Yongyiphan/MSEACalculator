@@ -1,16 +1,9 @@
 ﻿using Dasync.Collections;
 using Microsoft.Data.Sqlite;
-using MSEACalculator.BossRes;
-using MSEACalculator.CharacterRes;
-using MSEACalculator.CharacterRes.EquipmentRes;
 using MSEACalculator.OtherRes.Database.Tables;
 using MSEACalculator.OtherRes.Interface;
-using MSEACalculator.StarforceRes;
-using MSEACalculator.UnionRes;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -34,59 +27,24 @@ namespace MSEACalculator.OtherRes.Database
             /////CHARACTER///////
 
             //TABLE FOR DEFAULT CHARACTER LIST
-            string[] CharacterTableSpec = { "(" +
-                            "ClassName string," +
-                            "ClassType string," +
-                            "Faction string," +
-                            "MainStat string," +
-                            "SecStat string," +
-                            "UnionE string," +
-                            "UnionET string," +
-                            "PRIMARY KEY (ClassName)" +
-                            ");" };
-            StaticTable.Add(new AllCharacterTable("AllCharacterData", CharacterTableSpec[0]));
+            
+            StaticTable.Add(new AllCharacterTable("AllCharacterData"));
 
             //TABLE FOR UNION EFFECTS
-            string[] unionETableSpecs = { "(" +
-                    "Effect string," +
-                    "EffectType string," +
-                    "B int," +
-                    "A int," +
-                    "S int," +
-                    "SS int," +
-                    "SSS int," +
-                    "PRIMARY KEY(Effect, EffectType)" +
-                    ");" };
-            StaticTable.Add(new UnionTable("UnionEffects", unionETableSpecs[0]));
+            
+            StaticTable.Add(new UnionTable("UnionEffects"));
 
 
             //TABLE FOR CLASS WEAP ASSOC
             
             //****SPECIAL IMPLEMENTATION 2 IN ONE TABLE CLASS****
-            string ClassWeaponSpec = "(" +
-                "ClassName string," +
-                "WeaponType string," +
-                "PRIMARY KEY (ClassName, WeaponType)" +
-                ");";
-            StaticTable.Add(new ClassWeaponTable("ClassMainWeapon", ClassWeaponSpec));
-            StaticTable.Add(new ClassWeaponTable("ClassSecWeapon", ClassWeaponSpec));
-
-
-
+            
+            StaticTable.Add(new ClassWeaponTable("ClassMainWeapon"));
+            StaticTable.Add(new ClassWeaponTable("ClassSecWeapon"));
 
 
             ///////BOSSING///////
-
-
-            string BossListSpec = "(" +
-                "BossID int," +
-                "BossName string NOT NULL," +
-                "Difficulty string NOT NULL," +
-                "EntryType string NOT NULL," +
-                "Meso int NOT NULL," +
-                "PRIMARY KEY(BossID)" +
-                ");";
-            StaticTable.Add(new BossListTable("BossListData", BossListSpec));
+            StaticTable.Add(new BossListTable("BossListData"));
 
 
 
@@ -97,161 +55,37 @@ namespace MSEACalculator.OtherRes.Database
             ///////INVENTORY////////
 
             //TABLE FOR EQUIP SLOT AND TYPES
-            string EquipSlotTableSpec = "(" +
-                "EquipSlot string," +
-                "EquipType string," +
-                "PRIMARY KEY(EquipSlot)" +
-                ");";
-            StaticTable.Add(new EquipSlotTable("EquipSlot", EquipSlotTableSpec));
+            
+            StaticTable.Add(new EquipSlotTable("EquipSlot"));
 
             //TABLE FOR ALL ARMOR
-            string[] ArmorTableSpec = { "(" +
-                    "EquipSet string," +
-                    "ClassType string," +
-                    "EquipSlot string," +
-                    "EquipLevel int," +
-                    "MainStat int," +
-                    "SecStat int," +
-                    "AllStat int," +
-                    "HP int," +
-                    "MP int," +
-                    "DEF int," +
-                    "ATK int," +
-                    "MATK int," +
-                    "SPD int," +
-                    "JUMP int," +
-                    "IED int," +
-                    "PRIMARY KEY (EquipSet, ClassType, EquipSlot)" +
-                    ");" };
-            StaticTable.Add(new EquipArmorTable("ArmorData", ArmorTableSpec[0]));
+            StaticTable.Add(new EquipArmorTable("ArmorData"));
 
             //TABLE FOR ACCESSORIES
-            string[] AccessoriesTableSpec = { "(" +
-                    "EquipName string," +
-                    "EquipSet string," +
-                    "ClassType  string," +
-                    "EquipSlot string," +
-                    "EquipLevel int," +
-                    "MainStat int," +
-                    "SecStat int," +
-                    "AllStat int," +
-                    "HP string," +
-                    "MP string," +
-                    "DEF int," +
-                    "ATK int," +
-                    "MATK int," +
-                    "SPD int," +
-                    "JUMP int," +
-                    "IED int," +
-                    "PRIMARY KEY (EquipName, EquipSet, ClassType, EquipSlot) " +
-                    ");" };
-            StaticTable.Add(new EquipAccessoriesTable("AccessoriesData", AccessoriesTableSpec[0]));
-
+            StaticTable.Add(new EquipAccessoriesTable("AccessoriesData"));
             //TABLE FOR WEAPON
             //MAIN WEAPON
-            string[] MainWeapTableSpec = { "(" +
-                    "EquipSet string," +
-                    "WeaponType string," +
-                    "EquipLevel int," +
-                    "ATKSPD int," +
-                    "MainStat int," +
-                    "SecStat int," +
-                    "HP int," +
-                    "DEF int," +
-                    "ATK int," +
-                    "MATK int," +
-                    "SPD int," +
-                    "BDMG int," +
-                    "IED int," +
-                    "PRIMARY KEY (EquipSet, WeaponType) " +
-                    ");" };
-            StaticTable.Add(new EquipMainWeaponTable("WeaponData", MainWeapTableSpec[0]));
-
+            StaticTable.Add(new EquipMainWeaponTable("WeaponData"));
             //SECONDARY WEAPON
-            string[] SecWeapTableSpec = { "(" +
-                    "ClassName string," +
-                    "EquipName string," +
-                    "WeaponType string," +
-                    "EquipLevel int," +
-                    "MainStat int," +
-                    "SecStat int," +
-                    "ATK int," +
-                    "MATK int," +
-                    "AllStat int," +
-                    "DEF int," +
-                    "HP int," +
-                    "MP int," +
-                    "ATKSPD int," +
-                    "PRIMARY KEY (ClassName, EquipName, WeaponType, EquipLevel) " +
-                    ");" };
-            StaticTable.Add(new EquipSecWeaponTable("SecondaryData", SecWeapTableSpec[0]));
+            StaticTable.Add(new EquipSecWeaponTable("SecondaryData"));
 
             /////CALCULATIONS/////
 
             //SPECIAL IMPLEMENTATION FOR STARFORCE DATA 2 IN 1
             //TABLE FOR STARFORCE STATS
-            string[] sfTableSpec = { "(" +
-                    "SFID int," +
-                    "JobStat int," +
-                    "NonWeapVDef int," +
-                    "OverallVDef int," +
-                    "CatAMaxHP int," +
-                    "WeapMaxMP int," +
-                    "WeapVATK int," +
-                    "WeapVMATK int," +
-                    "SJump int," +
-                    "SSpeed int," +
-                    "GloveVATK int, " +
-                    "GloveVMATK int," +
-                    "PRIMARY KEY (SFID)" +
-                    ");" };
-            StaticTable.Add(new StarForceTable("StarForceBaseData", sfTableSpec[0]));
+            StaticTable.Add(new StarForceTable("StarForceBaseData"));
+            
+            StaticTable.Add(new StarForceTable("StarForceAddData"));
 
-            //TABLE FOR STARFORCE STATS ADDONS
-            string[] addSFstatSpec = { "(" +
-                    "SFID int," +
-                    "LevelRank int," +
-                    "VStat int," +
-                    "NonWeapVATK int," +
-                    "NonWeapVMATK int," +
-                    "WeapVATK int," +
-                    "WeapVMATK int," +
-                    "PRIMARY KEY (SFID, LevelRank)" +
-                    ");" };
-            StaticTable.Add(new StarForceTable("StarForceAddData", addSFstatSpec[0]));
+            StaticTable.Add(new StarForceTable("StarforceSuperiorData"));
 
             ////ARCANE SYMBOL
-            string[] ArcaneSymSpec = { "(" +
-                        "Name string, " +
-                        "SubMap string, " +
-                        "CurrentLevel int," +
-                        "CurrentExp int," +
-                        "CurrentLimit int, " +
-                        "BaseGain int," +
-                        "PQGain int, " +
-                        "PQGainLimit int, " +
-                        "SymbolExchangeRate int," +
-                        "CostLvlMod int," +
-                        "CostMod int," +
-                        "PRIMARY KEY(Name)" +
-                        ");" };
-            StaticTable.Add(new SymbolsTable("ArcaneSymbolData", ArcaneSymSpec[0]));
+            
+            StaticTable.Add(new SymbolsTable("ArcaneSymbolData"));
 
-            string[] PotSpec = { "(" +
-                        "EquipGrp string," +
-                        "Grade string," +
-                        "GradeT string," +
-                        "StatT string," +
-                        "Stat nvarchar," +
-                        "MinLvl int," +
-                        "MaxLvl int," +
-                        "ValueI nvarchar," +
-                        "Duration int," +
-                        "Chance double," +
-                        "PRIMARY KEY (EquipGrp, Grade, GradeT, Stat, MinLvl, MaxLvl, ValueI)" +
-                        ");" };
-            StaticTable.Add(new PotentialTable("PotentialData", PotSpec[0]));
-            StaticTable.Add(new PotentialTable("PotentialBonusData", PotSpec[0]));
+            
+            StaticTable.Add(new PotentialTable("PotentialData"));
+            StaticTable.Add(new PotentialTable("PotentialBonusData"));
 
 
             await Task.WhenAll(StaticTable.ParallelForEachAsync(ST => Task.Run(() =>((ITableUpload)ST).RetrieveData())));
@@ -283,13 +117,8 @@ namespace MSEACalculator.OtherRes.Database
                         Console.WriteLine(ex.Message);
                         trans.Rollback();
                     }
-
                 }
-
-
             }
-
-
         }
 
         public async static Task BlankTablesInit()

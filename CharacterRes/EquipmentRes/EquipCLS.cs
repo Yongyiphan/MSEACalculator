@@ -48,6 +48,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         //STORE BY INDEX
         public int SpellTracePerc { get; set; } = -1;
         public int StarForce { get; set; } = 0;
+        public EquipStatsCLS StarforceStats { get; set; } = new EquipStatsCLS();
 
         //DEFAULT CONSTRUCTOR
         public EquipCLS() { }

@@ -32,8 +32,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         public List<string> FlameStatsTypes { get; set; } = GVar.BaseStatTypes.Concat(GVar.SpecialStatType).ToList();
 
         public List<StarforceCLS> BasicStarforceList { get => StarForceTable.GetAllStarforceDB(); }
-
-
-        public List<StarforceCLS> TyrantStarforceList { get; set; }
+        public List<StarforceCLS> SuperiorStarforceList { get => StarForceTable.GetAllSuperiorStarforceDB(); }
     }
 }

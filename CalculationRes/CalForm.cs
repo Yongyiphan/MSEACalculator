@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MSEACalculator.CharacterRes;
+using MSEACalculator.CharacterRes.EquipmentRes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -202,5 +204,20 @@ namespace MSEACalculator.CalculationRes
 
         }
 
+
+        public static Dictionary<string, int> CalStarforceStats(CharacterCLS Character, EquipCLS CEquip, int SFLvl, List<StarforceCLS> SFList)
+        {
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            
+            
+
+
+            return result;
+        }
+
+        public static Dictionary<string, int> CalStats(EquipCLS CEquip, string mode)
+        {
+
+        }
     }
 }

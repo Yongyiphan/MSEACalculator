@@ -437,6 +437,79 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
             return result;
         }
+        public static List<StarforceCLS> GetAllSuperiorStarforceDB()
+        {
+            List<StarforceCLS> result = new List<StarforceCLS>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+
+                string addQuery = "SELECT * FROM StarforceSuperiorData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(addQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+
+                        StarforceCLS SF = null;
+                        bool startNew = false;
+                        bool toAdd = false;
+                        int prevLvl = 0;
+
+                        while (reader.Read())
+                        {
+                            int clvl = reader.GetInt32(0);
+                            if (prevLvl == 0)
+                            {
+                                prevLvl = clvl;
+                                startNew = true;
+                                goto StartNew;
+                            }
+
+                        StartNew:
+                            if (startNew)
+                            {
+                                SF = new StarforceCLS();
+                                SF.SFLevel = clvl;
+                                SF.VDef = reader.GetInt32(4);
+                                startNew = false;
+                            }
+
+
+                            if (prevLvl !=  clvl)
+                            {
+                                prevLvl = clvl;
+                                toAdd = true;
+                                goto ToAdd;
+                            }
+                            else
+                            {
+                                int lvlrank = reader.GetInt32(1);
+                                SF.LevelRank = lvlrank;
+                                SF.VStatL.Add(lvlrank, reader.GetInt32(2));
+                                SF.WeapVATKL.Add(lvlrank, reader.GetInt32(3));
+                            }
+                        ToAdd:
+                            if (toAdd)
+                            {
+                                result.Add(SF);
+                                toAdd = false;
+                                startNew = true;
+                                goto StartNew;
+                            }
+                        }
+
+                        result.Add(SF);
+                    }
+                }
+
+
+            }
+
+            return result;
+        }
 
 
 

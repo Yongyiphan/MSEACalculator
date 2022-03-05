@@ -871,7 +871,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     NewEquip  = ComFunc.UpdateBaseStats(SCharacter, NewEquip);
                 }
                 NewEquip.EquipListSlot = SEquipSlot;
-                StarforceLevels = NewEquip.EquipSet == "Tyrant" ? new List<int>() : AEquipM.BasicStarforceList.Select(x => x.SFLevel).ToList();
+                StarforceLevels = NewEquip.EquipSet == "Tyrant" ? AEquipM.SuperiorStarforceList.Select(x=> x.SFLevel).ToList() : AEquipM.BasicStarforceList.Select(x => x.SFLevel).ToList();
 
 
                 CurrentSEquip = NewEquip;

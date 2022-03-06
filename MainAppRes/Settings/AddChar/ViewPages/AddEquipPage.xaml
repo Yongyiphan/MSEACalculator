@@ -24,8 +24,11 @@
                             SelectedValue="{Binding SEquipSlot, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                             SelectedValuePath="Key"
                             />
+                    <TextBlock Text="Class Type: " Visibility="{Binding ShowXenonClassType, Mode=TwoWay}"/>
+                    <ComboBox ItemsSource="{Binding AEquipM.XenonClassType, Mode=TwoWay}"
+                              SelectedItem="{Binding XenonEquipType, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                              Visibility="{Binding ShowXenonClassType, Mode=TwoWay}"/>
 
-                   
                     <!--Display Armor Set / Item Name-->
                     <!--ItemNameTypeTxt = "SET" or "EQUIPNAME"-->
                     

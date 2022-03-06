@@ -95,6 +95,8 @@ namespace MSEACalculator
             "ATK","MATK"
         };
 
+
+
         public static List<string> SpecialStatType { get; set; } = new List<string>
         {
             "BD","DMG", "AllStat"

@@ -31,7 +31,18 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         public Dictionary<string, string> EquipSlot { get; set; } = EquipSlotTable.GetEquipSlotDB();
         public List<string> FlameStatsTypes { get; set; } = GVar.BaseStatTypes.Concat(GVar.SpecialStatType).ToList();
 
-        public List<StarforceCLS> BasicStarforceList { get => StarForceTable.GetAllStarforceDB(); }
-        public List<StarforceCLS> SuperiorStarforceList { get => StarForceTable.GetAllSuperiorStarforceDB(); }
+        public Dictionary<string, ReadOnlyCollection<StarforceCLS>> StarforceStore { get; } = new Dictionary<string, ReadOnlyCollection<StarforceCLS>>
+        {
+            {"Basic",StarForceTable.GetAllStarforceDB().AsReadOnly()},
+            {"Superior",StarForceTable.GetAllSuperiorStarforceDB().AsReadOnly()}
+
+        };
+
+
+        public List<string> XenonClassType { get; } = new List<string>()
+        {
+            "Pirate", "Thief"
+        };
+
     }
 }

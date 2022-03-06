@@ -2,6 +2,7 @@
 using MSEACalculator.CharacterRes.EquipmentRes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -203,21 +204,84 @@ namespace MSEACalculator.CalculationRes
             return dictStore;
 
         }
+    
 
-
-        public static Dictionary<string, int> CalStarforceStats(CharacterCLS Character, EquipCLS CEquip, int SFLvl, List<StarforceCLS> SFList)
+        public static EquipStatsCLS CalSpellTrace(
+            EquipCLS selectedEquip,CharacterCLS Character, string slotType) 
         {
-            Dictionary<string, int> result = new Dictionary<string, int>();
-            
-            
 
+            EquipStatsCLS result = new EquipStatsCLS();
+            string MainStat = Character.MainStat;
+            string ClassType = Character.ClassType;
+            int STTier = ComFunc.SpellTraceTier(selectedEquip);
+            int perc = selectedEquip.SpellTracePerc;
+            result.HP = ComFunc.SpellTraceDict[slotType][STTier][perc].HP * selectedEquip.SlotCount;
+            result.DEF = ComFunc.SpellTraceDict[slotType][STTier][perc].DEF * selectedEquip.SlotCount;
+
+            if (slotType == "Weapon" || slotType == "Heart" || slotType == "Gloves")
+            {
+                if (ClassType == "Magician")
+                {
+                    result.MATK = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
+                }
+                else
+                {
+                    result.ATK  = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
+                }
+            }
+
+            if (MainStat == "HP")
+            {
+                result.HP += ComFunc.SpellTraceDict[slotType][STTier][perc].MainStat * selectedEquip.SlotCount * 50;
+            }
+            else
+            {
+                result.GetType().GetProperty(MainStat).SetValue(result, ComFunc.SpellTraceDict[slotType][STTier][perc].MainStat * selectedEquip.SlotCount, null);
+            }
 
             return result;
         }
 
-        public static Dictionary<string, int> CalStats(EquipCLS CEquip, string mode)
+        public static EquipStatsCLS CalStarforceStats(CharacterCLS Character, EquipCLS CEquip, ReadOnlyCollection<StarforceCLS> SFList)
         {
+            EquipStatsCLS SFStat = new EquipStatsCLS();
 
+            for(int i = 0; i< CEquip.StarForce; i++)
+            {
+                StarforceCLS current = SFList.ElementAt(i);
+                if(i <= 15)
+                {
+                    if(Character.MainStat == "SPECIAL")
+                    {
+                        SFStat.STR = current.JobStat;
+                        SFStat.DEX = current.JobStat;
+                        SFStat.LUK = current.JobStat;
+                    }
+                    else
+                    {
+                        SFStat.GetType().GetProperty(Character.MainStat).SetValue(SFStat, current.JobStat, null);
+                        if (Character.SecStat == "SPECIAL")
+                        {
+                            SFStat.STR = current.JobStat;
+                            SFStat.DEX = current.JobStat;
+                        }
+                        else
+                        {
+                            SFStat.GetType().GetProperty(Character.SecStat).SetValue(SFStat, current.JobStat, null);
+                        }
+                    }
+                    
+
+
+                }
+            }
+
+
+            
+            
+
+            return SFStat;
         }
+
     }
 }

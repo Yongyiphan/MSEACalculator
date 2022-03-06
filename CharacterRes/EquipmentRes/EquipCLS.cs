@@ -24,7 +24,14 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
 
         public EquipStatsCLS BaseStats { get; set; } = new EquipStatsCLS();
+
+        public bool SpellTraced { get; set; } = false;
+
+        //STORE BY INDEX
+        public int SpellTracePerc { get; set; } = -1;
         public EquipStatsCLS ScrollStats { get; set; } = new EquipStatsCLS();
+
+
         public EquipStatsCLS FlameStats { get; set; } = new EquipStatsCLS();
 
         public int MPotGrade { get; set; } = 0;
@@ -43,10 +50,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             {"Third", new PotentialStatsCLS() },
         };
 
-        public bool SpellTraced { get; set; } = false;
-
-        //STORE BY INDEX
-        public int SpellTracePerc { get; set; } = -1;
+        
         public int StarForce { get; set; } = 0;
         public EquipStatsCLS StarforceStats { get; set; } = new EquipStatsCLS();
 

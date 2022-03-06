@@ -136,12 +136,76 @@ namespace MSEACalculator
 
             return rank;
         }
-        public static int ReturnSFLevelRank(int lvl)
+        public static int ReturnSFLevelRank(int lvl, string type = "Basic")
         {
+            Func<int, int, int, bool> IB =  (level, start, end) => {
+
+                
+                return level >= start && level <= end ? true : false;
+            };
             int result = 0;
-
-
-
+            if(type == "Superior")
+            {
+                if (IB(lvl, 0, 77))
+                {
+                    result = 9;
+                }
+                else if (IB(lvl, 78, 87))
+                {
+                    result = 8;
+                }
+                else if (IB(lvl, 88, 97))
+                {
+                    result = 7;
+                }
+                else if (IB(lvl, 98, 107))
+                {
+                    result = 6;
+                }
+                else if (IB(lvl, 108, 117))
+                {
+                    result = 5;
+                }
+                else if (IB(lvl, 118, 127))
+                {
+                    result = 4;
+                }
+                else if (IB(lvl, 128, 137))
+                {
+                    result = 3;
+                }
+                else if (IB(lvl, 138, 149))
+                {
+                    result = 2;
+                }
+                else if (lvl >= 150)
+                {
+                    result = 1;
+                }
+            }
+            else
+            {
+                if (IB(lvl, 128, 137))
+                {
+                    result = 5;
+                }
+                else if (IB(lvl, 138, 149))
+                {
+                    result = 4;
+                }
+                else if (IB(lvl, 150, 159))
+                {
+                    result = 3;
+                }
+                else if (IB(lvl, 160, 199))
+                {
+                    result = 2;
+                }
+                else if (lvl >= 200)
+                {
+                    result = 1;
+                }
+            }
 
             return result;
         }
@@ -155,61 +219,7 @@ namespace MSEACalculator
            
         }
 
-        public static EquipCLS UpdateBaseStats(CharacterCLS character, EquipCLS baseEquip)
-        {
-            //To update equip with proper values as per class
-            //EquipModel equipModel = new EquipModel();
-
-            //Update from Main/Sec Stats to Stat Values STR|DEX|...
-            //Keep MS/SS property
-            int mainStat = baseEquip.BaseStats.MS, secStat = baseEquip.BaseStats.SS, AS = baseEquip.BaseStats.AllStat;
-            if(AS > 0)
-            {
-                baseEquip.BaseStats.STR = AS;
-                baseEquip.BaseStats.DEX = AS;
-                baseEquip.BaseStats.INT = AS;
-                baseEquip.BaseStats.LUK = AS;
-                baseEquip.BaseStats.AllStat = 0;
-            }
-            else
-            {
-                switch (character.MainStat)
-                {
-                    case "STR":
-                        baseEquip.BaseStats.STR = mainStat;
-                        baseEquip.BaseStats.DEX = secStat;
-                        break;
-                    case "DEX":
-                        baseEquip.BaseStats.DEX = mainStat;
-                        baseEquip.BaseStats.STR = secStat;
-                        break;
-                    case "INT":
-                        baseEquip.BaseStats.INT = mainStat;
-                        baseEquip.BaseStats.LUK = secStat;
-                        break;
-                    case "LUK":
-                        baseEquip.BaseStats.LUK = mainStat;
-                        //CADENA    DUAL BLADE
-                        if (character.SecStat == "SPECIAL")
-                        {
-                            baseEquip.BaseStats.STR = secStat;
-                        }
-                        baseEquip.BaseStats.DEX = secStat;
-                        break;
-                    case "HP":
-                        break;
-                    //XENON
-                    case "SPECIAL":
-                        baseEquip.BaseStats.STR = mainStat;
-                        baseEquip.BaseStats.DEX = mainStat;
-                        baseEquip.BaseStats.LUK = mainStat;
-                        break;
-
-                }
-            }
-
-            return baseEquip;
-        }
+        
 
         public static EquipStatsCLS RecordToProperty(EquipStatsCLS RM, Dictionary<string, int> record)
         {
@@ -298,13 +308,99 @@ namespace MSEACalculator
             return record;
         }
 
-
-        public static EquipCLS FindEquip(ReadOnlyCollection<EquipCLS> FindingList, CharacterCLS SCharacter, string Slot, string ESet)
+        public static List<string> FilterBy(string slotCat, CharacterCLS Character, string eSlot, ReadOnlyCollection<EquipCLS> SearchList, string XenonClass = "")
         {
-            
+            List<string> result = new List<string>();
+            string format = slotCat == "Accessory" || slotCat == "Secondary" ? "Name" : "Set";
+
+            string ClassType = Character.ClassName == "Xenon" ? XenonClass : Character.ClassType;
+
+            switch (format)
+            {
+                case "Set":
+                    foreach (var item in SearchList)
+                    {
+                        if (eSlot == "Weapon")
+                        {
+                            foreach (string weap in Character.MainWeapon)
+                            {
+                                if (item.WeaponType == weap)
+                                {
+                                    if (!result.Contains(item.EquipSet))
+                                    {
+                                        result.Add(item.EquipSet);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (item.EquipSlot == eSlot)
+                            {
+                                if (item.ClassType == ClassType ||item.ClassType == "Any")
+                                {
+                                    if (!result.Contains(item.EquipSet))
+                                    {
+                                        result.Add(item.EquipSet);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Name":
+                    foreach (var item in SearchList)
+                    {
+                        if (eSlot == "Secondary")
+                        {
+                            foreach (string weap in Character.SecondaryWeapon)
+                            {
+                                if (weap == "Shield")
+                                {
+                                    if (item.WeaponType == weap && item.ClassType == ClassType)
+                                    {
+                                        if (!result.Contains(item.EquipName))
+                                        {
+                                            result.Add(item.EquipName);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (item.WeaponType == weap)
+                                    {
+                                        if (!result.Contains(item.EquipName))
+                                        {
+                                            result.Add(item.EquipName);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (item.EquipSlot == eSlot && (item.ClassType == ClassType ||item.ClassType == "Any"))
+                            {
+                                if (!result.Contains(item.EquipName))
+                                {
+                                    result.Add(item.EquipName);
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+
+
+            return result;
+        }
+
+        public static EquipCLS FindEquip(ReadOnlyCollection<EquipCLS> FindingList, CharacterCLS SCharacter, string Slot, string ESet, string XenonClass = "")
+        {
+           
 
             EquipCLS returnedEquip = new EquipCLS();
-
+            string ClassType = SCharacter.ClassName == "Xenon" ? XenonClass : SCharacter.ClassType;
             
             if (GVar.AccEquips.Contains(Slot))
             {
@@ -314,7 +410,7 @@ namespace MSEACalculator
                     {
                         if (Slot == "Shoulder")
                         {
-                            if (equip.ClassType == SCharacter.ClassType || equip.ClassType == "Any")
+                            if (equip.ClassType == ClassType || equip.ClassType == "Any")
                             {
                                 return returnedEquip =  equip;
                             }
@@ -328,7 +424,7 @@ namespace MSEACalculator
             {
                 foreach (EquipCLS equip in FindingList)
                 {
-                    if (equip.EquipSet ==  ESet && equip.EquipSlot == Slot && equip.ClassType == SCharacter.ClassType)
+                    if (equip.EquipSet ==  ESet && equip.EquipSlot == Slot && equip.ClassType == ClassType)
                     {
                         return returnedEquip =  equip;
                     }
@@ -354,7 +450,7 @@ namespace MSEACalculator
                         {
                             if (equip.EquipName == ESet)
                             {
-                                if (equip.ClassType == SCharacter.ClassName || equip.ClassType == SCharacter.ClassType)
+                                if (equip.ClassType == SCharacter.ClassName || equip.ClassType == ClassType)
                                 {
                                     returnedEquip =  equip;
                                     if (equip.WeaponType.Contains("Demon Aegis")){
@@ -377,92 +473,80 @@ namespace MSEACalculator
                 }
             }
 
-            return null;
+            return returnedEquip;
         }
 
-
-
-        public static List<string> FilterBy(string slotCat, CharacterCLS Character, string eSlot, ReadOnlyCollection<EquipCLS> SearchList)
+        public static EquipCLS UpdateBaseStats(CharacterCLS character, EquipCLS baseEquip, string XenonClass = "")
         {
-            List<string> result = new List<string>();
-            string format = slotCat == "Accessory" || slotCat == "Secondary" ? "Name" : "Set";
-            
-            switch (format)
+            //To update equip with proper values as per class
+            //EquipModel equipModel = new EquipModel();
+
+            //Update from Main/Sec Stats to Stat Values STR|DEX|...
+            //Keep MS/SS property
+            int mainStat = baseEquip.BaseStats.MS, secStat = baseEquip.BaseStats.SS, AS = baseEquip.BaseStats.AllStat;
+            if (AS > 0)
             {
-                case "Set":
-                    foreach (var item in SearchList)
+                baseEquip.BaseStats.STR = AS;
+                baseEquip.BaseStats.DEX = AS;
+                baseEquip.BaseStats.INT = AS;
+                baseEquip.BaseStats.LUK = AS;
+                baseEquip.BaseStats.AllStat = 0;
+            }
+            else
+            {
+                if (character.ClassName == "Xenon")
+                {
+                    switch (XenonClass)
                     {
-                        if (eSlot == "Weapon")
-                        {
-                            foreach (string weap in Character.MainWeapon)
-                            {
-                                if (item.WeaponType == weap)
-                                {
-                                    if (!result.Contains(item.EquipSet))
-                                    {
-                                        result.Add(item.EquipSet);
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (item.EquipSlot == eSlot && (item.ClassType == Character.ClassType ||item.ClassType == "Any"))
-                            {
-                                if (!result.Contains(item.EquipSet))
-                                {
-                                    result.Add(item.EquipSet);
-                                }
-                            }
-                        }
+                        case "Pirate":
+                            baseEquip.BaseStats.STR = mainStat;
+                            baseEquip.BaseStats.DEX = mainStat;
+                            break;
+                        case "Thief":
+                            baseEquip.BaseStats.DEX = mainStat;
+                            baseEquip.BaseStats.LUK = mainStat;
+                            break;
                     }
-                    break;
-                case "Name":
-                    foreach (var item in SearchList)
-                    {
-                        if (eSlot == "Secondary")
+                    return baseEquip;
+                }
+
+                switch (character.MainStat)
+                {
+                    case "STR":
+                        baseEquip.BaseStats.STR = mainStat;
+                        baseEquip.BaseStats.DEX = secStat;
+                        break;
+                    case "DEX":
+                        baseEquip.BaseStats.DEX = mainStat;
+                        baseEquip.BaseStats.STR = secStat;
+                        break;
+                    case "INT":
+                        baseEquip.BaseStats.INT = mainStat;
+                        baseEquip.BaseStats.LUK = secStat;
+                        break;
+                    case "LUK":
+                        baseEquip.BaseStats.LUK = mainStat;
+                        //CADENA    DUAL BLADE
+                        if (character.SecStat == "SPECIAL")
                         {
-                            foreach (string weap in Character.SecondaryWeapon)
-                            {
-                                if (weap == "Shield")
-                                {
-                                    if (item.WeaponType == weap && item.ClassType == Character.ClassType)
-                                    {
-                                        if (!result.Contains(item.EquipName))
-                                        {
-                                            result.Add(item.EquipName);
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    if (item.WeaponType == weap)
-                                    {
-                                        if (!result.Contains(item.EquipName))
-                                        {
-                                            result.Add(item.EquipName);
-                                        }
-                                    }
-                                }
-                            }
+                            baseEquip.BaseStats.STR = secStat;
                         }
-                        else
-                        {
-                            if (item.EquipSlot == eSlot && (item.ClassType == Character.ClassType ||item.ClassType == "Any"))
-                            {
-                                if (!result.Contains(item.EquipName))
-                                {
-                                    result.Add(item.EquipName);
-                                }
-                            }
-                        }
-                    }
-                    break;
+                        baseEquip.BaseStats.DEX = secStat;
+                        break;
+                    case "HP":
+                        break;
+
+                }
             }
 
 
-            return result;
+
+            return baseEquip;
         }
+
+
+
+
         public static Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModelCLS>>> SpellTraceDict { get; set; } = new Dictionary<string, Dictionary<int, Dictionary<int, ScrollingModelCLS>>>
         {
             ["Armor"] = new Dictionary<int, Dictionary<int, ScrollingModelCLS>>

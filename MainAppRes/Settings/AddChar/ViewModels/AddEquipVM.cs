@@ -1,4 +1,5 @@
-﻿using MSEACalculator.CharacterRes;
+﻿using MSEACalculator.CalculationRes;
+using MSEACalculator.CharacterRes;
 using MSEACalculator.CharacterRes.EquipmentRes;
 using MSEACalculator.MainAppRes.Settings.AddChar.ViewPages;
 using MSEACalculator.OtherRes;
@@ -39,8 +40,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         public CheckTypes CT = new CheckTypes();
 
+
         //INIT MODELS END
-        
+
+        //Record Search List
+        private string CurrentEquipList = string.Empty;
+        private string CurrentStarforceList = string.Empty;
+
         //CURRENT SELECTED CHARACTER
         private CharacterCLS _SCharacter;
         public CharacterCLS SCharacter
@@ -63,8 +69,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private string _StarforceInput;
-        public string StarforceI
+        private int _StarforceInput;
+        public int StarforceI
         {
             get { return _StarforceInput; }
             set { _StarforceInput = value;
@@ -79,7 +85,23 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         public Dictionary<string, string> EquipSlots { get => AEquipM.EquipSlot; }
 
         public ObservableCollection<string> ArmorSet { get; set; } = new ObservableCollection<string>();
-        public string CurrentEquipList { get; set; } = string.Empty;
+
+        private string _XenonEquipType = string.Empty;
+
+        public string XenonEquipType
+        {
+            get { return _XenonEquipType; }
+            set { _XenonEquipType = value;
+
+                if (_XenonEquipType != string.Empty && SEquipSlot != null)
+                {
+                    ShowEquipSet(SEquipSlot);
+                }
+                OnPropertyChanged(nameof(XenonEquipType));
+            }
+        }
+
+
 
         private List<string> _CharWeapon;
         public List<string> CharacterWeapon
@@ -107,7 +129,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                     ShowWeapon = EquipSlots[SEquipSlot] == "Weapon" ? Visibility.Visible : Visibility.Collapsed;
 
-                    ShowEquipSet(SEquipSlot);    
+                    
+                    ShowEquipSet(SEquipSlot);
+                    
+                       
                     
                     if (CItemDictT.ToList().Find(item=> item?.EquipListSlot == SEquipSlot) == null)
                     {
@@ -517,12 +542,23 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        #endregion 
-        
+        #endregion
+
 
 
         /// VISIBILITY CONTROL
         #region
+        private Visibility _ShowXenonClassType = Visibility.Collapsed;
+
+        public Visibility ShowXenonClassType
+        {
+            get { return _ShowXenonClassType; }
+            set { _ShowXenonClassType = value;
+                OnPropertyChanged(nameof(ShowXenonClassType));
+            }
+        }
+            
+
         private Visibility _ShowWeapon = Visibility.Collapsed;
         public Visibility ShowWeapon
         {
@@ -730,6 +766,16 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 CharacterWeapon = SCharacter?.MainWeapon;
                 CItemDictT = new ObservableCollection<EquipCLS>(SCharacter?.EquipmentList);
 
+                if(SCharacter.ClassName == "Xenon")
+                {
+                    ShowXenonClassType = Visibility.Visible;
+                }
+                else
+                {
+                    ShowXenonClassType = Visibility.Collapsed;
+                    XenonEquipType = String.Empty;
+                }
+                
             }
         }
 
@@ -754,12 +800,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             //CurrentSEquip.EquipListSlot = SEquipSlot; //<- override value of Selected slot i.e ring1... pendant1...
             CurrentSEquip.SlotCount = NoSlot;
             CurrentSEquip.SpellTraced = IsSpellTrace;
+            CurrentSEquip.StarForce = StarforceI;
 
             
             
             string slotType = ComFunc.ReturnScrollCat(currentSSlot);
 
-            //Update Scroll/Flame Effects
+            //Update Scroll/Flame/Starforce Effects
             CurrentSEquip = updateEquipModelStats(CurrentSEquip, SCharacter, slotType);
             
 
@@ -801,12 +848,17 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             
             if (SCharacter != null)
             {
+                
+
                 selectedESlot = ComFunc.ReturnRingPend(selectedESlot);
                 string slotCat = ComFunc.ReturnSetCat(selectedESlot);
                 ArmorSet.Clear();
-                ComFunc.FilterBy(slotCat, SCharacter, selectedESlot, AEquipM.AllEquipStore[slotCat]).ForEach(x => ArmorSet.Add(x));
+                
+                ComFunc.FilterBy(slotCat, SCharacter, selectedESlot, AEquipM.AllEquipStore[slotCat], XenonEquipType).ForEach(x => ArmorSet.Add(x));
+                
                 CurrentEquipList = slotCat;
-
+                
+                
 
                 if (CItemDictT.Count > 0)
                 {
@@ -834,27 +886,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
 
         }
-        public void RedirectDisplayFrame(string targetStr)
-        {
-            switch (targetStr)
-            {
-                case "Scroll":
-                    FrameDis.Navigate(typeof(AddEquipScrollPage));
-                    FrameDis.DataContext = this;
-                    break;
-                case "Flame":
-                    FrameDis.Navigate(typeof(AddEquipFlamePage));
-                    FrameDis.DataContext = this;
-                    break;
-                case "Potential":
-                    FrameDis.Navigate(typeof(AddEquipPotentialPage));
-                    FrameDis.DataContext = this;
-                    break;
-                default:
-                    break;
-            }
-        }
-
+        
         public void GetCurrentEquipment()
         {
             
@@ -865,13 +897,18 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 string currentSSlot = ComFunc.ReturnRingPend(SEquipSlot);
 
                 //Retreive base equip stats from list
-                EquipCLS NewEquip = ComFunc.FindEquip(AEquipM.AllEquipStore[CurrentEquipList], SCharacter, currentSSlot, SSetItem);
+
+                EquipCLS NewEquip = ComFunc.FindEquip(AEquipM.AllEquipStore[CurrentEquipList], SCharacter, currentSSlot, SSetItem, XenonEquipType);
+
                 if((CurrentSEquip != null && !CurrentSEquip.Equals(NewEquip)) || CurrentSEquip == null)
                 {
-                    NewEquip  = ComFunc.UpdateBaseStats(SCharacter, NewEquip);
+                    NewEquip  = ComFunc.UpdateBaseStats(SCharacter, NewEquip, XenonEquipType);
                 }
                 NewEquip.EquipListSlot = SEquipSlot;
-                StarforceLevels = NewEquip.EquipSet == "Tyrant" ? AEquipM.SuperiorStarforceList.Select(x=> x.SFLevel).ToList() : AEquipM.BasicStarforceList.Select(x => x.SFLevel).ToList();
+
+                CurrentStarforceList = NewEquip.EquipSet == "Tyrant" ? "Superior" : "Basic";
+
+                StarforceLevels =  AEquipM.StarforceStore[CurrentStarforceList].Select(x => x.SFLevel).ToList();
 
 
                 CurrentSEquip = NewEquip;
@@ -1046,43 +1083,55 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         private EquipCLS updateEquipModelStats(EquipCLS selectedEquip, CharacterCLS selectedChar, string slotType)
         {
+            //if (selectedEquip.SpellTraced)
+            //{
+            //    string MainStat = selectedChar.MainStat;
+            //    int STTier = ComFunc.SpellTraceTier(selectedEquip);
+            //    int perc = Convert.ToInt32(SelectedScrollStat.Remove(SelectedScrollStat.Length - 1));
+            //    selectedEquip.ScrollStats.HP = ComFunc.SpellTraceDict[slotType][STTier][perc].HP * selectedEquip.SlotCount;
+            //    selectedEquip.ScrollStats.DEF = ComFunc.SpellTraceDict[slotType][STTier][perc].DEF * selectedEquip.SlotCount;
+
+            //    if (slotType == "Weapon" || slotType == "Heart" || slotType == "Gloves")
+            //    {
+            //        if (selectedChar.ClassType == "Magician")
+            //        {
+            //            selectedEquip.ScrollStats.MATK = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
+            //        }
+            //        else
+            //        {
+            //            selectedEquip.ScrollStats.ATK  = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
+            //        }
+            //    }
+
+            //    if (MainStat == "HP")
+            //    {
+            //        selectedEquip.ScrollStats.HP += ComFunc.SpellTraceDict[slotType][STTier][perc].MainStat * selectedEquip.SlotCount * 50;
+            //    }
+            //    else
+            //    {
+            //        selectedEquip.ScrollStats.GetType().GetProperty(MainStat).SetValue(selectedEquip.ScrollStats, ComFunc.SpellTraceDict[slotType][STTier][perc].MainStat * selectedEquip.SlotCount, null);
+            //    }
+            //    selectedEquip.SpellTracePerc = SelectedScrollIndex;
+            //}
+            //else
+            //{
+            //    selectedEquip.ScrollStats = new EquipStatsCLS();
+            //    selectedEquip.ScrollStats = ComFunc.RecordToProperty(selectedEquip.ScrollStats, ScrollRecord);
+            //}
             if (selectedEquip.SpellTraced)
             {
-                string MainStat = selectedChar.MainStat;
-                int STTier = ComFunc.SpellTraceTier(selectedEquip);
-                int perc = Convert.ToInt32(SelectedScrollStat.Remove(SelectedScrollStat.Length - 1));
-                selectedEquip.ScrollStats.HP = ComFunc.SpellTraceDict[slotType][STTier][perc].HP * selectedEquip.SlotCount;
-                selectedEquip.ScrollStats.DEF = ComFunc.SpellTraceDict[slotType][STTier][perc].DEF * selectedEquip.SlotCount;
-
-                if (slotType == "Weapon" || slotType == "Heart" || slotType == "Gloves")
-                {
-                    if (selectedChar.ClassType == "Magician")
-                    {
-                        selectedEquip.ScrollStats.MATK = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
-                    }
-                    else
-                    {
-                        selectedEquip.ScrollStats.ATK  = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
-                    }
-                }
-
-                if (MainStat == "HP")
-                {
-                    selectedEquip.ScrollStats.HP += ComFunc.SpellTraceDict[slotType][STTier][perc].MainStat * selectedEquip.SlotCount * 50;
-                }
-                else
-                {
-                    selectedEquip.ScrollStats.GetType().GetProperty(MainStat).SetValue(selectedEquip.ScrollStats, ComFunc.SpellTraceDict[slotType][STTier][perc].MainStat * selectedEquip.SlotCount, null);
-                }
-                selectedEquip.FlameStats = ComFunc.RecordToProperty(selectedEquip.FlameStats, FlameRecord);
-                selectedEquip.SpellTracePerc = SelectedScrollIndex;
+                selectedEquip.SpellTracePerc = Convert.ToInt32(SelectedScrollStat.TrimEnd('%'));
+                selectedEquip.ScrollStats = CalForm.CalSpellTrace(selectedEquip, SCharacter, slotType);
             }
             else
             {
                 selectedEquip.ScrollStats = new EquipStatsCLS();
                 selectedEquip.ScrollStats = ComFunc.RecordToProperty(selectedEquip.ScrollStats, ScrollRecord);
-                selectedEquip.FlameStats = ComFunc.RecordToProperty(selectedEquip.FlameStats, FlameRecord);
             }
+
+            selectedEquip.FlameStats = ComFunc.RecordToProperty(selectedEquip.FlameStats, FlameRecord);
+            selectedEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, selectedEquip, AEquipM.StarforceStore[CurrentStarforceList]);
+            
 
             return selectedEquip;
         }
@@ -1229,6 +1278,27 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             ShowPotential("Fields");
             ShowPotential("Display");
 
+        }
+
+        public void RedirectDisplayFrame(string targetStr)
+        {
+            switch (targetStr)
+            {
+                case "Scroll":
+                    FrameDis.Navigate(typeof(AddEquipScrollPage));
+                    FrameDis.DataContext = this;
+                    break;
+                case "Flame":
+                    FrameDis.Navigate(typeof(AddEquipFlamePage));
+                    FrameDis.DataContext = this;
+                    break;
+                case "Potential":
+                    FrameDis.Navigate(typeof(AddEquipPotentialPage));
+                    FrameDis.DataContext = this;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void ResetInput()

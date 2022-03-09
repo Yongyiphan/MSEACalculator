@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSEACalculator.CalculationRes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,9 +69,88 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             return test.Contains("false") ? false : true;
         }
 
+        public EquipStatsCLS ShallowCopy()
+        {
+            return (EquipStatsCLS)this.MemberwiseClone();
+        }
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
+
+        public void InitEquipStat(string ClassType, int s1, int s2)
+        {
+            switch (ClassType)
+            {
+                case "Warrior":
+                    STR = s1;
+                    DEX = s2;
+                    break;
+                case "Bowman":
+                    DEX = s1;
+                    STR = s2;
+                    break;
+                case "Magician":
+                    INT = s1;
+                    LUK = s2;
+                    break;
+                case "Thief":
+                    LUK = s1;
+                    DEX = s2;
+                    break;
+                case "Pirate":
+                    DEX = s1;
+                    STR = s2;
+                    break;
+            }
+        }
+
+        public void AppendJobStat(string ClassType, int s1, int s2)
+        {
+            switch (ClassType)
+            {
+                case "Warrior":
+                    STR += s1;
+                    DEX += s2;
+                    break;
+                case "Bowman":
+                    DEX += s1;
+                    STR += s2;
+                    break;
+                case "Magician":
+                    INT += s1;
+                    LUK += s2;
+                    break;
+                case "Thief":
+                    LUK += s1;
+                    DEX += s2;
+                    break;
+                case "Pirate":
+                    DEX += s1;
+                    STR += s2;
+                    break;
+                case "HP":
+                    break;
+            }
+        }
+
+        public void CombineEquipStat(EquipStatsCLS target)
+        {
+
+            STR += target.STR;
+            DEX += target.DEX;
+            INT += target.INT;
+            LUK += target.LUK;
+            DEF += target.DEF;
+            HP += target.HP;
+            MP += target.MP;
+            SPD += target.SPD;
+            JUMP += target.JUMP;
+            ATK += target.ATK;
+            MATK += target.MATK;
+
+
+
+    }
     }
 }

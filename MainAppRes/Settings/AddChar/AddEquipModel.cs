@@ -35,7 +35,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         {
             {"Basic",StarForceTable.GetAllStarforceDB().AsReadOnly()},
             {"Superior",StarForceTable.GetAllSuperiorStarforceDB().AsReadOnly()}
-
         };
 
 

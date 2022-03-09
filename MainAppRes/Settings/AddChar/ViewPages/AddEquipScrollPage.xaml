@@ -16,7 +16,7 @@
                 <!--Check if equip is spell traced-->
                 <CheckBox x:Name="chkSpellTrace" Content="Spell Traced?" Style="{StaticResource AddEquipCBX}"
                         IsChecked="{Binding IsSpellTrace, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-
+                
 
                 <!--Show Slots or stat chossing depending on checkbox-->
 
@@ -24,11 +24,18 @@
                 <ComboBox ItemsSource="{Binding Slots}" Visibility="{Binding ShoWSlot, Mode=TwoWay}"
                             SelectedItem="{Binding NoSlot, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
 
+                <TextBlock Text="Stat:"
+                           Visibility="{Binding ShoWSlot, Mode=TwoWay}"/>
+                <ComboBox ItemsSource="{Binding SpellTraceStats, Mode=TwoWay}"
+                          Visibility="{Binding ShoWSlot, Mode=TwoWay}"
+                          SelectedItem="{Binding STStat, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+
                 <!--Stat or spell trace perc-->
                 <TextBlock Text="{Binding ScrollTypeTxt}"/>
                 <ComboBox ItemsSource="{Binding StatTypes}" 
                             SelectedIndex="{Binding SelectedScrollIndex, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"
                             SelectedItem="{Binding SelectedScrollStat, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                
                 <TextBlock Text="Value" Visibility="{Binding ShowScrollValue}"/>
                 <TextBox Visibility="{Binding ShowScrollValue}" Text="{Binding ScrollStatValue, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
             </StackPanel>

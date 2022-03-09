@@ -25,7 +25,7 @@
                             SelectedValuePath="Key"
                             />
                     <TextBlock Text="Class Type: " Visibility="{Binding ShowXenonClassType, Mode=TwoWay}"/>
-                    <ComboBox ItemsSource="{Binding AEquipM.XenonClassType, Mode=TwoWay}"
+                    <ComboBox ItemsSource="{Binding AEM.XenonClassType, Mode=TwoWay}"
                               SelectedItem="{Binding XenonEquipType, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
                               Visibility="{Binding ShowXenonClassType, Mode=TwoWay}"/>
 

@@ -206,13 +206,12 @@ namespace MSEACalculator.CalculationRes
         }
     
 
-        public static EquipStatsCLS CalSpellTrace(
-            EquipCLS selectedEquip,CharacterCLS Character, string slotType) 
+        public static EquipStatsCLS CalSpellTrace(EquipCLS selectedEquip,string ClassType, string ScrollStat, string slotType) 
         {
+            //ONLY AFFECTS MAIN STAT, HP, DEF, ATK/MATK
 
             EquipStatsCLS result = new EquipStatsCLS();
-            string MainStat = Character.MainStat;
-            string ClassType = Character.ClassType;
+            string MainStat = ScrollStat;
             int STTier = ComFunc.SpellTraceTier(selectedEquip);
             int perc = selectedEquip.SpellTracePerc;
             result.HP = ComFunc.SpellTraceDict[slotType][STTier][perc].HP * selectedEquip.SlotCount;
@@ -244,43 +243,31 @@ namespace MSEACalculator.CalculationRes
 
         public static EquipStatsCLS CalStarforceStats(CharacterCLS Character, EquipCLS CEquip, ReadOnlyCollection<StarforceCLS> SFList)
         {
-            EquipStatsCLS SFStat = new EquipStatsCLS();
-
-            for(int i = 0; i< CEquip.StarForce; i++)
+            EquipStatsCLS ScaledStats = CEquip.BaseStats.ShallowCopy();
+            ScaledStats.CombineEquipStat(CEquip.ScrollStats);
+            //STARFORCE VISIBLE = BASE + SCROLLED STATS
+            List<string> NonStarable = new List<string>() 
             {
-                StarforceCLS current = SFList.ElementAt(i);
-                if(i <= 15)
+                "Emblem", "Badge", "Secondary", "Medal"
+            };
+
+            if(NonStarable.Contains(CEquip.EquipSlot) == false){
+                for (int i = 0; i< CEquip.StarForce; i++)
                 {
-                    if(Character.MainStat == "SPECIAL")
+                    StarforceCLS current = SFList.ElementAt(i);
+                    if (i <= 15)
                     {
-                        SFStat.STR = current.JobStat;
-                        SFStat.DEX = current.JobStat;
-                        SFStat.LUK = current.JobStat;
-                    }
-                    else
-                    {
-                        SFStat.GetType().GetProperty(Character.MainStat).SetValue(SFStat, current.JobStat, null);
-                        if (Character.SecStat == "SPECIAL")
-                        {
-                            SFStat.STR = current.JobStat;
-                            SFStat.DEX = current.JobStat;
-                        }
-                        else
-                        {
-                            SFStat.GetType().GetProperty(Character.SecStat).SetValue(SFStat, current.JobStat, null);
-                        }
-                    }
-                    
 
-
+                    }
                 }
             }
+            
 
 
             
             
 
-            return SFStat;
+            return CEquip.StarforceStats;
         }
 
     }

@@ -35,8 +35,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         
         //INIT MODELS BEGIN
         public readonly AddCharTrackVM ACharTrackVM;
-        public AddEquipModel AEquipM { get; set; } = new AddEquipModel();
-        public ScrollingModelCLS ScrollModel { get; set; } = new ScrollingModelCLS();
+        public AddEquipModel AEM { get; set; } = new AddEquipModel();
+        public ScrollingModelCLS ScrollM { get; set; } = new ScrollingModelCLS();
 
         public CheckTypes CT = new CheckTypes();
 
@@ -69,7 +69,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private int _StarforceInput;
+        private int _StarforceInput = 0;
         public int StarforceI
         {
             get { return _StarforceInput; }
@@ -82,7 +82,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         //BASE EQUIPMENT SELECTION
         #region
 
-        public Dictionary<string, string> EquipSlots { get => AEquipM.EquipSlot; }
+        public Dictionary<string, string> EquipSlots { get => AEM.EquipSlot; }
 
         public ObservableCollection<string> ArmorSet { get; set; } = new ObservableCollection<string>();
 
@@ -217,7 +217,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         //SCROLL SELECTION
         #region
         public Dictionary<string, int> ScrollRecord { get; set; } = new Dictionary<string, int>();
-        public List<int> Slots { get => ScrollModel.Slots; }
+        public List<int> Slots { get => ScrollM.Slots; }
 
         public List<string> ShowSet { get; set; } = new List<string>
         {
@@ -251,6 +251,20 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
+        public List<string> SpellTraceStats { get => ScrollM.SpellTraceStat;}
+
+        private string _STStat;
+
+        public string STStat
+        {
+            get { return _STStat; }
+            set { _STStat = value;
+                AddEquipmentCMD.RaiseCanExecuteChanged();
+                OnPropertyChanged(nameof(STStat));
+            }
+        }
+
+
 
         private bool _IsSpellTrace = false;
         public bool IsSpellTrace
@@ -266,15 +280,17 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 ShoWSlot = IsSpellTrace ? Visibility.Visible : Visibility.Collapsed;
                 ShowScrollValue = IsSpellTrace ? Visibility.Collapsed : Visibility.Visible;
                 
-                StatTypes = IsSpellTrace ? ScrollModel.SpellTracePercTypes : GVar.BaseStatTypes;
+                StatTypes = IsSpellTrace ? ScrollM.SpellTracePercTypes : GVar.BaseStatTypes;
                 if (!IsSpellTrace)
                 {
                     NoSlot = 0;
                     ScrollRecord.Clear();
                 }
+                AddEquipmentCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(IsSpellTrace));
             }
         }
+        
 
         private string _ScrollTypeTxt = "Stat:";
         public string ScrollTypeTxt
@@ -356,7 +372,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         //FLAME SELECTION
         #region
-        public List<string> FlameStatsTypes { get => AEquipM.FlameStatsTypes; }
+        public List<string> FlameStatsTypes { get => AEM.FlameStatsTypes; }
         public Dictionary<string, int> FlameRecord { get; set; } = new Dictionary<string, int>();
 
         private string _SelectedFlame;
@@ -613,6 +629,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
 
         public ObservableCollection<EquipCLS> CItemDictT { get; set; } = new ObservableCollection<EquipCLS>();
+        
+
+
+
 
         private EquipCLS _CItemSelect;
 
@@ -630,12 +650,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     SEquipSlot = CItemSelect?.EquipListSlot;
                     SSetItem = ComFunc.ReturnSetCat(SEquipSlot) == "Accessory" ? CItemSelect?.EquipName : CItemSelect?.EquipSet;
                     SelectedWeapon = CItemSelect?.WeaponType;
-                    IsSpellTrace = CItemSelect.SpellTraced;
+                    IsSpellTrace = CItemSelect.IsSpellTraced;
 
-                    if (CItemSelect.SpellTraced)
+                    if (CItemSelect.IsSpellTraced)
                     {
                         NoSlot = CItemSelect.SlotCount;
-                        SelectedScrollIndex = CItemSelect.SpellTracePerc;
+                        string perc = string.Format("{0}%", CItemSelect.SpellTracePerc);
+                        SelectedScrollIndex =  ScrollM.SpellTracePercTypes.IndexOf(perc);
                     }
                     ScrollRecord = ComFunc.PropertyToRecord(CItemSelect.ScrollStats, ScrollRecord);
                     FlameRecord = ComFunc.PropertyToRecord(CItemSelect.FlameStats, FlameRecord);
@@ -761,10 +782,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             else
             {
                 
-                ArmorSet = ArmorSet != null ? new ObservableCollection<string>() : ArmorSet;
-                SEquipSlot = SEquipSlot!=null ? null : SEquipSlot;
+                ArmorSet.Clear();
                 CharacterWeapon = SCharacter?.MainWeapon;
-                CItemDictT = new ObservableCollection<EquipCLS>(SCharacter?.EquipmentList);
+                SEquipSlot = null;
+                CItemDictT.Clear();
+                SCharacter?.EquipmentList.ForEach(x =>  CItemDictT.Add(x));
 
                 if(SCharacter.ClassName == "Xenon")
                 {
@@ -784,6 +806,17 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         {
             if(SCharacter != null && CurrentSEquip != null)
             {
+                if (IsSpellTrace)
+                {
+                    if(NoSlot > 0 && string.IsNullOrEmpty(STStat) == false && string.IsNullOrEmpty(SelectedScrollStat) == false)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
                 return true;
             }
 
@@ -799,7 +832,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
             //CurrentSEquip.EquipListSlot = SEquipSlot; //<- override value of Selected slot i.e ring1... pendant1...
             CurrentSEquip.SlotCount = NoSlot;
-            CurrentSEquip.SpellTraced = IsSpellTrace;
+            CurrentSEquip.IsSpellTraced = IsSpellTrace;
             CurrentSEquip.StarForce = StarforceI;
 
             
@@ -807,7 +840,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             string slotType = ComFunc.ReturnScrollCat(currentSSlot);
 
             //Update Scroll/Flame/Starforce Effects
-            CurrentSEquip = updateEquipModelStats(CurrentSEquip, SCharacter, slotType);
+            CurrentSEquip = updateEquipModelStats(CurrentSEquip, slotType);
             
 
             //Check for new / update of item.
@@ -854,7 +887,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 string slotCat = ComFunc.ReturnSetCat(selectedESlot);
                 ArmorSet.Clear();
                 
-                ComFunc.FilterBy(slotCat, SCharacter, selectedESlot, AEquipM.AllEquipStore[slotCat], XenonEquipType).ForEach(x => ArmorSet.Add(x));
+                ComFunc.FilterBy(slotCat, SCharacter, selectedESlot, AEM.AllEquipStore[slotCat], XenonEquipType).ForEach(x => ArmorSet.Add(x));
                 
                 CurrentEquipList = slotCat;
                 
@@ -898,17 +931,18 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 //Retreive base equip stats from list
 
-                EquipCLS NewEquip = ComFunc.FindEquip(AEquipM.AllEquipStore[CurrentEquipList], SCharacter, currentSSlot, SSetItem, XenonEquipType);
+                EquipCLS NewEquip = ComFunc.FindEquip(AEM.AllEquipStore[CurrentEquipList], SCharacter, currentSSlot, SSetItem, XenonEquipType);
 
                 if((CurrentSEquip != null && !CurrentSEquip.Equals(NewEquip)) || CurrentSEquip == null)
                 {
-                    NewEquip  = ComFunc.UpdateBaseStats(SCharacter, NewEquip, XenonEquipType);
+                    //NewEquip  = ComFunc.UpdateBaseStats(SCharacter, NewEquip, XenonEquipType);
+                    NewEquip.InitBaseEquipStat();
                 }
                 NewEquip.EquipListSlot = SEquipSlot;
 
                 CurrentStarforceList = NewEquip.EquipSet == "Tyrant" ? "Superior" : "Basic";
 
-                StarforceLevels =  AEquipM.StarforceStore[CurrentStarforceList].Select(x => x.SFLevel).ToList();
+                StarforceLevels =  AEM.StarforceStore[CurrentStarforceList].Select(x => x.SFLevel).ToList();
 
 
                 CurrentSEquip = NewEquip;
@@ -987,7 +1021,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         public void RetrievePot(EquipCLS CurrentEquip)
         {
             int PotType = IsAddPot ? CurrentEquip.APotGrade: CurrentEquip.MPotGrade;
-            List<PotentialStatsCLS> BasePotList = IsAddPot ? AEquipM.AllBonusPotDict : AEquipM.AllPotDict;
+            List<PotentialStatsCLS> BasePotList = IsAddPot ? AEM.AllBonusPotDict : AEM.AllPotDict;
 
             ObservableCollection<PotentialStatsCLS> potList = new ObservableCollection<PotentialStatsCLS>();
             if (CurrentEquip != null && PotType != -1)
@@ -1081,47 +1115,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         }
 
-        private EquipCLS updateEquipModelStats(EquipCLS selectedEquip, CharacterCLS selectedChar, string slotType)
+        private EquipCLS updateEquipModelStats(EquipCLS selectedEquip, string slotType)
         {
-            //if (selectedEquip.SpellTraced)
-            //{
-            //    string MainStat = selectedChar.MainStat;
-            //    int STTier = ComFunc.SpellTraceTier(selectedEquip);
-            //    int perc = Convert.ToInt32(SelectedScrollStat.Remove(SelectedScrollStat.Length - 1));
-            //    selectedEquip.ScrollStats.HP = ComFunc.SpellTraceDict[slotType][STTier][perc].HP * selectedEquip.SlotCount;
-            //    selectedEquip.ScrollStats.DEF = ComFunc.SpellTraceDict[slotType][STTier][perc].DEF * selectedEquip.SlotCount;
-
-            //    if (slotType == "Weapon" || slotType == "Heart" || slotType == "Gloves")
-            //    {
-            //        if (selectedChar.ClassType == "Magician")
-            //        {
-            //            selectedEquip.ScrollStats.MATK = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
-            //        }
-            //        else
-            //        {
-            //            selectedEquip.ScrollStats.ATK  = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
-            //        }
-            //    }
-
-            //    if (MainStat == "HP")
-            //    {
-            //        selectedEquip.ScrollStats.HP += ComFunc.SpellTraceDict[slotType][STTier][perc].MainStat * selectedEquip.SlotCount * 50;
-            //    }
-            //    else
-            //    {
-            //        selectedEquip.ScrollStats.GetType().GetProperty(MainStat).SetValue(selectedEquip.ScrollStats, ComFunc.SpellTraceDict[slotType][STTier][perc].MainStat * selectedEquip.SlotCount, null);
-            //    }
-            //    selectedEquip.SpellTracePerc = SelectedScrollIndex;
-            //}
-            //else
-            //{
-            //    selectedEquip.ScrollStats = new EquipStatsCLS();
-            //    selectedEquip.ScrollStats = ComFunc.RecordToProperty(selectedEquip.ScrollStats, ScrollRecord);
-            //}
-            if (selectedEquip.SpellTraced)
+            
+            if (selectedEquip.IsSpellTraced)
             {
                 selectedEquip.SpellTracePerc = Convert.ToInt32(SelectedScrollStat.TrimEnd('%'));
-                selectedEquip.ScrollStats = CalForm.CalSpellTrace(selectedEquip, SCharacter, slotType);
+                selectedEquip.ScrollStats = CalForm.CalSpellTrace(selectedEquip, SCharacter.ClassType, STStat, slotType);
             }
             else
             {
@@ -1130,7 +1130,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
 
             selectedEquip.FlameStats = ComFunc.RecordToProperty(selectedEquip.FlameStats, FlameRecord);
-            selectedEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, selectedEquip, AEquipM.StarforceStore[CurrentStarforceList]);
+            //selectedEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, selectedEquip, AEquipM.StarforceStore[CurrentStarforceList]);
             
 
             return selectedEquip;
@@ -1148,7 +1148,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     int curretValue = BaseStat[dictKey];
                     if (DisplayDict.ContainsKey(dictKey))
                     {
-                        DisplayDict[dictKey] = String.Format("{0} +{1}", DisplayDict[dictKey], curretValue);
+                        DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
                     }
                     else
                     {
@@ -1164,11 +1164,12 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     int curretValue = ScrollRecord[dictKey];
                     if (DisplayDict.ContainsKey(dictKey))
                     {
-                        DisplayDict[dictKey] = String.Format("{0} +{1}", DisplayDict[dictKey], curretValue);
+                        DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
                     }
                     else
                     {
-                        DisplayDict[dictKey] = String.Format("{0}: {1}",dictKey, curretValue);
+
+                        DisplayDict[dictKey] = String.Format("{0}: 0 + {1}",dictKey, curretValue);
                     }
                 }
             }
@@ -1181,11 +1182,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     {
                         if (GVar.SpecialStatType.Contains(dictKey) || dictKey == "IED")
                         {
-                            DisplayDict[dictKey] = String.Format("{0} +{1}%", DisplayDict[dictKey], curretValue);
+                            DisplayDict[dictKey] = String.Format("{0} + {1}%", DisplayDict[dictKey], curretValue);
                         }
                         else
                         {
-                            DisplayDict[dictKey] = String.Format("{0} +{1}", DisplayDict[dictKey], curretValue);
+                            DisplayDict[dictKey] = String.Format("{0}: {1}", DisplayDict[dictKey], curretValue);
                         }
                         
                     }
@@ -1193,11 +1194,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     {
                         if (GVar.SpecialStatType.Contains(dictKey) || dictKey == "IED")
                         {
-                            DisplayDict[dictKey] = String.Format("{0}: {1}%", DisplayDict[dictKey], curretValue);
+                            DisplayDict[dictKey] = String.Format("{0}: 0 + {1}%", DisplayDict[dictKey], curretValue);
                         }
                         else
                         {
-                            DisplayDict[dictKey] = String.Format("{0}: {1}", dictKey, curretValue);
+                            DisplayDict[dictKey] = String.Format("{0}: 0 + {1}", dictKey, curretValue);
                         }
                         
                     }
@@ -1303,6 +1304,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         private void ResetInput()
         {
+
             SSetItem = String.Empty;
             SelectedWeapon = String.Empty;
             IsSpellTrace = false;

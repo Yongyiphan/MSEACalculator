@@ -17,20 +17,22 @@ namespace MSEACalculator.CharacterRes
 
 
 
-        public List<string> ReturnJobStatEquip(string SetName)
+        public EquipStatsCLS UpdateMainStat(EquipStatsCLS EquipStat, string ClassType, int Stat1, int Stat2)
         {
-            List<string> results = null;
-            if (SetName.Contains("Pirate"))
+            switch (ClassType)
             {
-                results = new List<string>() { "STR", "DEX"};
+                case "Pirate":
+                    EquipStat.STR += Stat1;
+                    EquipStat.DEX += Stat2;
+                    break;
+                case "Thief":
+                    EquipStat.DEX += Stat1;
+                    EquipStat.LUK += Stat2;
+                    break;
             }
-            else
-            {
-                results = new List<string>() { "DEX", "LUK"};
-            } 
-
-            return results;
+            return EquipStat;
         }
+
 
     }
 }

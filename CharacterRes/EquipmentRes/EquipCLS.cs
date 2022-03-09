@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSEACalculator.CalculationRes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,10 +26,9 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
         public EquipStatsCLS BaseStats { get; set; } = new EquipStatsCLS();
 
-        public bool SpellTraced { get; set; } = false;
+        public bool IsSpellTraced { get; set; } = false;
+        public int SpellTracePerc { get; set; }
 
-        //STORE BY INDEX
-        public int SpellTracePerc { get; set; } = -1;
         public EquipStatsCLS ScrollStats { get; set; } = new EquipStatsCLS();
 
 
@@ -42,7 +42,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             {"Third", new PotentialStatsCLS() },
         };
 
-        public int APotGrade { get; set;} = 0;  
+        public int APotGrade { get; set; } = 0;
         public Dictionary<string, PotentialStatsCLS> AddPot { get; set; } = new Dictionary<string, PotentialStatsCLS>
         {
             {"First", new PotentialStatsCLS() },
@@ -50,7 +50,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             {"Third", new PotentialStatsCLS() },
         };
 
-        
+
         public int StarForce { get; set; } = 0;
         public EquipStatsCLS StarforceStats { get; set; } = new EquipStatsCLS();
 
@@ -97,5 +97,28 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         {
             return base.GetHashCode();
         }
+
+
+        public void InitBaseEquipStat()
+        {
+            //To update equip with proper values as per class
+            //EquipModel equipModel = new EquipModel();
+
+            //Update from Main/Sec Stats to Stat Values STR|DEX|...
+            //Keep MS/SS property
+            int mainStat = BaseStats.MS, secStat = BaseStats.SS, AS = BaseStats.AllStat;
+            if (AS > 0)
+            {
+                BaseStats.STR = AS;
+                BaseStats.DEX = AS;
+                BaseStats.INT = AS;
+                BaseStats.LUK = AS;
+                BaseStats.AllStat = 0;
+            }
+            else
+            {
+                BaseStats.InitEquipStat(ClassType, mainStat, secStat);
+            }
+        } 
     }
 }

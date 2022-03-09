@@ -476,73 +476,73 @@ namespace MSEACalculator
             return returnedEquip;
         }
 
-        public static EquipCLS UpdateBaseStats(CharacterCLS character, EquipCLS baseEquip, string XenonClass = "")
-        {
-            //To update equip with proper values as per class
-            //EquipModel equipModel = new EquipModel();
+        //public static EquipCLS UpdateBaseStats(CharacterCLS character, EquipCLS baseEquip, string XenonClass = "")
+        //{
+        //    //To update equip with proper values as per class
+        //    //EquipModel equipModel = new EquipModel();
 
-            //Update from Main/Sec Stats to Stat Values STR|DEX|...
-            //Keep MS/SS property
-            int mainStat = baseEquip.BaseStats.MS, secStat = baseEquip.BaseStats.SS, AS = baseEquip.BaseStats.AllStat;
-            if (AS > 0)
-            {
-                baseEquip.BaseStats.STR = AS;
-                baseEquip.BaseStats.DEX = AS;
-                baseEquip.BaseStats.INT = AS;
-                baseEquip.BaseStats.LUK = AS;
-                baseEquip.BaseStats.AllStat = 0;
-            }
-            else
-            {
-                if (character.ClassName == "Xenon")
-                {
-                    switch (XenonClass)
-                    {
-                        case "Pirate":
-                            baseEquip.BaseStats.STR = mainStat;
-                            baseEquip.BaseStats.DEX = mainStat;
-                            break;
-                        case "Thief":
-                            baseEquip.BaseStats.DEX = mainStat;
-                            baseEquip.BaseStats.LUK = mainStat;
-                            break;
-                    }
-                    return baseEquip;
-                }
+        //    //Update from Main/Sec Stats to Stat Values STR|DEX|...
+        //    //Keep MS/SS property
+        //    int mainStat = baseEquip.BaseStats.MS, secStat = baseEquip.BaseStats.SS, AS = baseEquip.BaseStats.AllStat;
+        //    if (AS > 0)
+        //    {
+        //        baseEquip.BaseStats.STR = AS;
+        //        baseEquip.BaseStats.DEX = AS;
+        //        baseEquip.BaseStats.INT = AS;
+        //        baseEquip.BaseStats.LUK = AS;
+        //        baseEquip.BaseStats.AllStat = 0;
+        //    }
+        //    else
+        //    {
+        //        if (character.ClassName == "Xenon")
+        //        {
+        //            switch (XenonClass)
+        //            {
+        //                case "Pirate":
+        //                    baseEquip.BaseStats.STR = mainStat;
+        //                    baseEquip.BaseStats.DEX = mainStat;
+        //                    break;
+        //                case "Thief":
+        //                    baseEquip.BaseStats.DEX = mainStat;
+        //                    baseEquip.BaseStats.LUK = mainStat;
+        //                    break;
+        //            }
+        //            return baseEquip;
+        //        }
 
-                switch (character.MainStat)
-                {
-                    case "STR":
-                        baseEquip.BaseStats.STR = mainStat;
-                        baseEquip.BaseStats.DEX = secStat;
-                        break;
-                    case "DEX":
-                        baseEquip.BaseStats.DEX = mainStat;
-                        baseEquip.BaseStats.STR = secStat;
-                        break;
-                    case "INT":
-                        baseEquip.BaseStats.INT = mainStat;
-                        baseEquip.BaseStats.LUK = secStat;
-                        break;
-                    case "LUK":
-                        baseEquip.BaseStats.LUK = mainStat;
-                        //CADENA    DUAL BLADE
-                        if (character.SecStat == "SPECIAL")
-                        {
-                            baseEquip.BaseStats.STR = secStat;
-                        }
-                        baseEquip.BaseStats.DEX = secStat;
-                        break;
-                    case "HP":
-                        break;
+        //        switch (character.MainStat)
+        //        {
+        //            case "STR":
+        //                baseEquip.BaseStats.STR = mainStat;
+        //                baseEquip.BaseStats.DEX = secStat;
+        //                break;
+        //            case "DEX":
+        //                baseEquip.BaseStats.DEX = mainStat;
+        //                baseEquip.BaseStats.STR = secStat;
+        //                break;
+        //            case "INT":
+        //                baseEquip.BaseStats.INT = mainStat;
+        //                baseEquip.BaseStats.LUK = secStat;
+        //                break;
+        //            case "LUK":
+        //                baseEquip.BaseStats.LUK = mainStat;
+        //                baseEquip.BaseStats.DEX = secStat;
+        //                ////CADENA    DUAL BLADE
+        //                //if (character.SecStat == "SPECIAL")
+        //                //{
+        //                //    baseEquip.BaseStats.STR = secStat;
+        //                //}
+        //                break;
+        //            case "HP":
+        //                break;
 
-                }
-            }
+        //        }
+        //    }
 
 
 
-            return baseEquip;
-        }
+        //    return baseEquip;
+        //}
 
 
 
@@ -734,7 +734,7 @@ namespace MSEACalculator
 
         }
 
-
+        
 
 
 

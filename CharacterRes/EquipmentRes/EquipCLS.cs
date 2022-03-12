@@ -119,6 +119,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             {
                 BaseStats.InitEquipStat(ClassType, mainStat, secStat);
             }
-        } 
-    }
+        }
+       
+     }
 }

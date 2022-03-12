@@ -1156,8 +1156,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
 
             selectedEquip.FlameStats = ComFunc.RecordToProperty(selectedEquip.FlameStats, FlameRecord);
-            //selectedEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, selectedEquip, AEquipM.StarforceStore[CurrentStarforceList]);
-            
+            selectedEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, selectedEquip, AEM.StarforceStore[CurrentStarforceList]);
+
 
             return selectedEquip;
         }
@@ -1230,6 +1230,26 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     }
                 }
             }
+
+            Dictionary<string, int> StarforceRecord = ComFunc.PropertyToRecord(CurrentSEquip.StarforceStats, new Dictionary<string, int>());
+
+            foreach(string dictKey in StarforceRecord.Keys)
+            {
+                if(StarforceRecord[dictKey] != 0)
+                {
+                    int curretValue = StarforceRecord[dictKey];
+                    if (DisplayDict.ContainsKey(dictKey))
+                    {
+                        DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
+                    }
+                    else
+                    {
+
+                        DisplayDict[dictKey] = String.Format("{0}: 0 + {1}",dictKey, curretValue);
+                    }
+                }
+            }
+
 
             TotalRecordDisplay = DisplayDict;
         }

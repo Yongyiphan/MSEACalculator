@@ -88,7 +88,10 @@ namespace MSEACalculator
 
         //EQUIPMENT SLOTS END
 
-
+        public static List<string> MainStats { get; set; } = new List<string>
+        {
+            "STR", "DEX", "INT", "LUK"
+        };
 
         public static List<string> BaseStatTypes { get; set; } = new List<string> {
             "STR","DEX","INT","LUK",

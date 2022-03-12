@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,16 +18,19 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int DEX { get; set; } = 0;
         public int INT { get; set; } = 0;
         public int LUK { get; set; } = 0;       
-        public int DEF { get; set; } = 0;
+        public int FlatDEF { get; set; } = 0;
+        public int PercDEF { get; set; } = 0;
         public int HP { get; set; } = 0;
         public string SpecialHP { get; set; } = "";
         public int MP { get; set; } = 0;
         public string SpecialMP { get; set; } = "";
         public int SPD { get; set; } = 0;
         public int JUMP { get; set; } = 0;
-        public int ATK { get; set; } = 0;
-        public int MATK { get; set; } = 0;
+        public int FlatATK { get; set; } = 0;
+        public int FlatMATK { get; set; } = 0;
 
+        public int PercATK { get; set; } = 0;
+        public int PercMATK { get; set; } = 0;
         //ADDITIONAL BASE STAT FOR WEAPONS
         public int IED { get; set; } = 0;
         public int BD { get; set; } = 0;
@@ -55,9 +59,13 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                 test.Add(DEX ==  cObj.DEX ? "true" : "false" );
                 test.Add(INT ==  cObj.INT ? "true" : "false" );
                 test.Add(LUK ==  cObj.LUK ? "true" : "false" );
-                test.Add(ATK ==  cObj.ATK ? "true" : "false" );
-                test.Add(MATK ==  cObj.MATK ? "true" : "false" );
-                test.Add(DEF ==  cObj.DEF ? "true" : "false" );
+                test.Add(FlatATK ==  cObj.FlatATK ? "true" : "false" );
+                test.Add(FlatMATK ==  cObj.FlatMATK ? "true" : "false");
+                test.Add(FlatDEF ==  cObj.FlatDEF ? "true" : "false" );
+                
+                test.Add(PercATK ==  cObj.PercATK ? "true" : "false" );
+                test.Add(PercMATK ==  cObj.PercMATK ? "true" : "false" );
+                test.Add(PercDEF ==  cObj.PercDEF ? "true" : "false" );
                 test.Add(HP ==  cObj.HP ? "true" : "false" );
                 test.Add(MP ==  cObj.MP ? "true" : "false" );
                 test.Add(SPD ==  cObj.SPD ? "true" : "false" );
@@ -105,7 +113,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             }
         }
 
-        public void AppendJobStat(string ClassType, int s1, int s2)
+        public void AppendJobStat(string ClassType, int s1, int s2, string MainStat = "")
         {
             switch (ClassType)
             {
@@ -126,31 +134,98 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                     DEX += s2;
                     break;
                 case "Pirate":
-                    DEX += s1;
-                    STR += s2;
+                    if(MainStat == "DEX")
+                    {
+                        DEX += s1;
+                        STR += s2;
+                    }
+                    else
+                    {
+                        STR += s1;
+                        DEX += s2;
+                    }
                     break;
                 case "HP":
                     break;
             }
         }
 
-        public void CombineEquipStat(EquipStatsCLS target)
+        public void ModifyEquipStat(EquipStatsCLS target, string mode)
         {
+            var properties = GetType().GetProperties();
+            foreach(PropertyInfo prop in properties)
+            {
+                if(prop.PropertyType == typeof(int))
+                try
+                {
+                    int current = Convert.ToInt32(prop.GetValue(this));
+                    int next = Convert.ToInt32(target.GetType().GetProperty(prop.Name).GetValue(target));
 
-            STR += target.STR;
-            DEX += target.DEX;
-            INT += target.INT;
-            LUK += target.LUK;
-            DEF += target.DEF;
-            HP += target.HP;
-            MP += target.MP;
-            SPD += target.SPD;
-            JUMP += target.JUMP;
-            ATK += target.ATK;
-            MATK += target.MATK;
+                    switch (mode)
+                    {
+                        case "Add":
+                            prop.SetValue(this, current += next);
+                            break;
+                        case "Subtract":
+                            prop.SetValue(this, current -= next);
+                            break;
+                    }
+
+                }
+                catch(Exception) 
+                {
+                    if(Convert.ToString(prop.GetValue(this)) != String.Empty)
+                    {
+                        int current = Convert.ToInt32(Convert.ToString(prop.GetValue(this)).TrimEnd('%'));
+                        int next = Convert.ToInt32(Convert.ToString(target.GetType().GetProperty(prop.Name).GetValue(target)).TrimEnd('%'));
+                        switch (mode)
+                        {
+                            case "Add":
+                                prop.SetValue(this, String.Format("{0}%",current += next));
+                                break;
+                            case "Subtract":
+                                prop.SetValue(this, String.Format("{0}%",current -= next));
+                                break;
+                        }
+
+                    }
+                    
+                }
+                finally
+                {
+                    if (prop.PropertyType == typeof(int))
+                    {
+                        if (Convert.ToInt32(prop.GetValue(this)) < 0)
+                        {
+                            prop.SetValue(this, 0);
+                        }
+                    }
+                }
+               
+            }
+
+            //STR += target.STR;
+            //DEX += target.DEX;
+            //INT += target.INT;
+            //LUK += target.LUK;
+            //FlatDEF += target.FlatDEF;
+            //HP += target.HP;
+            //MP += target.MP;
+            //SPD += target.SPD;
+            //JUMP += target.JUMP;
+            //FlatATK += target.FlatATK;
+            //FlatMATK += target.FlatMATK;
+
+            //PercATK += target.PercATK;
+            //PercMATK += target.PercMATK;
+            //PercDEF += target.PercDEF;
 
 
 
-    }
+        }
+
+        
+
+        
     }
 }

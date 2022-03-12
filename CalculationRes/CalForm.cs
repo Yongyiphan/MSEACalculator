@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -217,17 +218,28 @@ namespace MSEACalculator.CalculationRes
             int STTier = ComFunc.SpellTraceTier(selectedEquip);
             int perc = selectedEquip.SpellTracePerc;
             result.HP = ComFunc.SpellTraceDict[slotType][STTier][perc].HP * selectedEquip.SlotCount;
-            result.DEF = ComFunc.SpellTraceDict[slotType][STTier][perc].DEF * selectedEquip.SlotCount;
+            result.FlatDEF = ComFunc.SpellTraceDict[slotType][STTier][perc].DEF * selectedEquip.SlotCount;
+            if (GVar.ArmorEquips.Contains(selectedEquip.EquipSlot) && selectedEquip.EquipSlot != "Gloves" && selectedEquip.SlotCount > 3)
+            {
+                if (ClassType == "Magician")
+                {
+                    result.FlatMATK += 1;
+                }
+                else
+                {
+                    result.FlatATK += 1;
+                }
+            }
 
             if (slotType == "Weapon" || slotType == "Heart" || slotType == "Gloves")
             {
                 if (ClassType == "Magician")
                 {
-                    result.MATK = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
+                    result.FlatMATK = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
                 }
                 else
                 {
-                    result.ATK  = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
+                    result.FlatATK  = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
                 }
             }
 
@@ -246,45 +258,156 @@ namespace MSEACalculator.CalculationRes
         public static EquipStatsCLS CalStarforceStats(CharacterCLS Character, EquipCLS CEquip, ReadOnlyCollection<StarforceCLS> SFList)
         {
             EquipStatsCLS ScaledStats = CEquip.BaseStats.ShallowCopy();
-            ScaledStats.CombineEquipStat(CEquip.ScrollStats);
-            //STARFORCE VISIBLE = BASE + SCROLLED STATS
-            List<string> NonStarable = new List<string>() 
+            //BASE + SCROLLED STATS
+            ScaledStats.ModifyEquipStat(CEquip.ScrollStats, "Add");
+
+            List<string> NonStarable = new List<string>()
             {
                 "Emblem", "Badge", "Secondary", "Medal"
             };
-            string[] sfTableSpec = { "(" +
-                    "SFID int," +
-                    "JobStat int," +
-                    "NonWeapVDef int," +
-                    "OverallVDef int," +
-                    "CatAMaxHP int," +
-                    "WeapMaxMP int," +
-                    "WeapVATK int," +
-                    "WeapVMATK int," +
-                    "SJump int," +
-                    "SSpeed int," +
-                    "GloveVATK int, " +
-                    "GloveVMATK int," +
-                    "PRIMARY KEY (SFID)" +
-                    ");" };
+            int lvlRank = ComFunc.ReturnSFLevelRank(CEquip.EquipLevel);
 
-            if(NonStarable.Contains(CEquip.EquipSlot) == false){
-                for (int i = 0; i< CEquip.StarForce; i++)
+            EquipStatsCLS Result = ScaledStats.ShallowCopy();
+
+            if (NonStarable.Contains(CEquip.EquipSlot) == false)
+            {
+                for (int i = 0; i<CEquip.StarForce; i++)
                 {
+                    
                     StarforceCLS current = SFList.ElementAt(i);
-                    if (i <= 15)
+
+                    if (i<15)
                     {
+                        Result.AppendJobStat(Character.ClassType, current.JobStat, current.JobStat, Character.MainStat);
+                        if (GVar.CategoryAEquips.Contains(CEquip.EquipSlot))
+                        {
+                            Result.HP +=  current.CatAMaxHP;
+                        }
+                        if (CEquip.EquipSlot != "Weapon")
+                        {
+                            
+                            Result.FlatDEF += StatBoost(current.NonWeapVDef, Result.FlatDEF);
+                            //TempStat.PercDEF += current.NonWeapVDef;
+                            
+                            switch (CEquip.EquipSlot)
+                            {
+                                case "Gloves":
+                                    if (Character.ClassType == "Magician")
+                                    {
+                                        Result.FlatMATK += current.GloveVMATK;
+                                    }
+                                    else
+                                    {
+
+                                        Result.FlatATK += current.GloveVATK;
+                                    }
+                                    break;
+                                case "Shoes":
+                                    Result.SPD +=  current.SSpeed;
+                                    Result.JUMP += current.SJump;
+                                    break;
+                                case "Overall":
+                                    Result.FlatDEF += StatBoost(current.NonWeapVDef, Result.FlatDEF);
+                                    break;
+                                   
+                            }
+                        }
+                        else
+                        {
+                            Result.FlatATK += StatBoost(current.WeapVATK, Result.FlatATK);
+                            Result.FlatMATK += StatBoost(current.WeapVMATK, Result.FlatMATK);
+                            Result.MP += current.WeapMaxMP;
+                            
+                        }
+
+                    }
+                    else
+                    {
+                        foreach(string stat in GVar.MainStats)
+                        {
+                            int value = Convert.ToInt32(ScaledStats.GetType().GetProperty(stat).GetValue(ScaledStats));
+                            int cValue = Convert.ToInt32(Result.GetType().GetProperty(stat).GetValue(Result));
+                            if(value > 0)
+                            {
+                                Result.GetType().GetProperty(stat).SetValue(Result, cValue += current.VStatL[lvlRank]);
+                            }
+
+
+                        } 
+                        
+                        if(CEquip.EquipSlot !="Weapon")
+                        {
+                            Result.FlatDEF += StatBoost(current.NonWeapVDef, Result.FlatDEF);
+                            if(CEquip.EquipSlot == "Overall")
+                            {
+                                Result.FlatDEF += StatBoost(current.NonWeapVDef, Result.FlatDEF);
+                            } 
+                            Result.FlatATK += current.NonWeapVATKL[lvlRank];
+                            Result.FlatMATK += current.NonWeapVMATKL[lvlRank];
+                        }
+                        else
+                        {
+                            Result.FlatATK += current.WeapVATKL[lvlRank];
+                            Result.FlatMATK += current.WeapVMATKL[lvlRank];
+                        }
+
 
                     }
                 }
+                
             }
+
+            Result.ModifyEquipStat(ScaledStats, "Subtract");
+            //TempStat.FlatDEF -= ScaledStats.FlatDEF;
+            //TempStat.FlatATK -= ScaledStats.FlatATK;
+            //TempStat.FlatMATK -= ScaledStats.FlatMATK;
             
+            //foreach(string stat in GVar.MainStats)
+            //{
+            //    int value = Convert.ToInt32(ScaledStats.GetType().GetProperty(stat).GetValue(ScaledStats));
+            //    //Update Respective JobStat
+            //    result.GetType().GetProperty(stat).SetValue(result, TempStat.GetType().GetProperty(stat).GetValue(TempStat));
+            //    if(CEquip.StarForce > 15)
+            //    {
+            //        int current = Convert.ToInt32(result.GetType().GetProperty(stat).GetValue(result));
+            //        if (value > 0)
+            //        {
+            //            current +=  TempStat.MS;                        
+            //            result.GetType().GetProperty(stat).SetValue(result, current, null);
+            //        }
+
+            //    }
+
+            //}
+
+            //List<string> vList = new List<string>
+            //{
+            //    "DEF", "ATK","MATK"
+            //};
+
+            //foreach(string flat in vList)
+            //{
+                
+            //    int value = Convert.ToInt32(ScaledStats.GetType().GetProperty(String.Format("Flat{0}", flat)).GetValue(ScaledStats));
+            //    int addon = StatBoost(Convert.ToInt32(TempStat.GetType().GetProperty(String.Format("Perc{0}",flat)).GetValue(TempStat)), value);
+            //    if (value > 0)
+            //    {
+            //        result.GetType().GetProperty(String.Format("Flat{0}", flat)).SetValue(result, value += addon);
+            //    }
+            //}
+
+            //result.FlatATK += TempStat.FlatATK;
 
 
-            
-            
 
-            return CEquip.StarforceStats;
+            return Result;
+
+            }
+
+        public static int StatBoost(int perc, int itemstat)
+        {
+            decimal result = Math.Floor(Convert.ToDecimal(itemstat) * perc/100);
+            return 1 + Convert.ToInt32(result);
         }
 
     }

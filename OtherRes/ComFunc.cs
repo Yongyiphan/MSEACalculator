@@ -240,10 +240,10 @@ namespace MSEACalculator
                         RM.LUK = record[R];
                         break;
                     case "ATK":
-                        RM.ATK = record[R];
+                        RM.FlatATK = record[R];
                         break;
                     case "MATK":
-                        RM.MATK = record[R];
+                        RM.FlatMATK = record[R];
                         break;
                     case "HP":
                         RM.HP = record[R];
@@ -252,7 +252,7 @@ namespace MSEACalculator
                         RM.MP = record[R];
                         break;
                     case "DEF":
-                        RM.DEF = record[R];
+                        RM.FlatDEF = record[R];
                         break;
                     case "SPD":
                         RM.SPD = record[R];
@@ -293,9 +293,9 @@ namespace MSEACalculator
             record["DEX"] = RM.DEX;
             record["INT"] = RM.INT;
             record["LUK"] = RM.LUK;
-            record["ATK"] = RM.ATK;
-            record["MATK"] = RM.MATK;
-            record["DEF"] = RM.DEF;
+            record["ATK"] = RM.FlatATK;
+            record["MATK"] = RM.FlatMATK;
+            record["DEF"] = RM.FlatDEF;
             record["HP"] = RM.HP;
             record["MP"] = RM.MP;
             record["SPD"] = RM.SPD;

@@ -734,6 +734,37 @@ namespace MSEACalculator
 
         }
 
+        public static Dictionary<string, string> ReturnMainSecStat(string ClassType)
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            switch (ClassType)
+            {
+                case "Warrior":
+                    result.Add("Main", "STR");
+                    result.Add("Main", "STR");
+                    break;
+                case "Bowman":
+                    result.Add("Main", "STR");
+                    result.Add("Main", "STR");
+                    break;
+                case "Thief":
+                    result.Add("Main", "STR");
+                    result.Add("Main", "STR");
+                    break;
+                case "Magician":
+                    result.Add("Main", "STR");
+                    result.Add("Main", "STR");
+                    break;
+                case "Pirate":
+                    result.Add("Main", "STR");
+                    result.Add("Main", "STR");
+                    break;
+
+            }
+
+            return result;
+        }
         
 
 

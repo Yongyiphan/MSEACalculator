@@ -279,7 +279,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 ScrollTypeTxt = IsSpellTrace ? "Perc:" : "Stat:";
                 ShoWSlot = IsSpellTrace ? Visibility.Visible : Visibility.Collapsed;
                 ShowScrollValue = IsSpellTrace ? Visibility.Collapsed : Visibility.Visible;
-                
+                ShowXenonScroll = SCharacter.ClassName == "Xenon" ? Visibility.Visible : Visibility.Collapsed;
                 StatTypes = IsSpellTrace ? ScrollM.SpellTracePercTypes : GVar.BaseStatTypes;
                 if (!IsSpellTrace)
                 {
@@ -573,7 +573,19 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 OnPropertyChanged(nameof(ShowXenonClassType));
             }
         }
-            
+
+        private Visibility _showXenonScroll = Visibility.Collapsed;
+
+
+        //ISSUES: NEEDS TO UPDATE WHEN CHAR CHANGE
+        public Visibility ShowXenonScroll
+        {
+            get { return _showXenonScroll; }
+            set { _showXenonScroll = value;
+                OnPropertyChanged(nameof(ShowXenonScroll));
+            }
+        }
+
 
         private Visibility _ShowWeapon = Visibility.Collapsed;
         public Visibility ShowWeapon
@@ -808,14 +820,28 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             {
                 if (IsSpellTrace)
                 {
-                    if(NoSlot > 0 && string.IsNullOrEmpty(STStat) == false && string.IsNullOrEmpty(SelectedScrollStat) == false)
+                    if(SCharacter.ClassName == "Xenon")
                     {
-                        return true;
+                        if (NoSlot > 0 && string.IsNullOrEmpty(SelectedScrollStat) == false  && string.IsNullOrEmpty(STStat) == false)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                     else
                     {
-                        return false;
-                    }
+                        if (NoSlot > 0 && string.IsNullOrEmpty(SelectedScrollStat) == false)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }                    
                 }
                 return true;
             }
@@ -1121,7 +1147,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             if (selectedEquip.IsSpellTraced)
             {
                 selectedEquip.SpellTracePerc = Convert.ToInt32(SelectedScrollStat.TrimEnd('%'));
-                selectedEquip.ScrollStats = CalForm.CalSpellTrace(selectedEquip, SCharacter.ClassType, STStat, slotType);
+                selectedEquip.ScrollStats = CalForm.CalSpellTrace(selectedEquip, SCharacter, slotType, STStat);
             }
             else
             {

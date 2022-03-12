@@ -206,12 +206,14 @@ namespace MSEACalculator.CalculationRes
         }
     
 
-        public static EquipStatsCLS CalSpellTrace(EquipCLS selectedEquip,string ClassType, string ScrollStat, string slotType) 
+        public static EquipStatsCLS CalSpellTrace(EquipCLS selectedEquip,CharacterCLS Character, string slotType, string ScrollType = "") 
         {
             //ONLY AFFECTS MAIN STAT, HP, DEF, ATK/MATK
 
             EquipStatsCLS result = new EquipStatsCLS();
-            string MainStat = ScrollStat;
+
+            string MainStat = Character.ClassName == "Xenon" ? ScrollType : Character.MainStat;
+            string ClassType = Character.ClassType;
             int STTier = ComFunc.SpellTraceTier(selectedEquip);
             int perc = selectedEquip.SpellTracePerc;
             result.HP = ComFunc.SpellTraceDict[slotType][STTier][perc].HP * selectedEquip.SlotCount;
@@ -250,6 +252,21 @@ namespace MSEACalculator.CalculationRes
             {
                 "Emblem", "Badge", "Secondary", "Medal"
             };
+            string[] sfTableSpec = { "(" +
+                    "SFID int," +
+                    "JobStat int," +
+                    "NonWeapVDef int," +
+                    "OverallVDef int," +
+                    "CatAMaxHP int," +
+                    "WeapMaxMP int," +
+                    "WeapVATK int," +
+                    "WeapVMATK int," +
+                    "SJump int," +
+                    "SSpeed int," +
+                    "GloveVATK int, " +
+                    "GloveVMATK int," +
+                    "PRIMARY KEY (SFID)" +
+                    ");" };
 
             if(NonStarable.Contains(CEquip.EquipSlot) == false){
                 for (int i = 0; i< CEquip.StarForce; i++)

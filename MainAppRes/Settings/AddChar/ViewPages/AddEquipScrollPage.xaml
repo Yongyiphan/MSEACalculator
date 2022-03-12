@@ -25,9 +25,9 @@
                             SelectedItem="{Binding NoSlot, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
 
                 <TextBlock Text="Stat:"
-                           Visibility="{Binding ShoWSlot, Mode=TwoWay}"/>
+                           Visibility="{Binding ShowXenonScroll, Mode=TwoWay}"/>
                 <ComboBox ItemsSource="{Binding SpellTraceStats, Mode=TwoWay}"
-                          Visibility="{Binding ShoWSlot, Mode=TwoWay}"
+                          Visibility="{Binding ShowXenonScroll, Mode=TwoWay}"
                           SelectedItem="{Binding STStat, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
 
                 <!--Stat or spell trace perc-->

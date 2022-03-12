@@ -14,7 +14,7 @@ namespace MSEACalculator.CharacterRes
         public List<string> XenonClassType { get; set; } =  new List<string>() { "Pirate", "Thief"};
 
 
-
+        
 
 
         public EquipStatsCLS UpdateMainStat(EquipStatsCLS EquipStat, string ClassType, int Stat1, int Stat2)

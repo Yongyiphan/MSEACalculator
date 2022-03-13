@@ -15,10 +15,7 @@ namespace MSEACalculator.OtherRes.Interface
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            char[] toTrim = { '+', '%', ' ', ':' };
-            int nValue = int.Parse(value.ToString().Trim(toTrim));
-
-            if(nValue == 0)
+            if ((int)value == 0)
             {
                 return Visibility.Collapsed;
             }

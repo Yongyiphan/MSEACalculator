@@ -65,8 +65,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@SecStat", equipItem.BaseStats.SS);
                         insertCMD.Parameters.AddWithValue("@AllStat", equipItem.BaseStats.AllStat);
 
-                        insertCMD.Parameters.AddWithValue("@HP", equipItem.BaseStats.HP);
-                        insertCMD.Parameters.AddWithValue("@MP", equipItem.BaseStats.MP);
+                        insertCMD.Parameters.AddWithValue("@HP", equipItem.BaseStats.MaxHP);
+                        insertCMD.Parameters.AddWithValue("@MP", equipItem.BaseStats.MaxMP);
                         insertCMD.Parameters.AddWithValue("@DEF", equipItem.BaseStats.DEF);
                         insertCMD.Parameters.AddWithValue("@ATK", equipItem.BaseStats.ATK);
                         insertCMD.Parameters.AddWithValue("@MATK", equipItem.BaseStats.MATK);
@@ -130,8 +130,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         equip.BaseStats.MS = Convert.ToInt32(temp[5]);
                         equip.BaseStats.SS = Convert.ToInt32(temp[6]);
                         equip.BaseStats.AllStat = Convert.ToInt32(temp[7]);
-                        equip.BaseStats.HP = Convert.ToInt32(temp[8]);
-                        equip.BaseStats.MP = Convert.ToInt32(temp[9]);
+                        equip.BaseStats.MaxHP = Convert.ToInt32(temp[8]);
+                        equip.BaseStats.MaxMP = Convert.ToInt32(temp[9]);
                         equip.BaseStats.DEF = Convert.ToInt32(temp[10]);
                         equip.BaseStats.ATK = Convert.ToInt32(temp[11]);
                         equip.BaseStats.MATK = Convert.ToInt32(temp[12]);
@@ -175,8 +175,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             tempEquip.BaseStats.SS = result.GetInt32(5);
                             tempEquip.BaseStats.AllStat = result.GetInt32(6);
 
-                            tempEquip.BaseStats.HP = result.GetInt32(7);
-                            tempEquip.BaseStats.MP = result.GetInt32(8);
+                            tempEquip.BaseStats.MaxHP = result.GetInt32(7);
+                            tempEquip.BaseStats.MaxMP = result.GetInt32(8);
                             tempEquip.BaseStats.DEF = result.GetInt32(9);
                             tempEquip.BaseStats.ATK = result.GetInt32(10);
                             tempEquip.BaseStats.MATK = result.GetInt32(11);

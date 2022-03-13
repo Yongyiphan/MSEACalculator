@@ -95,7 +95,7 @@ namespace MSEACalculator
 
         public static List<string> BaseStatTypes { get; set; } = new List<string> {
             "STR","DEX","INT","LUK",
-            "HP","MP","DEF","SPD","JUMP",
+            "MaxHP","MaxMP","DEF","SPD","JUMP",
             "ATK","MATK"
         };
 
@@ -103,7 +103,7 @@ namespace MSEACalculator
 
         public static List<string> SpecialStatType { get; set; } = new List<string>
         {
-            "BD","DMG", "AllStat"
+            "BD","DMG", "AllStat", "HP" , "MP"
         };
 
 

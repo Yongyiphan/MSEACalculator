@@ -62,7 +62,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@ATKSPD", model.BaseStats.ATKSPD);
                         insertCMD.Parameters.AddWithValue("@MainStat", model.BaseStats.MS);
                         insertCMD.Parameters.AddWithValue("@SecStat", model.BaseStats.SS);
-                        insertCMD.Parameters.AddWithValue("@HP", model.BaseStats.HP);
+                        insertCMD.Parameters.AddWithValue("@HP", model.BaseStats.MaxHP);
                         insertCMD.Parameters.AddWithValue("@DEF", model.BaseStats.DEF);
                         insertCMD.Parameters.AddWithValue("@ATK", model.BaseStats.ATK);
                         insertCMD.Parameters.AddWithValue("@MATK", model.BaseStats.MATK);
@@ -119,7 +119,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         equip.BaseStats.ATKSPD = Convert.ToInt32(temp[4]);
                         equip.BaseStats.MS = Convert.ToInt32(temp[5]);
                         equip.BaseStats.SS = Convert.ToInt32(temp[6]);
-                        equip.BaseStats.HP = Convert.ToInt32(temp[7]);
+                        equip.BaseStats.MaxHP = Convert.ToInt32(temp[7]);
                         equip.BaseStats.DEF = Convert.ToInt32(temp[8]);
                         equip.BaseStats.ATK = Convert.ToInt32(temp[9]);
                         equip.BaseStats.MATK = Convert.ToInt32(temp[10]);
@@ -169,7 +169,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             equipModel.BaseStats.MS = reader.GetInt32(4);
                             equipModel.BaseStats.SS = reader.GetInt32(5);
 
-                            equipModel.BaseStats.HP = reader.GetInt32(6);
+                            equipModel.BaseStats.MaxHP = reader.GetInt32(6);
                             equipModel.BaseStats.DEF = reader.GetInt32(7);
                             equipModel.BaseStats.ATK = reader.GetInt32(8);
                             equipModel.BaseStats.MATK = reader.GetInt32(9);

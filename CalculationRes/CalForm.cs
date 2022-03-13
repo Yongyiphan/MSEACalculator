@@ -217,7 +217,7 @@ namespace MSEACalculator.CalculationRes
             string ClassType = Character.ClassType;
             int STTier = ComFunc.SpellTraceTier(selectedEquip);
             int perc = selectedEquip.SpellTracePerc;
-            result.HP = ComFunc.SpellTraceDict[slotType][STTier][perc].HP * selectedEquip.SlotCount;
+            result.MaxHP = ComFunc.SpellTraceDict[slotType][STTier][perc].HP * selectedEquip.SlotCount;
             result.DEF = ComFunc.SpellTraceDict[slotType][STTier][perc].DEF * selectedEquip.SlotCount;
             if (GVar.ArmorEquips.Contains(selectedEquip.EquipSlot) && selectedEquip.EquipSlot != "Gloves" && selectedEquip.SlotCount > 3)
             {
@@ -245,7 +245,7 @@ namespace MSEACalculator.CalculationRes
 
             if (MainStat == "HP")
             {
-                result.HP += ComFunc.SpellTraceDict[slotType][STTier][perc].MainStat * selectedEquip.SlotCount * 50;
+                result.MaxHP += ComFunc.SpellTraceDict[slotType][STTier][perc].MainStat * selectedEquip.SlotCount * 50;
             }
             else
             {
@@ -278,10 +278,12 @@ namespace MSEACalculator.CalculationRes
 
                     if (i<15)
                     {
-                        Result.AppendJobStat(Character.ClassType, current.JobStat, current.JobStat, Character.MainStat);
+                        
+
+                        Result.AppendJobStat(CEquip.ClassType == "Any" ? CEquip.ClassType : Character.ClassType, current.JobStat, current.JobStat, Character.MainStat);
                         if (GVar.CategoryAEquips.Contains(CEquip.EquipSlot))
                         {
-                            Result.HP +=  current.CatAMaxHP;
+                            Result.MaxHP +=  current.CatAMaxHP;
                         }
                         if (CEquip.EquipSlot != "Weapon")
                         {
@@ -316,7 +318,7 @@ namespace MSEACalculator.CalculationRes
                         {
                             Result.ATK += StatBoost(current.WeapVATK, Result.ATK);
                             Result.MATK += StatBoost(current.WeapVMATK, Result.MATK);
-                            Result.MP += current.WeapMaxMP;
+                            Result.MaxMP += current.WeapMaxMP;
                             
                         }
 

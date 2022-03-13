@@ -70,8 +70,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@ATK", model.BaseStats.ATK);
                         insertCMD.Parameters.AddWithValue("@MATK", model.BaseStats.MATK);
                         insertCMD.Parameters.AddWithValue("@DEF", model.BaseStats.DEF);
-                        insertCMD.Parameters.AddWithValue("@HP", model.BaseStats.HP);
-                        insertCMD.Parameters.AddWithValue("@MP", model.BaseStats.MP);
+                        insertCMD.Parameters.AddWithValue("@HP", model.BaseStats.MaxHP);
+                        insertCMD.Parameters.AddWithValue("@MP", model.BaseStats.MaxMP);
                         insertCMD.Parameters.AddWithValue("@ATKSPD", model.BaseStats.ATKSPD);
 
 
@@ -128,8 +128,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         equip.BaseStats.MATK = Convert.ToInt32(temp[8]);
                         equip.BaseStats.AllStat = Convert.ToInt32(temp[9]);
                         equip.BaseStats.DEF = Convert.ToInt32(temp[10]);
-                        equip.BaseStats.HP = Convert.ToInt32(temp[11]);
-                        equip.BaseStats.MP = Convert.ToInt32(temp[12]);
+                        equip.BaseStats.MaxHP = Convert.ToInt32(temp[11]);
+                        equip.BaseStats.MaxMP = Convert.ToInt32(temp[12]);
                         equip.BaseStats.ATKSPD = Convert.ToInt32(temp[13]);
 
 
@@ -176,8 +176,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             equipModel.BaseStats.MATK = reader.GetInt32(7);
                             equipModel.BaseStats.AllStat = reader.GetInt32(8);
                             equipModel.BaseStats.DEF = reader.GetInt32(9);
-                            equipModel.BaseStats.HP = reader.GetInt32(10);
-                            equipModel.BaseStats.MP = reader.GetInt32(11);
+                            equipModel.BaseStats.MaxHP = reader.GetInt32(10);
+                            equipModel.BaseStats.MaxMP = reader.GetInt32(11);
 
                             equipModel.BaseStats.ATKSPD = reader.GetInt32(12);
 

@@ -121,14 +121,16 @@
                                             <DataTemplate> 
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="{Binding Key}"/>
-                                                    <TextBlock Text="{Binding Value.BaseStat}"/>
-                                                    <TextBlock Text="{Binding Value.ScrollStat}" Foreground="DarkTurquoise"
+                                                    <TextBlock Text="{Binding Value.DTotalStat}"/>
+                                                    <TextBlock Text="("/>
+                                                    <TextBlock Text="{Binding Value.DBaseStat}"/>
+                                                    <TextBlock Text="{Binding Value.DScrollStat}" Foreground="DarkTurquoise"
                                                                Visibility="{Binding Converter={StaticResource HideIfZero},Path=Value.ScrollStat}"/>
-                                                    <TextBlock Text="{Binding Value.StarforceStat}" Foreground="Orange"
+                                                    <TextBlock Text="{Binding Value.DStarforceStat}" Foreground="Orange"
                                                                Visibility="{Binding Converter={StaticResource HideIfZero},Path=Value.StarforceStat}"/>
-                                                    <TextBlock Text="{Binding Value.FlameStat}" Foreground="LimeGreen"
-                                                               Visibility="{Binding Converter={StaticResource HideIfZero},Path=Value.FlameStat}"/>   
-                                                    
+                                                    <TextBlock Text="{Binding Value.DFlameStat}" Foreground="LimeGreen"
+                                                               Visibility="{Binding Converter={StaticResource HideIfZero},Path=Value.FlameStat}"/>
+                                                    <TextBlock Text=")"/>
                                                 </StackPanel>
                                                 
                                             </DataTemplate>

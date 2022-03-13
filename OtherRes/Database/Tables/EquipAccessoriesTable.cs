@@ -67,8 +67,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@MainStat", Aitem.BaseStats.MS);
                         insertCMD.Parameters.AddWithValue("@SecStat", Aitem.BaseStats.SS);
                         insertCMD.Parameters.AddWithValue("@AllStat", Aitem.BaseStats.AllStat);
-                        insertCMD.Parameters.AddWithValue("@HP", Aitem.BaseStats.SpecialHP);
-                        insertCMD.Parameters.AddWithValue("@MP", Aitem.BaseStats.SpecialMP);
+                        insertCMD.Parameters.AddWithValue("@HP", Aitem.BaseStats.HP);
+                        insertCMD.Parameters.AddWithValue("@MP", Aitem.BaseStats.MP);
                         insertCMD.Parameters.AddWithValue("@DEF", Aitem.BaseStats.DEF);
                         insertCMD.Parameters.AddWithValue("@ATK", Aitem.BaseStats.ATK);
                         insertCMD.Parameters.AddWithValue("@MATK", Aitem.BaseStats.MATK);
@@ -132,8 +132,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         equip.BaseStats.SS = Convert.ToInt32(temp[7]);
                         equip.BaseStats.AllStat = Convert.ToInt32(temp[8]);
 
-                        equip.BaseStats.SpecialHP = temp[9];
-                        equip.BaseStats.SpecialMP = temp[10];
+                        equip.BaseStats.HP = temp[9];
+                        equip.BaseStats.MP = temp[10];
                         equip.BaseStats.DEF = Convert.ToInt32(temp[11]);
                         equip.BaseStats.ATK = Convert.ToInt32(temp[12]);
                         equip.BaseStats.MATK = Convert.ToInt32(temp[13]);
@@ -181,8 +181,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             equipModel.BaseStats.SS = reader.GetInt32(6);
                             equipModel.BaseStats.AllStat = reader.GetInt32(7);
 
-                            equipModel.BaseStats.SpecialHP = reader.GetString(8);
-                            equipModel.BaseStats.SpecialMP = reader.GetString(9);
+                            equipModel.BaseStats.HP = reader.GetString(8);
+                            equipModel.BaseStats.MP = reader.GetString(9);
                             equipModel.BaseStats.DEF = reader.GetInt32(10);
                             equipModel.BaseStats.ATK = reader.GetInt32(11);
                             equipModel.BaseStats.MATK = reader.GetInt32(12);

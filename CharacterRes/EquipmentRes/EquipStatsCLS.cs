@@ -20,10 +20,10 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int LUK { get; set; } = 0;       
         public int DEF { get; set; } = 0;
         public int PercDEF { get; set; } = 0;
-        public int HP { get; set; } = 0;
-        public string SpecialHP { get; set; } = "";
-        public int MP { get; set; } = 0;
-        public string SpecialMP { get; set; } = "";
+        public int MaxHP { get; set; } = 0;
+        public string HP { get; set; } = "";
+        public int MaxMP { get; set; } = 0;
+        public string MP { get; set; } = "";
         public int SPD { get; set; } = 0;
         public int JUMP { get; set; } = 0;
         public int ATK { get; set; } = 0;
@@ -66,8 +66,8 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                 test.Add(PercATK ==  cObj.PercATK ? "true" : "false" );
                 test.Add(PercMATK ==  cObj.PercMATK ? "true" : "false" );
                 test.Add(PercDEF ==  cObj.PercDEF ? "true" : "false" );
-                test.Add(HP ==  cObj.HP ? "true" : "false" );
-                test.Add(MP ==  cObj.MP ? "true" : "false" );
+                test.Add(MaxHP ==  cObj.MaxHP ? "true" : "false" );
+                test.Add(MaxMP ==  cObj.MaxMP ? "true" : "false" );
                 test.Add(SPD ==  cObj.SPD ? "true" : "false" );
                 test.Add(JUMP ==  cObj.JUMP ? "true" : "false" );
                 test.Add(AllStat ==  cObj.AllStat ? "true" : "false" );
@@ -147,6 +147,12 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                     break;
                 case "HP":
                     break;
+                case "Any":
+                    STR += s1;
+                    DEX += s1;
+                    INT += s1;
+                    LUK += s1;
+                    break;
             }
         }
 
@@ -156,6 +162,9 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             foreach(PropertyInfo prop in properties)
             {
                 if(prop.PropertyType == typeof(int))
+                {
+
+                }
                 try
                 {
                     int current = Convert.ToInt32(prop.GetValue(this));

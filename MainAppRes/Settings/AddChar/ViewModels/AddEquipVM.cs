@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -1297,21 +1298,55 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         
         public struct StatValue
         {
-            public string BaseStat { get; set; }
-            public string ScrollStat { get; set; }
-            public string FlameStat { get; set; }
-            public string StarforceStat { get; set; }
-            
-            public int CheckAllZero()
-            {
-                char[] toTrim = { '+', '%', ' ', ':' };
-                int BS = Convert.ToInt32(BaseStat.Trim(toTrim));
-                int SS = Convert.ToInt32(ScrollStat.Trim(toTrim));
-                int FS = Convert.ToInt32(FlameStat.Trim(toTrim));
-                int SfS = Convert.ToInt32(StarforceStat.Trim(toTrim));
+            public string Key;
+            public string DTotalStat { get; set; }
+            public string DBaseStat { get; set; }
+            public string DScrollStat { get; set; }
+            public string DFlameStat { get; set; }
+            public string DStarforceStat { get; set; }
 
-                return BS + SS + FS + SfS; 
+            public int TotalStat { get; set; }
+            public int BaseStat { get; set; }
+            public int ScrollStat { get; set; }
+            public int FlameStat { get; set; }
+            public int StarforceStat { get; set; }
+
+            public void ReOrgInput()
+            {
+                char[] toTrim = {'+', '%', ' ', ':' };
+                BaseStat = Convert.ToInt32(DBaseStat.Trim(toTrim));
+                ScrollStat = Convert.ToInt32(DScrollStat.Trim(toTrim));
+                FlameStat = Convert.ToInt32(DFlameStat.Trim(toTrim));
+                StarforceStat = Convert.ToInt32(DStarforceStat.Trim(toTrim));
+
+                if (GVar.SpecialStatType.Contains(Key) || Key == "IED")
+                {
+                    DBaseStat      = String.Format(" {0}%",  BaseStat);
+                    DScrollStat    = String.Format(" +{0}%", ScrollStat);
+                    DStarforceStat = String.Format(" +{0}%", StarforceStat);
+                    DFlameStat     = String.Format(" +{0}%", FlameStat);
+
+                    DTotalStat     = String.Format(": {0}%", TotalStat);
+                }
+                else
+                {
+                    DBaseStat      = String.Format(" {0}",  BaseStat);
+                    DScrollStat    = String.Format(" +{0}", ScrollStat);
+                    DStarforceStat = String.Format(" +{0}", StarforceStat);
+                    DFlameStat     = String.Format(" +{0}", FlameStat);
+
+                    DTotalStat     = String.Format(": {0}", TotalStat);
+
+                }
+
             }
+
+            public int ReturnTotal()
+            {
+                ReOrgInput();
+                TotalStat = BaseStat + ScrollStat + FlameStat + StarforceStat;
+                return TotalStat;
+            } 
         }
 
         private  void GatherDisplay()
@@ -1328,28 +1363,16 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             foreach(string key in BaseStat.Keys)
             {
                 StatValue temp  = new StatValue();
+                temp.DBaseStat   = BaseStat[key].ToString();
+                temp.DScrollStat = ScrollStat[key].ToString();
+                temp.DFlameStat  = FlameStat[key].ToString();
+                temp.DStarforceStat = SFStat[key].ToString();
+                temp.Key = key;
 
-                if(key == "AllStat")
+
+                if(temp.ReturnTotal() > 0)
                 {
-                    temp.BaseStat   = string.Format(": {0}%", BaseStat[key].ToString());
-                    temp.ScrollStat = string.Format(" +{0}%", ScrollStat[key].ToString());
-                    temp.FlameStat  = string.Format(" +{0}%", FlameStat[key].ToString());
-                    temp.StarforceStat = string.Format(" +{0}%", SFStat[key].ToString());
-
-                }
-                else
-                {
-                    temp.BaseStat   = string.Format(": {0}", BaseStat[key].ToString());
-                    temp.ScrollStat = string.Format(" +{0}", ScrollStat[key].ToString());
-                    temp.FlameStat  = string.Format(" +{0}", FlameStat[key].ToString());
-                    temp.StarforceStat = string.Format(" +{0}", SFStat[key].ToString());
-
-                }
-
-
-                if(temp.CheckAllZero() > 0)
-                {
-
+                    temp.ReturnTotal();
                     ToDisplay.Add(key, temp);
                 }
             }

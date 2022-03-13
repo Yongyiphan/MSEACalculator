@@ -49,8 +49,12 @@
                               SelectedValue="{Binding StarforceI, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
 
                 </StackPanel>
-                <Button x:Name="AddItemCMD" Content="Add / Update Equipment" Margin="5 5 0 2" 
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="AddItemCMD" Content="Add / Update Equipment" Margin="5 5 0 2" 
                         Command="{Binding AddEquipmentCMD}"/>
+                    <Button x:Name="DelItemCMD" Content="Delete Equipment" Margin=" 5 5 0 2"
+                        Command="{Binding DelEquipmentCMD}"/>
+                </StackPanel>
                 <SplitView IsPaneOpen="True" OpenPaneLength="100" DisplayMode="Inline">
                     <SplitView.Pane>
                         <ListView SelectedValue="{Binding FrameSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -104,9 +108,32 @@
                                                     Visibility="{Binding ShowSEquipStat, Mode=TwoWay}"
                                                     Margin="20 0"/>-->
                                 <StackPanel Orientation="Vertical" Visibility="{Binding ShowSEquipStat, Mode=TwoWay}">
-                                    <TextBlock Text="Base + Scroll + Flame + SF"/>
-                                    <ListView ItemsSource="{Binding TotalRecordDisplay, Mode=TwoWay}"
-                                          DisplayMemberPath="Value"/>
+                                    <TextBlock Foreground="Black">
+                                        Stat: Base
+                                        <Span Foreground="DarkTurquoise">Scroll</Span>
+                                        <Span Foreground="Orange">SF</Span>
+                                        <Span Foreground="LimeGreen">Flame</Span>
+                                    </TextBlock>
+                                    <!--<ListView ItemsSource="{Binding TotalRecordDisplay, Mode=TwoWay}"
+                                          DisplayMemberPath="Value"/>-->
+                                    <ListView ItemsSource="{Binding TotalRecordDisplay, Mode=TwoWay}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate> 
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Key}"/>
+                                                    <TextBlock Text="{Binding Value.BaseStat}"/>
+                                                    <TextBlock Text="{Binding Value.ScrollStat}" Foreground="DarkTurquoise"
+                                                               Visibility="{Binding Converter={StaticResource HideIfZero},Path=Value.ScrollStat}"/>
+                                                    <TextBlock Text="{Binding Value.StarforceStat}" Foreground="Orange"
+                                                               Visibility="{Binding Converter={StaticResource HideIfZero},Path=Value.StarforceStat}"/>
+                                                    <TextBlock Text="{Binding Value.FlameStat}" Foreground="LimeGreen"
+                                                               Visibility="{Binding Converter={StaticResource HideIfZero},Path=Value.FlameStat}"/>   
+                                                    
+                                                </StackPanel>
+                                                
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
                                 </StackPanel>
                                 
                             </Grid>

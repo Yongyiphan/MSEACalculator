@@ -69,9 +69,9 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@AllStat", Aitem.BaseStats.AllStat);
                         insertCMD.Parameters.AddWithValue("@HP", Aitem.BaseStats.SpecialHP);
                         insertCMD.Parameters.AddWithValue("@MP", Aitem.BaseStats.SpecialMP);
-                        insertCMD.Parameters.AddWithValue("@DEF", Aitem.BaseStats.FlatDEF);
-                        insertCMD.Parameters.AddWithValue("@ATK", Aitem.BaseStats.FlatATK);
-                        insertCMD.Parameters.AddWithValue("@MATK", Aitem.BaseStats.FlatMATK);
+                        insertCMD.Parameters.AddWithValue("@DEF", Aitem.BaseStats.DEF);
+                        insertCMD.Parameters.AddWithValue("@ATK", Aitem.BaseStats.ATK);
+                        insertCMD.Parameters.AddWithValue("@MATK", Aitem.BaseStats.MATK);
                         insertCMD.Parameters.AddWithValue("@SPD", Aitem.BaseStats.SPD);
                         insertCMD.Parameters.AddWithValue("@JUMP", Aitem.BaseStats.JUMP);
                         insertCMD.Parameters.AddWithValue("@IED", Aitem.BaseStats.IED);
@@ -134,9 +134,9 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
                         equip.BaseStats.SpecialHP = temp[9];
                         equip.BaseStats.SpecialMP = temp[10];
-                        equip.BaseStats.FlatDEF = Convert.ToInt32(temp[11]);
-                        equip.BaseStats.FlatATK = Convert.ToInt32(temp[12]);
-                        equip.BaseStats.FlatMATK = Convert.ToInt32(temp[13]);
+                        equip.BaseStats.DEF = Convert.ToInt32(temp[11]);
+                        equip.BaseStats.ATK = Convert.ToInt32(temp[12]);
+                        equip.BaseStats.MATK = Convert.ToInt32(temp[13]);
 
                         equip.BaseStats.SPD = Convert.ToInt32(temp[14]);
                         equip.BaseStats.JUMP = Convert.ToInt32(temp[15]);
@@ -183,9 +183,9 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
                             equipModel.BaseStats.SpecialHP = reader.GetString(8);
                             equipModel.BaseStats.SpecialMP = reader.GetString(9);
-                            equipModel.BaseStats.FlatDEF = reader.GetInt32(10);
-                            equipModel.BaseStats.FlatATK = reader.GetInt32(11);
-                            equipModel.BaseStats.FlatMATK = reader.GetInt32(12);
+                            equipModel.BaseStats.DEF = reader.GetInt32(10);
+                            equipModel.BaseStats.ATK = reader.GetInt32(11);
+                            equipModel.BaseStats.MATK = reader.GetInt32(12);
 
                             equipModel.BaseStats.SPD = reader.GetInt32(13);
                             equipModel.BaseStats.JUMP = reader.GetInt32(14);

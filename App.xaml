@@ -34,6 +34,7 @@
         </Style>
 
         <interface:IStringFormatConverter x:Key="ThousandsConverter" StringFormat= " {0:N0} "/>
+        <interface:IStatDisplayConverter x:Key="HideIfZero"/>
     </Application.Resources>
 
 </Application>

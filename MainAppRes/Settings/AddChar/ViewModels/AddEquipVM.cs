@@ -6,6 +6,7 @@ using MSEACalculator.OtherRes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -367,7 +368,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 OnPropertyChanged(nameof(ScrollStatValue));
             }
         }
-
         #endregion
 
         //FLAME SELECTION
@@ -663,6 +663,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     SSetItem = ComFunc.ReturnSetCat(SEquipSlot) == "Accessory" ? CItemSelect?.EquipName : CItemSelect?.EquipSet;
                     SelectedWeapon = CItemSelect?.WeaponType;
                     IsSpellTrace = CItemSelect.IsSpellTraced;
+                    StarforceI = CItemSelect.StarForce;
 
                     if (CItemSelect.IsSpellTraced)
                     {
@@ -670,11 +671,15 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                         string perc = string.Format("{0}%", CItemSelect.SpellTracePerc);
                         SelectedScrollIndex =  ScrollM.SpellTracePercTypes.IndexOf(perc);
                     }
-                    ScrollRecord = ComFunc.PropertyToRecord(CItemSelect.ScrollStats, ScrollRecord);
-                    FlameRecord = ComFunc.PropertyToRecord(CItemSelect.FlameStats, FlameRecord);
+                    //ScrollRecord = ComFunc.PropertyToRecord(CItemSelect.ScrollStats);
+                    //FlameRecord = ComFunc.PropertyToRecord(CItemSelect.FlameStats);
+
+                    ScrollRecord = CItemSelect.ScrollStats.ToRecord();
+                    FlameRecord = CItemSelect.FlameStats.ToRecord();
 
                     UpdateDisplay();
                 }
+                DelEquipmentCMD.RaiseCanExecuteChanged();
 
                 OnPropertyChanged(nameof(CItemSelect));
             }
@@ -683,8 +688,18 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         //DISPLAY FINAL ITEM STATS
         #region
-        private Dictionary<string, string> _TotalRecordDisplay;
-        public Dictionary<string, string> TotalRecordDisplay
+        //private Dictionary<string, string> _TotalRecordDisplay;
+        //public Dictionary<string, string> TotalRecordDisplay
+        //{
+        //    get => _TotalRecordDisplay;
+        //    set
+        //    {
+        //        _TotalRecordDisplay = value;
+        //        OnPropertyChanged(nameof(TotalRecordDisplay));
+        //    }
+        //}
+        private Dictionary<string, StatValue> _TotalRecordDisplay;
+        public Dictionary<string, StatValue> TotalRecordDisplay
         {
             get => _TotalRecordDisplay;
             set
@@ -733,6 +748,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
 
             AddEquipmentCMD = new CustomCommand(AddItem, canAddItem);
+            DelEquipmentCMD = new CustomCommand(DelItem, canDelItem);
         }
 
         void HandleCharChange(object sender, CharTStore CC)
@@ -779,6 +795,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
 
         public CustomCommand AddEquipmentCMD { get; private set; }
+        public CustomCommand DelEquipmentCMD { get;private set; }   
 
         //FUNCTION
         #region
@@ -900,7 +917,21 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             AddEquipmentCMD.RaiseCanExecuteChanged();
             ACharTrackVM.UpdateDBCMD.RaiseCanExecuteChanged();
         }
+      
         
+        private bool canDelItem()
+        {
+            if (CItemSelect != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        private void DelItem()
+        {
+            CItemDictT.Remove(CItemSelect);
+            UpdateDisplay();
+        }
 
         private void ShowEquipSet(string selectedESlot)
         {
@@ -959,6 +990,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 EquipCLS NewEquip = ComFunc.FindEquip(AEM.AllEquipStore[CurrentEquipList], SCharacter, currentSSlot, SSetItem, XenonEquipType);
 
+                if(NewEquip.ClassType ==  null)
+                {
+                    NewEquip.ClassType =  SCharacter.ClassName == "Xenon" ? XenonEquipType : SCharacter.ClassType;
+                }
                 if((CurrentSEquip != null && !CurrentSEquip.Equals(NewEquip)) || CurrentSEquip == null)
                 {
                     //NewEquip  = ComFunc.UpdateBaseStats(SCharacter, NewEquip, XenonEquipType);
@@ -1152,10 +1187,12 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             else
             {
                 selectedEquip.ScrollStats = new EquipStatsCLS();
-                selectedEquip.ScrollStats = ComFunc.RecordToProperty(selectedEquip.ScrollStats, ScrollRecord);
+                //selectedEquip.ScrollStats = ComFunc.RecordToProperty(ScrollRecord);
+                selectedEquip.ScrollStats.DictToProperty(ScrollRecord);
             }
 
-            selectedEquip.FlameStats = ComFunc.RecordToProperty(selectedEquip.FlameStats, FlameRecord);
+            //selectedEquip.FlameStats = ComFunc.RecordToProperty(FlameRecord);
+            selectedEquip.FlameStats.DictToProperty(FlameRecord);
             selectedEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, selectedEquip, AEM.StarforceStore[CurrentStarforceList]);
 
 
@@ -1163,97 +1200,162 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
 
-        private void ShowEnteredRecords()
-        {
-            Dictionary<string, int> BaseStat = ComFunc.PropertyToRecord(CurrentSEquip.BaseStats, new Dictionary<string, int>());
-            Dictionary<string, string> DisplayDict = new Dictionary<string, string>();
-            foreach(string dictKey in BaseStat.Keys)
-            {
-                if(BaseStat[dictKey] != 0)
-                {
-                    int curretValue = BaseStat[dictKey];
-                    if (DisplayDict.ContainsKey(dictKey))
-                    {
-                        DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
-                    }
-                    else
-                    {
-                        DisplayDict[dictKey] = String.Format("{0}: {1}",dictKey, curretValue);
-                    }
-                }
-            }
+        //private void ShowEnteredRecords()
+        //{
+        //    //Dictionary<string, int> BaseStat = ComFunc.PropertyToRecord(CurrentSEquip.BaseStats);
+        //    Dictionary<string, int> BaseStat = CurrentSEquip.BaseStats.ToRecord(); 
+        //    Dictionary<string, string> DisplayDict = new Dictionary<string, string>();
+        //    foreach(string dictKey in BaseStat.Keys)
+        //    {
+        //        if(BaseStat[dictKey] != 0)
+        //        {
+        //            int curretValue = BaseStat[dictKey];
+        //            if (DisplayDict.ContainsKey(dictKey))
+        //            {
+        //                DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
+        //            }
+        //            else
+        //            {
+        //                DisplayDict[dictKey] = String.Format("{0}: {1}",dictKey, curretValue);
+        //            }
+        //        }
+        //    }
 
-            foreach(string dictKey in ScrollRecord.Keys)
-            {
-                if(ScrollRecord[dictKey] != 0)
-                {
-                    int curretValue = ScrollRecord[dictKey];
-                    if (DisplayDict.ContainsKey(dictKey))
-                    {
-                        DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
-                    }
-                    else
-                    {
+        //    foreach(string dictKey in ScrollRecord.Keys)
+        //    {
+        //        if(ScrollRecord[dictKey] != 0)
+        //        {
+        //            int curretValue = ScrollRecord[dictKey];
+        //            if (DisplayDict.ContainsKey(dictKey))
+        //            {
+        //                DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
+        //            }
+        //            else
+        //            {
 
-                        DisplayDict[dictKey] = String.Format("{0}: 0 + {1}",dictKey, curretValue);
-                    }
-                }
-            }
-            foreach(string dictKey in FlameRecord.Keys)
-            {
-                if(FlameRecord[dictKey] != 0)
-                {
-                    int curretValue = FlameRecord[dictKey];
-                    if (DisplayDict.ContainsKey(dictKey))
-                    {
-                        if (GVar.SpecialStatType.Contains(dictKey) || dictKey == "IED")
-                        {
-                            DisplayDict[dictKey] = String.Format("{0} + {1}%", DisplayDict[dictKey], curretValue);
-                        }
-                        else
-                        {
-                            DisplayDict[dictKey] = String.Format("{0}: {1}", DisplayDict[dictKey], curretValue);
-                        }
+        //                DisplayDict[dictKey] = String.Format("{0}: 0 + {1}",dictKey, curretValue);
+        //            }
+        //        }
+        //    }
+        //    //Dictionary<string, int> StarforceRecord = ComFunc.PropertyToRecord(CurrentSEquip.StarforceStats);
+
+        //    Dictionary<string, int> StarforceRecord = CurrentSEquip.StarforceStats.ToRecord(); 
+        //    foreach (string dictKey in StarforceRecord.Keys)
+        //    {
+        //        if(StarforceRecord[dictKey] != 0)
+        //        {
+        //            int curretValue = StarforceRecord[dictKey];
+        //            if (DisplayDict.ContainsKey(dictKey))
+        //            {
+        //                DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
+        //            }
+        //            else
+        //            {
+
+        //                DisplayDict[dictKey] = String.Format("{0}: 0 + {1}",dictKey, curretValue);
+        //            }
+        //        }
+        //    }
+
+
+        //    foreach(string dictKey in FlameRecord.Keys)
+        //    {
+        //        if(FlameRecord[dictKey] != 0)
+        //        {
+        //            int curretValue = FlameRecord[dictKey];
+        //            if (DisplayDict.ContainsKey(dictKey))
+        //            {
+        //                if (GVar.SpecialStatType.Contains(dictKey) || dictKey == "IED")
+        //                {
+        //                    DisplayDict[dictKey] = String.Format("{0} + {1}%", DisplayDict[dictKey], curretValue);
+        //                }
+        //                else
+        //                {
+        //                    DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
+        //                }
                         
-                    }
-                    else
-                    {
-                        if (GVar.SpecialStatType.Contains(dictKey) || dictKey == "IED")
-                        {
-                            DisplayDict[dictKey] = String.Format("{0}: 0 + {1}%", DisplayDict[dictKey], curretValue);
-                        }
-                        else
-                        {
-                            DisplayDict[dictKey] = String.Format("{0}: 0 + {1}", dictKey, curretValue);
-                        }
+        //            }
+        //            else
+        //            {
+        //                if (GVar.SpecialStatType.Contains(dictKey) || dictKey == "IED")
+        //                {
+        //                    DisplayDict[dictKey] = String.Format("{0}: 0 + {1}%", DisplayDict[dictKey], curretValue);
+        //                }
+        //                else
+        //                {
+        //                    DisplayDict[dictKey] = String.Format("{0}: 0 + {1}", dictKey, curretValue);
+        //                }
                         
-                    }
-                }
-            }
+        //            }
+        //        }
+        //    }
 
-            Dictionary<string, int> StarforceRecord = ComFunc.PropertyToRecord(CurrentSEquip.StarforceStats, new Dictionary<string, int>());
+            
 
-            foreach(string dictKey in StarforceRecord.Keys)
-            {
-                if(StarforceRecord[dictKey] != 0)
-                {
-                    int curretValue = StarforceRecord[dictKey];
-                    if (DisplayDict.ContainsKey(dictKey))
-                    {
-                        DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
-                    }
-                    else
-                    {
-
-                        DisplayDict[dictKey] = String.Format("{0}: 0 + {1}",dictKey, curretValue);
-                    }
-                }
-            }
-
-
-            TotalRecordDisplay = DisplayDict;
-        }
+        //    TotalRecordDisplay = DisplayDict;
+        //}
         
+        public struct StatValue
+        {
+            public string BaseStat { get; set; }
+            public string ScrollStat { get; set; }
+            public string FlameStat { get; set; }
+            public string StarforceStat { get; set; }
+            
+            public int CheckAllZero()
+            {
+                char[] toTrim = { '+', '%', ' ', ':' };
+                int BS = Convert.ToInt32(BaseStat.Trim(toTrim));
+                int SS = Convert.ToInt32(ScrollStat.Trim(toTrim));
+                int FS = Convert.ToInt32(FlameStat.Trim(toTrim));
+                int SfS = Convert.ToInt32(StarforceStat.Trim(toTrim));
+
+                return BS + SS + FS + SfS; 
+            }
+        }
+
+        private  void GatherDisplay()
+        {
+
+            DataTable dt = new DataTable();
+            //Dictionary<string, List<string>> ToDisplay = new Dictionary<string, List<string>>();
+            Dictionary<string, StatValue> ToDisplay = new Dictionary<string, StatValue>();
+            Dictionary<string, int> BaseStat = CurrentSEquip.BaseStats.ToRecord();
+            Dictionary<string, int> ScrollStat = CurrentSEquip.ScrollStats.ToRecord();
+            Dictionary<string, int> FlameStat = CurrentSEquip.FlameStats.ToRecord();
+            Dictionary<string, int> SFStat = CurrentSEquip.StarforceStats.ToRecord();             
+            
+            foreach(string key in BaseStat.Keys)
+            {
+                StatValue temp  = new StatValue();
+
+                if(key == "AllStat")
+                {
+                    temp.BaseStat   = string.Format(": {0}%", BaseStat[key].ToString());
+                    temp.ScrollStat = string.Format(" +{0}%", ScrollStat[key].ToString());
+                    temp.FlameStat  = string.Format(" +{0}%", FlameStat[key].ToString());
+                    temp.StarforceStat = string.Format(" +{0}%", SFStat[key].ToString());
+
+                }
+                else
+                {
+                    temp.BaseStat   = string.Format(": {0}", BaseStat[key].ToString());
+                    temp.ScrollStat = string.Format(" +{0}", ScrollStat[key].ToString());
+                    temp.FlameStat  = string.Format(" +{0}", FlameStat[key].ToString());
+                    temp.StarforceStat = string.Format(" +{0}", SFStat[key].ToString());
+
+                }
+
+
+                if(temp.CheckAllZero() > 0)
+                {
+
+                    ToDisplay.Add(key, temp);
+                }
+            }
+            TotalRecordDisplay = ToDisplay;
+
+        }
         private void ShowPotential(string mode)
         {
             if (CurrentSEquip != null)
@@ -1321,7 +1423,9 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         private void UpdateDisplay()
         {
-            ShowEnteredRecords();
+
+            GatherDisplay();
+            //ShowEnteredRecords();
             ShowPotential("Fields");
             ShowPotential("Display");
 

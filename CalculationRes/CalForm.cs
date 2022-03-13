@@ -218,16 +218,16 @@ namespace MSEACalculator.CalculationRes
             int STTier = ComFunc.SpellTraceTier(selectedEquip);
             int perc = selectedEquip.SpellTracePerc;
             result.HP = ComFunc.SpellTraceDict[slotType][STTier][perc].HP * selectedEquip.SlotCount;
-            result.FlatDEF = ComFunc.SpellTraceDict[slotType][STTier][perc].DEF * selectedEquip.SlotCount;
+            result.DEF = ComFunc.SpellTraceDict[slotType][STTier][perc].DEF * selectedEquip.SlotCount;
             if (GVar.ArmorEquips.Contains(selectedEquip.EquipSlot) && selectedEquip.EquipSlot != "Gloves" && selectedEquip.SlotCount > 3)
             {
                 if (ClassType == "Magician")
                 {
-                    result.FlatMATK += 1;
+                    result.MATK += 1;
                 }
                 else
                 {
-                    result.FlatATK += 1;
+                    result.ATK += 1;
                 }
             }
 
@@ -235,11 +235,11 @@ namespace MSEACalculator.CalculationRes
             {
                 if (ClassType == "Magician")
                 {
-                    result.FlatMATK = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
+                    result.MATK = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
                 }
                 else
                 {
-                    result.FlatATK  = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
+                    result.ATK  = ComFunc.SpellTraceDict[slotType][STTier][perc].ATK * selectedEquip.SlotCount;
                 }
             }
 
@@ -286,7 +286,7 @@ namespace MSEACalculator.CalculationRes
                         if (CEquip.EquipSlot != "Weapon")
                         {
                             
-                            Result.FlatDEF += StatBoost(current.NonWeapVDef, Result.FlatDEF);
+                            Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
                             //TempStat.PercDEF += current.NonWeapVDef;
                             
                             switch (CEquip.EquipSlot)
@@ -294,12 +294,12 @@ namespace MSEACalculator.CalculationRes
                                 case "Gloves":
                                     if (Character.ClassType == "Magician")
                                     {
-                                        Result.FlatMATK += current.GloveVMATK;
+                                        Result.MATK += current.GloveVMATK;
                                     }
                                     else
                                     {
 
-                                        Result.FlatATK += current.GloveVATK;
+                                        Result.ATK += current.GloveVATK;
                                     }
                                     break;
                                 case "Shoes":
@@ -307,15 +307,15 @@ namespace MSEACalculator.CalculationRes
                                     Result.JUMP += current.SJump;
                                     break;
                                 case "Overall":
-                                    Result.FlatDEF += StatBoost(current.NonWeapVDef, Result.FlatDEF);
+                                    Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
                                     break;
                                    
                             }
                         }
                         else
                         {
-                            Result.FlatATK += StatBoost(current.WeapVATK, Result.FlatATK);
-                            Result.FlatMATK += StatBoost(current.WeapVMATK, Result.FlatMATK);
+                            Result.ATK += StatBoost(current.WeapVATK, Result.ATK);
+                            Result.MATK += StatBoost(current.WeapVMATK, Result.MATK);
                             Result.MP += current.WeapMaxMP;
                             
                         }
@@ -337,18 +337,18 @@ namespace MSEACalculator.CalculationRes
                         
                         if(CEquip.EquipSlot !="Weapon")
                         {
-                            Result.FlatDEF += StatBoost(current.NonWeapVDef, Result.FlatDEF);
+                            Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
                             if(CEquip.EquipSlot == "Overall")
                             {
-                                Result.FlatDEF += StatBoost(current.NonWeapVDef, Result.FlatDEF);
+                                Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
                             } 
-                            Result.FlatATK += current.NonWeapVATKL[lvlRank];
-                            Result.FlatMATK += current.NonWeapVMATKL[lvlRank];
+                            Result.ATK += current.NonWeapVATKL[lvlRank];
+                            Result.MATK += current.NonWeapVMATKL[lvlRank];
                         }
                         else
                         {
-                            Result.FlatATK += current.WeapVATKL[lvlRank];
-                            Result.FlatMATK += current.WeapVMATKL[lvlRank];
+                            Result.ATK += current.WeapVATKL[lvlRank];
+                            Result.MATK += current.WeapVMATKL[lvlRank];
                         }
 
 

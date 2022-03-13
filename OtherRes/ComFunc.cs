@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Reflection;
 using System.Text;
 using Windows.UI.Popups;
 
@@ -220,94 +221,6 @@ namespace MSEACalculator
         }
 
         
-
-        public static EquipStatsCLS RecordToProperty(EquipStatsCLS RM, Dictionary<string, int> record)
-        {
-            foreach(var R in record.Keys)
-            {
-                switch (R)
-                {
-                    case "STR":
-                        RM.STR = record[R];
-                        break;
-                    case "DEX":
-                        RM.DEX = record[R];
-                        break;
-                    case "INT":
-                        RM.INT = record[R];
-                        break;
-                    case "LUK":
-                        RM.LUK = record[R];
-                        break;
-                    case "ATK":
-                        RM.FlatATK = record[R];
-                        break;
-                    case "MATK":
-                        RM.FlatMATK = record[R];
-                        break;
-                    case "HP":
-                        RM.HP = record[R];
-                        break;
-                    case "MP":
-                        RM.MP = record[R];
-                        break;
-                    case "DEF":
-                        RM.FlatDEF = record[R];
-                        break;
-                    case "SPD":
-                        RM.SPD = record[R];
-                        break;
-                    case "JUMP":
-                        RM.JUMP = record[R];
-                        break;
-
-                    case "AllStat":
-                        RM.AllStat = record[R];
-                        break;
-                    case "SpecialHP":
-                        RM.SpecialHP = record[R].ToString();
-                        break;
-                    case "SpecialMP":
-                        RM.SpecialMP = record[R].ToString();
-                        break;
-                    case "BD":
-                        RM.BD = record[R];
-                        break;
-                    case "DMG":
-                        RM.DMG = record[R];
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-
-
-            return RM;
-        }
-        
-        public static Dictionary<string,int> PropertyToRecord(EquipStatsCLS RM, Dictionary<string, int> record)
-        {
-            record.Clear();
-            record["STR"] = RM.STR;
-            record["DEX"] = RM.DEX;
-            record["INT"] = RM.INT;
-            record["LUK"] = RM.LUK;
-            record["ATK"] = RM.FlatATK;
-            record["MATK"] = RM.FlatMATK;
-            record["DEF"] = RM.FlatDEF;
-            record["HP"] = RM.HP;
-            record["MP"] = RM.MP;
-            record["SPD"] = RM.SPD;
-            record["JUMP"] = RM.JUMP;
-            record["AllSTAT"] = RM.AllStat;
-            record["BMDG"] = RM.BD;
-            record["IED"] = RM.IED;
-            record["DMG"] = RM.DMG;
-
-            return record;
-        }
-
         public static List<string> FilterBy(string slotCat, CharacterCLS Character, string eSlot, ReadOnlyCollection<EquipCLS> SearchList, string XenonClass = "")
         {
             List<string> result = new List<string>();

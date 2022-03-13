@@ -18,7 +18,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int DEX { get; set; } = 0;
         public int INT { get; set; } = 0;
         public int LUK { get; set; } = 0;       
-        public int FlatDEF { get; set; } = 0;
+        public int DEF { get; set; } = 0;
         public int PercDEF { get; set; } = 0;
         public int HP { get; set; } = 0;
         public string SpecialHP { get; set; } = "";
@@ -26,8 +26,8 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public string SpecialMP { get; set; } = "";
         public int SPD { get; set; } = 0;
         public int JUMP { get; set; } = 0;
-        public int FlatATK { get; set; } = 0;
-        public int FlatMATK { get; set; } = 0;
+        public int ATK { get; set; } = 0;
+        public int MATK { get; set; } = 0;
 
         public int PercATK { get; set; } = 0;
         public int PercMATK { get; set; } = 0;
@@ -59,9 +59,9 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                 test.Add(DEX ==  cObj.DEX ? "true" : "false" );
                 test.Add(INT ==  cObj.INT ? "true" : "false" );
                 test.Add(LUK ==  cObj.LUK ? "true" : "false" );
-                test.Add(FlatATK ==  cObj.FlatATK ? "true" : "false" );
-                test.Add(FlatMATK ==  cObj.FlatMATK ? "true" : "false");
-                test.Add(FlatDEF ==  cObj.FlatDEF ? "true" : "false" );
+                test.Add(ATK ==  cObj.ATK ? "true" : "false" );
+                test.Add(MATK ==  cObj.MATK ? "true" : "false");
+                test.Add(DEF ==  cObj.DEF ? "true" : "false" );
                 
                 test.Add(PercATK ==  cObj.PercATK ? "true" : "false" );
                 test.Add(PercMATK ==  cObj.PercMATK ? "true" : "false" );
@@ -224,8 +224,59 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
         }
 
-        
+        private List<string> HiddenFields = new List<string>()
+        {
+            "MS", "SS", "ATKSPD"
+        };
+        public Dictionary<string, int> ToRecord()
+        {
 
+            Dictionary<string, int> result = new Dictionary<string, int>();
+
+            foreach(PropertyInfo prop in GetType().GetProperties())
+            {
+
+                if (HiddenFields.Contains(prop.Name))
+                {
+                    continue;
+                }
+                if(prop.PropertyType == typeof(string))
+                {
+                    string sValue = prop.GetValue(this).ToString();
+                    int iValue = sValue == string.Empty ? 0 : Convert.ToInt32(sValue.TrimEnd('%'));
+                    result[prop.Name] = iValue;
+                }
+                else
+                {
+                    result[prop.Name] = Convert.ToInt32(prop.GetValue(this));
+                }
+            }
+
+            return result;
+        }
+        
+        public void DictToProperty(Dictionary<string, int> Record)
+        {
+            foreach (string key in Record.Keys)
+            {
+                if (GetType().GetProperty(key).PropertyType == typeof(string))
+                {
+                    if (Record[key] == 0)
+                    {
+                        GetType().GetProperty(key).SetValue(this, string.Empty);
+                    }
+                    else
+                    {
+                        GetType().GetProperty(key).SetValue(this, string.Format("{0}%", Record[key]));
+                    }
+                }
+                else
+                {
+                    GetType().GetProperty(key).SetValue(this, Record[key], null);
+                }
+            }
+
+        }
         
     }
 }

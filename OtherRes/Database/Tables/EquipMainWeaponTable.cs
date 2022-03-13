@@ -63,9 +63,9 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@MainStat", model.BaseStats.MS);
                         insertCMD.Parameters.AddWithValue("@SecStat", model.BaseStats.SS);
                         insertCMD.Parameters.AddWithValue("@HP", model.BaseStats.HP);
-                        insertCMD.Parameters.AddWithValue("@DEF", model.BaseStats.FlatDEF);
-                        insertCMD.Parameters.AddWithValue("@ATK", model.BaseStats.FlatATK);
-                        insertCMD.Parameters.AddWithValue("@MATK", model.BaseStats.FlatMATK);
+                        insertCMD.Parameters.AddWithValue("@DEF", model.BaseStats.DEF);
+                        insertCMD.Parameters.AddWithValue("@ATK", model.BaseStats.ATK);
+                        insertCMD.Parameters.AddWithValue("@MATK", model.BaseStats.MATK);
                         insertCMD.Parameters.AddWithValue("@SPD", model.BaseStats.SPD);
                         insertCMD.Parameters.AddWithValue("@BDMG", model.BaseStats.BD);
                         insertCMD.Parameters.AddWithValue("@IED", model.BaseStats.IED);
@@ -120,9 +120,9 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         equip.BaseStats.MS = Convert.ToInt32(temp[5]);
                         equip.BaseStats.SS = Convert.ToInt32(temp[6]);
                         equip.BaseStats.HP = Convert.ToInt32(temp[7]);
-                        equip.BaseStats.FlatDEF = Convert.ToInt32(temp[8]);
-                        equip.BaseStats.FlatATK = Convert.ToInt32(temp[9]);
-                        equip.BaseStats.FlatMATK = Convert.ToInt32(temp[10]);
+                        equip.BaseStats.DEF = Convert.ToInt32(temp[8]);
+                        equip.BaseStats.ATK = Convert.ToInt32(temp[9]);
+                        equip.BaseStats.MATK = Convert.ToInt32(temp[10]);
                         equip.BaseStats.SPD = Convert.ToInt32(temp[11]);
                         equip.BaseStats.BD = Convert.ToInt32(temp[12]);
                         equip.BaseStats.IED = Convert.ToInt32(temp[13]);
@@ -170,9 +170,9 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             equipModel.BaseStats.SS = reader.GetInt32(5);
 
                             equipModel.BaseStats.HP = reader.GetInt32(6);
-                            equipModel.BaseStats.FlatDEF = reader.GetInt32(7);
-                            equipModel.BaseStats.FlatATK = reader.GetInt32(8);
-                            equipModel.BaseStats.FlatMATK = reader.GetInt32(9);
+                            equipModel.BaseStats.DEF = reader.GetInt32(7);
+                            equipModel.BaseStats.ATK = reader.GetInt32(8);
+                            equipModel.BaseStats.MATK = reader.GetInt32(9);
 
                             equipModel.BaseStats.SPD = reader.GetInt32(10);
                             equipModel.BaseStats.BD = reader.GetInt32(11);

@@ -12,14 +12,16 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
         public Dictionary<string, CharacterCLS> AllCharDB { get; set; } = AllCharacterTable.GetAllCharDB();
         public Dictionary<string, CharacterCLS> AllCharTrackDB { get; set; } = DBRetrieve.GetAllCharTrackDB();
-
         public List<CharacterCLS> AllCharList { get; set; } = new List<CharacterCLS>();
+
+        public List<CharacterCLS> AllCharTList { get; set; } = new List<CharacterCLS>();
 
         public ACTModel()
         {
 
             consolAllCharWeapon();
-            displayNonTrackChar();
+            ReturnTrackLists();
+
             //AllCharList = AllCharDict.Values.ToList();
         }
 
@@ -39,18 +41,25 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             }
         }
 
-        public void displayNonTrackChar()
+        public void ReturnTrackLists()
         {
 
-            List<string> trackedChar = AllCharTrackDB.Values.Select(x => x.ClassName).ToList();
+            List<string> TrackList = AllCharTrackDB.Keys.ToList();
             foreach(CharacterCLS character in AllCharDB.Values)
             {
-                if (trackedChar.Contains(character.ClassName))
+                if (TrackList.Contains(character.ClassName))
                 {
                     continue;
                 }
                 AllCharList.Add(character);
             }
-        }
+
+            foreach (string character in TrackList)
+            {
+                AllCharTList.Add(AllCharDB[character]);
+            }
+
+        }    
+    
     }
 }

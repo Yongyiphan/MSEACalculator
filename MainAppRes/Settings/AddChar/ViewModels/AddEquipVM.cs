@@ -641,9 +641,22 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
 
 
-        public ObservableCollection<EquipCLS> CItemDictT { get; set; } = new ObservableCollection<EquipCLS>();
-        
+        private ObservableCollection<EquipCLS> _CItemDict = new ObservableCollection<EquipCLS>();
+        public ObservableCollection<EquipCLS> CItemDictT
+        {
+            get => _CItemDict;
+            set
+            {
+                _CItemDict = value;
+                OnDictChanged(CItemDictT);
+            }
+        }
 
+        public EventHandler<ObservableCollection<EquipCLS>> CItemDictChanged;
+        private void OnDictChanged(ObservableCollection<EquipCLS> EC)
+        {
+            CItemDictChanged?.Invoke(this, EC);
+        }
 
 
 
@@ -752,12 +765,12 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             DelEquipmentCMD = new CustomCommand(DelItem, canDelItem);
         }
 
-        void HandleCharChange(object sender, CharTStore CC)
+        void HandleCharChange(object sender, CharacterCLS CC)
         {
 
-            if (CC.CurrentCharacter !=  SCharacter)
+            if (CC !=  SCharacter)
             {
-                SCharacter = CC.CurrentCharacter;
+                SCharacter = CC;
 
                 initFields();
             }            

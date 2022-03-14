@@ -17,7 +17,7 @@ namespace MSEACalculator.OtherRes.Database
         {
             bool insertPassed;
 
-            string insertQueryStr = "INSERT INTO CharacterTrack (CharName, UnionRank, Level, Starforce ) VALUES (@CN, @UR, @Lvl, @SF)";
+            string insertQueryStr = "INSERT INTO TrackCharacter (CharName, UnionRank, Level, Starforce ) VALUES (@CN, @UR, @Lvl, @SF)";
 
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
@@ -219,5 +219,6 @@ namespace MSEACalculator.OtherRes.Database
         }
 
 
+        
     }
 }

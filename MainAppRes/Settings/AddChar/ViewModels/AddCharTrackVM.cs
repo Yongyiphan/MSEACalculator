@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using MSEACalculator.OtherRes.Database;
+using MSEACalculator.CharacterRes.EquipmentRes;
 
 namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 {
@@ -27,7 +28,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         /// </summary>
         public ACTModel AllCharTrackM { get; set; } = new ACTModel();
 
-        public event EventHandler<CharTStore> RaiseChangeChar;
 
         private AddEquipVM _AEquipVM;
         public AddEquipVM AEquipVM 
@@ -52,28 +52,27 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
         //INIT Empty List
-        private ObservableCollection<CharacterCLS> _charTrackList = new ObservableCollection<CharacterCLS>();
-        public ObservableCollection<CharacterCLS> CharTrackList
-        {
-            get { return _charTrackList; }
-            set { _charTrackList = value; OnPropertyChanged(nameof(CharTrackList)); }
-        }
+        
 
 
         //VARAIBLES
+        public CharacterCLS CurrentChar { get; set; }
+
         private CharacterCLS _SelectedAllChar;
         public CharacterCLS SelectedAllChar
         {
             get { return _SelectedAllChar; }
             set
             {
+                _SelectedAllChar = value;
                 if (value != null)
                 {
-                    _SelectedAllChar = value;
-                    OnPropertyChanged(nameof(SelectedAllChar));
-                    OnChangedCharacter(new CharTStore(SelectedAllChar));
+                    CurrentChar = SelectedAllChar;
+                    CharTSelect = null;
+                    OnChangedCharacter(CurrentChar);
                     addCharTrackCMD.RaiseCanExecuteChanged();
                 }
+                OnPropertyChanged(nameof(SelectedAllChar));
             }
         }
 
@@ -103,14 +102,32 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
+        private ObservableCollection<CharacterCLS> _charTrackList = new ObservableCollection<CharacterCLS>();
+        public ObservableCollection<CharacterCLS> CharTrackList
+        {
+            get { return _charTrackList; }
+            set 
+            {
+                _charTrackList = value; 
+                OnPropertyChanged(nameof(CharTrackList)); 
+            }
+        }
 
         private CharacterCLS _CharTSelect;
         public CharacterCLS CharTSelect
         {
             get { return _CharTSelect; }
-            set { _CharTSelect = value;
+            set 
+            {
+                _CharTSelect = value;
+                if(CharTSelect != null)
+                {
+                    CurrentChar = CharTSelect;
+                    SelectedAllChar = null;
+                    OnChangedCharacter(CurrentChar);
+                    removeCharTrackCMD.RaiseCanExecuteChanged();
+                }
                 OnPropertyChanged(nameof(CharTSelect));
-                removeCharTrackCMD.RaiseCanExecuteChanged();
             }
         }
 
@@ -127,14 +144,34 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             addCharTrackCMD = new CustomCommand(addChar, canAddChar);
             removeCharTrackCMD = new CustomCommand(removeChar, canRemoveChar);
             UpdateDBCMD = new CustomCommand(AddCharE, canAddCharE);
+            AEquipVM.CItemDictChanged += HandleDictChange;
         }
 
-        
+        void HandleDictChange(object sender, ObservableCollection<EquipCLS> EC)
+        {
+            if(CurrentChar != null)
+            {
+                CurrentChar.EquipmentList = EC.ToList();
+            }
+        }
+
+        public event EventHandler<CharacterCLS> RaiseChangeChar;
+         protected virtual void OnChangedCharacter(CharacterCLS CC)
+        {
+            //EventHandler<CharTStore> raiseEvent = RaiseChangeChar;
+            //if (raiseEvent != null)
+            //{
+            //    raiseEvent(this, CC);
+            //}
+            RaiseChangeChar?.Invoke(this, CC);
+        }
+
+       
 
         private void initFields()
         {
             AllCharTrackM.AllCharList.ForEach(x => _AllCharList.Add(x));
-            AllCharTrackM.AllCharTrackDB.Values.ToList().ForEach(x => _charTrackList.Add(x));
+            AllCharTrackM.AllCharTList.ForEach(x => _charTrackList.Add(x));
         }
         private bool canAddChar()
         {
@@ -165,19 +202,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             int charLvl = Convert.ToInt32(LvlInput);
                 
             int sf = Convert.ToInt32(StarF);
-            string URank = ComFunc.ReturnUnionRank(SelectedAllChar.ClassName, charLvl);
+            CurrentChar.UnionRank = ComFunc.ReturnUnionRank(CurrentChar.ClassName, charLvl);
 
-            CharacterCLS tempChar = new CharacterCLS()
-            {
-                ClassName = SelectedAllChar.ClassName,
-                UnionRank = URank,
-                Level = charLvl,
-                Starforce = sf
-            };
-
-            CharTrackList.Add(tempChar);
-            AllCharList.Remove(SelectedAllChar);
-            bool insertResult = DBAccess.insertCharTrack(tempChar);
+            CharTrackList.Add(CurrentChar);
+            AllCharList.Remove(CurrentChar);
+            bool insertResult = DBAccess.insertCharTrack(CurrentChar);
             if (insertResult == false)
             {
                 ComFunc.ErrorDia("This character has been added before.");
@@ -206,16 +235,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 CharTrackList.Remove(CharTSelect);
             }
 
-        }
-
-        protected virtual void OnChangedCharacter(CharTStore CC)
-        {
-            //EventHandler<CharTStore> raiseEvent = RaiseChangeChar;
-            //if (raiseEvent != null)
-            //{
-            //    raiseEvent(this, CC);
-            //}
-            RaiseChangeChar?.Invoke(this, CC);
         }
 
         private bool canAddCharE()

@@ -59,15 +59,15 @@ namespace MSEACalculator.OtherRes.Database
             StaticTable.Add(new EquipSlotTable("EquipSlot"));
 
             //TABLE FOR ALL ARMOR
-            StaticTable.Add(new EquipArmorTable("ArmorData"));
+            StaticTable.Add(new EquipArmorTable("EquipArmorData"));
 
             //TABLE FOR ACCESSORIES
-            StaticTable.Add(new EquipAccessoriesTable("AccessoriesData"));
+            StaticTable.Add(new EquipAccessoriesTable("EquipAccessoriesData"));
             //TABLE FOR WEAPON
             //MAIN WEAPON
-            StaticTable.Add(new EquipMainWeaponTable("WeaponData"));
+            StaticTable.Add(new EquipMainWeaponTable("EquipWeaponData"));
             //SECONDARY WEAPON
-            StaticTable.Add(new EquipSecWeaponTable("SecondaryData"));
+            StaticTable.Add(new EquipSecWeaponTable("EquipSecondaryData"));
 
             /////CALCULATIONS/////
 
@@ -150,6 +150,7 @@ namespace MSEACalculator.OtherRes.Database
 
             string[] charEquipScrollSpec = {"(" +
                 "CharName string," +
+                "ClassType string," +
                 "EquipSlot string," +
                 "EquipSet string," +
                 "STR int," +
@@ -170,6 +171,7 @@ namespace MSEACalculator.OtherRes.Database
 
             string[] charEquipFlameSpec = {"(" +
                 "CharName string," +
+                "ClassType string," +
                 "EquipSlot string," +
                 "EquipSet string," +
                 "STR int," +
@@ -194,8 +196,9 @@ namespace MSEACalculator.OtherRes.Database
             //EquipSet == WeaponType if recording Weapon
             string[] CharEquipPot = { "(" +
                     "CharName string," +
+                    "ClassType string," +
                     "EquipSlot string," +
-                    "EqiuipSet string," +
+                    "EquipSet string," +
                     "PotType string," +
                     "FirstID int," +
                     "SecondID int," +
@@ -203,6 +206,13 @@ namespace MSEACalculator.OtherRes.Database
                     ");" };
             BlankTables.Add(new BaseDBTable("TrackCharEquipPot", CharEquipPot[0]));
 
+            string[] CharWeap = { "(" +
+                    "CharName string," +
+                    "MainWeapon string," +
+                    "SecWeapon string," +
+                    "PRIMARY KEY (CharName)" +
+                    ");" };
+            BlankTables.Add(new BaseDBTable("TrackCharWeapons", CharWeap[0]));
 
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
             {

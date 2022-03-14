@@ -155,7 +155,7 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <ListView ItemsSource="{Binding CharTrackList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="ClassName"
+            <ListView ItemsSource="{Binding CharTrackList, Mode=TwoWay}" DisplayMemberPath="ClassName"
                       SelectedItem="{Binding CharTSelect, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         </Grid>
     </Grid>

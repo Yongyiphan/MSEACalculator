@@ -1321,21 +1321,21 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 if (GVar.SpecialStatType.Contains(Key) || Key == "IED")
                 {
-                    DBaseStat      = String.Format(" {0}%",  BaseStat);
+                    DBaseStat      = String.Format("{0}%",  BaseStat);
                     DScrollStat    = String.Format(" +{0}%", ScrollStat);
                     DStarforceStat = String.Format(" +{0}%", StarforceStat);
                     DFlameStat     = String.Format(" +{0}%", FlameStat);
 
-                    DTotalStat     = String.Format(": {0}%", TotalStat);
+                    DTotalStat     = String.Format(": {0}% ", TotalStat);
                 }
                 else
                 {
-                    DBaseStat      = String.Format(" {0}",  BaseStat);
+                    DBaseStat      = String.Format("{0}",  BaseStat);
                     DScrollStat    = String.Format(" +{0}", ScrollStat);
                     DStarforceStat = String.Format(" +{0}", StarforceStat);
                     DFlameStat     = String.Format(" +{0}", FlameStat);
 
-                    DTotalStat     = String.Format(": {0}", TotalStat);
+                    DTotalStat     = String.Format(": {0} ", TotalStat);
 
                 }
 

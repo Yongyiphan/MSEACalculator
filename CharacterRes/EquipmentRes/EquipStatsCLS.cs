@@ -161,10 +161,6 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             var properties = GetType().GetProperties();
             foreach(PropertyInfo prop in properties)
             {
-                if(prop.PropertyType == typeof(int))
-                {
-
-                }
                 try
                 {
                     int current = Convert.ToInt32(prop.GetValue(this));
@@ -183,21 +179,24 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                 }
                 catch(Exception) 
                 {
-                    if(Convert.ToString(prop.GetValue(this)) != String.Empty)
-                    {
-                        int current = Convert.ToInt32(Convert.ToString(prop.GetValue(this)).TrimEnd('%'));
-                        int next = Convert.ToInt32(Convert.ToString(target.GetType().GetProperty(prop.Name).GetValue(target)).TrimEnd('%'));
-                        switch (mode)
-                        {
-                            case "Add":
-                                prop.SetValue(this, String.Format("{0}%",current += next));
-                                break;
-                            case "Subtract":
-                                prop.SetValue(this, String.Format("{0}%",current -= next));
-                                break;
-                        }
 
+                    string c = prop.GetValue(this).ToString();
+                    int current = string.IsNullOrEmpty(c) ? 0 : Convert.ToInt32(c.Trim('%'));
+
+                    string n = target.GetType().GetProperty(prop.Name).GetValue(target).ToString();
+                    int next = string.IsNullOrEmpty(n) ? 0 : Convert.ToInt32(n.Trim('%'));
+
+
+                    switch (mode)
+                    {
+                        case "Add":
+                            prop.SetValue(this, String.Format("{0}%",current += next));
+                            break;
+                        case "Subtract":
+                            prop.SetValue(this, String.Format("{0}%",current -= next));
+                            break;
                     }
+
                     
                 }
                 finally

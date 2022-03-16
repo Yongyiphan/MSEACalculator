@@ -648,15 +648,15 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _CItemDict = value;
-                OnDictChanged(CItemDictT);
+                OnPropertyChanged(nameof(CItemDictT));
             }
         }
 
-        public EventHandler<ObservableCollection<EquipCLS>> CItemDictChanged;
-        private void OnDictChanged(ObservableCollection<EquipCLS> EC)
-        {
-            CItemDictChanged?.Invoke(this, EC);
-        }
+        //public EventHandler<ObservableCollection<EquipCLS>> CItemDictChanged;
+        //private void OnDictChanged(ObservableCollection<EquipCLS> EC)
+        //{
+        //    CItemDictChanged?.Invoke(this, EC);
+        //}
 
 
 
@@ -829,7 +829,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 CharacterWeapon = SCharacter?.MainWeapon;
                 SEquipSlot = null;
                 CItemDictT.Clear();
-                SCharacter?.EquipmentList.ForEach(x =>  CItemDictT.Add(x));
+                SCharacter?.EquipmentList.Values.ToList().ForEach(x =>  CItemDictT.Add(x));
 
                 if(SCharacter.ClassName == "Xenon")
                 {

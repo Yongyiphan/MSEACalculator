@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,13 +70,20 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                 if (obj is EquipCLS)
                 {
                     EquipCLS cObj = (EquipCLS)obj;
-                    test.Add(EquipSet == cObj.EquipSet ? "true" : "false");
-                    test.Add(EquipName == cObj.EquipName ? "true" : "false");
-                    test.Add(EquipSlot == cObj.EquipSlot ? "true" : "false");
-                    test.Add(SlotCount == cObj.SlotCount ? "true" : "false");
-                    test.Add(WeaponType == cObj.WeaponType ? "true" : "false");
+                    List<string> ManualCheckList = new List<string>() { "BaseStats", "ScrollStats", "FlameStats" };
+                    foreach (PropertyInfo prop in GetType().GetProperties())
+                    {
+                        if (ManualCheckList.Contains(prop.Name))
+                        {
+                            continue;
+                        }
+                        test.Add(cObj.GetType().GetProperty(prop.Name).GetValue(cObj, null) == prop.GetValue(this) ? "true" : "false");
+
+                    }
+
                     test.Add(ScrollStats.Equals(cObj.ScrollStats) ? "true" : "false");
                     test.Add(FlameStats.Equals(cObj.FlameStats) ? "true" : "false");
+
                     //test.Add(new HashSet<PotentialStats>(MainPot).Equals(new HashSet<PotentialStats>(((EquipModel)obj).MainPot)) ? "true" : "false");
                     test.Add(MainPot.Values.ToList().Select(x => x.PotID).ToList().SequenceEqual(cObj.MainPot.Values.ToList().Select(x => x.PotID).ToList()) ? "true" : "false");
                     test.Add(AddPot.Values.ToList().Select(x => x.PotID).ToList().SequenceEqual(cObj.AddPot.Values.ToList().Select(x => x.PotID).ToList()) ? "true" : "false");

@@ -7,6 +7,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using MSEACalculator.OtherRes.Database;
 using MSEACalculator.CharacterRes.EquipmentRes;
+using System.Collections.Specialized;
 
 namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 {
@@ -144,25 +145,44 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             addCharTrackCMD = new CustomCommand(addChar, canAddChar);
             removeCharTrackCMD = new CustomCommand(removeChar, canRemoveChar);
             UpdateDBCMD = new CustomCommand(AddCharE, canAddCharE);
-            AEquipVM.CItemDictChanged += HandleDictChange;
+            AEquipVM.CItemDictT.CollectionChanged += HandleDictChange;
+
         }
 
-        void HandleDictChange(object sender, ObservableCollection<EquipCLS> EC)
+        void HandleDictChange(object sender, NotifyCollectionChangedEventArgs EC)
         {
-            if(CurrentChar != null)
+            ObservableCollection<EquipCLS> EquipDict =  AEquipVM.CItemDictT;
+            if(CurrentChar != null && EquipDict.Count > 0)
             {
-                CurrentChar.EquipmentList = EC.ToList();
+                foreach(EquipCLS equip in EquipDict)
+                {
+                    if (CurrentChar.EquipmentList.ContainsKey(equip.EquipListSlot))
+                    {
+                        EquipCLS current = CurrentChar.EquipmentList[equip.EquipListSlot];
+                        if (current.Equals(equip))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            CurrentChar.EquipmentList[equip.EquipListSlot] = equip;
+                        }
+                    }
+                    else
+                    {
+                        CurrentChar.EquipmentList.Add(equip.EquipListSlot, equip);
+                    }
+                }
+
+
+                //CurrentChar.Starforce = CurrentChar.EquipmentList.Values.ToList().Select(x => x.StarForce).ToList().Sum();
+
             }
         }
 
         public event EventHandler<CharacterCLS> RaiseChangeChar;
-         protected virtual void OnChangedCharacter(CharacterCLS CC)
-        {
-            //EventHandler<CharTStore> raiseEvent = RaiseChangeChar;
-            //if (raiseEvent != null)
-            //{
-            //    raiseEvent(this, CC);
-            //}
+        protected virtual void OnChangedCharacter(CharacterCLS CC)
+        { 
             RaiseChangeChar?.Invoke(this, CC);
         }
 
@@ -202,19 +222,32 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             int charLvl = Convert.ToInt32(LvlInput);
                 
             int sf = Convert.ToInt32(StarF);
+            CurrentChar.Level = charLvl;
+            List<int> TotalStarforce = new List<int>() { sf};
+            if(CurrentChar.EquipmentList.Count > 0)
+            {
+                TotalStarforce.Add(CurrentChar.EquipmentList.Values.ToList().Select(x => x.StarForce).ToList().Sum());
+            }
+            CurrentChar.Starforce = TotalStarforce.Max();
             CurrentChar.UnionRank = ComFunc.ReturnUnionRank(CurrentChar.ClassName, charLvl);
 
-            CharTrackList.Add(CurrentChar);
-            AllCharList.Remove(CurrentChar);
-            bool insertResult = DBAccess.insertCharTrack(CurrentChar);
-            if (insertResult == false)
+            bool InsertResult = DBAccess.InsertCharWithEquip(CurrentChar);
+            if (InsertResult == false)
             {
                 ComFunc.ErrorDia("This character has been added before.");
             }
-            SelectedAllChar = null;
-                
-            LvlInput = "1";
-            StarF = "0";
+ 
+
+            if (InsertResult)
+            {
+
+                CharTrackList.Add(CurrentChar);
+                AllCharList.Remove(CurrentChar);
+                SelectedAllChar = null;
+                    
+                LvlInput = "1";
+                StarF = "0";
+            }
 
             addCharTrackCMD.RaiseCanExecuteChanged();
         }

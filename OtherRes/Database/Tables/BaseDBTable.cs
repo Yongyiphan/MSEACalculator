@@ -28,19 +28,27 @@ namespace MSEACalculator.OtherRes.Database.Tables
         {
             if (connection.State == ConnectionState.Open)
             {
-                //delete table if exist
-                string dropT = "DROP TABLE IF EXISTS " + TableName;
-                using (SqliteCommand dropCmd = new SqliteCommand(dropT, connection, transaction))
-                {
-                    dropCmd.ExecuteNonQuery();
-                };
-                // create table if not exist
 
-                string createTable = "CREATE TABLE IF NOT EXISTS " + TableName + TableParameters;
-                using (SqliteCommand createCmd = new SqliteCommand(createTable, connection, transaction))
+                try
                 {
-                    createCmd.ExecuteNonQuery();
-                };
+                    //delete table if exist
+                    string dropT = "DROP TABLE IF EXISTS " + TableName;
+                    using (SqliteCommand dropCmd = new SqliteCommand(dropT, connection, transaction))
+                    {
+                        dropCmd.ExecuteNonQuery();
+                    };
+                    // create table if not exist
+
+                    string createTable = "CREATE TABLE IF NOT EXISTS " + TableName + TableParameters;
+                    using (SqliteCommand createCmd = new SqliteCommand(createTable, connection, transaction))
+                    {
+                        createCmd.ExecuteNonQuery();
+                    };
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 

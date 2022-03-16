@@ -154,7 +154,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
             {
                 dbCon.Open();
 
-                string selectQuery = "SELECT * FROM SecondaryData";
+                string selectQuery = "SELECT * FROM EquipSecondaryData";
 
                 using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
                 {

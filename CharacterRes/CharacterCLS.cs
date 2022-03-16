@@ -48,7 +48,9 @@ namespace MSEACalculator.CharacterRes
         //EACH CHAR HAS OWN SET OF EQUIPMENT LIST
         //EACH EQUIPMENT IN LIST HAS OWN BASE / FLAME / SCROLL STATS
         //:. 
-        public List<EquipCLS> EquipmentList { get; set; } = new List<EquipCLS>();
+        //public List<EquipCLS> EquipmentList { get; set; } = new List<EquipCLS>();
+
+        public Dictionary<string, EquipCLS> EquipmentList { get; set; } = new Dictionary<string, EquipCLS>();
 
         //EQUIPMENT INFORMATION END
         public CharacterCLS() { }

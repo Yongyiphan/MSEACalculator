@@ -133,7 +133,8 @@ namespace MSEACalculator.OtherRes.Database
                 "UnionRank string," +
                 "Level int," +
                 "Starforce int," +
-                "PRIMARY KEY(CharName)" +
+                "PRIMARY KEY (CharName)," +
+                "FOREIGN KEY (CharName) REFERENCES AllCharacterData(ClassName) ON UPDATE CASCADE ON DELETE CASCADE" +
                 ");";
             BlankTables.Add(new BaseDBTable("TrackCharacter", charTrackSpec));
 
@@ -142,17 +143,47 @@ namespace MSEACalculator.OtherRes.Database
                 "CharName string," +
                 "BossName string," +
                 "BossID int," +
-                "PRIMARY KEY(CharName, BossID)," +
-                "FOREIGN KEY (CharName) REFERENCES CharacterTrack(CharName) ON DELETE CASCADE," +
-                "FOREIGN KEY (BossID) REFERENCES BossList(BossID)" +
+                "PRIMARY KEY (CharName, BossID)," +
+                "FOREIGN KEY (CharName) REFERENCES TrackCharacter(CharName) ON UPDATE CASCADE ON DELETE CASCADE," +
+                "FOREIGN KEY (BossID) REFERENCES BossList(BossID) ON UPDATE CASCADE ON DELETE CASCADE" +
                 ");";
             BlankTables.Add(new BaseDBTable("TrackBossMesoGains", bossMesoGainsTableSpec));
 
-            string[] charEquipScrollSpec = {"(" +
+            string[] EQueryStartEnd = { "(", ");" };
+            string[] TEquipKey = {
+                    "CharName string," +
+                    "ClassType string," +
+                    "EquipSlot string," +
+                    "EquipSet string,"
+            };
+            
+                       //ClassType, EquipSlot, EquipSet == ROWID
+            string[] charEquipSpec = {
+                "PRIMARY KEY (CharName, EquipSlot)," +
+                "FOREIGN KEY (CharName) REFERENCES TrackCharacter(CharName) ON DELETE CASCADE"
+            };
+
+            BlankTables.Add(new BaseDBTable("TrackCharEquip", String.Join("", EQueryStartEnd[0], TEquipKey[0], charEquipSpec[0], EQueryStartEnd[1])));
+
+             string[] SubTableReferenceKey =
+            {
+                "PRIMARY KEY (CharName, EquipSlot)," +
+                "FOREIGN KEY (CharName, EquipSlot) REFERENCES TrackCharEquip(CharName, EquipSlot) ON UPDATE CASCADE ON DELETE CASCADE"
+            };
+
+            string[] CharWeap = { "(" +
                 "CharName string," +
-                "ClassType string," +
-                "EquipSlot string," +
-                "EquipSet string," +
+                "MainWeapon string," +
+                "SecWeapon string," +
+                "PRIMARY KEY (CharName)," +
+                "FOREIGN KEY (CharName) REFERENCES TrackCharacter(CharName) ON UPDATE CASCADE ON DELETE CASCADE" +
+                ");" };
+            BlankTables.Add(new BaseDBTable("TrackCharWeapons", CharWeap[0]));
+
+
+            string[] charEquipScrollSpec = {
+                "SlotCount int," +
+                "ScrollPerc int," +
                 "STR int," +
                 "DEX int," +
                 "INT int," +
@@ -163,17 +194,11 @@ namespace MSEACalculator.OtherRes.Database
                 "ATK int," +
                 "MATK int," +
                 "SPD int," +
-                "JUMP int," +
-                "PRIMARY KEY (CharName, EquipSlot, EquipSet)," +
-                "FOREIGN KEY (CharName) REFERENCES CharacterTrack(CharName) ON DELETE CASCADE" +
-                ");" };
-            BlankTables.Add(new BaseDBTable("TrackCharEquipScroll", charEquipScrollSpec[0]));
+                "JUMP int,"
+              };
+            BlankTables.Add(new BaseDBTable("TrackCharEquipScroll", string.Join("", EQueryStartEnd[0], TEquipKey[0], charEquipScrollSpec[0],SubTableReferenceKey[0], EQueryStartEnd[1])));
 
-            string[] charEquipFlameSpec = {"(" +
-                "CharName string," +
-                "ClassType string," +
-                "EquipSlot string," +
-                "EquipSet string," +
+            string[] charEquipFlameSpec = {
                 "STR int," +
                 "DEX int," +
                 "INT int," +
@@ -187,32 +212,22 @@ namespace MSEACalculator.OtherRes.Database
                 "JUMP int," +
                 "AllStat int," +
                 "BossDMG int," +
-                "DMG int," +
-                "PRIMARY KEY (CharName, EquipSlot, EquipSet)," +
-                "FOREIGN KEY (CharName) REFERENCES CharacterTrack(CharName) ON DELETE CASCADE" +
-                ");" };
-            BlankTables.Add(new BaseDBTable("TrackCharEquipFlame", charEquipFlameSpec[0]));
+                "DMG int,"
+            };
+            BlankTables.Add(new BaseDBTable("TrackCharEquipFlame", string.Join("", EQueryStartEnd[0], TEquipKey[0], charEquipFlameSpec[0],SubTableReferenceKey[0], EQueryStartEnd[1])));
 
             //EquipSet == WeaponType if recording Weapon
-            string[] CharEquipPot = { "(" +
-                    "CharName string," +
-                    "ClassType string," +
-                    "EquipSlot string," +
-                    "EquipSet string," +
-                    "PotType string," +
-                    "FirstID int," +
-                    "SecondID int," +
-                    "ThirdID int" +
-                    ");" };
-            BlankTables.Add(new BaseDBTable("TrackCharEquipPot", CharEquipPot[0]));
-
-            string[] CharWeap = { "(" +
-                    "CharName string," +
-                    "MainWeapon string," +
-                    "SecWeapon string," +
-                    "PRIMARY KEY (CharName)" +
-                    ");" };
-            BlankTables.Add(new BaseDBTable("TrackCharWeapons", CharWeap[0]));
+            string[] CharEquipPot = {
+                "MGrade int," +
+                "MFirstID int," +
+                "MSecondID int," +
+                "MThirdID int," +
+                "AGrade int," +
+                "AFirstID int," +
+                "ASecondID int," +
+                "AThirdID int,"
+               };
+            BlankTables.Add(new BaseDBTable("TrackCharEquipPot", string.Join("", EQueryStartEnd[0], TEquipKey[0], CharEquipPot[0], SubTableReferenceKey[0], EQueryStartEnd[1])));
 
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
             {
@@ -221,10 +236,10 @@ namespace MSEACalculator.OtherRes.Database
                 {
                     try
                     {
-                        //INIT Blank Tables <- Tables with foreign key FIRST
-                        //blankTables.ForEach(x => initTable(x.tableName, x.tableSpecs, dbConnection, trans));
-
-                        BlankTables.ForEach(T => T.InitTable(dbConnection, trans));
+                        foreach(BaseDBTable table in BlankTables)
+                        {
+                            table.InitTable(dbConnection, trans);
+                        }
                         trans.Commit();
                     }
                     catch (Exception ex)

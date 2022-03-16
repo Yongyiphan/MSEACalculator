@@ -23,6 +23,8 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
         public List<string> SpellTracePercTypes { get; set; } = new List<string> { "100%", "70%", "30%", "15%" };
 
+        public List<int> SpellTracePerc { get; set; } = new List<int>() { 100, 70, 30, 15 };
+
         public List<string> SpellTraceStat { get; set; } = new List<string> { "STR", "DEX", "INT", "LUK", "HP" };
 
         public List<int> Slots { get; set; } = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };

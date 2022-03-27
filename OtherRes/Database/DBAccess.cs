@@ -13,39 +13,7 @@ namespace MSEACalculator.OtherRes.Database
     public class DBAccess
     {
 
-        public static bool insertCharTrack(CharacterCLS character)
-        {
-            bool insertPassed;
-
-            string insertQueryStr = "INSERT INTO TrackCharacter (CharName, UnionRank, Level, Starforce ) VALUES (@CN, @UR, @Lvl, @SF)";
-
-            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
-            {
-                dbCon.Open();
-
-                try
-                {
-                    using (SqliteCommand insertCMD = new SqliteCommand(insertQueryStr, dbCon))
-                    {
-                        insertCMD.Parameters.AddWithValue("@CN", character.ClassName);
-                        insertCMD.Parameters.AddWithValue("@UR", character.UnionRank);
-                        insertCMD.Parameters.AddWithValue("@Lvl", character.Level);
-                        insertCMD.Parameters.AddWithValue("@SF", character.Starforce);
-
-                        insertCMD.ExecuteNonQuery();
-                    }
-
-                    insertPassed = true;
-                    return insertPassed;
-                }
-                catch (SqliteException)
-                {
-                    return insertPassed = false;
-                }
-            }
-        
-        }
-
+       
         public static bool InsertCharWithEquip(CharacterCLS Character)
         {
 
@@ -61,26 +29,53 @@ namespace MSEACalculator.OtherRes.Database
                         //RECORD BASE CHARACTER
                         string insertTrackChar = "INSERT INTO TrackCharacter VALUES (@CharName, @UnionRank, @Level, @Starforce);";
 
-                        using(SqliteCommand insertCMD = new SqliteCommand(insertTrackChar, con, trans))
+                        using (SqliteCommand insertCMD = new SqliteCommand(insertTrackChar, con, trans))
                         {
                             insertCMD.Parameters.AddWithValue("@CharName", Character.ClassName);
                             insertCMD.Parameters.AddWithValue("@UnionRank", Character.UnionRank);
                             insertCMD.Parameters.AddWithValue("@Level", Character.Level);
                             insertCMD.Parameters.AddWithValue("@Starforce", Character.Starforce);
-                            insertCMD.ExecuteNonQuery();    
+
+
+
+                            try
+                            {
+                                insertCMD.ExecuteNonQuery();
+                            }
+                            catch (SqliteException) {
+                                insertCMD.CommandText = "UPDATE TrackCharacter " +
+                                    "SET " +
+                                    "UnionRank = @UnionRank, " +
+                                    "Level = @Level, " +
+                                    "Starforce = @Starforce " +
+                                    "WHERE CharName = @CharName;";
+                                insertCMD.ExecuteNonQuery();
+                            } 
                         }
 
                         //RECORD MAIN AND SEC WEAPONS
                         if(!string.IsNullOrEmpty(Character.CurrentMainWeapon) || !string.IsNullOrEmpty(Character.CurrentSecondaryWeapon))
                         {
                             string insertCurrentWeapon = "INSERT INTO TrackCharWeapons VALUES (@CharName, @Main, @Sec)";
-                            using(SqliteCommand cmd = new SqliteCommand(insertCurrentWeapon, con, trans))
+                            using (SqliteCommand cmd = new SqliteCommand(insertCurrentWeapon, con, trans))
                             {
                                 cmd.Parameters.AddWithValue("@CharName", Character.ClassName);
                                 cmd.Parameters.AddWithValue("@Main", Character.CurrentMainWeapon);
                                 cmd.Parameters.AddWithValue("@Sec", Character.CurrentSecondaryWeapon);
 
-                                cmd.ExecuteNonQuery();
+                                try {
+                                    cmd.ExecuteNonQuery();
+                                }
+                                catch (SqliteException)
+                                {
+                                    cmd.CommandText = "UPDATE TrackCharWeapons" +
+                                        "SET " +
+                                        "MainWeapon = @Main, " +
+                                        "SecWeapon = @Sec " +
+                                        "WHERE CharName =  @CharName;";
+
+                                    cmd.ExecuteNonQuery();
+                                }
                             }
                         }
 
@@ -96,6 +91,7 @@ namespace MSEACalculator.OtherRes.Database
 
                             string insertEquipPot = "INSERT INTO TrackCharEquipPot VALUES (@CharName, @ClassType, @EquipSlot, @EquipSet, @MGrade, @M1, @M2, @M3, @AGrade, @A1, @A2, @A3);";
 
+                            EquipStatsCLS BlankStat = new EquipStatsCLS();
                             foreach (EquipCLS equip in Character.EquipmentList.Values)
                             {
                                 SqliteCommand cmd = new SqliteCommand();
@@ -115,44 +111,116 @@ namespace MSEACalculator.OtherRes.Database
                                 {
                                     cmd.Parameters.AddWithValue("@EquipSet", equip.EquipSet);
                                 }
-                                cmd.ExecuteNonQuery();
 
-                                cmd.CommandText = insertEquipScoll;
-                                cmd.Parameters.AddWithValue("@SlotCount", equip.SlotCount);
-                                cmd.Parameters.AddWithValue("@ScrollPerc", equip.SpellTracePerc);
-                                cmd.Parameters.AddWithValue("@STR", equip.ScrollStats.STR);
-                                cmd.Parameters.AddWithValue("@DEX", equip.ScrollStats.DEX);
-                                cmd.Parameters.AddWithValue("@INT", equip.ScrollStats.INT);
-                                cmd.Parameters.AddWithValue("@LUK", equip.ScrollStats.LUK);
-                                cmd.Parameters.AddWithValue("@HP", equip.ScrollStats.MaxHP);
-                                cmd.Parameters.AddWithValue("@MP", equip.ScrollStats.MaxMP);
-                                cmd.Parameters.AddWithValue("@DEF", equip.ScrollStats.DEF);
-                                cmd.Parameters.AddWithValue("@ATK", equip.ScrollStats.ATK);
-                                cmd.Parameters.AddWithValue("@MATK", equip.ScrollStats.MATK);
-                                cmd.Parameters.AddWithValue("@SPD", equip.ScrollStats.SPD);
-                                cmd.Parameters.AddWithValue("@JUMP", equip.ScrollStats.JUMP);
-
-                                cmd.ExecuteNonQuery();
-
-                                cmd.CommandText = insertEquipFlame;
-                                cmd.Parameters["@STR"].Value = equip.FlameStats.STR;
-                                cmd.Parameters["@DEX"].Value = equip.FlameStats.DEX;
-                                cmd.Parameters["@INT"].Value= equip.FlameStats.INT;
-                                cmd.Parameters["@LUK"].Value = equip.FlameStats.LUK;
-                                cmd.Parameters["@HP"].Value = equip.FlameStats.LUK;
-                                cmd.Parameters["@MP"].Value = equip.FlameStats.MaxHP;
-                                cmd.Parameters["@DEF"].Value = equip.FlameStats.MaxMP;
-                                cmd.Parameters["@ATK"].Value = equip.FlameStats.ATK;
-                                cmd.Parameters["@MATK"].Value = equip.FlameStats.MATK;
-                                cmd.Parameters["@SPD"].Value= equip.FlameStats.SPD;
-                                cmd.Parameters["@JUMP"].Value= equip.FlameStats.JUMP;
-                                cmd.Parameters.AddWithValue("@ALLSTAT", equip.FlameStats.AllStat);
-                                cmd.Parameters.AddWithValue("@BD", equip.FlameStats.BD);
-                                cmd.Parameters.AddWithValue("@DMG", equip.FlameStats.DMG);
-
-                                cmd.ExecuteNonQuery();
+                                try
+                                {
+                                    cmd.ExecuteNonQuery();
+                                }
+                                catch (SqliteException)
+                                {
+                                    cmd.CommandText = "UPDATE TrackCharEquip SET " +
+                                        "ClassType = @ClassType, " +
+                                        "EquipSlot = @EquipSlot, " +
+                                        "EquipSet = @EquipSet " +
+                                        "WHERE CharName = @CharName;";
+                                    cmd.ExecuteNonQuery(); 
+                                }
 
 
+                                if (equip.ScrollStats.Equals(BlankStat) == false)
+                                {
+                                    cmd.CommandText = insertEquipScoll;
+                                    cmd.Parameters.AddWithValue("@SlotCount", equip.SlotCount);
+                                    cmd.Parameters.AddWithValue("@ScrollPerc", equip.SpellTracePerc);
+                                    cmd.Parameters.AddWithValue("@STR", equip.ScrollStats.STR);
+                                    cmd.Parameters.AddWithValue("@DEX", equip.ScrollStats.DEX);
+                                    cmd.Parameters.AddWithValue("@INT", equip.ScrollStats.INT);
+                                    cmd.Parameters.AddWithValue("@LUK", equip.ScrollStats.LUK);
+                                    cmd.Parameters.AddWithValue("@HP", equip.ScrollStats.MaxHP);
+                                    cmd.Parameters.AddWithValue("@MP", equip.ScrollStats.MaxMP);
+                                    cmd.Parameters.AddWithValue("@DEF", equip.ScrollStats.DEF);
+                                    cmd.Parameters.AddWithValue("@ATK", equip.ScrollStats.ATK);
+                                    cmd.Parameters.AddWithValue("@MATK", equip.ScrollStats.MATK);
+                                    cmd.Parameters.AddWithValue("@SPD", equip.ScrollStats.SPD);
+                                    cmd.Parameters.AddWithValue("@JUMP", equip.ScrollStats.JUMP);
+
+                                    try
+                                    {
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                    catch (SqliteException)
+                                    {
+                                        cmd.CommandText = "UPDATE TrackCharEquipScroll SET " +
+                                            "ClassType = @ClassType, " +
+                                            "EquipSet =  @EquipSet, " +
+                                            "SlotCount =  @SlotCount, " +
+                                            "ScrollPerc = @ScrollPerc, " +
+                                            "STR = @STR, " +
+                                            "DEX = @DEX, " +
+                                            "INT = @INT, " +
+                                            "LUK = @LUK, " +
+                                            "HP = @HP, " +
+                                            "MP = @MP, " +
+                                            "DEF = @DEF, " +
+                                            "ATK = @ATK, " +
+                                            "MATK = @MATK, " +
+                                            "SPD = @SPD, " +
+                                            "JUMP =  @JUMP " +
+                                            "WHERE CharName = @CharName AND EquipSlot = @EquipSlot;";
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
+
+                                if (equip.FlameStats.Equals(BlankStat) == false)
+                                {
+                                    cmd.CommandText = insertEquipFlame;
+                                    cmd.Parameters["@STR"].Value = equip.FlameStats.STR;
+                                    cmd.Parameters["@DEX"].Value = equip.FlameStats.DEX;
+                                    cmd.Parameters["@INT"].Value= equip.FlameStats.INT;
+                                    cmd.Parameters["@LUK"].Value = equip.FlameStats.LUK;
+                                    cmd.Parameters["@HP"].Value = equip.FlameStats.LUK;
+                                    cmd.Parameters["@MP"].Value = equip.FlameStats.MaxHP;
+                                    cmd.Parameters["@DEF"].Value = equip.FlameStats.MaxMP;
+                                    cmd.Parameters["@ATK"].Value = equip.FlameStats.ATK;
+                                    cmd.Parameters["@MATK"].Value = equip.FlameStats.MATK;
+                                    cmd.Parameters["@SPD"].Value= equip.FlameStats.SPD;
+                                    cmd.Parameters["@JUMP"].Value= equip.FlameStats.JUMP;
+                                    cmd.Parameters.AddWithValue("@ALLSTAT", equip.FlameStats.AllStat);
+                                    cmd.Parameters.AddWithValue("@BD", equip.FlameStats.BD);
+                                    cmd.Parameters.AddWithValue("@DMG", equip.FlameStats.DMG);
+
+                                    cmd.ExecuteNonQuery();
+                                    try
+                                    {
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                    catch (SqliteException)
+                                    {
+                                        cmd.CommandText  = "UPDATE TrackCharEquipFlame SET " +
+                                            "ClaaType = @ClassType, " +
+                                            "EquipSet = @EquipSet, " +
+                                            "STR = @STR, " +
+                                            "DEX = @DEX, " +
+                                            "INT = @INT, " +
+                                            "LUK = @LUK, " +
+                                            "HP = @HP, " +
+                                            "MP = @MP, " +
+                                            "DEF = @DEF, " +
+                                            "ATK = @ATK, " +
+                                            "MATK = @MATK, " +
+                                            "SPD = @SPD, " +
+                                            "JUMP = @JUMP, " +
+                                            "AllStat = @ALLSTAT, " +
+                                            "BossDMG = @BD," +
+                                            "DMG = @DMG " +
+                                            "WHERE CharName = @CharName AND EquipSlot = @EquipSlot;";
+                                        cmd.ExecuteNonQuery();
+
+                                    }
+                                }
+
+                                
+                                
                                 cmd.CommandText = insertEquipPot;
                                 cmd.Parameters.AddWithValue("@MGrade", equip.MPotGrade);
                                 cmd.Parameters.AddWithValue("@M1", equip.MainPot["First"].PotID);
@@ -163,7 +231,28 @@ namespace MSEACalculator.OtherRes.Database
                                 cmd.Parameters.AddWithValue("@A2", equip.AddPot["Second"].PotID);
                                 cmd.Parameters.AddWithValue("@A3", equip.AddPot["Third"].PotID);
 
-                                cmd.ExecuteNonQuery();
+                                try
+                                {
+                                    cmd.ExecuteNonQuery();
+                                }
+                                catch (SqliteException)
+                                {
+
+
+                                    cmd.CommandText = "UPDATE TrackCharEquipPot SET " +
+                                        "ClassType = @ClassType, " +
+                                        "EquipSet = @EquipSet, " +
+                                        "MGrade = @MGrade, " +
+                                        "MFirstID = @M1, " +
+                                        "MSecondID = @M2, " +
+                                        "MThirdID = @M3, " +
+                                        "AGrade = @AGrade, " +
+                                        "AFirstID = @A1, " +
+                                        "ASecondID = @A2, " +
+                                        "AThirdID = @A3 " +
+                                        "WHERE CharName = @CharName AND EquipSlot = @EquipSlot;";
+                                    cmd.ExecuteNonQuery();
+                                }
 
                                 cmd.Dispose();
 
@@ -175,9 +264,9 @@ namespace MSEACalculator.OtherRes.Database
 
                         insertPassed = true;
                     }
-                    catch (SqliteException)
+                    catch (SqliteException ex)
                     {
-
+                        Console.WriteLine(ex.Message);
                         trans.Rollback();
                         insertPassed=false;
                     }

@@ -90,6 +90,8 @@ namespace MSEACalculator.OtherRes.Database
                                 Equip.EquipListSlot = result.GetString(2);
                                 Equip.EquipSet = result.GetString(3);
 
+                                Equip.EquipSlot = ComFunc.ReturnRingPend(Equip.EquipListSlot);
+
                                 Dictionary<string, EquipCLS> CurrentEList = FinalResult[CharName].EquipmentList;
                                 if (!CurrentEList.ContainsKey(Equip.EquipListSlot))
                                 {
@@ -108,28 +110,47 @@ namespace MSEACalculator.OtherRes.Database
                     {
                         using (SqliteDataReader result = cmd.ExecuteReader())
                         {
-                            string CharName = result.GetString(0);
-                            EquipCLS Equip = new EquipCLS();
-                            Equip.ClassType = result.GetString(1);
-                            Equip.EquipListSlot = result.GetString(2);
-                            Equip.EquipSet = result.GetString(3);
-                            Equip.EquipSlot = ComFunc.ReturnRingPend(Equip.EquipListSlot);
-                            string SlotCat = ComFunc.ReturnSetCat(Equip.EquipSlot);
+                            while (result.Read())
+                            {
+                                string CharName = result.GetString(0);
 
-                            EquipStatsCLS Stat = new EquipStatsCLS();
-                            Stat.STR = result.GetInt32(4);
-                            Stat.DEX = result.GetInt32(5);
-                            Stat.INT = result.GetInt32(6);
-                            Stat.LUK = result.GetInt32(7);
-                            Stat.MaxHP = result.GetInt32(8);
-                            Stat.MaxMP = result.GetInt32(9);
-                            Stat.DEF = result.GetInt32(10);
-                            Stat.ATK = result.GetInt32(11);
-                            Stat.MATK = result.GetInt32(12);
-                            Stat.SPD = result.GetInt32(13);
-                            Stat.JUMP = result.GetInt32(14);
-                            Equip.ScrollStats = Stat;
+                                string EquipSlot = result.GetString(2);
+                                string EquipSet = result.GetString(3);
 
+                                int SlotCount = result.GetInt32(4);
+                                int ScrollPerc = result.GetInt32(5);
+
+
+                                if (FinalResult.ContainsKey(CharName))
+                                {
+                                    if (FinalResult[CharName].EquipmentList.ContainsKey(EquipSlot))
+                                    {
+                                        EquipStatsCLS Stat = new EquipStatsCLS();
+                                        Stat.STR = result.GetInt32(6);
+                                        Stat.DEX = result.GetInt32(7);
+                                        Stat.INT = result.GetInt32(8);
+                                        Stat.LUK = result.GetInt32(9);
+                                        Stat.MaxHP = result.GetInt32(10);
+                                        Stat.MaxMP = result.GetInt32(11);
+                                        Stat.DEF = result.GetInt32(12);
+                                        Stat.ATK = result.GetInt32(13);
+                                        Stat.MATK = result.GetInt32(14);
+                                        Stat.SPD = result.GetInt32(15);
+                                        Stat.JUMP = result.GetInt32(16);
+
+                                        EquipCLS current = FinalResult[CharName].EquipmentList[EquipSlot];
+                                        current.SlotCount = SlotCount;
+                                        current.SpellTracePerc = ScrollPerc;
+                                        current.ScrollStats = Stat;
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
+                                }
+
+
+                            }
                         }
                     }
                     string FlameET = "SELECT * FROM TrackCharEquipFlame";

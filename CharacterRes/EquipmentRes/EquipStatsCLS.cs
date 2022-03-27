@@ -74,8 +74,23 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
                 foreach (PropertyInfo prop in GetType().GetProperties())
                 {
-                    var GT = cObj.GetType();
-                    test.Add(GT.GetProperty(prop.Name).GetValue(cObj) == prop.GetValue(this) ? "true" : "false");
+                    
+                    if(prop.PropertyType == typeof(int))
+                    {
+
+                        int GT = Convert.ToInt32(cObj.GetType().GetProperty(prop.Name).GetValue(cObj));
+                        int current = Convert.ToInt32(prop.GetValue(this));
+
+                        test.Add(GT == current ? "true" : "false");
+                    }
+                    if(prop.PropertyType == typeof(string))
+                    {
+                        string GT = cObj.GetType().GetProperty(prop.Name).GetValue(cObj).ToString();
+                        string current = prop.GetValue(this).ToString();
+
+                        test.Add(GT == current ? "true" : "false");
+                    }
+                    
                 }
                 
             }

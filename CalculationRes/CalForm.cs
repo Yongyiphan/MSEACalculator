@@ -269,7 +269,7 @@ namespace MSEACalculator.CalculationRes
 
             EquipStatsCLS Result = ScaledStats.ShallowCopy();
 
-            if (NonStarable.Contains(CEquip.EquipSlot) == false)
+            if (NonStarable.Contains(CEquip.EquipSlot) == false && CEquip.StarForce >  0)
             {
                 for (int i = 0; i<CEquip.StarForce; i++)
                 {

@@ -145,7 +145,7 @@ namespace MSEACalculator.OtherRes.Database
                 "BossID int," +
                 "PRIMARY KEY (CharName, BossID)," +
                 "FOREIGN KEY (CharName) REFERENCES TrackCharacter(CharName) ON UPDATE CASCADE ON DELETE CASCADE," +
-                "FOREIGN KEY (BossID) REFERENCES BossList(BossID) ON UPDATE CASCADE ON DELETE CASCADE" +
+                "FOREIGN KEY (BossID) REFERENCES BossListData(BossID) ON UPDATE CASCADE ON DELETE CASCADE" +
                 ");";
             BlankTables.Add(new BaseDBTable("TrackBossMesoGains", bossMesoGainsTableSpec));
 

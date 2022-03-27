@@ -197,7 +197,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         {
 
             //SIMPLE ADD CHAR
-            if (SelectedAllChar != null && LvlInput != null && StarF != null)
+            if (CurrentChar != null && LvlInput != null && StarF != null)
             {
                 int lvlOutput, sfOutput;
                 if (int.TryParse(LvlInput, out lvlOutput) && int.TryParse(StarF, out sfOutput))
@@ -240,9 +240,15 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
             if (InsertResult)
             {
+                if (CharTrackList.Contains(CurrentChar) == false)
+                {
+                    CharTrackList.Add(CurrentChar);
+                }
 
-                CharTrackList.Add(CurrentChar);
-                AllCharList.Remove(CurrentChar);
+                if (AllCharList.Contains(CurrentChar))
+                {
+                    AllCharList.Remove(CurrentChar);
+                }
                 SelectedAllChar = null;
                     
                 LvlInput = "1";

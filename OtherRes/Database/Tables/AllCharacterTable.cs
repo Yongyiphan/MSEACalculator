@@ -172,36 +172,5 @@ namespace MSEACalculator.OtherRes.Database.Tables
             return charDict;
         }
 
-
-        public static CharacterCLS CompleteRetrieve(string CharName)
-        {
-            Dictionary<string, CharacterCLS> AllCharList = GetAllCharDB();
-
-            CharacterCLS TargetChar = AllCharList[CharName];
-            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
-            {
-
-                StringBuilder BaseTrackQ = new StringBuilder("SELECT * FROM TrackCharacter WHERE CharName = ");
-                BaseTrackQ.Append(CharName);
-                using (SqliteCommand cmd = new SqliteCommand(BaseTrackQ.ToString(), dbConnection))
-                {
-                    using(SqliteDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            TargetChar.UnionRank = reader.GetString(1);
-                            TargetChar.Level = reader.GetInt32(2);
-                            TargetChar.Starforce = reader.GetInt32(3);
-                        }
-                    }
-                }
-
-                StringBuilder ScrollET = new StringBuilder("SELECT * FROM TrackCharEquipScroll WHERE CharName");
-            }
-
-
-            return TargetChar;
-        }
-
     }
 }

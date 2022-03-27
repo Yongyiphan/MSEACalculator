@@ -1019,6 +1019,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 StarforceLevels =  AEM.StarforceStore[CurrentStarforceList].Select(x => x.SFLevel).ToList();
 
+                StarforceLevels.Insert(0, 0);
 
                 CurrentSEquip = NewEquip;
             }

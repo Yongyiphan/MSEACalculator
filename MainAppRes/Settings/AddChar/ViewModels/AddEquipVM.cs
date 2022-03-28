@@ -1366,7 +1366,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         private  void GatherDisplay()
         {
 
-            DataTable dt = new DataTable();
             //Dictionary<string, List<string>> ToDisplay = new Dictionary<string, List<string>>();
             Dictionary<string, StatValue> ToDisplay = new Dictionary<string, StatValue>();
             Dictionary<string, int> BaseStat = CurrentSEquip.BaseStats.ToRecord();

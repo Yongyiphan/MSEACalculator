@@ -8,3 +8,5 @@ Resolve Logic Error: (Feature)
 - Details
 
 Reorganise
+
+"Last Edit before Commit" <- Where I ended off

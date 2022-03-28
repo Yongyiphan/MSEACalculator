@@ -11,7 +11,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         
 
         public Dictionary<string, CharacterCLS> AllCharDB { get; set; } = AllCharacterTable.GetAllCharDB();
-        public Dictionary<string, CharacterCLS> AllCharTrackDB { get; set; } = DBRetrieve.GetAllCharTrackDB();
+        public Dictionary<string, CharacterCLS> AllCharTrackDB { get; set; }
         public List<CharacterCLS> AllCharList { get; set; } = new List<CharacterCLS>();
 
         public List<CharacterCLS> AllCharTList { get; set; } = new List<CharacterCLS>();
@@ -19,6 +19,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         public ACTModel()
         {
 
+            AllCharTrackDB = DBRetrieve.CompleteCharTrackRetrieve(AllCharDB);
             consolAllCharWeapon();
             ReturnTrackLists();
 

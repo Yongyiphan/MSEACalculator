@@ -25,6 +25,7 @@ namespace MSEACalculator.CharacterRes
         public List<string> SecondaryWeapon { get; set; }
         //BASIC INFORMATION END
 
+
         //UNION INFORMATION BEGIN
         public string UnionEffect { get; set; }
 

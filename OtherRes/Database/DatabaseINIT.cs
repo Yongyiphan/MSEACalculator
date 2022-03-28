@@ -159,6 +159,7 @@ namespace MSEACalculator.OtherRes.Database
             
                        //ClassType, EquipSlot, EquipSet == ROWID
             string[] charEquipSpec = {
+                "Starforce int," + 
                 "PRIMARY KEY (CharName, EquipSlot)," +
                 "FOREIGN KEY (CharName) REFERENCES TrackCharacter(CharName) ON DELETE CASCADE"
             };

@@ -240,17 +240,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
             if (InsertResult)
             {
-                if (CharTrackList.Contains(CurrentChar) == false)
-                {
-                    CharTrackList.Add(CurrentChar);
-                }
-
-                if (AllCharList.Contains(CurrentChar))
-                {
-                    AllCharList.Remove(CurrentChar);
-                }
-                SelectedAllChar = null;
-                    
+                UpdateCharacterLists();
+                                    
                 LvlInput = "1";
                 StarF = "0";
             }
@@ -297,9 +288,28 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             //ELSE CONTINUE TO ADDED EQUIPMENT
             //ADD EQUIPMENT TO RESPECTIVE DB
 
+            foreach(CharacterCLS Character in CharTrackList)
+            {
+
+            }
 
         }
+    
+        private void UpdateCharacterLists()
+        {
+            if (CharTrackList.Contains(CurrentChar) == false)
+            {
+                CharTrackList.Add(CurrentChar);
+            }
 
+            if (AllCharList.Contains(CurrentChar))
+            {
+                AllCharList.Remove(CurrentChar);
+            }
+            SelectedAllChar = null;
+            CharTSelect = null;
+
+        }
 
     }
 

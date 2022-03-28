@@ -83,7 +83,7 @@ namespace MSEACalculator.OtherRes.Database
 
                         if (Character.EquipmentList.Values.ToList().Count > 0)
                         {
-                            string insertEquipTrack = "INSERT INTO TrackCharEquip VALUES (@CharName, @ClassType, @EquipSlot, @EquipSet);";
+                            string insertEquipTrack = "INSERT INTO TrackCharEquip VALUES (@CharName, @ClassType, @EquipSlot, @EquipSet, @Starforce);";
 
                             string insertEquipScoll = "INSERT INTO TrackCharEquipScroll VALUES  (@CharName, @ClassType, @EquipSlot, @EquipSet, @SlotCount, @ScrollPerc, @STR, @DEX, @INT, @LUK, @HP, @MP, @DEF, @ATK, @MATK, @SPD, @JUMP);";
 
@@ -103,6 +103,7 @@ namespace MSEACalculator.OtherRes.Database
                                 cmd.Parameters.AddWithValue("@CharName", Character.ClassName);
                                 cmd.Parameters.AddWithValue("@ClassType", equip.ClassType);
                                 cmd.Parameters.AddWithValue("@EquipSlot", equip.EquipListSlot);
+                                cmd.Parameters.AddWithValue("@Starforce", equip.StarForce);
                                 if (equip.EquipListSlot == "Secondary" || GVar.AccEquips.Contains(equip.EquipSlot))
                                 {
                                     cmd.Parameters.AddWithValue("@EquipSet", equip.EquipName);
@@ -121,7 +122,8 @@ namespace MSEACalculator.OtherRes.Database
                                     cmd.CommandText = "UPDATE TrackCharEquip SET " +
                                         "ClassType = @ClassType, " +
                                         "EquipSlot = @EquipSlot, " +
-                                        "EquipSet = @EquipSet " +
+                                        "EquipSet = @EquipSet," +
+                                        "Starforce = @Starforce, " +
                                         "WHERE CharName = @CharName;";
                                     cmd.ExecuteNonQuery(); 
                                 }
@@ -189,7 +191,6 @@ namespace MSEACalculator.OtherRes.Database
                                     cmd.Parameters.AddWithValue("@BD", equip.FlameStats.BD);
                                     cmd.Parameters.AddWithValue("@DMG", equip.FlameStats.DMG);
 
-                                    cmd.ExecuteNonQuery();
                                     try
                                     {
                                         cmd.ExecuteNonQuery();

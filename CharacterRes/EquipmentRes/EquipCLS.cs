@@ -95,9 +95,9 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             return test.Contains("false") ? false : true;
         }
 
-        public object ShallowCopy()
+        public EquipCLS ShallowCopy()
         {
-            return this.MemberwiseClone();
+            return (EquipCLS)this.MemberwiseClone();
         }
 
 

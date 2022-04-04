@@ -41,17 +41,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             } 
         }
 
-        private ObservableCollection<CharacterCLS> _AllCharList = new ObservableCollection<CharacterCLS>();
-        public ObservableCollection<CharacterCLS> AllCharList 
-        {
-            get => _AllCharList; 
-            set 
-            { 
-                _AllCharList = value;
-                OnPropertyChanged(nameof(AllCharList));
-            } 
-        }
-
+        public ObservableCollection<CharacterCLS> AllCharList { get; set; } = new ObservableCollection<CharacterCLS>();
         //INIT Empty List
         
 
@@ -103,16 +93,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private ObservableCollection<CharacterCLS> _charTrackList = new ObservableCollection<CharacterCLS>();
-        public ObservableCollection<CharacterCLS> CharTrackList
-        {
-            get { return _charTrackList; }
-            set 
-            {
-                _charTrackList = value; 
-                OnPropertyChanged(nameof(CharTrackList)); 
-            }
-        }
+
+        public ObservableCollection<CharacterCLS> CharTrackList { get; set; } = new ObservableCollection<CharacterCLS>();
 
         private CharacterCLS _CharTSelect;
         public CharacterCLS CharTSelect
@@ -190,8 +172,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         private void initFields()
         {
-            AllCharTrackM.AllCharList.ForEach(x => _AllCharList.Add(x));
-            AllCharTrackM.AllCharTList.ForEach(x => _charTrackList.Add(x));
+            AllCharTrackM.AllCharList.ForEach(x => AllCharList.Add(x));
+            AllCharTrackM.AllCharTList.ForEach(x => CharTrackList.Add(x));
         }
         private bool canAddChar()
         {

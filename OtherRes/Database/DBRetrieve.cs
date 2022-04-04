@@ -50,7 +50,6 @@ namespace MSEACalculator.OtherRes.Database
 
         public static Dictionary<string, CharacterCLS> CompleteCharTrackRetrieve(Dictionary<string, CharacterCLS> BaseList)
         {
-            //Last Edit before Commit
             Dictionary<string, CharacterCLS> FinalResult = new Dictionary<string, CharacterCLS>();
             
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))

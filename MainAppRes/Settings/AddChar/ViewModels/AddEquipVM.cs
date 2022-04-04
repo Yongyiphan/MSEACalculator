@@ -40,7 +40,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         public AddEquipModel AEM { get; set; } = new AddEquipModel();
         public ScrollingModelCLS ScrollM { get; set; } = new ScrollingModelCLS();
 
-        public CheckTypes CT = new CheckTypes();
 
 
         //INIT MODELS END
@@ -672,7 +671,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 if (CItemSelect != null)
                 {
-                    CurrentSEquip = CItemSelect;
+                    CurrentSEquip = CItemSelect.ShallowCopy();
                     SEquipSlot = CItemSelect?.EquipListSlot;
                     SSetItem = ComFunc.ReturnSetCat(SEquipSlot) == "Accessory" ? CItemSelect?.EquipName : CItemSelect?.EquipSet;
                     SelectedWeapon = CItemSelect?.WeaponType;
@@ -690,6 +689,9 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                     ScrollRecord = CItemSelect.ScrollStats.ToRecord();
                     FlameRecord = CItemSelect.FlameStats.ToRecord();
+                    CurrentSEquip.ScrollStats = CItemSelect.ScrollStats;
+                    CurrentSEquip.FlameStats = CItemSelect.FlameStats;
+                    CurrentSEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, CurrentSEquip, AEM.StarforceStore[CurrentStarforceList]);
 
                     UpdateDisplay();
                 }
@@ -712,8 +714,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         //        OnPropertyChanged(nameof(TotalRecordDisplay));
         //    }
         //}
-        private Dictionary<string, StatValue> _TotalRecordDisplay;
-        public Dictionary<string, StatValue> TotalRecordDisplay
+        private Dictionary<string, DisplayStatValue> _TotalRecordDisplay;
+        public Dictionary<string, DisplayStatValue> TotalRecordDisplay
         {
             get => _TotalRecordDisplay;
             set
@@ -1100,7 +1102,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             List<PotentialStatsCLS> BasePotList = IsAddPot ? AEM.AllBonusPotDict : AEM.AllPotDict;
 
             ObservableCollection<PotentialStatsCLS> potList = new ObservableCollection<PotentialStatsCLS>();
-            if (CurrentEquip != null && PotType != -1)
+            if (CurrentEquip != null && PotType != -1 && GVar.UnPottable.Contains(CurrentEquip.EquipSlot) == false)
             {
                 foreach (PotentialStatsCLS lines in BasePotList)
                 {
@@ -1310,64 +1312,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         //    TotalRecordDisplay = DisplayDict;
         //}
         
-        public struct StatValue
-        {
-            public string Key;
-            public string DTotalStat { get; set; }
-            public string DBaseStat { get; set; }
-            public string DScrollStat { get; set; }
-            public string DFlameStat { get; set; }
-            public string DStarforceStat { get; set; }
-
-            public int TotalStat { get; set; }
-            public int BaseStat { get; set; }
-            public int ScrollStat { get; set; }
-            public int FlameStat { get; set; }
-            public int StarforceStat { get; set; }
-
-            public void ReOrgInput()
-            {
-                char[] toTrim = {'+', '%', ' ', ':' };
-                BaseStat = Convert.ToInt32(DBaseStat.Trim(toTrim));
-                ScrollStat = Convert.ToInt32(DScrollStat.Trim(toTrim));
-                FlameStat = Convert.ToInt32(DFlameStat.Trim(toTrim));
-                StarforceStat = Convert.ToInt32(DStarforceStat.Trim(toTrim));
-
-                if (GVar.SpecialStatType.Contains(Key) || Key == "IED")
-                {
-                    DBaseStat      = String.Format("{0}%",  BaseStat);
-                    DScrollStat    = String.Format(" +{0}%", ScrollStat);
-                    DStarforceStat = String.Format(" +{0}%", StarforceStat);
-                    DFlameStat     = String.Format(" +{0}%", FlameStat);
-
-                    DTotalStat     = String.Format(": {0}% ", TotalStat);
-                }
-                else
-                {
-                    DBaseStat      = String.Format("{0}",  BaseStat);
-                    DScrollStat    = String.Format(" +{0}", ScrollStat);
-                    DStarforceStat = String.Format(" +{0}", StarforceStat);
-                    DFlameStat     = String.Format(" +{0}", FlameStat);
-
-                    DTotalStat     = String.Format(": {0} ", TotalStat);
-
-                }
-
-            }
-
-            public int ReturnTotal()
-            {
-                ReOrgInput();
-                TotalStat = BaseStat + ScrollStat + FlameStat + StarforceStat;
-                return TotalStat;
-            } 
-        }
-
         private  void GatherDisplay()
         {
 
             //Dictionary<string, List<string>> ToDisplay = new Dictionary<string, List<string>>();
-            Dictionary<string, StatValue> ToDisplay = new Dictionary<string, StatValue>();
+            Dictionary<string, DisplayStatValue> ToDisplay = new Dictionary<string, DisplayStatValue>();
             Dictionary<string, int> BaseStat = CurrentSEquip.BaseStats.ToRecord();
             Dictionary<string, int> ScrollStat = CurrentSEquip.ScrollStats.ToRecord();
             Dictionary<string, int> FlameStat = CurrentSEquip.FlameStats.ToRecord();
@@ -1375,7 +1324,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             
             foreach(string key in BaseStat.Keys)
             {
-                StatValue temp  = new StatValue();
+                DisplayStatValue temp  = new DisplayStatValue();
                 temp.DBaseStat   = BaseStat[key].ToString();
                 temp.DScrollStat = ScrollStat[key].ToString();
                 temp.DFlameStat  = FlameStat[key].ToString();

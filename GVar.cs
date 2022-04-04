@@ -59,7 +59,10 @@ namespace MSEACalculator
             "Hat", "Top", "Bottom", "Overall", "Cape", "Ring", "Pendant", "Belt", "Shoulderpad", "Shield" ,"Weapon"
         };
 
-
+        public static List<string> UnPottable { get; set; } = new List<string>
+        {
+            "Medal", "Pocket", "Badge"
+        };
 
 
         //TOTAL 20 UNIQUE SLOTS + 3 EXTRA RING + 1 EXTRA PENDANT = 24 SLOTS

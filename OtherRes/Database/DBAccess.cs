@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MSEACalculator.OtherRes;
 namespace MSEACalculator.OtherRes.Database
 {
     public class DBAccess
@@ -60,8 +60,8 @@ namespace MSEACalculator.OtherRes.Database
                             using (SqliteCommand cmd = new SqliteCommand(insertCurrentWeapon, con, trans))
                             {
                                 cmd.Parameters.AddWithValue("@CharName", Character.ClassName);
-                                cmd.Parameters.AddWithValue("@Main", Character.CurrentMainWeapon);
-                                cmd.Parameters.AddWithValue("@Sec", Character.CurrentSecondaryWeapon);
+                                cmd.Parameters.AddWithValue("@Main", (object) Character.CurrentMainWeapon ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("@Sec", (object) Character.CurrentSecondaryWeapon ?? DBNull.Value);
 
                                 try {
                                     cmd.ExecuteNonQuery();

@@ -105,6 +105,7 @@ namespace MSEACalculator.OtherRes.Database
                             }
                         }
                     }
+                    //End Off, (Add Method to gather data from TrackCharWeapons)
 
                    string ScrollET = "SELECT * FROM TrackCharEquipScroll";
                     using (SqliteCommand cmd = new SqliteCommand(ScrollET, dbCon, tran))

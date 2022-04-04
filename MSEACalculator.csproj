@@ -198,6 +198,7 @@
     <Compile Include="OtherRes\Database\Tables\StarForceTable.cs" />
     <Compile Include="OtherRes\Database\Tables\SymbolsTable.cs" />
     <Compile Include="OtherRes\Database\Tables\UnionTable.cs" />
+    <Compile Include="OtherRes\ExtensionMethods.cs" />
     <Compile Include="OtherRes\INPCObject.cs" />
     <Compile Include="OtherRes\Interface\IStatDisplayConverter.cs" />
     <Compile Include="OtherRes\Interface\ITableUpload.cs" />

@@ -671,27 +671,28 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 if (CItemSelect != null)
                 {
-                    CurrentSEquip = CItemSelect.ShallowCopy();
                     SEquipSlot = CItemSelect?.EquipListSlot;
                     SSetItem = ComFunc.ReturnSetCat(SEquipSlot) == "Accessory" ? CItemSelect?.EquipName : CItemSelect?.EquipSet;
                     SelectedWeapon = CItemSelect?.WeaponType;
-                    IsSpellTrace = CItemSelect.IsSpellTraced;
-                    StarforceI = CItemSelect.StarForce;
+                    CurrentSEquip.UpdateFromDB(CItemSelect);
+                    IsSpellTrace = CurrentSEquip.IsSpellTraced;
+                    StarforceI = CurrentSEquip.StarForce;
 
-                    if (CItemSelect.IsSpellTraced)
+
+
+                    if (CurrentSEquip.IsSpellTraced)
                     {
-                        NoSlot = CItemSelect.SlotCount;
-                        string perc = string.Format("{0}%", CItemSelect.SpellTracePerc);
+                        NoSlot = CurrentSEquip.SlotCount;
+                        string perc = string.Format("{0}%", CurrentSEquip.SpellTracePerc);
                         SelectedScrollIndex =  ScrollM.SpellTracePercTypes.IndexOf(perc);
                     }
                     //ScrollRecord = ComFunc.PropertyToRecord(CItemSelect.ScrollStats);
                     //FlameRecord = ComFunc.PropertyToRecord(CItemSelect.FlameStats);
 
-                    ScrollRecord = CItemSelect.ScrollStats.ToRecord();
-                    FlameRecord = CItemSelect.FlameStats.ToRecord();
-                    CurrentSEquip.ScrollStats = CItemSelect.ScrollStats;
-                    CurrentSEquip.FlameStats = CItemSelect.FlameStats;
+                    ScrollRecord = CurrentSEquip.ScrollStats.ToRecord();
+                    FlameRecord = CurrentSEquip.FlameStats.ToRecord();
                     CurrentSEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, CurrentSEquip, AEM.StarforceStore[CurrentStarforceList]);
+                    IsAddPot = false;
 
                     UpdateDisplay();
                 }

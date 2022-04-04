@@ -129,5 +129,23 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             }
         }
        
+
+        public void UpdateFromDB(EquipCLS UpdatedEquip)
+        {
+            EquipListSlot =  UpdatedEquip?.EquipListSlot;
+            StarForce = UpdatedEquip.StarForce;
+            if (UpdatedEquip.SpellTracePerc > 0)
+            {
+                IsSpellTraced = true;
+            }
+            SpellTracePerc = UpdatedEquip.SpellTracePerc;
+            SlotCount = UpdatedEquip.SlotCount;
+            ScrollStats = UpdatedEquip.ScrollStats;
+            FlameStats = UpdatedEquip.FlameStats;
+            MPotGrade = UpdatedEquip.MPotGrade;
+            MainPot = UpdatedEquip.MainPot;
+            APotGrade = UpdatedEquip.APotGrade;
+            AddPot = UpdatedEquip.AddPot;
+        }
      }
 }

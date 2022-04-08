@@ -105,9 +105,26 @@ namespace MSEACalculator.OtherRes.Database
                             }
                         }
                     }
-                    //End Off, (Add Method to gather data from TrackCharWeapons)
 
-                   string ScrollET = "SELECT * FROM TrackCharEquipScroll";
+                    string WeapET = "SELECT * FROM TrackCharWeapons";
+                    using (SqliteCommand cmd = new SqliteCommand(WeapET, dbCon, tran))
+                    {
+                        using(SqliteDataReader result = cmd.ExecuteReader())
+                        {
+                            while (result.Read())
+                            {
+                                string CharName = result.GetString(0);
+                                if (FinalResult.ContainsKey(CharName))
+                                {
+                                    FinalResult[CharName].CurrentMainWeapon = result.GetString(1);  
+                                    FinalResult[CharName].CurrentSecondaryWeapon = result.GetString(2);
+                                }
+                            }
+                            
+                        }
+                    }
+
+                    string ScrollET = "SELECT * FROM TrackCharEquipScroll";
                     using (SqliteCommand cmd = new SqliteCommand(ScrollET, dbCon, tran))
                     {
                         using (SqliteDataReader result = cmd.ExecuteReader())

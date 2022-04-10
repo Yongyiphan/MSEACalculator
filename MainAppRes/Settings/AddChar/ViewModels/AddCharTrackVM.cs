@@ -60,6 +60,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 {
                     CurrentChar = SelectedAllChar;
                     CharTSelect = null;
+                    AddUpdateBtnTxt = "Add";
                     OnChangedCharacter(CurrentChar);
                     addCharTrackCMD.RaiseCanExecuteChanged();
                 }
@@ -77,6 +78,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 lvlI = value;
+                if (int.TryParse(LvlInput, out int lvl))
+                {
+                    CurrentChar.Level = lvl;
+                }
+                
                 OnPropertyChanged(nameof(LvlInput));
                 addCharTrackCMD.RaiseCanExecuteChanged();
             }
@@ -89,6 +95,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _StarF = value;
+                if (int.TryParse(StarF, out int starF))
+                {
+                    CurrentChar.Starforce = starF;
+                }
                 OnPropertyChanged(nameof(StarF));
             }
         }
@@ -107,7 +117,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 {
                     CurrentChar = CharTSelect;
                     SelectedAllChar = null;
+                    AddUpdateBtnTxt = "Update";
+                    LvlInput = CurrentChar.Level.ToString();
+                    StarF = CurrentChar.Starforce.ToString();
                     OnChangedCharacter(CurrentChar);
+                    addCharTrackCMD.RaiseCanExecuteChanged();
                     removeCharTrackCMD.RaiseCanExecuteChanged();
                 }
                 OnPropertyChanged(nameof(CharTSelect));
@@ -126,7 +140,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             AEquipVM = new AddEquipVM(this);
             addCharTrackCMD = new CustomCommand(addChar, canAddChar);
             removeCharTrackCMD = new CustomCommand(removeChar, canRemoveChar);
-            UpdateDBCMD = new CustomCommand(AddCharE, canAddCharE);
+            UpdateDBCMD = new CustomCommand(UpdateDB, canUpdateDB);
             AEquipVM.CItemDictT.CollectionChanged += HandleDictChange;
 
         }
@@ -249,7 +263,18 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         }
 
-        private bool canAddCharE()
+        private string _AddUpdateBtnTxt = "Add";
+        public string AddUpdateBtnTxt
+        {
+            get { return _AddUpdateBtnTxt; }
+            set 
+            {
+                _AddUpdateBtnTxt = value;
+                OnPropertyChanged(nameof(AddUpdateBtnTxt));
+            }
+        }
+
+        private bool canUpdateDB()
         {
             if (AEquipVM.CItemDictT.Count > 0)
             {
@@ -258,7 +283,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             return false;
         }
 
-        private void AddCharE()
+        private void UpdateDB()
         {
 
             //CHECK FOR NULLS
@@ -272,7 +297,19 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
             foreach(CharacterCLS Character in CharTrackList)
             {
+                List<int> TotalStarforce = new List<int>() { Character.Starforce};
+                if(CurrentChar.EquipmentList.Count > 0)
+                {
+                    TotalStarforce.Add(CurrentChar.EquipmentList.Values.ToList().Select(x => x.StarForce).ToList().Sum());
+                }
+                CurrentChar.Starforce = TotalStarforce.Max();
+                CurrentChar.UnionRank = ComFunc.ReturnUnionRank(CurrentChar.ClassName, Character.Level);
 
+                bool InsertResult = DBAccess.InsertCharWithEquip(CurrentChar);
+                if (InsertResult == false)
+                {
+                    continue;    
+                }
             }
 
         }

@@ -1,6 +1,4 @@
-Check on Xenon Equip Stats
+Display spell trace perc
+Display add pot
 
-Allow which spell trace stat to enchance
-Update method for xenon
-
-
+Require Hyperstat table chart

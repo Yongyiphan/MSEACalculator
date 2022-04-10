@@ -130,6 +130,7 @@
     <Compile Include="CalculationRes\ViewPages\ArcaneQMPage.xaml.cs">
       <DependentUpon>ArcaneQMPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CharacterRes\HyperStat.cs" />
     <Compile Include="CharacterRes\IfXenon.cs" />
     <Compile Include="MainAppRes\QuickMathPage.xaml.cs">
       <DependentUpon>QuickMathPage.xaml</DependentUpon>

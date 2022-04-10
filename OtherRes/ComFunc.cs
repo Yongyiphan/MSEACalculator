@@ -678,8 +678,9 @@ namespace MSEACalculator
 
             return result;
         }
+       
         
-
+        
 
 
         //public static bool notNULL(object obj)

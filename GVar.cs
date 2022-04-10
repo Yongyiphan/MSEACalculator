@@ -59,9 +59,12 @@ namespace MSEACalculator
             "Hat", "Top", "Bottom", "Overall", "Cape", "Ring", "Pendant", "Belt", "Shoulderpad", "Shield" ,"Weapon"
         };
 
-        public static List<string> UnPottable { get; set; } = new List<string>
+        
+        public static Dictionary<string, List<string>> EnhanceRestriction { get; set; } = new Dictionary<string, List<string>>()
         {
-            "Medal", "Pocket", "Badge"
+            {"Potential", new List<string>{ "Medal", "Pocket", "Badge"}},//Critical Ring, Onyx Ring, Oz Ring
+            {"Scroll", new List<string> { "Medal", "Pocket", "Badge", "Secondary", "Emblem"} }, //Event Rings
+            {"Flame", new List<string>{ "Ring", "Shoulder", "Medal", "Emblem", "Badge", "Heart", "Secondary" } }
         };
 
 

@@ -128,7 +128,7 @@
                     <TextBox Text="{Binding LvlInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" />
                     <TextBlock Text="Starforce"/>
                     <TextBox Text="{Binding StarF, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
-                    <Button x:Name="AddTrack" Content="Add" Command="{Binding addCharTrackCMD}"/>
+                    <Button x:Name="AddUpateBtn" Content="{Binding AddUpdateBtnTxt}" Command="{Binding addCharTrackCMD}"/>
                     <Button x:Name="RemoveTrack" Content="Remove" Command="{Binding removeCharTrackCMD}"/>
                 </StackPanel>
             </Grid>

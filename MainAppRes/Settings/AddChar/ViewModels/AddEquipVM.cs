@@ -1111,7 +1111,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             List<PotentialStatsCLS> BasePotList = IsAddPot ? AEM.AllBonusPotDict : AEM.AllPotDict;
 
             ObservableCollection<PotentialStatsCLS> potList = new ObservableCollection<PotentialStatsCLS>();
-            if (CurrentEquip != null && PotType != -1 && GVar.UnPottable.Contains(CurrentEquip.EquipSlot) == false)
+            if (CurrentEquip != null && PotType != -1 && !GVar.EnhanceRestriction["Potential"].Contains(CurrentEquip.EquipSlot))
             {
                 foreach (PotentialStatsCLS lines in BasePotList)
                 {

@@ -477,7 +477,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                     if(CItemSelect != null)
                     {
-                        ShowPotential("Fields");
+                        DisplayPotential("Fields");
                     }
                 }
 
@@ -636,6 +636,44 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 OnPropertyChanged(nameof(ShowSEquipStat));
             }
         }
+
+        private Visibility _ShowScroll = Visibility.Visible;
+
+        public Visibility ShowScroll
+        {
+            get { return _ShowScroll; }
+            set { _ShowScroll = value;
+                OnPropertyChanged(nameof(ShowScroll));
+            }
+        }
+        private Visibility _ShowFlame;
+
+        public Visibility ShowFlame
+        {
+            get { return _ShowFlame; }
+            set { _ShowFlame = value;
+                OnPropertyChanged(nameof(ShowFlame));
+            }
+        }
+        private Visibility _ShowPotential;
+
+        public Visibility ShowPotential
+        {
+            get { return _ShowPotential; }
+            set { _ShowPotential = value;
+                OnPropertyChanged(nameof(DisplayPotential));
+            }
+        }
+
+        private Visibility _ShowStarforce = Visibility.Visible;
+        public Visibility ShowStarforce
+        {
+            get { return _ShowStarforce; }
+            set { _ShowStarforce = value;
+                OnPropertyChanged(nameof(ShowStarforce));
+            }
+        }
+            
         #endregion
 
 
@@ -1002,6 +1040,49 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         }
         
+        //End Off
+        private void DisplayEnhancementType()
+        {
+            ShowStarforce = Visibility.Visible;
+            ShowScroll = Visibility.Visible;
+            ShowFlame = Visibility.Visible;
+            ShowPotential = Visibility.Visible;
+
+            if (CurrentSEquip != null)
+            {
+                if (GVar.EnhanceRestriction["Scroll"].Contains(CurrentSEquip.EquipSlot))
+                {
+                    ShowScroll = Visibility.Collapsed;
+                }
+
+                if (GVar.EnhanceRestriction["Flame"].Contains(CurrentSEquip.EquipSlot))
+                {
+                    ShowFlame = Visibility.Collapsed;
+                }
+                if (GVar.EnhanceRestriction["Potential"].Contains(CurrentSEquip.EquipSlot))
+                {
+                    ShowPotential = Visibility.Collapsed;
+                }
+                if (GVar.EnhanceRestriction["Starforce"].Contains(CurrentSEquip.EquipSlot))
+                {
+                    ShowStarforce = Visibility.Collapsed;
+                }
+                if (CurrentSEquip.EquipSlot == "Ring")
+                {
+                    if (CurrentSEquip.EquipName.Contains("Onyx") || CurrentSEquip.EquipName.Contains("Critical Ring") || CurrentSEquip.EquipSet == "Oz")
+                    {
+                        ShowPotential = Visibility.Collapsed;
+                        ShowStarforce = Visibility.Collapsed;
+                    }
+                    if (CurrentSEquip.EquipSet == "Event")
+                    {
+                        ShowScroll = Visibility.Collapsed;
+                        ShowStarforce = Visibility.Collapsed;
+                    }
+                }
+
+            }
+        }
         public void GetCurrentEquipment()
         {
             
@@ -1033,6 +1114,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 StarforceLevels.Insert(0, 0);
 
                 CurrentSEquip = NewEquip;
+
+                DisplayEnhancementType();
             }
 
 
@@ -1350,7 +1433,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             TotalRecordDisplay = ToDisplay;
 
         }
-        private void ShowPotential(string mode)
+        private void DisplayPotential(string mode)
         {
             if (CurrentSEquip != null)
             {
@@ -1420,8 +1503,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
             GatherDisplay();
             //ShowEnteredRecords();
-            ShowPotential("Fields");
-            ShowPotential("Display");
+            DisplayPotential("Fields");
+            DisplayPotential("Display");
 
         }
 

@@ -64,7 +64,8 @@ namespace MSEACalculator
         {
             {"Potential", new List<string>{ "Medal", "Pocket", "Badge"}},//Critical Ring, Onyx Ring, Oz Ring
             {"Scroll", new List<string> { "Medal", "Pocket", "Badge", "Secondary", "Emblem"} }, //Event Rings
-            {"Flame", new List<string>{ "Ring", "Shoulder", "Medal", "Emblem", "Badge", "Heart", "Secondary" } }
+            {"Flame", new List<string>{ "Ring", "Shoulder", "Medal", "Emblem", "Badge", "Heart", "Secondary" } },
+            {"Starforce", new List<string>{"Medal", "Pocket", "Badge", "Emblem", "Secondary"} } //Event Rings, Oz Rings
         };
 
 

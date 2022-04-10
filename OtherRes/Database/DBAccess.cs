@@ -60,8 +60,8 @@ namespace MSEACalculator.OtherRes.Database
                             using (SqliteCommand cmd = new SqliteCommand(insertCurrentWeapon, con, trans))
                             {
                                 cmd.Parameters.AddWithValue("@CharName", Character.ClassName);
-                                cmd.Parameters.AddWithValue("@Main", (object) Character.CurrentMainWeapon ?? DBNull.Value);
-                                cmd.Parameters.AddWithValue("@Sec", (object) Character.CurrentSecondaryWeapon ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("@Main", Character.CurrentMainWeapon ?? string.Empty);
+                                cmd.Parameters.AddWithValue("@Sec", Character.CurrentSecondaryWeapon ?? string.Empty);
 
                                 try {
                                     cmd.ExecuteNonQuery();
@@ -180,9 +180,9 @@ namespace MSEACalculator.OtherRes.Database
                                     cmd.Parameters["@DEX"].Value = equip.FlameStats.DEX;
                                     cmd.Parameters["@INT"].Value= equip.FlameStats.INT;
                                     cmd.Parameters["@LUK"].Value = equip.FlameStats.LUK;
-                                    cmd.Parameters["@HP"].Value = equip.FlameStats.LUK;
-                                    cmd.Parameters["@MP"].Value = equip.FlameStats.MaxHP;
-                                    cmd.Parameters["@DEF"].Value = equip.FlameStats.MaxMP;
+                                    cmd.Parameters["@HP"].Value = equip.FlameStats.MaxHP;
+                                    cmd.Parameters["@MP"].Value = equip.FlameStats.MaxMP;
+                                    cmd.Parameters["@DEF"].Value = equip.FlameStats.DEF;
                                     cmd.Parameters["@ATK"].Value = equip.FlameStats.ATK;
                                     cmd.Parameters["@MATK"].Value = equip.FlameStats.MATK;
                                     cmd.Parameters["@SPD"].Value= equip.FlameStats.SPD;

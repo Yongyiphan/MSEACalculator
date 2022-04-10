@@ -316,8 +316,15 @@ namespace MSEACalculator.CalculationRes
                         }
                         else
                         {
-                            Result.ATK += StatBoost(current.WeapVATK, Result.ATK);
-                            Result.MATK += StatBoost(current.WeapVMATK, Result.MATK);
+                            if (Result.ATK > 0)
+                            {
+                                Result.ATK += StatBoost(current.WeapVATK, Result.ATK);
+                            }
+                            if (Result.MATK > 0)
+                            {
+
+                                Result.MATK += StatBoost(current.WeapVMATK, Result.MATK);
+                            }
                             Result.MaxMP += current.WeapMaxMP;
                             
                         }
@@ -349,8 +356,14 @@ namespace MSEACalculator.CalculationRes
                         }
                         else
                         {
-                            Result.ATK += current.WeapVATKL[lvlRank];
-                            Result.MATK += current.WeapVMATKL[lvlRank];
+                            if (Result.ATK > 0)
+                            {
+                                Result.ATK += current.WeapVATKL[lvlRank];
+                            }
+                            if (Result.MATK > 0)
+                            {
+                                Result.MATK += current.WeapVMATKL[lvlRank];
+                            }
                         }
 
 

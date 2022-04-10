@@ -673,7 +673,15 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 {
                     SEquipSlot = CItemSelect?.EquipListSlot;
                     SSetItem = ComFunc.ReturnSetCat(SEquipSlot) == "Accessory" ? CItemSelect?.EquipName : CItemSelect?.EquipSet;
-                    SelectedWeapon = CItemSelect?.WeaponType;
+                    switch (CItemSelect.EquipSlot)
+                    {
+                        case "Weapon":
+                            SelectedWeapon = SCharacter.CurrentMainWeapon;
+                            break;
+                        case "Secondary":
+                            SelectedWeapon =  SCharacter.CurrentSecondaryWeapon;
+                            break;
+                    } 
                     CurrentSEquip.UpdateFromDB(CItemSelect);
                     IsSpellTrace = CurrentSEquip.IsSpellTraced;
                     StarforceI = CurrentSEquip.StarForce;

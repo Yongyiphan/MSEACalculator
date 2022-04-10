@@ -116,7 +116,7 @@ namespace MSEACalculator.OtherRes.Database
                                 string CharName = result.GetString(0);
                                 if (FinalResult.ContainsKey(CharName))
                                 {
-                                    FinalResult[CharName].CurrentMainWeapon = result.GetString(1);  
+                                    FinalResult[CharName].CurrentMainWeapon =  result.GetString(1);
                                     FinalResult[CharName].CurrentSecondaryWeapon = result.GetString(2);
                                 }
                             }

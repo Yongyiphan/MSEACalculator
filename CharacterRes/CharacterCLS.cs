@@ -47,9 +47,7 @@ namespace MSEACalculator.CharacterRes
         public int Starforce { get; set; }
 
         //EACH CHAR HAS OWN SET OF EQUIPMENT LIST
-        //EACH EQUIPMENT IN LIST HAS OWN BASE / FLAME / SCROLL STATS
-        //:. 
-        //public List<EquipCLS> EquipmentList { get; set; } = new List<EquipCLS>();
+        //EACH EQUIPMENT IN LIST HAS OWN BASE / FLAME / SCROLL / STARFORCE STATS
 
         public Dictionary<string, EquipCLS> EquipmentList { get; set; } = new Dictionary<string, EquipCLS>();
 

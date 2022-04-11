@@ -62,10 +62,18 @@ namespace MSEACalculator
         
         public static Dictionary<string, List<string>> EnhanceRestriction { get; set; } = new Dictionary<string, List<string>>()
         {
-            {"Potential", new List<string>{ "Medal", "Pocket", "Badge"}},//Critical Ring, Onyx Ring, Oz Ring
-            {"Scroll", new List<string> { "Medal", "Pocket", "Badge", "Secondary", "Emblem"} }, //Event Rings
-            {"Flame", new List<string>{ "Ring", "Shoulder", "Medal", "Emblem", "Badge", "Heart", "Secondary" } },
-            {"Starforce", new List<string>{"Medal", "Pocket", "Badge", "Emblem", "Secondary"} } //Event Rings, Oz Rings
+            {"Scroll", new List<string>
+            { "Medal", "Pocket", "Badge", "Secondary", "Emblem"} }, //Event Rings
+
+            {"Flame", new List<string>
+            { "Medal", "Badge", "Ring", "Shoulder", "Heart", "Emblem", "Secondary"}},
+
+             {"Potential", new List<string>
+            { "Medal", "Pocket", "Badge"}},//Critical Ring, Onyx Ring, Oz Ring
+
+
+            {"Starforce", new List<string>
+            {"Medal", "Pocket", "Badge", "Emblem", "Secondary"} } //Event Rings, Oz Rings
         };
 
 

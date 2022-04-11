@@ -277,15 +277,18 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _IsSpellTrace = value;
-                ScrollTypeTxt = IsSpellTrace ? "Perc:" : "Stat:";
-                ShoWSlot = IsSpellTrace ? Visibility.Visible : Visibility.Collapsed;
-                ShowScrollValue = IsSpellTrace ? Visibility.Collapsed : Visibility.Visible;
-                ShowXenonScroll = SCharacter.ClassName == "Xenon" ? Visibility.Visible : Visibility.Collapsed;
-                StatTypes = IsSpellTrace ? ScrollM.SpellTracePercTypes : GVar.BaseStatTypes;
-                if (!IsSpellTrace)
+                if (SCharacter != null)
                 {
-                    NoSlot = 0;
-                    ScrollRecord.Clear();
+                    ScrollTypeTxt = IsSpellTrace ? "Perc:" : "Stat:";
+                    ShoWSlot = IsSpellTrace ? Visibility.Visible : Visibility.Collapsed;
+                    ShowScrollValue = IsSpellTrace ? Visibility.Collapsed : Visibility.Visible;
+                    ShowXenonScroll = SCharacter.ClassName == "Xenon" ? Visibility.Visible : Visibility.Collapsed;
+                    StatTypes = IsSpellTrace ? ScrollM.SpellTracePercTypes : GVar.BaseStatTypes;
+                    if (!IsSpellTrace)
+                    {
+                        NoSlot = 0;
+                        ScrollRecord.Clear();
+                    }
                 }
                 AddEquipmentCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(IsSpellTrace));
@@ -637,35 +640,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private Visibility _ShowScroll = Visibility.Visible;
 
-        public Visibility ShowScroll
-        {
-            get { return _ShowScroll; }
-            set { _ShowScroll = value;
-                OnPropertyChanged(nameof(ShowScroll));
-            }
-        }
-        private Visibility _ShowFlame;
-
-        public Visibility ShowFlame
-        {
-            get { return _ShowFlame; }
-            set { _ShowFlame = value;
-                OnPropertyChanged(nameof(ShowFlame));
-            }
-        }
-        private Visibility _ShowPotential;
-
-        public Visibility ShowPotential
-        {
-            get { return _ShowPotential; }
-            set { _ShowPotential = value;
-                OnPropertyChanged(nameof(DisplayPotential));
-            }
-        }
-
-        private Visibility _ShowStarforce = Visibility.Visible;
+        private Visibility _ShowStarforce = Visibility.Collapsed;
         public Visibility ShowStarforce
         {
             get { return _ShowStarforce; }
@@ -826,14 +802,19 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
 
         //TOGGLE DIFFERENT INPUT FRAMES
-        private ListViewItem _FrameSelection;
-        public ListViewItem FrameSelection
+        public ObservableCollection<string> EnhancementType { get; set; } = new ObservableCollection<string>();
+
+        private string _FrameSelection;
+        public string FrameSelection
         {
             get { return _FrameSelection; }
             set
             {
                 _FrameSelection = value;
-                RedirectDisplayFrame(FrameSelection.Content.ToString());
+                if(FrameSelection != null)
+                {
+                    RedirectDisplayFrame(FrameSelection);
+                }
                 OnPropertyChanged(nameof(FrameSelection));
 
             }
@@ -1044,25 +1025,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         private void DisplayEnhancementType()
         {
             ShowStarforce = Visibility.Visible;
-            ShowScroll = Visibility.Visible;
-            ShowFlame = Visibility.Visible;
-            ShowPotential = Visibility.Visible;
 
+            EnhancementType.Clear();
             if (CurrentSEquip != null)
             {
-                if (GVar.EnhanceRestriction["Scroll"].Contains(CurrentSEquip.EquipSlot))
-                {
-                    ShowScroll = Visibility.Collapsed;
-                }
-
-                if (GVar.EnhanceRestriction["Flame"].Contains(CurrentSEquip.EquipSlot))
-                {
-                    ShowFlame = Visibility.Collapsed;
-                }
-                if (GVar.EnhanceRestriction["Potential"].Contains(CurrentSEquip.EquipSlot))
-                {
-                    ShowPotential = Visibility.Collapsed;
-                }
                 if (GVar.EnhanceRestriction["Starforce"].Contains(CurrentSEquip.EquipSlot))
                 {
                     ShowStarforce = Visibility.Collapsed;
@@ -1071,13 +1037,25 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 {
                     if (CurrentSEquip.EquipName.Contains("Onyx") || CurrentSEquip.EquipName.Contains("Critical Ring") || CurrentSEquip.EquipSet == "Oz")
                     {
-                        ShowPotential = Visibility.Collapsed;
-                        ShowStarforce = Visibility.Collapsed;
+                        EnhancementType.Clear();
                     }
                     if (CurrentSEquip.EquipSet == "Event")
                     {
-                        ShowScroll = Visibility.Collapsed;
-                        ShowStarforce = Visibility.Collapsed;
+                        EnhancementType.Add("Potential");  
+                    }
+                }
+                else
+                {
+                    foreach(string ET in GVar.EnhanceRestriction.Keys)
+                    {
+                        if (ET == "Starforce")
+                        {
+                            continue;
+                        }
+                        if (!GVar.EnhanceRestriction[ET].Contains(CurrentSEquip.EquipSlot))
+                        {
+                            EnhancementType.Add(ET);
+                        }
                     }
                 }
 
@@ -1085,7 +1063,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
         public void GetCurrentEquipment()
         {
-            
+            FrameSelection = null;
 
             if (SCharacter != null && SSetItem != null)
             {

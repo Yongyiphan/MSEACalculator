@@ -57,10 +57,11 @@
                 </StackPanel>
                 <SplitView IsPaneOpen="True" OpenPaneLength="100" DisplayMode="Inline">
                     <SplitView.Pane>
-                        <ListView SelectedValue="{Binding FrameSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                            <ListViewItem Content="Scroll"    Visibility="{Binding ShowScroll}"/>
+                        <ListView SelectedValue="{Binding FrameSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  ItemsSource="{Binding EnhancementType}">
+                            <!--<ListViewItem Content="Scroll"    Visibility="{Binding ShowScroll}"/>
                             <ListViewItem Content="Flame"     Visibility="{Binding ShowFlame}"/>
-                            <ListViewItem Content="Potential" Visibility="{Binding ShowPotential}"/>
+                            <ListViewItem Content="Potential" Visibility="{Binding ShowPotential}"/>-->
                         </ListView>
                     </SplitView.Pane>
                     <SplitView.Content>

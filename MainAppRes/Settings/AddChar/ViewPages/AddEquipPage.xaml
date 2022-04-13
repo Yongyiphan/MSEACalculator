@@ -44,8 +44,8 @@
                         <ComboBox x:Name="WeapType" Visibility="{Binding ShowWeapon, Mode=TwoWay}"
                                   ItemsSource="{Binding CharacterWeapon, Mode=TwoWay}"
                                     SelectedItem="{Binding SelectedWeapon, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <TextBlock Text="Starforce: " Visibility="{Binding ShowStarforce}"/>
-                    <ComboBox ItemsSource="{Binding StarforceLevels, Mode=TwoWay}" Visibility="{Binding ShowStarforce}"
+                    <TextBlock Text="Starforce: " Visibility="{Binding ShowStarforce, Mode=TwoWay}"/>
+                    <ComboBox ItemsSource="{Binding StarforceLevels, Mode=TwoWay}" Visibility="{Binding ShowStarforce, Mode=TwoWay}"
                               SelectedValue="{Binding StarforceI, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
 
                 </StackPanel>
@@ -55,24 +55,18 @@
                     <Button x:Name="DelItemCMD" Content="Delete Equipment" Margin=" 5 5 0 2"
                         Command="{Binding DelEquipmentCMD}"/>
                 </StackPanel>
-                <SplitView IsPaneOpen="True" OpenPaneLength="100" DisplayMode="Inline">
-                    <SplitView.Pane>
-                        <ListView SelectedValue="{Binding FrameSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                  ItemsSource="{Binding EnhancementType}">
-                            <!--<ListViewItem Content="Scroll"    Visibility="{Binding ShowScroll}"/>
-                            <ListViewItem Content="Flame"     Visibility="{Binding ShowFlame}"/>
-                            <ListViewItem Content="Potential" Visibility="{Binding ShowPotential}"/>-->
-                        </ListView>
-                    </SplitView.Pane>
-                    <SplitView.Content>
-                        <ScrollViewer HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
-                            <Grid>
-                                <Frame Content="{Binding FrameDis, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </Grid>
-                        </ScrollViewer>
-
-                    </SplitView.Content>
-                </SplitView>
+                    <SplitView IsPaneOpen="True" OpenPaneLength="100" DisplayMode="Inline">
+                        <SplitView.Pane>
+                            <ListView SelectedValue="{Binding FrameSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  ItemsSource="{Binding EnhancementType, Mode=TwoWay}">
+                            </ListView>
+                        </SplitView.Pane>
+                        <SplitView.Content>
+                                <Grid>
+                                    <Frame Content="{Binding FrameDis, Mode=OneWay}"/>
+                                </Grid>
+                        </SplitView.Content>
+                    </SplitView>
             </StackPanel>
             
             
@@ -83,7 +77,7 @@
                 
         <!--<TextBlock Text="{Binding TestVar}"/>-->
         
-                <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                <ScrollViewer VerticalScrollBarVisibility="Visible" >
                     <SplitView IsPaneOpen="True" OpenPaneLength="150" DisplayMode="Inline">
                         <SplitView.Pane>
                             <Grid>

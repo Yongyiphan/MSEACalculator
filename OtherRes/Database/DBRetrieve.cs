@@ -88,10 +88,17 @@ namespace MSEACalculator.OtherRes.Database
                                 EquipCLS Equip = new EquipCLS();
                                 Equip.ClassType = result.GetString(1);
                                 Equip.EquipListSlot = result.GetString(2);
-                                Equip.EquipSet = result.GetString(3);
                                 Equip.StarForce = result.GetInt32(4);
 
                                 Equip.EquipSlot = ComFunc.ReturnRingPend(Equip.EquipListSlot);
+                                if (Equip.EquipSlot == "Secondary" || GVar.AccEquips.Contains(Equip.EquipSlot))
+                                {
+                                    Equip.EquipName = result.GetString(3);
+                                }
+                                else 
+                                { 
+                                    Equip.EquipSet = result.GetString(3);
+                                }
 
                                 Dictionary<string, EquipCLS> CurrentEList = FinalResult[CharName].EquipmentList;
                                 if (!CurrentEList.ContainsKey(Equip.EquipListSlot))

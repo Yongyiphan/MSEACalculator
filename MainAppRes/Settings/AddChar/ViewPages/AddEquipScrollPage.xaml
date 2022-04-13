@@ -10,7 +10,7 @@
     
     <Grid>
 
-        <StackPanel>
+        <StackPanel Style="{StaticResource SP}">
             <!--SCROLLING RECORDS-->
             <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
                 <!--Check if equip is spell traced-->
@@ -33,7 +33,7 @@
                 <!--Stat or spell trace perc-->
                 <TextBlock Text="{Binding ScrollTypeTxt}"/>
                 <ComboBox ItemsSource="{Binding StatTypes}" 
-                            SelectedIndex="{Binding SelectedScrollIndex, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"
+                            SelectedIndex="{Binding SelectedScrollIndex,Mode=TwoWay}"
                             SelectedItem="{Binding SelectedScrollStat, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                 
                 <TextBlock Text="Value" Visibility="{Binding ShowScrollValue}"/>

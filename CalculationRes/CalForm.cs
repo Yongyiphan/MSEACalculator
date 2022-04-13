@@ -261,15 +261,11 @@ namespace MSEACalculator.CalculationRes
             //BASE + SCROLLED STATS
             ScaledStats.ModifyEquipStat(CEquip.ScrollStats, "Add");
 
-            List<string> NonStarable = new List<string>()
-            {
-                "Emblem", "Badge", "Secondary", "Medal"
-            };
             int lvlRank = ComFunc.ReturnSFLevelRank(CEquip.EquipLevel);
 
             EquipStatsCLS Result = ScaledStats.ShallowCopy();
 
-            if (NonStarable.Contains(CEquip.EquipSlot) == false && CEquip.StarForce >  0)
+            if (GVar.EnhanceRestriction["Starforce"].Contains(CEquip.EquipSlot) == false && CEquip.StarForce >  0)
             {
                 for (int i = 0; i<CEquip.StarForce; i++)
                 {

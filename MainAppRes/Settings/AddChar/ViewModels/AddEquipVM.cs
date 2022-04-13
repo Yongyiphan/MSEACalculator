@@ -460,7 +460,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         private bool _isAddPot = false;
         public bool IsAddPot
         {
-            get => _isAddPot;
+            get { return _isAddPot; }
             set
             {
                 _isAddPot = value;
@@ -665,13 +665,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        //public EventHandler<ObservableCollection<EquipCLS>> CItemDictChanged;
-        //private void OnDictChanged(ObservableCollection<EquipCLS> EC)
-        //{
-        //    CItemDictChanged?.Invoke(this, EC);
-        //}
-
-
 
         private EquipCLS _CItemSelect;
 
@@ -705,8 +698,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                     if (CurrentSEquip.IsSpellTraced)
                     {
                         NoSlot = CurrentSEquip.SlotCount;
-                        string perc = string.Format("{0}%", CurrentSEquip.SpellTracePerc);
-                        SelectedScrollIndex =  ScrollM.SpellTracePercTypes.IndexOf(perc);
+                        SelectedScrollStat = string.Format("{0}%", CurrentSEquip.SpellTracePerc);
+                        //SelectedScrollIndex =  ScrollM.SpellTracePercTypes.IndexOf(perc);
                     }
                     //ScrollRecord = ComFunc.PropertyToRecord(CItemSelect.ScrollStats);
                     //FlameRecord = ComFunc.PropertyToRecord(CItemSelect.FlameStats);
@@ -811,17 +804,28 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             set
             {
                 _FrameSelection = value;
-                if(FrameSelection != null)
-                {
-                    RedirectDisplayFrame(FrameSelection);
-                }
+                RedirectDisplayFrame(FrameSelection);
                 OnPropertyChanged(nameof(FrameSelection));
 
             }
         }
+
+        //private Frame _FrameDis = new Frame();
+        //public Frame FrameDis
+        //{
+        //    get => _FrameDis;
+        //    set
+        //    {
+        //        _FrameDis = value;
+        //        if (FrameDis.Content == null)
+        //        {
+        //            FrameDis.Navigate(typeof(BlankPage), null);
+        //        }
+        //        OnPropertyChanged(nameof(FrameDis));
+        //    }
+        //}
         public Frame FrameDis { get; set; } = new Frame();
 
-        
 
         private bool _SyncCI = false;
         public bool SyncCI
@@ -1021,28 +1025,30 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         }
         
-        //End Off
         private void DisplayEnhancementType()
         {
-            ShowStarforce = Visibility.Visible;
 
             EnhancementType.Clear();
             if (CurrentSEquip != null)
             {
-                if (GVar.EnhanceRestriction["Starforce"].Contains(CurrentSEquip.EquipSlot))
-                {
-                    ShowStarforce = Visibility.Collapsed;
-                }
+                ShowStarforce = GVar.EnhanceRestriction["Starforce"].Contains(CurrentSEquip.EquipSlot)  ? Visibility.Collapsed : Visibility.Visible;
+
                 if (CurrentSEquip.EquipSlot == "Ring")
                 {
                     if (CurrentSEquip.EquipName.Contains("Onyx") || CurrentSEquip.EquipName.Contains("Critical Ring") || CurrentSEquip.EquipSet == "Oz")
                     {
                         EnhancementType.Clear();
                     }
-                    if (CurrentSEquip.EquipSet == "Event")
+                    else if (CurrentSEquip.EquipSet == "Event")
                     {
                         EnhancementType.Add("Potential");  
                     }
+                    else
+                    {
+                        EnhancementType.Add("Scroll");
+                        EnhancementType.Add("Potential");
+                    }
+
                 }
                 else
                 {
@@ -1063,10 +1069,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         }
         public void GetCurrentEquipment()
         {
-            FrameSelection = null;
-
+            
             if (SCharacter != null && SSetItem != null)
             {
+                
+                IsSpellTrace = false;
+                IsAddPot = false;
+
                  
                 string currentSSlot = ComFunc.ReturnRingPend(SEquipSlot);
 
@@ -1286,102 +1295,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             return selectedEquip;
         }
 
-
-        //private void ShowEnteredRecords()
-        //{
-        //    //Dictionary<string, int> BaseStat = ComFunc.PropertyToRecord(CurrentSEquip.BaseStats);
-        //    Dictionary<string, int> BaseStat = CurrentSEquip.BaseStats.ToRecord(); 
-        //    Dictionary<string, string> DisplayDict = new Dictionary<string, string>();
-        //    foreach(string dictKey in BaseStat.Keys)
-        //    {
-        //        if(BaseStat[dictKey] != 0)
-        //        {
-        //            int curretValue = BaseStat[dictKey];
-        //            if (DisplayDict.ContainsKey(dictKey))
-        //            {
-        //                DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
-        //            }
-        //            else
-        //            {
-        //                DisplayDict[dictKey] = String.Format("{0}: {1}",dictKey, curretValue);
-        //            }
-        //        }
-        //    }
-
-        //    foreach(string dictKey in ScrollRecord.Keys)
-        //    {
-        //        if(ScrollRecord[dictKey] != 0)
-        //        {
-        //            int curretValue = ScrollRecord[dictKey];
-        //            if (DisplayDict.ContainsKey(dictKey))
-        //            {
-        //                DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
-        //            }
-        //            else
-        //            {
-
-        //                DisplayDict[dictKey] = String.Format("{0}: 0 + {1}",dictKey, curretValue);
-        //            }
-        //        }
-        //    }
-        //    //Dictionary<string, int> StarforceRecord = ComFunc.PropertyToRecord(CurrentSEquip.StarforceStats);
-
-        //    Dictionary<string, int> StarforceRecord = CurrentSEquip.StarforceStats.ToRecord(); 
-        //    foreach (string dictKey in StarforceRecord.Keys)
-        //    {
-        //        if(StarforceRecord[dictKey] != 0)
-        //        {
-        //            int curretValue = StarforceRecord[dictKey];
-        //            if (DisplayDict.ContainsKey(dictKey))
-        //            {
-        //                DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
-        //            }
-        //            else
-        //            {
-
-        //                DisplayDict[dictKey] = String.Format("{0}: 0 + {1}",dictKey, curretValue);
-        //            }
-        //        }
-        //    }
-
-
-        //    foreach(string dictKey in FlameRecord.Keys)
-        //    {
-        //        if(FlameRecord[dictKey] != 0)
-        //        {
-        //            int curretValue = FlameRecord[dictKey];
-        //            if (DisplayDict.ContainsKey(dictKey))
-        //            {
-        //                if (GVar.SpecialStatType.Contains(dictKey) || dictKey == "IED")
-        //                {
-        //                    DisplayDict[dictKey] = String.Format("{0} + {1}%", DisplayDict[dictKey], curretValue);
-        //                }
-        //                else
-        //                {
-        //                    DisplayDict[dictKey] = String.Format("{0} + {1}", DisplayDict[dictKey], curretValue);
-        //                }
-                        
-        //            }
-        //            else
-        //            {
-        //                if (GVar.SpecialStatType.Contains(dictKey) || dictKey == "IED")
-        //                {
-        //                    DisplayDict[dictKey] = String.Format("{0}: 0 + {1}%", DisplayDict[dictKey], curretValue);
-        //                }
-        //                else
-        //                {
-        //                    DisplayDict[dictKey] = String.Format("{0}: 0 + {1}", dictKey, curretValue);
-        //                }
-                        
-        //            }
-        //        }
-        //    }
-
-            
-
-        //    TotalRecordDisplay = DisplayDict;
-        //}
-        
+    
         private  void GatherDisplay()
         {
 
@@ -1488,19 +1402,20 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         public void RedirectDisplayFrame(string targetStr)
         {
+            FrameDis.DataContext = this;
             switch (targetStr)
             {
                 case "Scroll":
                     FrameDis.Navigate(typeof(AddEquipScrollPage));
-                    FrameDis.DataContext = this;
                     break;
                 case "Flame":
                     FrameDis.Navigate(typeof(AddEquipFlamePage));
-                    FrameDis.DataContext = this;
                     break;
                 case "Potential":
                     FrameDis.Navigate(typeof(AddEquipPotentialPage));
-                    FrameDis.DataContext = this;
+                    break;
+                case null:
+                    FrameDis.Navigate(typeof(BlankPage));
                     break;
                 default:
                     break;

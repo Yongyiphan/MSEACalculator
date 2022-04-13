@@ -123,8 +123,8 @@ namespace MSEACalculator.OtherRes.Database
                                         "ClassType = @ClassType, " +
                                         "EquipSlot = @EquipSlot, " +
                                         "EquipSet = @EquipSet," +
-                                        "Starforce = @Starforce, " +
-                                        "WHERE CharName = @CharName;";
+                                        "Starforce = @Starforce " +
+                                        "WHERE CharName = @CharName AND EquipSlot = @EquipSlot;";
                                     cmd.ExecuteNonQuery(); 
                                 }
 

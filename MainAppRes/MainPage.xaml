@@ -27,7 +27,7 @@
 
 
 
-            <ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Visible">
                 <Frame x:Name="ContentFrame" Padding="20" ></Frame>
             </ScrollViewer>
 

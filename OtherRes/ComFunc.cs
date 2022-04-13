@@ -363,7 +363,7 @@ namespace MSEACalculator
                         {
                             if (equip.EquipName == ESet)
                             {
-                                if (equip.ClassType == SCharacter.ClassName || equip.ClassType == ClassType)
+                                if (equip.ClassType == SCharacter.ClassName || equip.ClassType == SCharacter.Faction || equip.ClassType == ClassType)
                                 {
                                     returnedEquip =  equip;
                                     if (equip.WeaponType.Contains("Demon Aegis")){

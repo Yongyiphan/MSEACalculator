@@ -9,12 +9,8 @@
 
     <Grid>
         <!--POTENTIAL RECORDS-->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <StackPanel>
+        <StackPanel Orientation="Horizontal">
+             <StackPanel>
                 <CheckBox Content="Add Pot?" Margin="10 0" IsChecked="{Binding IsAddPot, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <StackPanel Orientation="Horizontal">
@@ -25,10 +21,7 @@
                           RelativePanel.RightOf="txtGrade"/>
                 </StackPanel>
             </StackPanel>
-
-        </Grid>
-        <Grid Grid.Column="1">
-            <StackPanel Style="{StaticResource SP}">
+            <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Line 1"/>
                     <ComboBox ItemsSource="{Binding FirstPotL, Mode=TwoWay}" DisplayMemberPath="DisplayStat"
@@ -47,8 +40,6 @@
                               SelectedItem="{Binding ThirdLine, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>
-        </Grid>
-        
-        
+        </StackPanel>        
     </Grid>
 </Page>

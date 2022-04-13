@@ -132,6 +132,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         equip.BaseStats.SS = Convert.ToInt32(temp[7]);
                         equip.BaseStats.AllStat = Convert.ToInt32(temp[8]);
 
+
                         equip.BaseStats.HP = temp[9];
                         equip.BaseStats.MP = temp[10];
                         equip.BaseStats.DEF = Convert.ToInt32(temp[11]);
@@ -180,9 +181,25 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             equipModel.BaseStats.MS = reader.GetInt32(5);
                             equipModel.BaseStats.SS = reader.GetInt32(6);
                             equipModel.BaseStats.AllStat = reader.GetInt32(7);
+    
+                            if (reader.GetString(8).Contains('%'))
+                            {
+                                equipModel.BaseStats.HP = reader.GetString(8);
 
-                            equipModel.BaseStats.HP = reader.GetString(8);
-                            equipModel.BaseStats.MP = reader.GetString(9);
+                            }
+                            else
+                            {
+                                equipModel.BaseStats.MaxHP = Convert.ToInt32(reader.GetString(8));
+                            }
+
+                            if (reader.GetString(9).Contains('%'))
+                            {
+                                equipModel.BaseStats.MP = reader.GetString(9);
+                            }
+                            else
+                            {
+                                equipModel.BaseStats.MaxMP = Convert.ToInt32(reader.GetString(9));
+                            }
                             equipModel.BaseStats.DEF = reader.GetInt32(10);
                             equipModel.BaseStats.ATK = reader.GetInt32(11);
                             equipModel.BaseStats.MATK = reader.GetInt32(12);

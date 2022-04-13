@@ -16,7 +16,7 @@
                 
             </NavigationView.MenuItems>
 
-            <ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Visible">
                 <Frame x:Name="QMContent"/>
             </ScrollViewer>
         </NavigationView>

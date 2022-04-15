@@ -198,7 +198,7 @@ namespace MSEACalculator.OtherRes.Database
                                     catch (SqliteException)
                                     {
                                         cmd.CommandText  = "UPDATE TrackCharEquipFlame SET " +
-                                            "ClaaType = @ClassType, " +
+                                            "ClassType = @ClassType, " +
                                             "EquipSet = @EquipSet, " +
                                             "STR = @STR, " +
                                             "DEX = @DEX, " +

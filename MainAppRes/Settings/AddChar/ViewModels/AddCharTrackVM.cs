@@ -262,7 +262,6 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
 
         }
-        //End off Write method to mass update equipment list.
         private string _AddUpdateBtnTxt = "Add";
         public string AddUpdateBtnTxt
         {

@@ -170,7 +170,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 {
                     GetCurrentEquipment();
                 }
-
+                //End Off
                 if (CurrentSEquip != null)
                 {
                     if(SEquipSlot == "Secondary")
@@ -961,6 +961,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 CItemDictT.Add(CurrentSEquip);
                 ResetInput();
             }
+            CurrentSEquip = null;
             
             AddEquipmentCMD.RaiseCanExecuteChanged();
             ACharTrackVM.UpdateDBCMD.RaiseCanExecuteChanged();

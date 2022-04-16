@@ -377,6 +377,7 @@ namespace MSEACalculator
                                     {
                                         returnedEquip.EquipSlot = "Secondary";
                                     }
+                                    returnedEquip.ClassType = ClassType;
 
                                     return returnedEquip;
                                 }

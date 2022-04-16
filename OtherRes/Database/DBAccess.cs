@@ -279,6 +279,33 @@ namespace MSEACalculator.OtherRes.Database
             return insertPassed;
         }
 
+        public static bool DeleteCharEquip(CharacterCLS Character, EquipCLS Equip)
+        {
+            bool delPassed = false;
+            string delQuery = @"DELETE FROM TrackCharEquip WHERE CharName = @CharName AND EquipSlot = @EquipSlot";
+            
+            using (SqliteConnection con = new SqliteConnection(GVar.CONN_STRING))
+            {
+                con.Open();
+                using(SqliteCommand cmd = new SqliteCommand(delQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@CharName", Character.ClassName);
+                    cmd.Parameters.AddWithValue("@EquipSlot", Equip.EquipListSlot);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        delPassed = true;
+                    }
+                    catch(Exception ex)
+                    {
+                        delPassed = false;
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+            return delPassed;
+        }
 
         public static List<BossCLS> getCharBossList(string character)
         {

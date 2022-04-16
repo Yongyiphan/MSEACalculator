@@ -98,6 +98,12 @@ namespace MSEACalculator
             "Cape", "Gloves", "Shoes"
         };
 
+        public static List<string> GrpByName { get; set; } = new List<string>
+        {
+
+        };
+
+
         //+ WEAPON
         //+ SECONDARY/ SHIELD
 

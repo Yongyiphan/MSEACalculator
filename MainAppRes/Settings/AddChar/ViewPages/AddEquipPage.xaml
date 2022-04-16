@@ -20,9 +20,7 @@
                     <TextBlock Text="Equip Slot"/>
                     <ComboBox x:Name="EquipmentSlot"
                             ItemsSource="{Binding EquipSlots}" 
-                            DisplayMemberPath="Key" 
                             SelectedValue="{Binding SEquipSlot, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                            SelectedValuePath="Key"
                             />
                     <TextBlock Text="Class Type: " Visibility="{Binding ShowXenonClassType, Mode=TwoWay}"/>
                     <ComboBox ItemsSource="{Binding AEM.XenonClassType, Mode=TwoWay}"

@@ -77,7 +77,17 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                         {
                             continue;
                         }
-                        test.Add(cObj.GetType().GetProperty(prop.Name).GetValue(cObj, null) == prop.GetValue(this) ? "true" : "false");
+                        var cValue = prop.GetValue(this);
+                        var nValue = cObj.GetType().GetProperty(prop.Name).GetValue(obj);
+                        if(cValue == null || nValue == null)
+                        {
+
+                            test.Add(nValue == cValue ? "true" : "false");
+                        }
+                        else
+                        {
+                            test.Add(nValue.Equals(cValue) ? "true" : "false");
+                        }
 
                     }
 

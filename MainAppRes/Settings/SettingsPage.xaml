@@ -27,8 +27,8 @@
         <Grid Grid.Row="1">
             <TextBlock Text="{Binding TimeElapsed}" VerticalAlignment="Center" HorizontalAlignment="Left" Height="100"/>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                <Button Content="Reset Track Record"  Command="{Binding resetDBTableCMD }" />
-                <Button Content="Reset DB" Command="{Binding resetDBBlankCMD}" />
+                <Button Content="Reset Track Record"  Command="{Binding resetDBBlankCMD }" />
+                <Button Content="Reset DB" Command="{Binding resetDBTableCMD}" />
             </StackPanel>
             
         </Grid>

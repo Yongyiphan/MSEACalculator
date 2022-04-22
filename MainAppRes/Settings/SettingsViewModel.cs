@@ -33,7 +33,7 @@ namespace MSEACalculator.MainAppRes.Settings
         {
             var timer = new Stopwatch();
             timer.Start();
-            var resetDB = DatabaseINIT.BlankTablesInit();
+            var resetDB = DatabaseINIT.DBInit();
             timer.Stop();
 
             TimeSpan timeTaken = timer.Elapsed;
@@ -51,7 +51,7 @@ namespace MSEACalculator.MainAppRes.Settings
         {
             var timer = new Stopwatch();
             timer.Start();
-            var resetDB = DatabaseINIT.DBInit();
+            var resetDB = DatabaseINIT.BlankTablesInit();
             timer.Stop();
 
             TimeSpan timeTaken = timer.Elapsed;

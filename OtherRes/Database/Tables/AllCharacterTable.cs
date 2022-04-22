@@ -71,14 +71,14 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         }
                         catch (Exception ex)
                         {
-                            string updateQuery = "UPDATE " + TableName + "" +
+                            string updateQuery = "UPDATE " + TableName + " " +
                                 "SET " +
-                                "ClassType = @ClassType," +
-                                "Faction = @Faction," +
-                                "MainStat = @MainStat," +
-                                "SecStat = @SecStat," +
-                                "UnionE = @UnionE," +
-                                "UnionET = @UnionET" +
+                                "ClassType = @ClassType, " +
+                                "Faction = @Faction, " +
+                                "MainStat = @MainStat, " +
+                                "SecStat = @SecStat, " +
+                                "UnionE = @UnionE, " +
+                                "UnionET = @UnionET " +
                                 "WHERE ClassName = @ClassName";
                             insertCMD.CommandText = updateQuery;
                             insertCMD.ExecuteNonQuery();
@@ -196,7 +196,6 @@ namespace MSEACalculator.OtherRes.Database.Tables
             {
                 base.InitTable(connection, transaction);
             }
-
         }
     }
 }

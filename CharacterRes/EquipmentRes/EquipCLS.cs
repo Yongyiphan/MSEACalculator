@@ -124,7 +124,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
             //Update from Main/Sec Stats to Stat Values STR|DEX|...
             //Keep MS/SS property
-            int mainStat = BaseStats.MS, secStat = BaseStats.SS, AS = BaseStats.AllStat;
+            int AS = BaseStats.AllStat;
             if (AS > 0)
             {
                 BaseStats.STR = AS;
@@ -132,10 +132,6 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                 BaseStats.INT = AS;
                 BaseStats.LUK = AS;
                 BaseStats.AllStat = 0;
-            }
-            else
-            {
-                BaseStats.InitEquipStat(ClassType, mainStat, secStat);
             }
         }
        

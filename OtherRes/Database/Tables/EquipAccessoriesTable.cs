@@ -22,8 +22,10 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     "ClassType  string," +
                     "EquipSlot string," +
                     "EquipLevel int," +
-                    "MainStat int," +
-                    "SecStat int," +
+                    "STR int," +
+                    "DEX int," +
+                    "INT int," +
+                    "LUK int," +
                     "AllStat int," +
                     "HP string," +
                     "MP string," +
@@ -64,8 +66,10 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@EquipSlot", Aitem.EquipSlot);
                         insertCMD.Parameters.AddWithValue("@EquipLevel", Aitem.EquipLevel);
 
-                        insertCMD.Parameters.AddWithValue("@MainStat", Aitem.BaseStats.MS);
-                        insertCMD.Parameters.AddWithValue("@SecStat", Aitem.BaseStats.SS);
+                        insertCMD.Parameters.AddWithValue("@STR", Aitem.BaseStats.STR);
+                        insertCMD.Parameters.AddWithValue("@DEX", Aitem.BaseStats.DEX);
+                        insertCMD.Parameters.AddWithValue("@INT", Aitem.BaseStats.INT);
+                        insertCMD.Parameters.AddWithValue("@LUK", Aitem.BaseStats.LUK);
                         insertCMD.Parameters.AddWithValue("@AllStat", Aitem.BaseStats.AllStat);
                         insertCMD.Parameters.AddWithValue("@HP", Aitem.BaseStats.HP);
                         insertCMD.Parameters.AddWithValue("@MP", Aitem.BaseStats.MP);
@@ -128,20 +132,22 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         equip.EquipSlot = temp[4];
 
                         equip.EquipLevel = Convert.ToInt32(temp[5]);
-                        equip.BaseStats.MS = Convert.ToInt32(temp[6]);
-                        equip.BaseStats.SS = Convert.ToInt32(temp[7]);
-                        equip.BaseStats.AllStat = Convert.ToInt32(temp[8]);
+                        equip.BaseStats.STR = Convert.ToInt32(temp[6]);
+                        equip.BaseStats.DEX = Convert.ToInt32(temp[7]);
+                        equip.BaseStats.INT = Convert.ToInt32(temp[8]);
+                        equip.BaseStats.LUK = Convert.ToInt32(temp[9]);
+                        equip.BaseStats.AllStat = Convert.ToInt32(temp[10]);
 
 
-                        equip.BaseStats.HP = temp[9];
-                        equip.BaseStats.MP = temp[10];
-                        equip.BaseStats.DEF = Convert.ToInt32(temp[11]);
-                        equip.BaseStats.ATK = Convert.ToInt32(temp[12]);
-                        equip.BaseStats.MATK = Convert.ToInt32(temp[13]);
+                        equip.BaseStats.HP = temp[11];
+                        equip.BaseStats.MP = temp[12];
+                        equip.BaseStats.DEF = Convert.ToInt32(temp[13]);
+                        equip.BaseStats.ATK = Convert.ToInt32(temp[14]);
+                        equip.BaseStats.MATK = Convert.ToInt32(temp[15]);
 
-                        equip.BaseStats.SPD = Convert.ToInt32(temp[14]);
-                        equip.BaseStats.JUMP = Convert.ToInt32(temp[15]);
-                        equip.BaseStats.IED = Convert.ToInt32(temp[16]);
+                        equip.BaseStats.SPD = Convert.ToInt32(temp[16]);
+                        equip.BaseStats.JUMP = Convert.ToInt32(temp[17]);
+                        equip.BaseStats.IED = Convert.ToInt32(temp[18]);
 
 
                         AccessoriesList.Add(equip);
@@ -178,35 +184,37 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             equipModel.EquipSlot = reader.GetString(3);
                             equipModel.EquipLevel = reader.GetInt32(4);
 
-                            equipModel.BaseStats.MS = reader.GetInt32(5);
-                            equipModel.BaseStats.SS = reader.GetInt32(6);
-                            equipModel.BaseStats.AllStat = reader.GetInt32(7);
+                            equipModel.BaseStats.STR = reader.GetInt32(5);
+                            equipModel.BaseStats.DEX = reader.GetInt32(6);
+                            equipModel.BaseStats.INT = reader.GetInt32(7);
+                            equipModel.BaseStats.LUK = reader.GetInt32(8);
+                            equipModel.BaseStats.AllStat = reader.GetInt32(9);
     
-                            if (reader.GetString(8).Contains('%'))
+                            if (reader.GetString(10).Contains('%'))
                             {
-                                equipModel.BaseStats.HP = reader.GetString(8);
+                                equipModel.BaseStats.HP = reader.GetString(10);
 
                             }
                             else
                             {
-                                equipModel.BaseStats.MaxHP = Convert.ToInt32(reader.GetString(8));
+                                equipModel.BaseStats.MaxHP = Convert.ToInt32(reader.GetString(10));
                             }
 
-                            if (reader.GetString(9).Contains('%'))
+                            if (reader.GetString(11).Contains('%'))
                             {
-                                equipModel.BaseStats.MP = reader.GetString(9);
+                                equipModel.BaseStats.MP = reader.GetString(11);
                             }
                             else
                             {
-                                equipModel.BaseStats.MaxMP = Convert.ToInt32(reader.GetString(9));
+                                equipModel.BaseStats.MaxMP = Convert.ToInt32(reader.GetString(11));
                             }
-                            equipModel.BaseStats.DEF = reader.GetInt32(10);
-                            equipModel.BaseStats.ATK = reader.GetInt32(11);
-                            equipModel.BaseStats.MATK = reader.GetInt32(12);
+                            equipModel.BaseStats.DEF = reader.GetInt32(12);
+                            equipModel.BaseStats.ATK = reader.GetInt32(13);
+                            equipModel.BaseStats.MATK = reader.GetInt32(14);
 
-                            equipModel.BaseStats.SPD = reader.GetInt32(13);
-                            equipModel.BaseStats.JUMP = reader.GetInt32(14);
-                            equipModel.BaseStats.IED = reader.GetInt32(15);
+                            equipModel.BaseStats.SPD = reader.GetInt32(15);
+                            equipModel.BaseStats.JUMP = reader.GetInt32(16);
+                            equipModel.BaseStats.IED = reader.GetInt32(17);
 
                             accModel.Add(equipModel);
                         }

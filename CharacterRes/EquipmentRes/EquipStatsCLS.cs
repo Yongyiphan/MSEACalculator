@@ -11,8 +11,8 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
     public class EquipStatsCLS
     {
         //BASE STATS
-        public int MS { get; set; } = 0;
-        public int SS { get; set; } = 0;
+        //public int MS { get; set; } = 0;
+        //public int SS { get; set; } = 0;
 
         public int STR { get; set; } = 0;
         public int DEX { get; set; } = 0;
@@ -106,33 +106,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             return base.GetHashCode();
         }
 
-        public void InitEquipStat(string ClassType, int s1, int s2)
-        {
-            switch (ClassType)
-            {
-                case "Warrior":
-                    STR = s1;
-                    DEX = s2;
-                    break;
-                case "Bowman":
-                    DEX = s1;
-                    STR = s2;
-                    break;
-                case "Magician":
-                    INT = s1;
-                    LUK = s2;
-                    break;
-                case "Thief":
-                    LUK = s1;
-                    DEX = s2;
-                    break;
-                case "Pirate":
-                    DEX = s1;
-                    STR = s2;
-                    break;
-            }
-        }
-
+        
         public void AppendJobStat(string ClassType, int s1, int s2, string MainStat = "")
         {
             switch (ClassType)
@@ -232,29 +206,12 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                
             }
 
-            //STR += target.STR;
-            //DEX += target.DEX;
-            //INT += target.INT;
-            //LUK += target.LUK;
-            //FlatDEF += target.FlatDEF;
-            //HP += target.HP;
-            //MP += target.MP;
-            //SPD += target.SPD;
-            //JUMP += target.JUMP;
-            //FlatATK += target.FlatATK;
-            //FlatMATK += target.FlatMATK;
-
-            //PercATK += target.PercATK;
-            //PercMATK += target.PercMATK;
-            //PercDEF += target.PercDEF;
-
-
 
         }
 
         private List<string> HiddenFields = new List<string>()
         {
-            "MS", "SS", "ATKSPD"
+             "ATKSPD"
         };
         public Dictionary<string, int> ToRecord()
         {

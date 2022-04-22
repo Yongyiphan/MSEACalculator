@@ -12,9 +12,11 @@ using Windows.Storage;
 
 namespace MSEACalculator.OtherRes.Database.Tables
 {
-    public class AllCharacterTable : BaseDBTable, ITableUpload
+    public class AllCharacterTable : BaseDBTable , ITableUpload
     {
         List<CharacterCLS> CharacterList { get; set; }
+
+        private bool HaveTrack = false;
 
         private string[] CharacterTableSpec = { "(" +
                             "ClassName string," +
@@ -47,16 +49,19 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
                 using (SqliteCommand insertCMD = new SqliteCommand(insertChar, connection, transaction))
                 {
+                    insertCMD.Connection = connection;
+                    insertCMD.Transaction = transaction;
                     foreach (CharacterCLS charItem in CharacterList)
                     {
                         insertCMD.Parameters.Clear();
+                        insertCMD.CommandText = insertChar;
                         insertCMD.Parameters.AddWithValue("@ClassName", charItem.ClassName);
                         insertCMD.Parameters.AddWithValue("@ClassType", charItem.ClassType);
                         insertCMD.Parameters.AddWithValue("@Faction", charItem.Faction);
 
                         insertCMD.Parameters.AddWithValue("@MainStat", charItem.MainStat);
                         insertCMD.Parameters.AddWithValue("@SecStat", charItem.SecStat);
-                        
+
                         insertCMD.Parameters.AddWithValue("@UnionE", charItem.UnionEffect);
                         insertCMD.Parameters.AddWithValue("@UnionET", charItem.UnionEffectType);
 
@@ -66,13 +71,22 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         }
                         catch (Exception ex)
                         {
+                            string updateQuery = "UPDATE " + TableName + "" +
+                                "SET " +
+                                "ClassType = @ClassType," +
+                                "Faction = @Faction," +
+                                "MainStat = @MainStat," +
+                                "SecStat = @SecStat," +
+                                "UnionE = @UnionE," +
+                                "UnionET = @UnionET" +
+                                "WHERE ClassName = @ClassName";
+                            insertCMD.CommandText = updateQuery;
+                            insertCMD.ExecuteNonQuery();
+
                             Console.WriteLine(counter.ToString());
                             Console.WriteLine(ex.ToString());
                         }
                     };
-
-
-
                 }
 
             }
@@ -172,5 +186,17 @@ namespace MSEACalculator.OtherRes.Database.Tables
             return charDict;
         }
 
+        public override void InitTable(SqliteConnection connection, SqliteTransaction transaction)
+        {
+
+            Dictionary<string, CharacterCLS> CharTrackDB = DBRetrieve.GetAllCharTrackDB();
+            HaveTrack = CharTrackDB.Keys.Count > 0 ? true : false;
+
+            if (!HaveTrack)
+            {
+                base.InitTable(connection, transaction);
+            }
+
+        }
     }
 }

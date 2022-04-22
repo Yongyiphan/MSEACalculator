@@ -189,6 +189,7 @@
     <Compile Include="OtherRes\CustomCommand.cs" />
     <Compile Include="OtherRes\Database\DBAccess.cs" />
     <Compile Include="OtherRes\Database\DBRetrieve.cs" />
+    <Compile Include="OtherRes\Database\StructCollections.cs" />
     <Compile Include="OtherRes\Database\Tables\BossListTable.cs" />
     <Compile Include="OtherRes\Database\Tables\ClassWeaponTable.cs" />
     <Compile Include="OtherRes\Database\Tables\EquipAccessoriesTable.cs" />

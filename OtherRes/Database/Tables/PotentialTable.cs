@@ -207,10 +207,12 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
 
 
-
-        public static List<PotentialStatsCLS> GetAllPotentialDB()
+        //E.G
+        //Hat => Rare => List
+        public static Dictionary<string,Dictionary<string, List<PotentialStatsCLS>>> GetAllPotentialDB()
         {
-            List<PotentialStatsCLS> potentialList = new List<PotentialStatsCLS>();
+            Dictionary<string,Dictionary<string, List<PotentialStatsCLS>>> FinalResult = new Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>>();
+            List<PotentialStatsCLS> UnsortedPotentialList = new List<PotentialStatsCLS>();
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
                 dbCon.Open();
@@ -226,7 +228,15 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             PotentialStatsCLS pot = new PotentialStatsCLS();
                             pot.PotID = reader.GetInt32(0);
                             pot.EquipGrp = reader.GetString(1);
+                            if (!FinalResult.ContainsKey(pot.EquipGrp))
+                            {
+                                FinalResult.Add(pot.EquipGrp, new Dictionary<string, List<PotentialStatsCLS>>());
+                            }
                             pot.Grade = reader.GetString(2);
+                            if (!FinalResult[pot.EquipGrp].ContainsKey(pot.Grade))
+                            {
+                                FinalResult[pot.EquipGrp].Add(pot.Grade, new List<PotentialStatsCLS>());
+                            }
                             pot.Prime = reader.GetString(3);
                             pot.StatType = reader.GetString(4);
                             pot.StatIncrease = reader.GetString(5);
@@ -234,8 +244,12 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             pot.MaxLvl = reader.GetInt32(7);
                             pot.StatValue = reader.GetString(8);
 
-                            potentialList.Add(pot);
+                            pot.DisplayStat = pot.StatValue == "0" ? pot.StatIncrease.ToString() : String.Format("{0} +{1}", pot.StatIncrease.TrimEnd('%'), pot.StatValue);
+                            UnsortedPotentialList.Add(pot);
+                            
+                            
 
+                            //FinalResult[pot.EquipGrp].Add(pot);
                         }
                     }
                 }
@@ -243,11 +257,49 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
             }
 
-            return potentialList;
+            foreach(PotentialStatsCLS pot in UnsortedPotentialList)
+            {
+                int potPos = GVar.PotentialGrade.IndexOf(pot.Grade);
+                string nextPot;
+                switch (pot.Grade)
+                {
+                    case "Rare":
+                        FinalResult[pot.EquipGrp][pot.Grade].Add(pot);
+                        if (pot.Prime == "Prime")
+                        {
+                            nextPot = GVar.PotentialGrade[potPos + 1];
+                            FinalResult[pot.EquipGrp][nextPot].Add(pot);
+
+                        }
+                        break;
+
+                    case "Epic":
+                        FinalResult[pot.EquipGrp][pot.Grade].Add(pot);
+                        nextPot = GVar.PotentialGrade[potPos + 1];
+                        FinalResult[pot.EquipGrp][nextPot].Add(pot);
+
+                        break;
+
+                    case "Unique":
+                        FinalResult[pot.EquipGrp][pot.Grade].Add(pot);
+                        nextPot = GVar.PotentialGrade[potPos + 1];
+                        FinalResult[pot.EquipGrp][nextPot].Add(pot);
+                        break;
+
+                    case "Legendary":
+                        FinalResult[pot.EquipGrp][pot.Grade].Add(pot);
+                        break;
+                }
+
+            }
+
+            return FinalResult;
         }
-        public static List<PotentialStatsCLS> GetAllBonusPotentialDB()
+        public static Dictionary<string, Dictionary<string,List<PotentialStatsCLS>>> GetAllBonusPotentialDB()
         {
-            List<PotentialStatsCLS> potentialList = new List<PotentialStatsCLS>();
+            Dictionary<string, Dictionary<string,List<PotentialStatsCLS>>> FinalResult = new Dictionary<string, Dictionary<string,List<PotentialStatsCLS>>>();
+
+            List<PotentialStatsCLS> UnsortedPotentialList = new List<PotentialStatsCLS>();
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
                 dbCon.Open();
@@ -263,7 +315,15 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             PotentialStatsCLS pot = new PotentialStatsCLS();
                             pot.PotID = reader.GetInt32(0);
                             pot.EquipGrp = reader.GetString(1);
+                            if (!FinalResult.ContainsKey(pot.EquipGrp))
+                            {
+                                FinalResult.Add(pot.EquipGrp, new Dictionary<string, List<PotentialStatsCLS>>());
+                            }
                             pot.Grade = reader.GetString(2);
+                            if (!FinalResult[pot.EquipGrp].ContainsKey(pot.Grade))
+                            {
+                                FinalResult[pot.EquipGrp].Add(pot.Grade, new List<PotentialStatsCLS>());
+                            }
                             pot.Prime = reader.GetString(3);
                             pot.StatType = reader.GetString(4);
                             pot.StatIncrease = reader.GetString(5);
@@ -271,16 +331,51 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             pot.MaxLvl = reader.GetInt32(7);
                             pot.StatValue = reader.GetString(8);
 
-                            potentialList.Add(pot);
-
+                            pot.DisplayStat = pot.StatValue == "0" ? pot.StatIncrease.ToString() : String.Format("{0} +{1}", pot.StatIncrease.TrimEnd('%'), pot.StatValue);
+                            UnsortedPotentialList.Add(pot);                           
                         }
                     }
                 }
 
 
             }
+            foreach (PotentialStatsCLS pot in UnsortedPotentialList)
+            {
+                int potPos = GVar.PotentialGrade.IndexOf(pot.Grade);
+                string nextPot;
+                switch (pot.Grade)
+                {
+                    case "Rare":
+                        FinalResult[pot.EquipGrp][pot.Grade].Add(pot);
+                        if (pot.Prime == "Prime")
+                        {
+                            nextPot = GVar.PotentialGrade[potPos + 1];
+                            FinalResult[pot.EquipGrp][nextPot].Add(pot);
 
-            return potentialList;
+                        }
+                        break;
+
+                    case "Epic":
+                        FinalResult[pot.EquipGrp][pot.Grade].Add(pot);
+                        nextPot = GVar.PotentialGrade[potPos + 1];
+                        FinalResult[pot.EquipGrp][nextPot].Add(pot);
+
+                        break;
+
+                    case "Unique":
+                        FinalResult[pot.EquipGrp][pot.Grade].Add(pot);
+                        nextPot = GVar.PotentialGrade[potPos + 1];
+                        FinalResult[pot.EquipGrp][nextPot].Add(pot);
+                        break;
+
+                    case "Legendary":
+                        FinalResult[pot.EquipGrp][pot.Grade].Add(pot);
+                        break;
+                }
+            }
+
+
+            return FinalResult;
         }
 
     }

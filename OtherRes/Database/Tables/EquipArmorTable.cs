@@ -21,8 +21,10 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     "ClassType string," +
                     "EquipSlot string," +
                     "EquipLevel int," +
-                    "MainStat int," +
-                    "SecStat int," +
+                    "STR int," +
+                    "DEX int," +
+                    "INT int," +
+                    "LUK int," +
                     "AllStat int," +
                     "HP int," +
                     "MP int," +
@@ -61,8 +63,11 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@ClassType", equipItem.ClassType);
                         insertCMD.Parameters.AddWithValue("@EquipSlot", equipItem.EquipSlot);
                         insertCMD.Parameters.AddWithValue("@EquipLevel", equipItem.EquipLevel);
-                        insertCMD.Parameters.AddWithValue("@MainStat", equipItem.BaseStats.MS);
-                        insertCMD.Parameters.AddWithValue("@SecStat", equipItem.BaseStats.SS);
+                        insertCMD.Parameters.AddWithValue("@STR", equipItem.BaseStats.STR);
+                        insertCMD.Parameters.AddWithValue("@DEX", equipItem.BaseStats.DEX);
+                        insertCMD.Parameters.AddWithValue("@INT", equipItem.BaseStats.INT);
+                        insertCMD.Parameters.AddWithValue("@LUK", equipItem.BaseStats.LUK);
+
                         insertCMD.Parameters.AddWithValue("@AllStat", equipItem.BaseStats.AllStat);
 
                         insertCMD.Parameters.AddWithValue("@HP", equipItem.BaseStats.MaxHP);
@@ -127,17 +132,20 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         equip.ClassType = temp[2];
                         equip.EquipSlot = temp[3];
                         equip.EquipLevel = Convert.ToInt32(temp[4]);
-                        equip.BaseStats.MS = Convert.ToInt32(temp[5]);
-                        equip.BaseStats.SS = Convert.ToInt32(temp[6]);
-                        equip.BaseStats.AllStat = Convert.ToInt32(temp[7]);
-                        equip.BaseStats.MaxHP = Convert.ToInt32(temp[8]);
-                        equip.BaseStats.MaxMP = Convert.ToInt32(temp[9]);
-                        equip.BaseStats.DEF = Convert.ToInt32(temp[10]);
-                        equip.BaseStats.ATK = Convert.ToInt32(temp[11]);
-                        equip.BaseStats.MATK = Convert.ToInt32(temp[12]);
-                        equip.BaseStats.SPD = Convert.ToInt32(temp[13]);
-                        equip.BaseStats.JUMP = Convert.ToInt32(temp[14]);
-                        equip.BaseStats.IED = Convert.ToInt32(temp[15]);
+                        equip.BaseStats.STR = Convert.ToInt32(temp[5]);
+                        equip.BaseStats.DEX = Convert.ToInt32(temp[6]);
+                        equip.BaseStats.INT = Convert.ToInt32(temp[7]);
+                        equip.BaseStats.LUK = Convert.ToInt32(temp[8]);
+
+                        equip.BaseStats.AllStat = Convert.ToInt32(temp[9]);
+                        equip.BaseStats.MaxHP = Convert.ToInt32(temp[10]);
+                        equip.BaseStats.MaxMP = Convert.ToInt32(temp[11]);
+                        equip.BaseStats.DEF = Convert.ToInt32(temp[12]);
+                        equip.BaseStats.ATK = Convert.ToInt32(temp[13]);
+                        equip.BaseStats.MATK = Convert.ToInt32(temp[14]);
+                        equip.BaseStats.SPD = Convert.ToInt32(temp[15]);
+                        equip.BaseStats.JUMP = Convert.ToInt32(temp[16]);
+                        equip.BaseStats.IED = Convert.ToInt32(temp[17]);
 
                         equipList.Add(equip);
 
@@ -171,19 +179,21 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             tempEquip.EquipSlot = result.GetString(2);
                             tempEquip.EquipLevel = result.GetInt32(3);
 
-                            tempEquip.BaseStats.MS = result.GetInt32(4);
-                            tempEquip.BaseStats.SS = result.GetInt32(5);
-                            tempEquip.BaseStats.AllStat = result.GetInt32(6);
+                            tempEquip.BaseStats.STR = result.GetInt32(4);
+                            tempEquip.BaseStats.DEX = result.GetInt32(5);
+                            tempEquip.BaseStats.INT = result.GetInt32(6);
+                            tempEquip.BaseStats.LUK = result.GetInt32(7);
+                            tempEquip.BaseStats.AllStat = result.GetInt32(8);
 
-                            tempEquip.BaseStats.MaxHP = result.GetInt32(7);
-                            tempEquip.BaseStats.MaxMP = result.GetInt32(8);
-                            tempEquip.BaseStats.DEF = result.GetInt32(9);
-                            tempEquip.BaseStats.ATK = result.GetInt32(10);
-                            tempEquip.BaseStats.MATK = result.GetInt32(11);
+                            tempEquip.BaseStats.MaxHP = result.GetInt32(9);
+                            tempEquip.BaseStats.MaxMP = result.GetInt32(10);
+                            tempEquip.BaseStats.DEF = result.GetInt32(11);
+                            tempEquip.BaseStats.ATK = result.GetInt32(12);
+                            tempEquip.BaseStats.MATK = result.GetInt32(13);
 
-                            tempEquip.BaseStats.SPD = result.GetInt32(12);
-                            tempEquip.BaseStats.JUMP = result.GetInt32(13);
-                            tempEquip.BaseStats.IED = result.GetInt32(14);
+                            tempEquip.BaseStats.SPD = result.GetInt32(14);
+                            tempEquip.BaseStats.JUMP = result.GetInt32(15);
+                            tempEquip.BaseStats.IED = result.GetInt32(16);
 
                             equipList.Add(tempEquip);
                         }

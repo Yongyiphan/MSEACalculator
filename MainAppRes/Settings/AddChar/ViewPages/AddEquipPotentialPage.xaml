@@ -25,19 +25,19 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Line 1"/>
                     <ComboBox ItemsSource="{Binding FirstPotL, Mode=TwoWay}" DisplayMemberPath="DisplayStat"
-                              SelectedItem="{Binding FirstLine, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"
+                              SelectedItem="{Binding FirstLine, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                               SelectedValuePath="DisplayStat"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Line 2"/>
                     <ComboBox ItemsSource="{Binding SecondPotL, Mode=TwoWay}" DisplayMemberPath="DisplayStat"
-                              SelectedItem="{Binding SecondLine, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"/>
+                              SelectedItem="{Binding SecondLine, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
 
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Line 3"/>
                     <ComboBox ItemsSource="{Binding ThirdPotL, Mode=TwoWay}" DisplayMemberPath="DisplayStat"
-                              SelectedItem="{Binding ThirdLine, UpdateSourceTrigger=LostFocus,Mode=TwoWay}"/>
+                              SelectedItem="{Binding ThirdLine, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>        

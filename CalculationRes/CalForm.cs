@@ -255,117 +255,151 @@ namespace MSEACalculator.CalculationRes
             return result;
         }
 
-        public static EquipStatsCLS CalStarforceStats(CharacterCLS Character, EquipCLS CEquip, ReadOnlyCollection<StarforceCLS> SFList)
+        public static EquipStatsCLS CalStarforceStats(CharacterCLS Character, EquipCLS CEquip, ReadOnlyCollection<StarforceCLS> SFList, string EquipSFType = "Basic")
         {
             EquipStatsCLS ScaledStats = CEquip.BaseStats.ShallowCopy();
             //BASE + SCROLLED STATS
             ScaledStats.ModifyEquipStat(CEquip.ScrollStats, "Add");
 
-            int lvlRank = ComFunc.ReturnSFLevelRank(CEquip.EquipLevel);
+            int lvlRank = ComFunc.ReturnSFLevelRank(CEquip.EquipLevel, EquipSFType);
 
             EquipStatsCLS Result = ScaledStats.ShallowCopy();
 
             if (GVar.EnhanceRestriction["Starforce"].Contains(CEquip.EquipSlot) == false && CEquip.StarForce >  0)
             {
-                for (int i = 0; i<CEquip.StarForce; i++)
+                switch (EquipSFType)
                 {
-                    
-                    StarforceCLS current = SFList.ElementAt(i);
-
-                    if (i<15)
-                    {
-                        
-
-                        Result.AppendJobStat(CEquip.ClassType == "Any" ? CEquip.ClassType : Character.ClassType, current.JobStat, current.JobStat, Character.MainStat);
-                        if (GVar.CategoryAEquips.Contains(CEquip.EquipSlot))
+                    case "Basic":
+                        for (int i = 0; i<CEquip.StarForce; i++)
                         {
-                            Result.MaxHP +=  current.CatAMaxHP;
-                        }
-                        if (CEquip.EquipSlot != "Weapon")
-                        {
-                            
-                            Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
-                            //TempStat.PercDEF += current.NonWeapVDef;
-                            
-                            switch (CEquip.EquipSlot)
+
+                            StarforceCLS current = SFList.ElementAt(i);
+
+                            if (i<15)
                             {
-                                case "Gloves":
-                                    if (Character.ClassType == "Magician")
-                                    {
-                                        Result.MATK += current.GloveVMATK;
-                                    }
-                                    else
-                                    {
 
-                                        Result.ATK += current.GloveVATK;
-                                    }
-                                    break;
-                                case "Shoes":
-                                    Result.SPD +=  current.SSpeed;
-                                    Result.JUMP += current.SJump;
-                                    break;
-                                case "Overall":
+                                
+                                Result.AppendJobStat(CEquip.ClassType == "Any" || Character.ClassName == "Xenon" ? CEquip.ClassType : Character.ClassType, current.JobStat, current.JobStat, Character.MainStat);
+                                if (GVar.CategoryAEquips.Contains(CEquip.EquipSlot))
+                                {
+                                    Result.MaxHP +=  current.CatAMaxHP;
+                                }
+                                if (CEquip.EquipSlot != "Weapon")
+                                {
+
                                     Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
-                                    break;
-                                   
+                                    //TempStat.PercDEF += current.NonWeapVDef;
+
+                                    switch (CEquip.EquipSlot)
+                                    {
+                                        case "Gloves":
+                                            if (Character.ClassType == "Magician")
+                                            {
+                                                Result.MATK += current.GloveVMATK;
+                                            }
+                                            else
+                                            {
+
+                                                Result.ATK += current.GloveVATK;
+                                            }
+                                            break;
+                                        case "Shoes":
+                                            Result.SPD +=  current.SSpeed;
+                                            Result.JUMP += current.SJump;
+                                            break;
+                                        case "Overall":
+                                            Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
+                                            break;
+
+                                    }
+                                }
+                                else
+                                {
+                                    if (Result.ATK > 0)
+                                    {
+                                        Result.ATK += StatBoost(current.WeapVATK, Result.ATK);
+                                    }
+                                    if (Result.MATK > 0)
+                                    {
+
+                                        Result.MATK += StatBoost(current.WeapVMATK, Result.MATK);
+                                    }
+                                    Result.MaxMP += current.WeapMaxMP;
+
+                                }
+
+                            }
+                            else
+                            {
+                                foreach (string stat in GVar.MainStats)
+                                {
+                                    int value = Convert.ToInt32(ScaledStats.GetType().GetProperty(stat).GetValue(ScaledStats));
+                                    int cValue = Convert.ToInt32(Result.GetType().GetProperty(stat).GetValue(Result));
+                                    if (value > 0)
+                                    {
+                                        Result.GetType().GetProperty(stat).SetValue(Result, cValue += current.VStatL[lvlRank]);
+                                    }
+
+
+                                }
+
+                                if (CEquip.EquipSlot !="Weapon")
+                                {
+                                    Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
+                                    if (CEquip.EquipSlot == "Overall")
+                                    {
+                                        Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
+                                    }
+                                    Result.ATK += current.NonWeapVATKL[lvlRank];
+                                    Result.MATK += current.NonWeapVMATKL[lvlRank];
+                                }
+                                else
+                                {
+                                    if (Result.ATK > 0)
+                                    {
+                                        Result.ATK += current.WeapVATKL[lvlRank];
+                                    }
+                                    if (Result.MATK > 0)
+                                    {
+                                        Result.MATK += current.WeapVMATKL[lvlRank];
+                                    }
+                                }
+
+
                             }
                         }
-                        else
+
+
+                        break;
+                    case "Superior":
+
+                        for (int i = 0; i< CEquip.StarForce; i++)
                         {
-                            if (Result.ATK > 0)
+                            StarforceCLS current = SFList.ElementAt(i);
+                            foreach (string ms in GVar.MainStats)
                             {
-                                Result.ATK += StatBoost(current.WeapVATK, Result.ATK);
+                                int cValue = Convert.ToInt32(Result.GetType().GetProperty(ms).GetValue(Result));
+                                if (cValue > 0) 
+                                {
+                                    Result.GetType().GetProperty(ms).SetValue(Result, cValue + current.VStatL[lvlRank]);
+                                }
                             }
-                            if (Result.MATK > 0)
+                            if(Result.MATK > 0)
                             {
-
-                                Result.MATK += StatBoost(current.WeapVMATK, Result.MATK);
+                                    Result.MATK += current.WeapVATKL[lvlRank];
                             }
-                            Result.MaxMP += current.WeapMaxMP;
-                            
-                        }
-
-                    }
-                    else
-                    {
-                        foreach(string stat in GVar.MainStats)
-                        {
-                            int value = Convert.ToInt32(ScaledStats.GetType().GetProperty(stat).GetValue(ScaledStats));
-                            int cValue = Convert.ToInt32(Result.GetType().GetProperty(stat).GetValue(Result));
-                            if(value > 0)
-                            {
-                                Result.GetType().GetProperty(stat).SetValue(Result, cValue += current.VStatL[lvlRank]);
-                            }
-
-
-                        } 
-                        
-                        if(CEquip.EquipSlot !="Weapon")
-                        {
-                            Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
-                            if(CEquip.EquipSlot == "Overall")
-                            {
-                                Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
-                            } 
-                            Result.ATK += current.NonWeapVATKL[lvlRank];
-                            Result.MATK += current.NonWeapVMATKL[lvlRank];
-                        }
-                        else
-                        {
                             if (Result.ATK > 0)
                             {
                                 Result.ATK += current.WeapVATKL[lvlRank];
                             }
-                            if (Result.MATK > 0)
+                            if(Result.DEF> 0)
                             {
-                                Result.MATK += current.WeapVMATKL[lvlRank];
+                                Result.DEF += current.VDef;
                             }
                         }
 
-
-                    }
+                        break;
                 }
-                
             }
 
             Result.ModifyEquipStat(ScaledStats, "Subtract");

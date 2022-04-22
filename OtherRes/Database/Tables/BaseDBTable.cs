@@ -24,7 +24,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
         }
 
 
-        public void InitTable(SqliteConnection connection, SqliteTransaction transaction)
+        public virtual void InitTable(SqliteConnection connection, SqliteTransaction transaction)
         {
             if (connection.State == ConnectionState.Open)
             {

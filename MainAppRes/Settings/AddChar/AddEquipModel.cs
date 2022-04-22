@@ -18,15 +18,17 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         //private List<EquipCLS> AllWeapList { get => DBRetrieve.GetAllWeaponDB(); }
         //private List<EquipCLS> AllSecList { get => DBRetrieve.GetAllSecondaryDB(); }
 
-        public IReadOnlyDictionary<string, ReadOnlyCollection<EquipCLS>> AllEquipStore { get;} = new Dictionary<string, ReadOnlyCollection<EquipCLS>>
+        public IReadOnlyDictionary<string, ReadOnlyCollection<EquipCLS>> AllEquipStore { get; } = new Dictionary<string, ReadOnlyCollection<EquipCLS>>
         {
             {"Armor", EquipArmorTable.GetAllArmorDB().AsReadOnly() },
             {"Accessory", EquipAccessoriesTable.GetAllAccessoriesDB().AsReadOnly()},
             {"Weapon", EquipMainWeaponTable.GetAllWeaponDB().AsReadOnly()},
             {"Secondary",EquipSecWeaponTable.GetAllSecondaryDB().AsReadOnly()}
         };
-        public List<PotentialStatsCLS> AllPotDict { get => PotentialTable.GetAllPotentialDB(); }
-        public List<PotentialStatsCLS> AllBonusPotDict { get => PotentialTable.GetAllBonusPotentialDB(); }
+        private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllPotDict = PotentialTable.GetAllPotentialDB();
+        private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllBonusPotDict = PotentialTable.GetAllBonusPotentialDB();
+        public Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> AllPotDict { get => _AllPotDict; }
+        public Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> AllBonusPotDict { get => _AllBonusPotDict; }
 
         public Dictionary<string, string> EquipSlot { get; set; } = EquipSlotTable.GetEquipSlotDB();
         public List<string> FlameStatsTypes { get; set; } = GVar.BaseStatTypes.Concat(GVar.SpecialStatType).ToList();
@@ -36,6 +38,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             {"Basic",StarForceTable.GetAllStarforceDB().AsReadOnly()},
             {"Superior",StarForceTable.GetAllSuperiorStarforceDB().AsReadOnly()}
         };
+
 
 
         public List<string> XenonClassType { get; } = new List<string>()

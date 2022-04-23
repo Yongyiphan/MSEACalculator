@@ -1,0 +1,12 @@
+In Progress: (Feature/ Process)
+
+Feature Improv Update => Updating Feature
+
+Feature Update => New Feature
+
+Resolve Logic Error: (Feature)
+- Details
+
+Reorganise
+
+"Last Edit before Commit" <- Where I ended off

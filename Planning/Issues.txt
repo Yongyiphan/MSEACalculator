@@ -1,0 +1,4 @@
+Display spell trace perc
+Display add pot
+
+Require Hyperstat table chart

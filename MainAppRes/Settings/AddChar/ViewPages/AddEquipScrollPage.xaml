@@ -1,0 +1,45 @@
+﻿<Page
+    x:Class="MSEACalculator.MainAppRes.Settings.AddChar.ViewPages.AddEquipScrollPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MSEACalculator.MainAppRes.Settings.AddChar"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    
+    <Grid>
+
+        <StackPanel Style="{StaticResource SP}">
+            <!--SCROLLING RECORDS-->
+            <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
+                <!--Check if equip is spell traced-->
+                <CheckBox x:Name="chkSpellTrace" Content="Spell Traced?" Style="{StaticResource AddEquipCBX}"
+                        IsChecked="{Binding IsSpellTrace, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                
+
+                <!--Show Slots or stat chossing depending on checkbox-->
+
+                <TextBlock Text="Slot" Visibility="{Binding ShoWSlot, Mode=TwoWay}"/>
+                <ComboBox ItemsSource="{Binding Slots}" Visibility="{Binding ShoWSlot, Mode=TwoWay}"
+                            SelectedItem="{Binding NoSlot, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+
+                <TextBlock Text="Stat:"
+                           Visibility="{Binding ShowXenonScroll, Mode=TwoWay}"/>
+                <ComboBox ItemsSource="{Binding SpellTraceStats, Mode=TwoWay}"
+                          Visibility="{Binding ShowXenonScroll, Mode=TwoWay}"
+                          SelectedItem="{Binding STStat, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+
+                <!--Stat or spell trace perc-->
+                <TextBlock Text="{Binding ScrollTypeTxt}"/>
+                <ComboBox ItemsSource="{Binding StatTypes}" 
+                            SelectedIndex="{Binding SelectedScrollIndex,Mode=TwoWay}"
+                            SelectedItem="{Binding SelectedScrollStat, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                
+                <TextBlock Text="Value" Visibility="{Binding ShowScrollValue}"/>
+                <TextBox Visibility="{Binding ShowScrollValue}" Text="{Binding ScrollStatValue, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Page>

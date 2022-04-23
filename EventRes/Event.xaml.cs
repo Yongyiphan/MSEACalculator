@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using MSEACalculator.MainAppRes;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,7 +27,7 @@ namespace MSEACalculator.EventRes
     /// </summary>
     public sealed partial class Event : Page
     {
-        EventRecords eRec = new EventRecords();
+        EventRecordsCLS eRec = new EventRecordsCLS();
         public Event()
         {
             this.InitializeComponent();

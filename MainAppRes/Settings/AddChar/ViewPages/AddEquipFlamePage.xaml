@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="MSEACalculator.MainAppRes.Settings.AddChar.ViewPages.AddEquipFlamePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MSEACalculator.MainAppRes.Settings.AddChar"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <StackPanel>
+            <!--FLAMING RECORDS-->
+            <StackPanel Orientation="Horizontal" Style="{StaticResource SP}">
+                <TextBlock Text="Stat Type"/>
+                <ComboBox ItemsSource="{Binding FlameStatsTypes}"
+                            SelectedItem="{Binding SelectedFlame, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <TextBlock Text="Value"/>
+                <TextBox Text="{Binding FlameStatValue, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

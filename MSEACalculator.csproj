@@ -119,25 +119,110 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BossRes\Boss.cs" />
-    <Compile Include="CharacterRes\MesoRes\CustomItem.cs" />
-    <Compile Include="CharacterRes\MesoRes\MesoProgress.xaml.cs">
-      <DependentUpon>MesoProgress.xaml</DependentUpon>
+    <Compile Include="BossRes\BossCLS.cs" />
+    <Compile Include="CalculationRes\DisplayStatValue.cs" />
+    <Compile Include="CalculationRes\ViewPages\ConversionQMPage.xaml.cs">
+      <DependentUpon>ConversionQMPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CharacterRes\MesoRes\BossMesoList.cs" />
-    <Compile Include="CharacterRes\Character.cs" />
-    <Compile Include="CommonFunc.cs" />
-    <Compile Include="DatabaseAccess.cs" />
+    <Compile Include="CalculationRes\ViewModels\QMConversionVM.cs" />
+    <Compile Include="CalculationRes\SymbolModel.cs" />
+    <Compile Include="CalculationRes\ViewModels\QMArcaneVM.cs" />
+    <Compile Include="CalculationRes\ViewPages\ArcaneQMPage.xaml.cs">
+      <DependentUpon>ArcaneQMPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CharacterRes\HyperStat.cs" />
+    <Compile Include="CharacterRes\IfXenon.cs" />
+    <Compile Include="MainAppRes\QuickMathPage.xaml.cs">
+      <DependentUpon>QuickMathPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CharacterRes\ArcaneSymbolCLS.cs" />
+    <Compile Include="CharacterRes\CharacterPage.xaml.cs">
+      <DependentUpon>CharacterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CharacterRes\CharTStore.cs" />
+    <Compile Include="MainAppRes\QuickMathViewModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipFlamePage.xaml.cs">
+      <DependentUpon>AddEquipFlamePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\Settings\AddChar\AddEquipModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipPage.xaml.cs">
+      <DependentUpon>AddEquipPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipPotentialPage.xaml.cs">
+      <DependentUpon>AddEquipPotentialPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipScrollPage.xaml.cs">
+      <DependentUpon>AddEquipScrollPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\Settings\AddChar\ViewModels\AddEquipVM.cs" />
+    <Compile Include="CharacterRes\EquipmentRes\EquipCLS.cs" />
+    <Compile Include="CharacterRes\EquipmentRes\EquipStatsCLS.cs" />
+    <Compile Include="CharacterRes\EquipmentRes\PotentialStatsCLS.cs" />
+    <Compile Include="CharacterRes\EquipmentRes\ScrollingModelCLS.cs" />
+    <Compile Include="CharacterRes\MesoRes\BossMesoModel.cs" />
+    <Compile Include="CharacterRes\MesoRes\CustomItem.cs" />
+    <Compile Include="CharacterRes\MesoRes\MesoPage.xaml.cs">
+      <DependentUpon>MesoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CharacterRes\CharacterCLS.cs" />
+    <Compile Include="CharacterRes\MesoRes\MesoViewModel.cs" />
+    <Compile Include="OtherRes\BlankPage.xaml.cs">
+      <DependentUpon>BlankPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OtherRes\CheckTypes.cs" />
+    <Compile Include="OtherRes\ComFunc.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\AddCharTrackModel.cs" />
+    <Compile Include="MainAppRes\Settings\AddChar\ViewPages\AddCharTrackPage.xaml.cs">
+      <DependentUpon>AddCharTrackPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\Settings\AddChar\ViewModels\AddCharTrackVM.cs" />
+    <Compile Include="MainAppRes\TestingBlankPage.xaml.cs">
+      <DependentUpon>TestingBlankPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CalculationRes\CalForm.cs" />
+    <Compile Include="OtherRes\Database\DatabaseINIT.cs" />
     <Compile Include="EventRes\Event.xaml.cs">
       <DependentUpon>Event.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EventRes\EventRecords.cs" />
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="EventRes\EventRecordsCLS.cs" />
+    <Compile Include="GVar.cs" />
+    <Compile Include="OtherRes\CustomCommand.cs" />
+    <Compile Include="OtherRes\Database\DBAccess.cs" />
+    <Compile Include="OtherRes\Database\DBRetrieve.cs" />
+    <Compile Include="OtherRes\Database\StructCollections.cs" />
+    <Compile Include="OtherRes\Database\Tables\BossListTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\ClassWeaponTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\EquipAccessoriesTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\AllCharacterTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\EquipArmorTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\BaseDBTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\EquipMainWeaponTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\EquipSecWeaponTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\EquipSlotTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\PotentialTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\StarForceTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\SymbolsTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\UnionTable.cs" />
+    <Compile Include="OtherRes\ExtensionMethods.cs" />
+    <Compile Include="OtherRes\INPCObject.cs" />
+    <Compile Include="OtherRes\Interface\IStatDisplayConverter.cs" />
+    <Compile Include="OtherRes\Interface\ITableUpload.cs" />
+    <Compile Include="OtherRes\Interface\IStringFormatConverter.cs" />
+    <Compile Include="OtherRes\Interface\IValidateTypes.cs" />
+    <Compile Include="OtherRes\ScrapCode.cs" />
+    <Compile Include="UnionRes\UnionCLS.cs" />
+    <Compile Include="MainAppRes\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StarforceRes\SFGain.cs" />
-    <Compile Include="TableStats.cs" />
+    <Compile Include="CalculationRes\StarforceCLS.cs" />
+    <Compile Include="MainAppRes\Settings\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainAppRes\Settings\SettingsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -159,7 +244,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="CharacterRes\MesoRes\MesoProgress.xaml">
+    <Page Include="CalculationRes\ViewPages\ConversionQMPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CalculationRes\ViewPages\ArcaneQMPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\QuickMathPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CharacterRes\CharacterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipFlamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CharacterRes\MesoRes\MesoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,9 +276,37 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="MainAppRes\Settings\AddChar\ViewPages\AddCharTrackPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipPotentialPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\Settings\AddChar\ViewPages\AddEquipScrollPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\TestingBlankPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainAppRes\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainAppRes\Settings\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OtherRes\BlankPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -177,24 +314,19 @@
       <Version>4.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Data.Sqlite">
-      <Version>5.0.10</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Data.Sqlite.Core">
-      <Version>5.0.10</Version>
+      <Version>5.0.16</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.12</Version>
+      <Version>6.2.13</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>7.1.2</Version>
     </PackageReference>
-    <PackageReference Include="SQLitePCLRaw.core">
-      <Version>2.0.4</Version>
-    </PackageReference>
-    <PackageReference Include="System.Text.Json">
-      <Version>5.0.2</Version>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
+      <Version>7.1.2</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

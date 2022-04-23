@@ -1,0 +1,51 @@
+﻿Name,Difficulty,Entry Type,Entry Limit,BosscrystalCount,Meso
+Ursus,Normal,Daily,3,0,0
+Kawoong,Normal,Daily,1,1,1250000
+Ranmaru,Normal,Daily,1,1,840500
+Ranmaru,Hard,Daily,1,1,2664500
+Zakum,Normal,Daily,1,1,612500
+Zakum,Hard,Weekly,1,1,16200000
+Magnus,Easy,Daily,1,1,722000
+Magnus,Normal,Daily,1,1,2592000
+Magnus,Hard,Weekly,1,1,19012500
+Hilla,Normal,Daily,1,1,800000
+Hilla,Hard,Weekly,1,1,11250000
+Hilla,Chaos,Weekly,1,1,110450000
+Horntail,Easy,Daily,1,1,882000
+Horntail,Normal,Daily,1,1,1012500
+Horntail,Hard,Daily,1,1,1352000
+Von Leon,Easy,Daily,1,1,1058000
+Von Leon,Normal,Daily,1,1,1458000
+Von Leon,Hard,Daily,1,1,2450000
+Papulatus,Easy,Daily,1,1,684500
+Papulatus,Normal,Daily,1,1,2664500
+Papulatus,Hard,Weekly,1,1,26450000
+Arkarium,Easy,Daily,1,1,1152000
+Arkarium,Normal,Daily,1,1,2520000
+Pink Bean,Normal,Daily,1,1,1404500
+Pink Bean,Hard,Weekly,1,1,12800000
+Von Bon,Normal,Daily,1,1,968000
+Crimson Queen,Normal,Daily,1,1,968000
+Pierre,Normal,Daily,1,1,968000
+Vellum,Normal,Daily,1,1,968000
+Von Bon,Hard,Weekly,1,1,16200000
+Crimson Queen,Hard,Weekly,1,1,16200000
+Pierre,Hard,Weekly,1,1,16200000
+Vellum,Hard,Weekly,1,1,21012500
+Princess Nou,Hard,Weekly,1,1,16200000
+Cygnus,Easy,Weekly,1,1,9112500
+Cygnus,Normal,Weekly,1,1,14450000
+Lotus,Normal,Weekly,1,1,32512500
+Lotus,Hard,Weekly,1,1,74112500
+Damien,Normal,Weekly,1,1,33800000
+Damien,Hard,Weekly,1,1,70312500
+Lucid,Easy,Weekly,1,1,35112500
+Lucid,Normal,Weekly,1,1,40612500
+Lucid,Hard,Weekly,1,1,80000000
+Will,Normal,Weekly,1,1,46512500
+Will,Hard,Weekly,1,1,88200000
+Darknell,Normal,Weekly,1,1,52812500
+Darknell,Hard,Weekly,1,1,98000000
+Gloom,Normal,Weekly,1,1,49612500
+Gloom,Hard,Weekly,1,1,92450000
+Black Mage,Hard,Monthly,1,1,500000000

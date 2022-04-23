@@ -1,0 +1,250 @@
+﻿++Solution 'MSEACalculator' ‎(1 of 1 project)
+i:{00000000-0000-0000-0000-000000000000}:MSEACalculator.sln
+++MSEACalculator ‎(Universal Windows)
+i:{00000000-0000-0000-0000-000000000000}:MSEACalculator
+++Properties
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\properties\
+++References
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++Assets
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\assets\
+++BossRes
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\bossres\
+++CalculationRes
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\
+++ViewModels
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\viewmodels\
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewmodels\
+++QMArcaneVM.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\viewmodels\qmarcanevm.cs
+++QMConversionVM.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\viewmodels\qmconversionvm.cs
+++ViewPages
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\viewpages\
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewpages\
+++CalForm.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\calform.cs
+++StarforceCLS.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\starforcecls.cs
+++SymbolModel.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\symbolmodel.cs
+++CharacterRes
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\
+++EquipmentRes
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\equipmentres\
+++EquipCLS.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\equipmentres\equipcls.cs
+++EquipStatsCLS.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\equipmentres\equipstatscls.cs
+++PotentialStatsCLS.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\equipmentres\potentialstatscls.cs
+++ScrollingModelCLS.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\equipmentres\scrollingmodelcls.cs
+++MesoRes
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\mesores\
+++ArcaneSymbolCLS.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\arcanesymbolcls.cs
+++CharacterCLS.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\charactercls.cs
+++CharacterPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\characterpage.xaml
+++CharTStore.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\chartstore.cs
+++IfXenon.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\ifxenon.cs
+++EventRes
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\eventres\
+++MainAppRes
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\
+++Settings
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\
+++AddChar
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\
+++AddCharTrackVM.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewmodels\addchartrackvm.cs
+++AddEquipVM.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewmodels\addequipvm.cs
+++AddCharTrackPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewpages\addchartrackpage.xaml
+++AddEquipFlamePage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewpages\addequipflamepage.xaml
+++AddEquipPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewpages\addequippage.xaml
+++AddEquipPotentialPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewpages\addequippotentialpage.xaml
+++AddEquipScrollPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewpages\addequipscrollpage.xaml
+++AddCharTrackModel.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\addchartrackmodel.cs
+++AddEquipModel.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\addequipmodel.cs
+++SettingsPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\settingspage.xaml
+++SettingsViewModel.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\settingsviewmodel.cs
+++HomePage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\homepage.xaml
+++MainPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\mainpage.xaml
+++QuickMathPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\quickmathpage.xaml
+++QuickMathViewModel.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\quickmathviewmodel.cs
+++TestingBlankPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\testingblankpage.xaml
+++OtherRes
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\
+++Database
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\
+++Tables
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\
+++DatabaseINIT.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\databaseinit.cs
+++DBAccess.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\dbaccess.cs
+++DBRetrieve.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\dbretrieve.cs
+++Interface
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\interface\
+++IStringFormatConverter.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\interface\istringformatconverter.cs
+++ITableUpload.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\interface\itableupload.cs
+++IValidateTypes.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\interface\ivalidatetypes.cs
+++CheckTypes.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\checktypes.cs
+++ComFunc.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\comfunc.cs
+++CustomCommand.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\customcommand.cs
+++INPCObject.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\inpcobject.cs
+++ScrapCode.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\scrapcode.cs
+++UnionRes
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\unionres\
+++App.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\app.xaml
+++GVar.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\gvar.cs
+++Package.appxmanifest
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\package.appxmanifest
+++AssemblyInfo.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\properties\assemblyinfo.cs
+++Default.rd.xml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\properties\default.rd.xml
+++AsyncEnumerator
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++Microsoft.Data.Sqlite
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++Microsoft.NETCore.UniversalWindowsPlatform
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++Microsoft.Toolkit.Uwp.UI.Controls
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++Microsoft.Toolkit.Uwp.UI.Controls.DataGrid
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++Microsoft.UI.Xaml.Markup
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++Microsoft.VCLibs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++Newtonsoft.Json
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++SQLitePCLRaw.bundle_winsqlite3
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++System.Text.Json
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++Universal Windows
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:
+++LockScreenLogo.scale-200.png
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\assets\lockscreenlogo.scale-200.png
+++SplashScreen.scale-200.png
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\assets\splashscreen.scale-200.png
+++Square150x150Logo.scale-200.png
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\assets\square150x150logo.scale-200.png
+++Square44x44Logo.scale-200.png
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\assets\square44x44logo.scale-200.png
+++Square44x44Logo.targetsize-24_altform-unplated.png
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\assets\square44x44logo.targetsize-24_altform-unplated.png
+++StoreLogo.png
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\assets\storelogo.png
+++Wide310x150Logo.scale-200.png
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\assets\wide310x150logo.scale-200.png
+++BossCLS.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\bossres\bosscls.cs
+++ArcaneQMPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\viewpages\arcaneqmpage.xaml
+++ConversionQMPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\viewpages\conversionqmpage.xaml
+++BossMesoModel.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\mesores\bossmesomodel.cs
+++CustomItem.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\mesores\customitem.cs
+++MesoPage.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\mesores\mesopage.xaml
+++MesoViewModel.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\mesores\mesoviewmodel.cs
+++CharacterPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\characterpage.xaml.cs
+++Event.xaml
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\eventres\event.xaml
+++EventRecordsCLS.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\eventres\eventrecordscls.cs
+++AddCharTrackPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewpages\addchartrackpage.xaml.cs
+++AddEquipFlamePage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewpages\addequipflamepage.xaml.cs
+++AddEquipPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewpages\addequippage.xaml.cs
+++AddEquipPotentialPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewpages\addequippotentialpage.xaml.cs
+++AddEquipScrollPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\addchar\viewpages\addequipscrollpage.xaml.cs
+++SettingsPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\settings\settingspage.xaml.cs
+++HomePage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\homepage.xaml.cs
+++MainPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\mainpage.xaml.cs
+++QuickMathPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\quickmathpage.xaml.cs
+++TestingBlankPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\mainappres\testingblankpage.xaml.cs
+++AllCharacterTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\allcharactertable.cs
+++BaseDBTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\basedbtable.cs
+++BossListTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\bosslisttable.cs
+++ClassWeaponTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\classweapontable.cs
+++EquipAccessoriesTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\equipaccessoriestable.cs
+++EquipArmorTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\equiparmortable.cs
+++EquipMainWeaponTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\equipmainweapontable.cs
+++EquipSecWeaponTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\equipsecweapontable.cs
+++EquipSlotTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\equipslottable.cs
+++PotentialTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\potentialtable.cs
+++StarForceTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\starforcetable.cs
+++SymbolsTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\symbolstable.cs
+++UnionTable.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\otherres\database\tables\uniontable.cs
+++UnionCLS.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\unionres\unioncls.cs
+++App.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\app.xaml.cs
+++ArcaneQMPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\viewpages\arcaneqmpage.xaml.cs
+++ConversionQMPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\calculationres\viewpages\conversionqmpage.xaml.cs
+++MesoPage.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\characterres\mesores\mesopage.xaml.cs
+++Event.xaml.cs
+i:{161c87ea-ae9d-479e-b3ce-92327d5a8de7}:c:\users\edgar\documents\personal progamming\mseacalculator\eventres\event.xaml.cs

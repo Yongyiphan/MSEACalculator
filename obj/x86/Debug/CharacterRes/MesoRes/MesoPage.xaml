@@ -1,0 +1,163 @@
+﻿<Page
+    x:Class="MSEACalculator.CharacterRes.MesoRes.MesoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MSEACalculator.BossRes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition x:ConnectionId='2' x:Name="Header" Height="0.5*"/>
+            <RowDefinition Height="14*"/>
+            <RowDefinition x:ConnectionId='3' x:Name="Footer" Height="0.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="10 0 5 0"/>
+                <Setter Property="FontSize" Value="17"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Margin" Value="0 0 5 0"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="Margin" Value="0 0 0 0"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="MinHeight" Value="32"/>
+                <Setter Property="MinWidth" Value="64"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Height" Value="32"/>
+            </Style>
+            <Style TargetType="CalendarDatePicker">
+                <Setter Property="Margin" Value="0 0 5 0"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Height" Value="32"/>
+            </Style>
+        </Grid.Resources>
+        
+        <!--First Portion for Boss Crsytal Tracking-->
+        <Grid Grid.Row="1">
+            <!--<Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>-->
+            <Grid x:ConnectionId='4' Name="BossingGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <ComboBox x:ConnectionId='10' x:Name="MulesNameSelector"  PlaceholderText="Select Mule" 
+                                  ItemsSource ="{Binding charNameList, Mode=TwoWay}" 
+                                  SelectedItem="{Binding SelectedMule, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                  Width="200" VerticalAlignment="Center" ></ComboBox>
+                        <TextBlock>Weekdays:</TextBlock>
+                        <ComboBox x:ConnectionId='11' Name="daysMultiplier" 
+                                  ItemsSource ="{Binding daysList}" 
+                                  SelectedItem="{Binding DaysMultiplier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <TextBlock>Weekends:</TextBlock>
+                        <ComboBox x:ConnectionId='12' Name="weekEndsMultiplier" 
+                                  ItemsSource ="{Binding displayType}" 
+                                  SelectedItem="{Binding MesoViewBy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <TextBlock>Total Meso:</TextBlock>
+                        <TextBlock x:ConnectionId='13' Name="TotalMeso" MaxWidth="180" HorizontalAlignment="Left" Text="{Binding TotalMeso}"></TextBlock>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                        <ComboBox x:ConnectionId='6' x:Name="BossSelectorCBox" PlaceholderText="Select Boss or Custom" 
+                                  ItemsSource="{Binding bossNameList, Mode=TwoWay}" 
+                                  SelectedItem="{Binding SelectedBoss, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  Width="200" />
+                        <ComboBox x:ConnectionId='7' x:Name="BossDifficulty" IsTextSearchEnabled="True" PlaceholderText="Difficulty" 
+                                  ItemsSource="{Binding DifficultyList}" 
+                                  SelectedItem="{Binding SelectedDifficulty, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  MaxHeight="300" Width="110" />
+
+                        <Button x:ConnectionId='8' Name="AddBossItem" Command="{Binding addBossCMD}" Content="Add Boss"></Button>
+                        <Button x:ConnectionId='9' Name="DeleteBossItem" Command="{Binding deleteBossCMD}" Content="Delete Boss"></Button>
+                        <TextBlock Text="{Binding ErrorMessage}"/>
+
+
+
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2">
+                        <!--<ListView x:Name="bossListDisplay" ItemsSource="{Binding BossList}"></ListView>-->
+                    <controls:DataGrid x:ConnectionId='5' Name="bossDisplay" AreRowDetailsFrozen="True" AutoGenerateColumns="False" FontSize="14" 
+                                       ItemsSource="{Binding BossList}"
+                                       SelectedItem="{Binding SelectedBossItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <controls:DataGrid.Columns>
+                            <controls:DataGridTextColumn 
+                            Header="Boss Name" 
+                            Width="180"
+                            Binding="{Binding name}"/>
+                            <controls:DataGridTextColumn 
+                            Header="Difficulty" 
+                            Width="SizeToHeader"
+                            Binding="{Binding difficulty}"/>
+                            <controls:DataGridTextColumn 
+                            Header="Entry Type" 
+                            Width="SizeToHeader"
+                            Binding="{Binding entryType}"/>
+                            <controls:DataGridTextColumn 
+                            Header="Meso" 
+                            Width="150"
+                            Binding="{Binding meso}"/>
+                        </controls:DataGrid.Columns>
+                    </controls:DataGrid>
+                </Grid>
+            </Grid>
+
+
+            <!-- Second Portion for EB Tracking--><!--
+            <Grid Grid.Row="1" x:Name="EBGrid">
+
+                <TextBlock x:Name="displayTxt" Text="{Binding TestVar}"/>
+
+            </Grid>-->
+
+
+
+
+        </Grid>
+
+
+    </Grid>
+
+</Page>
+
+<!--Using Pop Up Panel to add custom items--><!--
+
+<Popup x:Name="AddCustomItemPopUp">
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+        <StackPanel.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="0 5 0 0"></Setter>
+            </Style>
+        </StackPanel.Resources>
+        <TextBlock Text="Name:"/>
+        <TextBox x:Name="CustomIName"></TextBox>
+        <TextBlock Text="Value: "/>
+        <TextBox x:Name="CustomIValue"></TextBox>
+        <TextBlock Text="Quantity: "/>
+        <TextBox x:Name="CustomIQuantity"></TextBox>
+        <Button Name="AddCustomItem">Add Item</Button>
+    </StackPanel>
+</Popup>-->
+

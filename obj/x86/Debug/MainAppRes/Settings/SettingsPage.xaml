@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="MSEACalculator.MainAppRes.Settings.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MSEACalculator.MainAppRes.Settings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:ConnectionId='2' x:Name="SettingsGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" >
+            <NavigationView x:ConnectionId='3' Name="SettingsNav" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" SelectionFollowsFocus="Enabled" IsSettingsVisible="False"                                                >
+                <NavigationView.MenuItems>
+                    <NavigationViewItem x:ConnectionId='4' Name="AddCharTrack" Content="Add Char to Track" Tag="AddCharTrack_Page"/>
+                    <NavigationViewItem x:ConnectionId='5' Name="ModifyDB" Content="Modify Database" Tag="ModifyDB_Page"/>
+                </NavigationView.MenuItems>
+
+                <Frame x:ConnectionId='6' Name="SettingsContentFrame"/>
+            </NavigationView>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <TextBlock Text="{Binding TimeElapsed}" VerticalAlignment="Center" HorizontalAlignment="Left" Height="100"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <Button Content="Reset Track Record"  Command="{Binding resetDBBlankCMD }" />
+                <Button Content="Reset DB" Command="{Binding resetDBTableCMD}" />
+            </StackPanel>
+            
+        </Grid>
+        <!--<Button x:Name="uploadDb" Content="Upload" VerticalAlignment="Center" HorizontalAlignment="Center" Click="uploadDb_Click"></Button>-->
+    </Grid>
+</Page>
+

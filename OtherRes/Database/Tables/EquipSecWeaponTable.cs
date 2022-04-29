@@ -130,12 +130,12 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         equip.BaseStats.DEX =Convert.ToInt32(temp[6]);
                         equip.BaseStats.INT =Convert.ToInt32(temp[7]);
                         equip.BaseStats.LUK =Convert.ToInt32(temp[8]);
-                        equip.BaseStats.ATK = Convert.ToInt32(temp[9]);
-                        equip.BaseStats.MATK = Convert.ToInt32(temp[10]);
-                        equip.BaseStats.AllStat = Convert.ToInt32(temp[11]);
+                        equip.BaseStats.AllStat = Convert.ToInt32(temp[9]);
+                        equip.BaseStats.MaxHP = Convert.ToInt32(temp[10]);
+                        equip.BaseStats.MaxMP = Convert.ToInt32(temp[11]);
                         equip.BaseStats.DEF = Convert.ToInt32(temp[12]);
-                        equip.BaseStats.MaxHP = Convert.ToInt32(temp[13]);
-                        equip.BaseStats.MaxMP = Convert.ToInt32(temp[14]);
+                        equip.BaseStats.ATK = Convert.ToInt32(temp[13]);
+                        equip.BaseStats.MATK = Convert.ToInt32(temp[14]);
                         equip.BaseStats.ATKSPD = Convert.ToInt32(temp[15]);
 
 

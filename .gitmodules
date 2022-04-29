@@ -1,3 +1,6 @@
 [submodule "OtherRes/WebScrapMSEA"]
 	path = OtherRes/WebScrapMSEA
 	url = https://github.com/Yongyiphan/WebScrapMSEA.git
+[submodule "OtherRes/ScrapyMSEA"]
+	path = OtherRes/ScrapyMSEA
+	url = https://github.com/Yongyiphan/ScrapyMSEA.git

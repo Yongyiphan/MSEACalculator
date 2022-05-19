@@ -6,8 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"     
-    xmlns:mtuuc="using:Microsoft.Toolkit.Uwp.UI.Controls"
 
+    xmlns:mtuuc="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <!--PURPOSE-->
@@ -152,6 +152,8 @@
                                  IsChecked="{Binding EndGoal, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <RadioButton GroupName="EndGoal" Content="To Transfer?"
                                  HorizontalAlignment="Center"/>
+                    <RadioButton GroupName="EndGoal" Content="Custom"
+                                 HorizontalAlignment="Center"/> 
                     <CheckBox Content="Arcane Catalyst?" 
                               IsChecked="{Binding ArcaneCatT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Margin="15 0 0 0" VerticalContentAlignment="Top"/>
@@ -236,7 +238,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>-->
-        <Grid Grid.Row="1">
+         <Grid Grid.Row="1">
             <Grid.Resources>
                 <DataTemplate x:Key="CEXP">
                     <Grid>
@@ -280,6 +282,7 @@
                             AreRowDetailsFrozen="True" AutoGenerateColumns="False" FontSize="15" IsReadOnly="True"
                             >
                 <mtuuc:DataGrid.Columns>
+                    
                     <mtuuc:DataGridTextColumn
                         Header="Name"
                         Binding="{Binding Name, Mode=TwoWay}"/>
@@ -303,7 +306,7 @@
                 </mtuuc:DataGrid.Columns>
             </mtuuc:DataGrid>
         </Grid>
-    </Grid>
+   </Grid>
 </Page>
 
 <!--<ContentControl Content="{Binding SArcaneSymbol, Mode=TwoWay}"

@@ -124,7 +124,7 @@ namespace MSEACalculator.CalculationRes
         }
 
 
-        public static Dictionary<string,int> CalArcaneStatsForce(int symbolLvl, string mode)
+        public static Dictionary<string,int> CalArcaneStatsForce(int symbolLvl, string mode = "General")
         {
             Dictionary<string, int> dictStore = new Dictionary<string, int>();
             int cForce = 0;

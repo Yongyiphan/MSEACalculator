@@ -1,6 +1,7 @@
 ﻿using MSEACalculator.CharacterRes;
 using MSEACalculator.OtherRes.Database;
 using MSEACalculator.OtherRes.Database.Tables;
+using MSEACalculator.OtherRes.Patterns;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,12 @@ namespace MSEACalculator.CalculationRes
     {
         public List<ArcaneSymbolCLS>  ArcaneList { get => SymbolsTable.GetAllArcaneSymbolDB(); }
 
-        public int MaxSymbolExp { get; set; }
+
         public int MaxArcaneForce { get; set; }
 
         public SymbolModel()
         {
-            MaxSymbolExp = CalForm.CalMaxExp(GVar.MaxArcaneSymbolLevel);
-            MaxArcaneForce = CalForm.CalArcaneStatsForce(GVar.MaxArcaneSymbolLevel, "General")["ArcaneForce"] * ArcaneList.Count;
+            MaxArcaneForce = CalForm.CalArcaneStatsForce(Singleton.Instance.GFlex.MaxArcaneSymbolLevel)["ArcaneForce"] * ArcaneList.Count;
         }
 
 

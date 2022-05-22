@@ -13,14 +13,19 @@ namespace MSEACalculator.CharacterRes
         //To be keyed in
         public string Name { get; set; }
 
+        //Arcane / Authentic Force
+        public string Description { get; set; }
+
         public int CurrentLevel { get; set; } = 1;
         public int CurrentExp { get; set; } = 1;
 
+        public int MaxLvl { get; set; } = 0;
+
+        public int MaxExp { get; set; } = 0;
 
         //Generated when Compiled (Initialised in GVar.cs)
         public int CurrentLimit { get; set; } //CalForm.CalCurrentLimit(CurrentLevel);
 
-        //public int MaxExp { get; set; } = GVar.MaxSymbolExp;
         public string SubMap { get; set; } = "None";
         public bool unlockSubMap { get; set; } = false;
         public int BaseSymbolGain { get; set; } = 0;

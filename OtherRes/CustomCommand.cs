@@ -25,13 +25,13 @@ namespace MSEACalculator.OtherRes
             this._execute = execute;
         }
         
-        public CustomCommand(Action execute, Func<bool> canExcute)
+        public CustomCommand(Action execute, Func<bool> canExecute)
         {
             if (execute == null)
                 throw new ArgumentNullException("execute");
 
             this._execute = execute;
-            this._canExecute = canExcute;
+            this._canExecute = canExecute;
         }
 
 
@@ -50,10 +50,11 @@ namespace MSEACalculator.OtherRes
         public void RaiseCanExecuteChanged()
         {
             var handler = CanExecuteChanged;
-            if(handler!= null)
+            if (handler!= null)
             {
                 handler(this, EventArgs.Empty);
             }
+
 
             //CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }

@@ -132,6 +132,8 @@
     </Compile>
     <Compile Include="CharacterRes\HyperStat.cs" />
     <Compile Include="CharacterRes\IfXenon.cs" />
+    <Compile Include="GVarFlex.cs" />
+    <Compile Include="OtherRes\CustomTCommand.cs" />
     <Compile Include="MainAppRes\QuickMathPage.xaml.cs">
       <DependentUpon>QuickMathPage.xaml</DependentUpon>
     </Compile>
@@ -209,6 +211,7 @@
     <Compile Include="OtherRes\Interface\ITableUpload.cs" />
     <Compile Include="OtherRes\Interface\IStringFormatConverter.cs" />
     <Compile Include="OtherRes\Interface\IValidateTypes.cs" />
+    <Compile Include="OtherRes\Patterns\Singleton.cs" />
     <Compile Include="OtherRes\ScrapCode.cs" />
     <Compile Include="UnionRes\UnionCLS.cs" />
     <Compile Include="MainAppRes\HomePage.xaml.cs">
@@ -322,8 +325,8 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>7.1.2</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
-      <Version>7.1.2</Version>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.7.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />

@@ -8,6 +8,7 @@ using Windows.UI.Xaml;
 using MSEACalculator.OtherRes.Database;
 using MSEACalculator.CharacterRes.EquipmentRes;
 using System.Collections.Specialized;
+using MSEACalculator.OtherRes.Patterns;
 
 namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 {
@@ -29,6 +30,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
         /// </summary>
         public ACTModel AllCharTrackM { get; set; } = new ACTModel();
 
+        public GVarFlex GFlex { get; set; } = Singleton.Instance.GFlex;
 
         private AddEquipVM _AEquipVM;
         public AddEquipVM AEquipVM 
@@ -68,7 +70,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private string lvlI = GVar.minLevel.ToString();
+        private string lvlI = this.GFlex.minLevel.ToString();
         public string LvlInput
         {
             get

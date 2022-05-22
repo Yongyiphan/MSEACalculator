@@ -1,4 +1,5 @@
 ﻿using MSEACalculator.MainAppRes;
+using MSEACalculator.OtherRes.Patterns;
 using System;
 using System.IO;
 using Windows.ApplicationModel;
@@ -17,6 +18,7 @@ namespace MSEACalculator
     {
 
         public string dpPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Maplestory.db");
+
 
 
 
@@ -40,6 +42,7 @@ namespace MSEACalculator
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
+            
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)

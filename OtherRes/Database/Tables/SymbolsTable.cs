@@ -24,6 +24,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         "PQGain int, " +
                         "PQGainLimit int, " +
                         "SymbolExchangeRate int," +
+                        "MaxLvl int," +
                         "CostLvlMod int," +
                         "CostMod int," +
                         "PRIMARY KEY(Name)" +
@@ -35,7 +36,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         public void RetrieveData()
         {
-            SymbolList = new List<ArcaneSymbolCLS> 
+            SymbolList = new List<ArcaneSymbolCLS>
             {
                 new ArcaneSymbolCLS
                 {
@@ -44,7 +45,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     SubMap = "Reverse City",
                     PQSymbolsGain = 6,
                     CostLvlMod = 7130000,
-                    CostMod = 2370000
+                    CostMod = 2370000,
+                    MaxLvl = 20
                 },
                 new ArcaneSymbolCLS
                 {
@@ -54,7 +56,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     PQGainLimit = 15,
                     SymbolExchangeRate = 1,
                     CostLvlMod = 6600000,
-                    CostMod = 12440000
+                    CostMod = 12440000,
+                    MaxLvl = 20
                 },
                 new ArcaneSymbolCLS
                 {
@@ -63,7 +66,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     PQGainLimit = 500,
                     SymbolExchangeRate = 30,
                     CostLvlMod = 6600000,
-                    CostMod = 12440000
+                    CostMod = 12440000,
+                    MaxLvl = 20
                 },
                 new ArcaneSymbolCLS
                 {
@@ -72,7 +76,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     PQGainLimit = 30,
                     SymbolExchangeRate = 3,
                     CostLvlMod = 6600000,
-                    CostMod = 12440000
+                    CostMod = 12440000,
+                    MaxLvl = 20
                 },
                 new ArcaneSymbolCLS
                 {
@@ -80,7 +85,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     BaseSymbolGain = 8,
                     PQSymbolsGain = 6,
                     CostLvlMod = 6600000,
-                    CostMod = 12440000
+                    CostMod = 12440000,
+                    MaxLvl = 20
                 },
                 new ArcaneSymbolCLS
                 {
@@ -88,7 +94,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     BaseSymbolGain = 8,
                     PQSymbolsGain = 6,
                     CostLvlMod = 6600000,
-                    CostMod = 12440000
+                    CostMod = 12440000,
+                    MaxLvl = 20
                 }
 
             };
@@ -113,6 +120,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@PQGain", (object)symbol.PQSymbolsGain ?? DBNull.Value);
                         insertCMD.Parameters.AddWithValue("@PQGainLimit", (object)symbol.PQGainLimit ?? DBNull.Value);
                         insertCMD.Parameters.AddWithValue("@SymbolExchangeRate", (object)symbol.SymbolExchangeRate ?? DBNull.Value);
+                        insertCMD.Parameters.AddWithValue("@MaxLvl", symbol.MaxLvl);
                         insertCMD.Parameters.AddWithValue("@CostLvlMod", symbol.CostLvlMod);
                         insertCMD.Parameters.AddWithValue("@CostMod", symbol.CostMod);
 
@@ -156,9 +164,12 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             symbol.PQSymbolsGain      =  reader.GetInt32(6);
                             symbol.PQGainLimit        =  reader.GetInt32(7);
                             symbol.SymbolExchangeRate =  reader.GetInt32(8);
-                            symbol.CostLvlMod         =  reader.GetInt32(9);
-                            symbol.CostMod            = reader.GetInt32(10);
-
+                            symbol.MaxLvl             =  reader.GetInt32(9);
+                            symbol.CostLvlMod         =  reader.GetInt32(10);
+                            symbol.CostMod            = reader.GetInt32(11);
+                            symbol.MaxExp = CalculationRes.CalForm.CalMaxExp(symbol.MaxLvl);
+                            symbol.Description = "Arcane";
+                            
                             symbolList.Add(symbol);
 
 

@@ -32,25 +32,21 @@ namespace MSEACalculator
         public const string CharacterPath = @"\DefaultData\CharacterData\";
         public const string EquipmentPath = @"\DefaultData\EquipmentData\";
         public const string CalculationsPath = @"\DefaultData\CalculationsData\";
-
-
-
+        public static string CONN_STRING { get; set; } = $"Filename = {databasePath}";
+        
+        
+        
         /// <summary>
         /// STATIC / CONSTANT VARIABLES
         /// </summary>
 
-        public const int MaxCrytalCount = 180;
-        public const int MaxArcaneSymbolLevel = 20;
-        public const int TransferSymbolExp = 2467;
-        public static int MaxSymbolExp = CalForm.CalMaxExp(MaxArcaneSymbolLevel);
+        
 
 
-        public static string CONN_STRING { get; set; } = $"Filename = {databasePath}";
 
 
-        public const int minLevel = 1;
-        public const int maxLevel = 300;
-
+        
+        
 
 
         //STAR FORCE

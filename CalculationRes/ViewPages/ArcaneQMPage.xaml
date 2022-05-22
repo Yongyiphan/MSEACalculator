@@ -211,8 +211,8 @@
                                  Command="{Binding EndGoal, Mode=TwoWay}" CommandParameter="Custom"/>
                     <StackPanel Orientation="Horizontal" Visibility="{Binding ShowCustomLevel, Mode=TwoWay}">
                         <TextBlock Text="Target Level:"/>
-                        <ComboBox ItemsSource="{Binding SymbolLvls, Mode=TwoWay}"
-                                  SelectedIndex="{Binding}"/>
+                        <ComboBox ItemsSource="{Binding CustomLvlList, Mode=TwoWay}"
+                                  SelectedIndex="{Binding CustomLvl, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </StackPanel>
                     <CheckBox Content="Arcane Catalyst?" 
                               IsChecked="{Binding ArcaneCatT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

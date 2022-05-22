@@ -70,13 +70,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
         }
 
-        private string lvlI = this.GFlex.minLevel.ToString();
+        private string lvlI;
         public string LvlInput
         {
-            get
-            {
-                return lvlI;
-            }
+            get => lvlI;
             set
             {
                 lvlI = value;
@@ -188,6 +185,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
         private void initFields()
         {
+            lvlI = GFlex.minLevel.ToString();
             AllCharTrackM.AllCharList.ForEach(x => AllCharList.Add(x));
             AllCharTrackM.AllCharTList.ForEach(x => CharTrackList.Add(x));
         }
@@ -201,7 +199,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 if (int.TryParse(LvlInput, out lvlOutput) && int.TryParse(StarF, out sfOutput))
                 {
 
-                    if (lvlOutput <= GVar.maxLevel && lvlOutput >= GVar.minLevel)
+                    if (lvlOutput <= GFlex.maxLevel && lvlOutput >= GFlex.minLevel)
                     {
                         return true;
                     }
@@ -264,6 +262,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
             }
 
         }
+
+
         private string _AddUpdateBtnTxt = "Add";
         public string AddUpdateBtnTxt
         {

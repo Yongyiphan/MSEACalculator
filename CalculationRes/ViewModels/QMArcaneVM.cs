@@ -88,7 +88,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
         #region
 
         private Visibility _ShowPQ = Visibility.Collapsed;
-
         public Visibility ShowPQ
         {
             get { return _ShowPQ; }
@@ -98,7 +97,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
         }
 
         private Visibility _ShowFlex = Visibility.Collapsed;
-
         public Visibility ShowFlex
         {
             get { return _ShowFlex; }
@@ -108,7 +106,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
         }
 
         private Visibility _ShowSubMap = Visibility.Collapsed;
-
         public Visibility ShowSubMap
         {
             get { return _ShowSubMap; }
@@ -116,8 +113,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 OnPropertyChanged(nameof(ShowSubMap));
             }
         }
-
-
         public Visibility ShowCustomLevel { get; set; } = Visibility.Collapsed;
         
         #endregion
@@ -269,19 +264,21 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         public string EndType { get; set; } = "Max";
 
-        private int _CustomLvl;
-
+        private int _CustomLvl = 0;
         public int CustomLvl
         {
             get { return _CustomLvl; }
             set
             {
                 _CustomLvl = value;
+                if (CustomLvl != 0)
+                {
+                    ReEvalSymbolArcaneCatalyst();
+                }
                 OnPropertyChanged(nameof(CustomLvl));
             }
         }
-        public List<int> CustomLvlList { get; set; } = new List<int>();
-
+        public List<int> CustomLvlList { get; set; }
 
 
         private string _DaysLeft;
@@ -395,12 +392,21 @@ namespace MSEACalculator.CalculationRes.ViewModels
             if (TargetLimit == "Custom")
             {
                 ShowCustomLevel = Visibility.Visible;
+                int MaxLvl = DisplayArcaneSymbolList.ToList().Select(x => x.MaxLvl).Max();
+                if( CustomLvlList == null || (CustomLvlList.Count > 0 && CustomLvlList.Max() != MaxLvl))
+                {
+                    CustomLvlList= Enumerable.Range(1, MaxLvl).ToList();
+                    OnPropertyChanged(nameof(CustomLvlList));
+                        
+                }
                 OnPropertyChanged(nameof(ShowCustomLevel));
-                OnPropertyChanged(nameof(SymbolLvls));
             }
             else
             {
                 ReEvalSymbolArcaneCatalyst();
+                ShowCustomLevel = Visibility.Collapsed;
+                CustomLvl = 0;
+                OnPropertyChanged(nameof(ShowCustomLevel));
             }
         }
 
@@ -636,6 +642,8 @@ namespace MSEACalculator.CalculationRes.ViewModels
                     CCap = symbol.Description == "Arcane" ? GFlex.ArcaneTransferSymbolExp : GFlex.AuthenticTransferSymbolExp;
                     break;
                 case "Custom":
+                    int NLvl = CustomLvlList[CustomLvl];
+                    CCap = CalForm.CalMaxExp(NLvl);
                     break;
             }
 

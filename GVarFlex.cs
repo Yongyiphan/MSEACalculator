@@ -14,9 +14,9 @@ namespace MSEACalculator
         public int MaxAuthenticSymbolLevel { get; private set; } = 11;
         public int ArcaneTransferSymbolExp { get; private set; } = 2467;
         public int AuthenticTransferSymbolExp { get; private set; } = 0;
-        public int MaxSymbolExp { get; set; }        
-        
-        
+        public int MaxSymbolExp { get; set; }
+
+        public List<string> ArcaneSymbolCoinExchange { get; set; } = new List<string> { "Lachelein", "Arcana" }; 
         public int minLevel { get; private set; } = 1;
         public int maxLevel { get; private set; } = 300;
 

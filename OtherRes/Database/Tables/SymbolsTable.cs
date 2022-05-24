@@ -21,6 +21,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         "CurrentExp int," +
                         "CurrentLimit int, " +
                         "BaseGain int," +
+                        "PQName string, " +
                         "PQGain int, " +
                         "PQGainLimit int, " +
                         "SymbolExchangeRate int," +
@@ -53,6 +54,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     Name = "Chew Chew",
                     BaseSymbolGain = 4,
                     SubMap = "Yum Yum",
+                    PQName = "Hungry Muto",
                     PQGainLimit = 15,
                     SymbolExchangeRate = 1,
                     CostLvlMod = 6600000,
@@ -63,6 +65,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 {
                     Name = "Lachelein",
                     BaseSymbolGain = 8,
+                    PQName = "Dream Breaker",
                     PQGainLimit = 500,
                     SymbolExchangeRate = 30,
                     CostLvlMod = 6600000,
@@ -73,6 +76,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 {
                     Name = "Arcana",
                     BaseSymbolGain = 8,
+                    PQName = "Spirit Savior",
                     PQGainLimit = 30,
                     SymbolExchangeRate = 3,
                     CostLvlMod = 6600000,
@@ -117,6 +121,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@CurrentExp", symbol.CurrentExp);
                         insertCMD.Parameters.AddWithValue("@CurrentLimit", CalculationRes.CalForm.CalCurrentLimit(symbol.CurrentLevel));
                         insertCMD.Parameters.AddWithValue("@BaseGain", symbol.BaseSymbolGain);
+                        insertCMD.Parameters.AddWithValue("@PQName", (object)symbol.PQName ?? string.Empty);
                         insertCMD.Parameters.AddWithValue("@PQGain", (object)symbol.PQSymbolsGain ?? DBNull.Value);
                         insertCMD.Parameters.AddWithValue("@PQGainLimit", (object)symbol.PQGainLimit ?? DBNull.Value);
                         insertCMD.Parameters.AddWithValue("@SymbolExchangeRate", (object)symbol.SymbolExchangeRate ?? DBNull.Value);
@@ -161,12 +166,13 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             symbol.CurrentExp         =  reader.GetInt32(3);
                             symbol.CurrentLimit       =  reader.GetInt32(4);
                             symbol.BaseSymbolGain     =  reader.GetInt32(5);
-                            symbol.PQSymbolsGain      =  reader.GetInt32(6);
-                            symbol.PQGainLimit        =  reader.GetInt32(7);
-                            symbol.SymbolExchangeRate =  reader.GetInt32(8);
-                            symbol.MaxLvl             =  reader.GetInt32(9);
-                            symbol.CostLvlMod         =  reader.GetInt32(10);
-                            symbol.CostMod            = reader.GetInt32(11);
+                            symbol.PQName             =  reader.GetString(6);
+                            symbol.PQSymbolsGain      =  reader.GetInt32(7);
+                            symbol.PQGainLimit        =  reader.GetInt32(8);
+                            symbol.SymbolExchangeRate =  reader.GetInt32(9);
+                            symbol.MaxLvl             =  reader.GetInt32(10);
+                            symbol.CostLvlMod         =  reader.GetInt32(11);
+                            symbol.CostMod            = reader.GetInt32(12);
                             symbol.MaxExp = CalculationRes.CalForm.CalMaxExp(symbol.MaxLvl);
                             symbol.Description = "Arcane";
                             

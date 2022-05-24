@@ -37,6 +37,7 @@ namespace MSEACalculator.CharacterRes
 
 
         //PQ Flex
+        public string PQName { get; set; }
         public int PQGainLimit { get; set; }
         public int SymbolExchangeRate { get; set; }
         public int PQCoins { get; set; } = 0;

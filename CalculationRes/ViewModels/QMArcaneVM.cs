@@ -30,7 +30,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 OnPropertyChanged(nameof(SymbolList));
             }
         }
-        
+
 
 
         private ObservableCollection<ArcaneSymbolCLS> _DisplayArcaneSymbolList = new ObservableCollection<ArcaneSymbolCLS>();
@@ -64,8 +64,9 @@ namespace MSEACalculator.CalculationRes.ViewModels
                             PQGains = CSymbol.PQCoins.ToString();
                             break;
                     }
-                    
+
                     ShowSubMap = CSymbol.SubMap == "None" ? Visibility.Collapsed : Visibility.Visible;
+                    ShowInvCoins = GFlex.ArcaneSymbolCoinExchange.Contains(CSymbol.Name) ?  Visibility.Visible : Visibility.Collapsed;
                     isSubMap = CSymbol.unlockSubMap;
                     if (SymbolLvls == null || SymbolLvls.Max() != CSymbol.MaxLvl)
                     {
@@ -81,6 +82,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
                 }
                 OnPropertyChanged(nameof(CSymbol));
+                OnPropertyChanged(nameof(ShowInvCoins));
             }
         }
 
@@ -114,7 +116,8 @@ namespace MSEACalculator.CalculationRes.ViewModels
             }
         }
         public Visibility ShowCustomLevel { get; set; } = Visibility.Collapsed;
-        
+        public Visibility ShowInvCoins { get; set; } = Visibility.Collapsed;
+
         #endregion
         public string GainsType { get; set; } = "";
 
@@ -127,7 +130,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             }
         }
 
-        public List<int> SymbolLvls { get; set; } 
+        public List<int> SymbolLvls { get; set; }
 
         private int _CurrentLvl;
         public int CLvl
@@ -191,7 +194,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                         int tempExp = int.Parse(CExp);
                         if (tempExp > CSymbol.MaxExp || tempExp<1)
                         {
-                            ComFunc.ErrorDia(String.Format("Enter number within 1 to {0}",CSymbol.MaxExp));
+                            ComFunc.ErrorDia(String.Format("Enter number within 1 to {0}", CSymbol.MaxExp));
                             CExp = "1";
                         }
                     }
@@ -259,6 +262,21 @@ namespace MSEACalculator.CalculationRes.ViewModels
                     }
                 }
                 OnPropertyChanged(nameof(PQGains));
+            }
+        }
+
+        private string _InvCoins = "0";
+
+        public string InvCoins
+        {
+            get { return _InvCoins; }
+            set { _InvCoins = value;
+                if (Vali.NotInt(value))
+                {
+                    ComFunc.ErrorDia("Enter valid number");
+                    InvCoins = "0";
+                }
+                OnPropertyChanged(nameof(InvCoins));
             }
         }
 
@@ -397,7 +415,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 {
                     CustomLvlList= Enumerable.Range(1, MaxLvl).ToList();
                     OnPropertyChanged(nameof(CustomLvlList));
-                        
                 }
                 OnPropertyChanged(nameof(ShowCustomLevel));
             }
@@ -452,6 +469,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
             int mod = isSubMap == true ? 2 : 1;
             dailyGains *= mod;
+            int invCoins = 0;
 
             switch (GainsType)
             {
@@ -473,6 +491,10 @@ namespace MSEACalculator.CalculationRes.ViewModels
                         cSymbol.PQCoins =  PQCoins;
 
                         decimal PQSymbols = Decimal.Divide(PQCoins, cSymbol.SymbolExchangeRate);
+                        if (Convert.ToDecimal(InvCoins) > 0)
+                        {
+                            invCoins = Convert.ToInt32(Math.Floor(Decimal.Divide(Convert.ToDecimal(InvCoins), cSymbol.SymbolExchangeRate)));
+                        }
                         dailyGains += PQSymbols;
                     }
                     break;
@@ -480,6 +502,10 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
             //CALCULATION BEGIN
             int accExp = CalForm.CalAccEXp(cSymbol.CurrentLevel, cSymbol.CurrentExp);
+            if (invCoins > 0)
+            {
+                accExp += invCoins;
+            }
             cSymbol.SymbolGainRate = dailyGains;
             Dictionary<string, int> CalculatedValues = CalForm.CalNewLvlExp(accExp);
 
@@ -659,6 +685,12 @@ namespace MSEACalculator.CalculationRes.ViewModels
             ResetDailyS = ResetPQS = false;
             isSubMap = false;
             PQGains = String.Empty;
+            InvCoins = "0";
+            ShowInvCoins = Visibility.Collapsed;
+            ShowFlex = Visibility.Collapsed;
+            ShowPQ = Visibility.Collapsed;
+
+            OnPropertyChanged(nameof(ShowInvCoins));
             DelSymbolCMD.RaiseCanExecuteChanged();
             EndGoal.RaiseCanExecuteChanged();
         }

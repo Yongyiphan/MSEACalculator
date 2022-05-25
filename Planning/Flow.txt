@@ -1,0 +1,18 @@
+Event
+
+Event Shop
+Shop Items
+
+Event Coins
+Coin Bonuses
+
+Duration of Event start -> server check to end date 23:59
+Coins per Character Gained, Total Coins TO Gain/Gained. 
+Auto Distribution -> ration coin capping. 
+
+Shop Items Database
+ItemName | Quantity | Costs | Tradability | Limitation
+E.G: KPC | 20 | 20 | Inter-acc | Per world
+
+Current Event Page
+Create New Event Page

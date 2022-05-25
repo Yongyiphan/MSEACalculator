@@ -132,6 +132,12 @@
     </Compile>
     <Compile Include="CharacterRes\HyperStat.cs" />
     <Compile Include="CharacterRes\IfXenon.cs" />
+    <Compile Include="EventRes\ViewPages\CurrentEventPage.xaml.cs">
+      <DependentUpon>CurrentEventPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventRes\ViewPages\NewEventPage.xaml.cs">
+      <DependentUpon>NewEventPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GVarFlex.cs" />
     <Compile Include="OtherRes\CustomTCommand.cs" />
     <Compile Include="MainAppRes\QuickMathPage.xaml.cs">
@@ -255,6 +261,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EventRes\ViewPages\CurrentEventPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EventRes\ViewPages\NewEventPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainAppRes\QuickMathPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -329,7 +343,9 @@
       <Version>2.7.1</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="EventRes\ViewModels\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

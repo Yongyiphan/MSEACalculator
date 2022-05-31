@@ -33,52 +33,7 @@ namespace MSEACalculator.EventRes
             this.InitializeComponent();
             //retreive from json database if have
 
-            
-            
-
-
         }
 
-
-        private void toHomeBtn_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(MainPage));
-        }
-
-        private void toScrollBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void startDatePicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
-        {
-
-            var temp = (DateTimeOffset)startDatePicker.Date;
-            eRec.startDate = temp.DateTime;
-
-        }
-
-        private void endDatePicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
-        {
-
-            //Get Today's Date
-            DateTime tdy = DateTime.Today;
-            //Retrieve Date from Calendar Picker
-            var temp = (DateTimeOffset)endDatePicker.Date;
-            double difference = Math.Floor((temp.DateTime - tdy).TotalDays);
-            //Display difference in days
-            DaysLeft.Text = String.Format("{0} ", difference);
-
-        }
-
-        private void testButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void updateEventRecords_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

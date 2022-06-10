@@ -61,12 +61,10 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     }
                 }
             }
-            
         }
 
         public static async Task<List<BossCLS>> GetBossCSVAsync()
         {
-
             List<BossCLS> AllBossList = new List<BossCLS>();
 
             StorageFile statTable = await GVar.storageFolder.GetFileAsync(GVar.CalculationsPath + "BossListData.csv");
@@ -103,15 +101,9 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
 
                         AllBossList.Add(tempboss);
-
-
                     }
-
                 }
             }
-
-
-
             return AllBossList;
         }
 
@@ -140,14 +132,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
                     bossDict.Add(query.GetInt32(0), tempBoss);
                 }
-
-
-
                 dbConnection.Close();
-
             }
-
-
             return bossDict;
         }
 

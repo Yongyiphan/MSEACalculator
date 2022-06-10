@@ -15,6 +15,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
     public class AllCharacterTable : BaseDBTable , ITableUpload
     {
         List<CharacterCLS> CharacterList { get; set; }
+        
 
         private bool HaveTrack = false;
 
@@ -100,9 +101,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
             StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "CharacterData.csv");
 
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
-
             ulong size = stream.Size;
-
             using (var inputStream = stream.GetInputStreamAt(0))
             {
                 using (var dataReader = new DataReader(inputStream))
@@ -135,8 +134,6 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     }
                 }
             }
-
-
             return characterList;
         }
 

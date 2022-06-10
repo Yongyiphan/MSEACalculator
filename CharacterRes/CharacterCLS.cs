@@ -12,7 +12,7 @@ namespace MSEACalculator.CharacterRes
 {
     public class CharacterCLS
     {
-        //BASIC INFORMATION BEGIN
+        //Gathered from Database
         public string ClassName { get; set; }
         public string Faction { get; set; }
         public string ClassType { get; set; }

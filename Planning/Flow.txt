@@ -16,3 +16,9 @@ E.G: KPC | 20 | 20 | Inter-acc | Per world
 
 Current Event Page
 Create New Event Page
+
+Display Flames Consideration
+(Input as toggle)
+Normal Equips - Tier 1 ~ 5
+Flame Advantage - Tier 2 ~ 7
+Only weapon flames require calculation, else check equip's level

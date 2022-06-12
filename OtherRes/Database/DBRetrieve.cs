@@ -17,7 +17,7 @@ namespace MSEACalculator.OtherRes.Database
         ///////Retrieving FULL Data from Maplestory.db
 
 
-        
+
         public static Dictionary<string, CharacterCLS> GetAllCharTrackDB()
         {
             Dictionary<string, CharacterCLS> charDict = new Dictionary<string, CharacterCLS>();
@@ -27,22 +27,29 @@ namespace MSEACalculator.OtherRes.Database
                 dbCon.Open();
 
                 string getCharCMD = "SELECT * FROM TrackCharacter";
-
-                using (SqliteCommand selectCMD = new SqliteCommand(getCharCMD, dbCon))
+                try
                 {
-                    using (SqliteDataReader result = selectCMD.ExecuteReader())
+                    using (SqliteCommand selectCMD = new SqliteCommand(getCharCMD, dbCon))
                     {
-                        while (result.Read())
+                        using (SqliteDataReader result = selectCMD.ExecuteReader())
                         {
-                            CharacterCLS tempChar = new CharacterCLS();
-                            tempChar.ClassName = result.GetString(0);
-                            tempChar.UnionRank = result.GetString(1);
-                            tempChar.Level = result.GetInt32(2);
-                            tempChar.Starforce = result.GetInt32(3);
+                            while (result.Read())
+                            {
+                                CharacterCLS tempChar = new CharacterCLS();
+                                tempChar.ClassName = result.GetString(0);
+                                tempChar.UnionRank = result.GetString(1);
+                                tempChar.Level = result.GetInt32(2);
+                                tempChar.Starforce = result.GetInt32(3);
 
-                            charDict.Add(result.GetString(0), tempChar);
+                                charDict.Add(result.GetString(0), tempChar);
+                            }
                         }
                     }
+
+                }
+                catch (Exception)
+                {
+                    return charDict;
                 }
             }
             return charDict;
@@ -51,7 +58,7 @@ namespace MSEACalculator.OtherRes.Database
         public static Dictionary<string, CharacterCLS> CompleteCharTrackRetrieve(Dictionary<string, CharacterCLS> BaseList)
         {
             Dictionary<string, CharacterCLS> FinalResult = new Dictionary<string, CharacterCLS>();
-            
+
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
                 dbCon.Open();
@@ -84,7 +91,7 @@ namespace MSEACalculator.OtherRes.Database
                         {
                             while (result.Read())
                             {
-                                string CharName = result.GetString(0); 
+                                string CharName = result.GetString(0);
                                 EquipCLS Equip = new EquipCLS();
                                 Equip.ClassType = result.GetString(1);
                                 Equip.EquipListSlot = result.GetString(2);
@@ -95,8 +102,8 @@ namespace MSEACalculator.OtherRes.Database
                                 {
                                     Equip.EquipName = result.GetString(3);
                                 }
-                                else 
-                                { 
+                                else
+                                {
                                     Equip.EquipSet = result.GetString(3);
                                 }
 
@@ -107,7 +114,7 @@ namespace MSEACalculator.OtherRes.Database
                                 }
                                 else
                                 {
-                                    FinalResult[CharName].EquipmentList[Equip.EquipListSlot] = Equip;  
+                                    FinalResult[CharName].EquipmentList[Equip.EquipListSlot] = Equip;
                                 }
                             }
                         }
@@ -116,7 +123,7 @@ namespace MSEACalculator.OtherRes.Database
                     string WeapET = "SELECT * FROM TrackCharWeapons";
                     using (SqliteCommand cmd = new SqliteCommand(WeapET, dbCon, tran))
                     {
-                        using(SqliteDataReader result = cmd.ExecuteReader())
+                        using (SqliteDataReader result = cmd.ExecuteReader())
                         {
                             while (result.Read())
                             {
@@ -127,7 +134,7 @@ namespace MSEACalculator.OtherRes.Database
                                     FinalResult[CharName].CurrentSecondaryWeapon = result.GetString(2);
                                 }
                             }
-                            
+
                         }
                     }
 
@@ -224,16 +231,16 @@ namespace MSEACalculator.OtherRes.Database
                         }
                     }
                     string PotET = "SELECT * FROM TrackCharEquipPot";
-                    using(SqliteCommand cmd = new SqliteCommand(PotET, dbCon, tran))
+                    using (SqliteCommand cmd = new SqliteCommand(PotET, dbCon, tran))
                     {
-                        using(SqliteDataReader result = cmd.ExecuteReader())
+                        using (SqliteDataReader result = cmd.ExecuteReader())
                         {
                             while (result.Read())
                             {
                                 string CharName = result.GetString(0);
                                 string EquipSlot = result.GetString(2);
 
-                                if(FinalResult.ContainsKey(CharName))
+                                if (FinalResult.ContainsKey(CharName))
                                 {
                                     if (FinalResult[CharName].EquipmentList.ContainsKey(EquipSlot))
                                     {
@@ -259,15 +266,238 @@ namespace MSEACalculator.OtherRes.Database
                 }
             }
 
-           
+
             return FinalResult;
+        }
+
+        //Generator Function to retrieve desired DB Content
+
+        //Armor DB Function
+        public static List<EquipCLS> GetArmorDB()
+        {
+            List<EquipCLS> equipList = new List<EquipCLS>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename ={GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string getArmor = "SELECT * FROM EquipArmorData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(getArmor, dbCon))
+                {
+                    using (SqliteDataReader result = selectCMD.ExecuteReader())
+                    {
+
+                        while (result.Read())
+                        {
+                            EquipCLS tempEquip = new EquipCLS();
+                            tempEquip.EquipSet = result.GetString(0);
+                            tempEquip.ClassType = result.GetString(1);
+                            tempEquip.EquipSlot = result.GetString(2);
+                            tempEquip.EquipLevel = result.GetInt32(3);
+
+                            tempEquip.BaseStats.STR = result.GetInt32(4);
+                            tempEquip.BaseStats.DEX = result.GetInt32(5);
+                            tempEquip.BaseStats.INT = result.GetInt32(6);
+                            tempEquip.BaseStats.LUK = result.GetInt32(7);
+                            tempEquip.BaseStats.AllStat = result.GetInt32(8);
+
+                            tempEquip.BaseStats.MaxHP = result.GetInt32(9);
+                            tempEquip.BaseStats.MaxMP = result.GetInt32(10);
+                            tempEquip.BaseStats.DEF = result.GetInt32(11);
+                            tempEquip.BaseStats.ATK = result.GetInt32(12);
+                            tempEquip.BaseStats.MATK = result.GetInt32(13);
+
+                            tempEquip.BaseStats.SPD = result.GetInt32(14);
+                            tempEquip.BaseStats.JUMP = result.GetInt32(15);
+                            tempEquip.BaseStats.IED = result.GetInt32(16);
+
+                            equipList.Add(tempEquip);
+                        }
+                    }
+                }
+
+            }
+
+            return equipList;
+        }
+
+
+        //Accessory DB Function
+        public static List<EquipCLS> GetAccessoriesDB()
+        {
+            List<EquipCLS> accModel = new List<EquipCLS>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM EquipAccessoriesData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            EquipCLS equipModel = new EquipCLS();
+                            equipModel.EquipName = reader.GetString(0);
+                            equipModel.EquipSet = reader.GetString(1);
+                            equipModel.ClassType = reader.GetString(2);
+                            equipModel.EquipSlot = reader.GetString(3);
+                            equipModel.EquipLevel = reader.GetInt32(4);
+
+                            equipModel.BaseStats.STR = reader.GetInt32(5);
+                            equipModel.BaseStats.DEX = reader.GetInt32(6);
+                            equipModel.BaseStats.INT = reader.GetInt32(7);
+                            equipModel.BaseStats.LUK = reader.GetInt32(8);
+                            equipModel.BaseStats.AllStat = reader.GetInt32(9);
+
+                            if (reader.GetString(10).Contains('%'))
+                            {
+                                equipModel.BaseStats.HP = reader.GetString(10);
+
+                            }
+                            else
+                            {
+                                equipModel.BaseStats.MaxHP = Convert.ToInt32(reader.GetString(10));
+                            }
+
+                            if (reader.GetString(11).Contains('%'))
+                            {
+                                equipModel.BaseStats.MP = reader.GetString(11);
+                            }
+                            else
+                            {
+                                equipModel.BaseStats.MaxMP = Convert.ToInt32(reader.GetString(11));
+                            }
+                            equipModel.BaseStats.DEF = reader.GetInt32(12);
+                            equipModel.BaseStats.ATK = reader.GetInt32(13);
+                            equipModel.BaseStats.MATK = reader.GetInt32(14);
+
+                            equipModel.BaseStats.SPD = reader.GetInt32(15);
+                            equipModel.BaseStats.JUMP = reader.GetInt32(16);
+                            equipModel.BaseStats.IED = reader.GetInt32(17);
+
+                            accModel.Add(equipModel);
+                        }
+                    }
+                }
+
+
+            }
+
+
+
+            return accModel;
+        }
+        //Weapon DB Function
+        public static List<EquipCLS> GetWeaponDB()
+        {
+            List<EquipCLS> weapModel = new List<EquipCLS>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM EquipWeaponData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            EquipCLS equipModel = new EquipCLS();
+                            equipModel.EquipSet = reader.GetString(0);
+                            equipModel.WeaponType = reader.GetString(1);
+                            equipModel.EquipLevel = reader.GetInt32(2);
+
+                            equipModel.BaseStats.ATKSPD = reader.GetInt32(3);
+
+                            equipModel.BaseStats.STR = reader.GetInt32(4);
+                            equipModel.BaseStats.DEX = reader.GetInt32(5);
+                            equipModel.BaseStats.INT = reader.GetInt32(6);
+                            equipModel.BaseStats.LUK = reader.GetInt32(7);
+
+                            equipModel.BaseStats.MaxHP = reader.GetInt32(8);
+                            equipModel.BaseStats.DEF = reader.GetInt32(9);
+                            equipModel.BaseStats.ATK = reader.GetInt32(10);
+                            equipModel.BaseStats.MATK = reader.GetInt32(11);
+
+                            equipModel.BaseStats.SPD = reader.GetInt32(12);
+                            equipModel.BaseStats.BD = reader.GetInt32(13);
+                            equipModel.BaseStats.IED = reader.GetInt32(14);
+
+
+
+                            weapModel.Add(equipModel);
+                        }
+                    }
+                }
+
+
+            }
+
+
+
+            return weapModel;
         }
 
 
 
+        //Secondary DB Function
+        public static List<EquipCLS> GetSecondaryDB()
+        {
+            List<EquipCLS> SecModel = new List<EquipCLS>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM EquipSecondaryData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            EquipCLS equipModel = new EquipCLS();
+
+                            equipModel.ClassType = reader.GetString(0);
+                            equipModel.EquipName = reader.GetString(1);
+                            equipModel.WeaponType = reader.GetString(2);
+                            equipModel.EquipLevel = reader.GetInt32(3);
+
+                            equipModel.BaseStats.STR = reader.GetInt32(4);
+                            equipModel.BaseStats.DEX = reader.GetInt32(5);
+                            equipModel.BaseStats.INT = reader.GetInt32(6);
+                            equipModel.BaseStats.LUK = reader.GetInt32(7);
+
+                            equipModel.BaseStats.ATK = reader.GetInt32(8);
+                            equipModel.BaseStats.MATK = reader.GetInt32(9);
+                            equipModel.BaseStats.AllStat = reader.GetInt32(10);
+                            equipModel.BaseStats.DEF = reader.GetInt32(11);
+                            equipModel.BaseStats.MaxHP = reader.GetInt32(12);
+                            equipModel.BaseStats.MaxMP = reader.GetInt32(13);
+
+                            equipModel.BaseStats.ATKSPD = reader.GetInt32(14);
 
 
 
+                            SecModel.Add(equipModel);
+                        }
+                    }
+                }
+
+
+            }
+
+
+
+            return SecModel;
+        }
 
     }
 }

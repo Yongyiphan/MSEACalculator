@@ -13,29 +13,35 @@ namespace MSEACalculator.OtherRes.Database.Tables
 {
     public class ClassWeaponTable : BaseDBTable, ITableUpload
     {
-        public Dictionary<int, List<string>> CurrentDict { get; set; }
 
-        private string ClassWeaponSpec = "(" +
-                "ClassName string," +
-                "WeaponType string," +
-                "PRIMARY KEY (ClassName, WeaponType)" +
-                ");";
+        //public Dictionary<int, List<string>> CurrentDict { get; set; }
+        public List<(string, string)> CurrentList { get; set; }
+
+
+
+        public string TableConstraints = "PRIMARY KEY (ClassName, WeaponType)";
+
         public ClassWeaponTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
-            TableParameters = ClassWeaponSpec;
         }
         public async void RetrieveData()
         {
             switch (TableName)
             {
                 case "ClassMainWeapon":
-                    CurrentDict = await GetClassMWeaponCSVAsync();
+                    var Result1 = await GetClassMWeaponCSVAsync(TableConstraints);
+                    CurrentList = Result1.Item1;
+                    TableParameters = Result1.Item2;
+
                     break;
                 case "ClassSecWeapon":
-                    CurrentDict = await GetClassSWeaponCSVAsync();
+                    var Result2 = await GetClassSWeaponCSVAsync(TableConstraints);
+                    CurrentList = Result2.Item1;
+                    TableParameters = Result2.Item2;
                     break;
 
             }
+
         }
 
 
@@ -47,12 +53,12 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 string insertMW = ComFunc.InsertSQLStringBuilder(TableName,TableParameters);
                 using (SqliteCommand insertCMD = new SqliteCommand(insertMW, connection, transaction))
                 {
-                    foreach (int CN in CurrentDict.Keys)
+                    foreach ((string, string) CN in CurrentList)
                     {
                         ErrorCounter++;
                         insertCMD.Parameters.Clear();
-                        insertCMD.Parameters.AddWithValue("@ClassName", CurrentDict[CN][0]);
-                        insertCMD.Parameters.AddWithValue("@WeaponType", CurrentDict[CN][1]);
+                        insertCMD.Parameters.AddWithValue("@ClassName", CN.Item1);
+                        insertCMD.Parameters.AddWithValue("@WeaponType", CN.Item2);
 
                         try
                         {
@@ -68,11 +74,13 @@ namespace MSEACalculator.OtherRes.Database.Tables
             }
         }
 
-        public static async Task<Dictionary<int, List<string>>> GetClassMWeaponCSVAsync()
+        public static async Task<(List<(string, string)>, string)> GetClassMWeaponCSVAsync(string TableConstraints)
         {
-            Dictionary<int, List<string>> CWdict = new Dictionary<int, List<string>>();
+            //Dictionary<int, List<string>> CWdict = new Dictionary<int, List<string>>();
+            List<(string, string)> CWdict = new List<(string, string)>();
             StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "ClassMainWeapon.csv");
 
+            string TableSpec = "";
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
 
             ulong size = stream.Size;
@@ -86,15 +94,20 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
                     var result = text.Split("\r\n");
                     int counter = 0;
-                    foreach (string CI in result.Skip(1))
+                    foreach (string CI in result)
                     {
                         if (CI == "")
                         {
-                            return CWdict;
+                            return (CWdict, TableSpec);
+                        }
+                        if (counter == 0)
+                        {
+                            TableSpec = ComFunc.TableSpecStringBuilder(CI, TableConstraints);
+                            counter += 1;
+                            continue;
                         }
                         var temp = CI.Split(',');
-                        var tempL = new List<string>() { temp[1], temp[2] };
-                        CWdict.Add(counter, tempL);
+                        CWdict.Add((temp[1], temp[2]));
 
                         counter++;
                     }
@@ -102,13 +115,15 @@ namespace MSEACalculator.OtherRes.Database.Tables
             }
 
 
-            return CWdict;
+            return (CWdict, TableSpec);
         }
-        public static async Task<Dictionary<int, List<string>>> GetClassSWeaponCSVAsync()
+        public static async Task<(List<(string, string)>, string)> GetClassSWeaponCSVAsync(string TableConstraints)
         {
-            Dictionary<int, List<string>> CWdict = new Dictionary<int, List<string>>();
+            //Dictionary<int, List<string>> CWdict = new Dictionary<int, List<string>>();
+            List<(string, string)> CWdict = new List<(string, string)>();
             StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "ClassSecWeapon.csv");
 
+            string TableSpec = "";
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
 
             ulong size = stream.Size;
@@ -122,15 +137,20 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
                     var result = text.Split("\r\n");
                     int counter = 0;
-                    foreach (string CI in result.Skip(1))
+                    foreach (string CI in result)
                     {
                         if (CI == "")
                         {
-                            return CWdict;
+                            return (CWdict, TableSpec);
+                        }
+                        if (counter == 0)
+                        {
+                            TableSpec = ComFunc.TableSpecStringBuilder(CI, TableConstraints);
+                            counter += 1;
+                            continue;
                         }
                         var temp = CI.Split(',');
-                        var tempL = new List<string>() { temp[1], temp[2] };
-                        CWdict.Add(counter, tempL);
+                        CWdict.Add((temp[1], temp[2]));
 
                         counter++;
                     }
@@ -138,9 +158,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
             }
 
 
-            return CWdict;
+            return (CWdict, TableSpec);
         }
-
 
 
 

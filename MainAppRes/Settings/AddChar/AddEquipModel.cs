@@ -18,12 +18,13 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         //private List<EquipCLS> AllWeapList { get => DBRetrieve.GetAllWeaponDB(); }
         //private List<EquipCLS> AllSecList { get => DBRetrieve.GetAllSecondaryDB(); }
 
+        //Create Factory to generate Dictionary Content
         public IReadOnlyDictionary<string, ReadOnlyCollection<EquipCLS>> AllEquipStore { get; } = new Dictionary<string, ReadOnlyCollection<EquipCLS>>
         {
-            {"Armor", EquipArmorTable.GetAllArmorDB().AsReadOnly() },
-            {"Accessory", EquipAccessoriesTable.GetAllAccessoriesDB().AsReadOnly()},
-            {"Weapon", EquipMainWeaponTable.GetAllWeaponDB().AsReadOnly()},
-            {"Secondary",EquipSecWeaponTable.GetAllSecondaryDB().AsReadOnly()}
+            {"Armor", DBRetrieve.GetArmorDB().AsReadOnly() },
+            {"Accessory", DBRetrieve.GetAccessoriesDB().AsReadOnly()},
+            {"Weapon", DBRetrieve.GetWeaponDB().AsReadOnly()},
+            {"Secondary",DBRetrieve.GetSecondaryDB().AsReadOnly()}
         };
         private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllPotDict = PotentialTable.GetAllPotentialDB();
         private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllBonusPotDict = PotentialTable.GetAllBonusPotentialDB();

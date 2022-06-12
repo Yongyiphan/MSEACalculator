@@ -19,25 +19,31 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         private bool HaveTrack = false;
 
-        private string[] CharacterTableSpec = { "(" +
-                            "ClassName string," +
-                            "ClassType string," +
-                            "Faction string," +
-                            "MainStat string," +
-                            "SecStat string," +
-                            "UnionE string," +
-                            "UnionET string," +
-                            "PRIMARY KEY (ClassName)" +
-                            ");" };
+        //private string[] CharacterTableSpec = { "(" +
+        //                    "ClassName string," +
+        //                    "ClassType string," +
+        //                    "Faction string," +
+        //                    "MainStat string," +
+        //                    "SecStat string," +
+        //                    "UnionE string," +
+        //                    "UnionET string," +
+        //                    "PRIMARY KEY (ClassName)" +
+        //                    ");" };
+
+
+        private string TableConstraints = "PRIMARY KEY (ClassName)";
 
         public AllCharacterTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
-            TableParameters = CharacterTableSpec[0];
+                        
         }
 
         public async void RetrieveData()
         {
-            CharacterList = await GetCharCSVAsync();
+            var Result = await GetCharCSVAsync(TableConstraints);
+
+            CharacterList = Result.Item1;
+            this.TableParameters = Result.Item2;
         }
 
         public void UploadTable(SqliteConnection connection, SqliteTransaction transaction)
@@ -46,7 +52,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
             if(ComFunc.IsOpenConnection(connection))
             {
                 counter++;
-                string insertChar = ComFunc.InsertSQLStringBuilder(TableName,TableParameters);
+                string insertChar = ComFunc.InsertSQLStringBuilder(TableName, TableParameters);
 
                 using (SqliteCommand insertCMD = new SqliteCommand(insertChar, connection, transaction))
                 {
@@ -63,8 +69,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@MainStat", charItem.MainStat);
                         insertCMD.Parameters.AddWithValue("@SecStat", charItem.SecStat);
 
-                        insertCMD.Parameters.AddWithValue("@UnionE", charItem.UnionEffect);
-                        insertCMD.Parameters.AddWithValue("@UnionET", charItem.UnionEffectType);
+                        insertCMD.Parameters.AddWithValue("@UEffect", charItem.UnionEffect);
+                        insertCMD.Parameters.AddWithValue("@UEffectType", charItem.UnionEffectType);
 
                         try
                         {
@@ -78,8 +84,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                                 "Faction = @Faction, " +
                                 "MainStat = @MainStat, " +
                                 "SecStat = @SecStat, " +
-                                "UnionE = @UnionE, " +
-                                "UnionET = @UnionET " +
+                                "UEffect = @UEffect, " +
+                                "UEffectType = @UEffectType" +
                                 "WHERE ClassName = @ClassName";
                             insertCMD.CommandText = updateQuery;
                             insertCMD.ExecuteNonQuery();
@@ -93,12 +99,12 @@ namespace MSEACalculator.OtherRes.Database.Tables
             }
         }
 
-        public static async Task<List<CharacterCLS>> GetCharCSVAsync()
+        public static async Task<(List<CharacterCLS>, string)> GetCharCSVAsync(string TableKey)
         {
             List<CharacterCLS> characterList = new List<CharacterCLS>();
 
-
             StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "CharacterData.csv");
+            string tableSpec = "";
 
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
             ulong size = stream.Size;
@@ -111,15 +117,20 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
                     var result = text.Split("\r\n");
                     int counter = 0;
-                    foreach (string characterItem in result.Skip(1))
+                    foreach (string characterItem in result)
                     {
                         if (characterItem == "")
                         {
-                            return characterList;
+                            return (characterList, tableSpec);
+                        }
+                        if (counter == 0)
+                        {
+                            tableSpec = ComFunc.TableSpecStringBuilder(characterItem, TableKey);
+                            counter += 1;
+                            continue;
                         }
 
                         var temp = characterItem.Split(",");
-                        counter += 1;
                         CharacterCLS tempChar = new CharacterCLS();
                         tempChar.ClassName = temp[1];
                         tempChar.Faction = temp[2];
@@ -130,11 +141,11 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         tempChar.UnionEffectType = temp[7];
 
                         characterList.Add(tempChar);
-
+                        counter += 1;
                     }
                 }
             }
-            return characterList;
+            return (characterList, tableSpec);
         }
 
         public static Dictionary<string, CharacterCLS> GetAllCharDB()

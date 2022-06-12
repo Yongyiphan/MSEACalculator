@@ -156,55 +156,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         }
 
-        public static List<EquipCLS> GetAllArmorDB()
-        {
-            List<EquipCLS> equipList = new List<EquipCLS>();
-
-            using (SqliteConnection dbCon = new SqliteConnection($"Filename ={GVar.databasePath}"))
-            {
-                dbCon.Open();
-
-                string getArmor = "SELECT * FROM EquipArmorData";
-
-                using (SqliteCommand selectCMD = new SqliteCommand(getArmor, dbCon))
-                {
-                    using (SqliteDataReader result = selectCMD.ExecuteReader())
-                    {
-
-                        while (result.Read())
-                        {
-                            EquipCLS tempEquip = new EquipCLS();
-                            tempEquip.EquipSet = result.GetString(0);
-                            tempEquip.ClassType = result.GetString(1);
-                            tempEquip.EquipSlot = result.GetString(2);
-                            tempEquip.EquipLevel = result.GetInt32(3);
-
-                            tempEquip.BaseStats.STR = result.GetInt32(4);
-                            tempEquip.BaseStats.DEX = result.GetInt32(5);
-                            tempEquip.BaseStats.INT = result.GetInt32(6);
-                            tempEquip.BaseStats.LUK = result.GetInt32(7);
-                            tempEquip.BaseStats.AllStat = result.GetInt32(8);
-
-                            tempEquip.BaseStats.MaxHP = result.GetInt32(9);
-                            tempEquip.BaseStats.MaxMP = result.GetInt32(10);
-                            tempEquip.BaseStats.DEF = result.GetInt32(11);
-                            tempEquip.BaseStats.ATK = result.GetInt32(12);
-                            tempEquip.BaseStats.MATK = result.GetInt32(13);
-
-                            tempEquip.BaseStats.SPD = result.GetInt32(14);
-                            tempEquip.BaseStats.JUMP = result.GetInt32(15);
-                            tempEquip.BaseStats.IED = result.GetInt32(16);
-
-                            equipList.Add(tempEquip);
-                        }
-                    }
-                }
-
-            }
-
-            return equipList;
-        }
-
+        
 
 
     }

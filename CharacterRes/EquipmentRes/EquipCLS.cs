@@ -10,6 +10,10 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 {
     public class EquipCLS
     {
+        //For Oz/ Event Rings
+        public string Category { get; set; }
+        public int Rank { get; set; } = 0;
+
         public string EquipName { get; set; }
         public string EquipSet { get; set; }
         public string ClassType { get; set; }

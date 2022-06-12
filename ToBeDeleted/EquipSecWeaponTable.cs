@@ -152,59 +152,6 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         }
 
-        public static List<EquipCLS> GetAllSecondaryDB()
-        {
-            List<EquipCLS> SecModel = new List<EquipCLS>();
-
-            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
-            {
-                dbCon.Open();
-
-                string selectQuery = "SELECT * FROM EquipSecondaryData";
-
-                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
-                {
-                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            EquipCLS equipModel = new EquipCLS();
-
-                            equipModel.ClassType = reader.GetString(0);
-                            equipModel.EquipName = reader.GetString(1);
-                            equipModel.WeaponType = reader.GetString(2);
-                            equipModel.EquipLevel = reader.GetInt32(3);
-
-                            equipModel.BaseStats.STR = reader.GetInt32(4);
-                            equipModel.BaseStats.DEX = reader.GetInt32(5);
-                            equipModel.BaseStats.INT = reader.GetInt32(6);
-                            equipModel.BaseStats.LUK = reader.GetInt32(7);
-
-                            equipModel.BaseStats.ATK = reader.GetInt32(8);
-                            equipModel.BaseStats.MATK = reader.GetInt32(9);
-                            equipModel.BaseStats.AllStat = reader.GetInt32(10);
-                            equipModel.BaseStats.DEF = reader.GetInt32(11);
-                            equipModel.BaseStats.MaxHP = reader.GetInt32(12);
-                            equipModel.BaseStats.MaxMP = reader.GetInt32(13);
-
-                            equipModel.BaseStats.ATKSPD = reader.GetInt32(14);
-
-
-
-                            SecModel.Add(equipModel);
-                        }
-                    }
-                }
-
-
-            }
-
-
-
-            return SecModel;
-        }
-
-
-
+       
     }
 }

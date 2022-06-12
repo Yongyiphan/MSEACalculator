@@ -9,7 +9,6 @@ namespace MSEACalculator.OtherRes.Interface
 {
     public interface ITableUpload
     {
-
         void RetrieveData();
         void UploadTable(SqliteConnection connection, SqliteTransaction transaction);
 

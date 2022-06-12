@@ -31,61 +31,59 @@ namespace MSEACalculator.OtherRes.Database
             StaticTable.Add(new AllCharacterTable("AllCharacterData"));
 
             //TABLE FOR UNION EFFECTS
-            
+
             StaticTable.Add(new UnionTable("UnionEffects"));
 
 
             //TABLE FOR CLASS WEAP ASSOC
-            
+
             //****SPECIAL IMPLEMENTATION 2 IN ONE TABLE CLASS****
-            
+
             StaticTable.Add(new ClassWeaponTable("ClassMainWeapon"));
             StaticTable.Add(new ClassWeaponTable("ClassSecWeapon"));
 
 
-            ///////BOSSING///////
-            StaticTable.Add(new BossListTable("BossListData"));
+            /////////BOSSING///////
+            //StaticTable.Add(new BossListTable("BossListData"));
 
 
 
 
 
-            //////EVENT///////
+            ////////EVENT///////
 
-            ///////INVENTORY////////
+            /////////INVENTORY////////
 
-            //TABLE FOR EQUIP SLOT AND TYPES
-            
-            StaticTable.Add(new EquipSlotTable("EquipSlot"));
+            ////TABLE FOR EQUIP SLOT AND TYPES
 
-            //TABLE FOR ALL ARMOR
-            StaticTable.Add(new EquipArmorTable("EquipArmorData"));
+            //StaticTable.Add(new EquipSlotTable("EquipSlot"));
 
-            //TABLE FOR ACCESSORIES
-            StaticTable.Add(new EquipAccessoriesTable("EquipAccessoriesData"));
-            //TABLE FOR WEAPON
-            //MAIN WEAPON
-            StaticTable.Add(new EquipMainWeaponTable("EquipWeaponData"));
-            //SECONDARY WEAPON
-            StaticTable.Add(new EquipSecWeaponTable("EquipSecondaryData"));
+            ////TABLE FOR ALL EQUIPMENTS
+            //List<string> EquipTableNames = new List<string> { "EquipArmorData", "EquipAccessoriesData", "EquipAndroidData", "EquipMedalData", "EquipWeaponData", "EquipSecondaryData" };
+            //foreach (string Names in EquipTableNames)
+            //{
+            //    StaticTable.Add(new EquipmentTable(Names));
+            //}
 
-            /////CALCULATIONS/////
+            ////EQUIPMENT SET EFFECT
 
-            //SPECIAL IMPLEMENTATION FOR STARFORCE DATA 2 IN 1
-            //TABLE FOR STARFORCE STATS
-            StaticTable.Add(new StarForceTable("StarForceBaseData"));
-            
-            StaticTable.Add(new StarForceTable("StarForceAddData"));
+            ///////CALCULATIONS/////
 
-            StaticTable.Add(new StarForceTable("StarforceSuperiorData"));
+            ////SPECIAL IMPLEMENTATION FOR STARFORCE DATA 2 IN 1
+            ////TABLE FOR STARFORCE STATS
+            //StaticTable.Add(new StarForceTable("StarForceBaseData"));
 
-            ////ARCANE SYMBOL
-            
-            StaticTable.Add(new SymbolsTable("ArcaneSymbolData"));
+            //StaticTable.Add(new StarForceTable("StarForceAddData"));
 
-            
-            StaticTable.Add(new PotentialTable("PotentialData"));
-            StaticTable.Add(new PotentialTable("PotentialBonusData"));
+            //StaticTable.Add(new StarForceTable("StarforceSuperiorData"));
+
+            //////ARCANE SYMBOL
+
+            //StaticTable.Add(new SymbolsTable("ArcaneSymbolData"));
+
+
+            //StaticTable.Add(new PotentialTable("PotentialData"));
+            //StaticTable.Add(new PotentialTable("PotentialBonusData"));
 
 
             await Task.WhenAll(StaticTable.ParallelForEachAsync(ST => Task.Run(() =>((ITableUpload)ST).RetrieveData())));

@@ -27,16 +27,20 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     "PRIMARY KEY(Effect, EffectType)" +
                     ");" };
 
+        public string TableConstraints = "PRIMARY KEY (Effect, EffectType) ";
+
         public UnionTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
-            TableParameters = unionETableSpecs[0];
         }
 
 
-        
+
         public async void RetrieveData()
         {
-            UnionList = await GetUnionECSVAsync();
+            var Result = await GetUnionECSVAsync(TableConstraints);
+
+            UnionList = Result.Item1;
+            TableParameters = Result.Item2;
         }
 
         public void UploadTable(SqliteConnection connection, SqliteTransaction transaction)
@@ -71,15 +75,16 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     }
                 }
             }
-            
+
         }
 
-        public static async Task<List<UnionCLS>> GetUnionECSVAsync()
+        public static async Task<(List<UnionCLS>, string)> GetUnionECSVAsync(string TableConstraints)
         {
             List<UnionCLS> unionList = new List<UnionCLS>();
 
-            StorageFile UnionTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "UnionData.csv");
+            StorageFile UnionTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "UnionEffect.csv");
 
+            string TableSpec = "";
             var stream = await UnionTable.OpenAsync(FileAccessMode.Read);
 
             ulong size = stream.Size;
@@ -93,22 +98,29 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
                     var result = text.Split("\r\n");
                     int counter = 0;
-                    foreach (string unionItems in result.Skip(1))
+                    foreach (string unionItems in result)
                     {
                         if (unionItems == "")
                         {
-                            return unionList;
+                            return (unionList, TableSpec);
+                        }
+                        if (counter == 0)
+                        {
+
+                            TableSpec = ComFunc.TableSpecStringBuilder(unionItems, TableConstraints);
+                            counter += 1;
+                            continue;
                         }
                         var temp = unionItems.Split(",");
                         counter += 1;
                         UnionCLS tempUnion = new UnionCLS();
                         tempUnion.Effect = temp[1];
-                        tempUnion.RankB = Convert.ToInt32(temp[2]);
-                        tempUnion.RankA = Convert.ToInt32(temp[3]);
-                        tempUnion.RankS = Convert.ToInt32(temp[4]);
-                        tempUnion.RankSS = Convert.ToInt32(temp[5]);
-                        tempUnion.RankSSS = Convert.ToInt32(temp[6]);
-                        tempUnion.EffectType = temp[7];
+                        tempUnion.EffectType = temp[2];
+                        tempUnion.RankB = Convert.ToInt32(temp[3]);
+                        tempUnion.RankA = Convert.ToInt32(temp[4]);
+                        tempUnion.RankS = Convert.ToInt32(temp[5]);
+                        tempUnion.RankSS = Convert.ToInt32(temp[6]);
+                        tempUnion.RankSSS = Convert.ToInt32(temp[7]);
 
 
                         //Stat = temp[0],
@@ -123,7 +135,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 }
             }
 
-            return unionList;
+            return (unionList, TableSpec);
         }
 
 

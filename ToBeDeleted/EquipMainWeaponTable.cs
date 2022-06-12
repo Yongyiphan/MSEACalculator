@@ -149,58 +149,6 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         }
 
-        public static List<EquipCLS> GetAllWeaponDB()
-        {
-            List<EquipCLS> weapModel = new List<EquipCLS>();
-
-            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
-            {
-                dbCon.Open();
-
-                string selectQuery = "SELECT * FROM EquipWeaponData";
-
-                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
-                {
-                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            EquipCLS equipModel = new EquipCLS();
-                            equipModel.EquipSet = reader.GetString(0);
-                            equipModel.WeaponType = reader.GetString(1);
-                            equipModel.EquipLevel = reader.GetInt32(2);
-
-                            equipModel.BaseStats.ATKSPD = reader.GetInt32(3);
-
-                            equipModel.BaseStats.STR = reader.GetInt32(4);
-                            equipModel.BaseStats.DEX = reader.GetInt32(5);
-                            equipModel.BaseStats.INT = reader.GetInt32(6);
-                            equipModel.BaseStats.LUK = reader.GetInt32(7);
-
-                            equipModel.BaseStats.MaxHP = reader.GetInt32(8);
-                            equipModel.BaseStats.DEF = reader.GetInt32(9);
-                            equipModel.BaseStats.ATK = reader.GetInt32(10);
-                            equipModel.BaseStats.MATK = reader.GetInt32(11);
-
-                            equipModel.BaseStats.SPD = reader.GetInt32(12);
-                            equipModel.BaseStats.BD = reader.GetInt32(13);
-                            equipModel.BaseStats.IED = reader.GetInt32(14);
-
-
-
-                            weapModel.Add(equipModel);
-                        }
-                    }
-                }
-
-
-            }
-
-
-
-            return weapModel;
-        }
-
-
+        
     }
 }

@@ -31,6 +31,13 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
         public int PercATK { get; set; } = 0;
         public int PercMATK { get; set; } = 0;
+
+        public int NoUpgrades { get; set; } = 0;
+
+        public int MaxDF { get; set; } = 0;
+        
+        //For Heart
+        public int Rank { get; set; } = 0;
         //ADDITIONAL BASE STAT FOR WEAPONS
         public int IED { get; set; } = 0;
         public int BD { get; set; } = 0;

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Windows.UI.Popups;
@@ -21,6 +22,35 @@ namespace MSEACalculator
         public static bool IsOpenConnection(SqliteConnection connection)
         {
             return connection.State == ConnectionState.Open ? true : false;
+        }
+
+        public static string TableSpecStringBuilder(string ColName, string constraints)
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder("(");
+
+                List<string> SplitComma = ColName.Split(",").ToList();
+                foreach (string name in SplitComma)
+                {
+                    if (String.IsNullOrWhiteSpace(name))
+                    {
+                        continue;
+                    }
+                    sb.Append(GVar.NameReplacementType[name]["Rename"] + " " + GVar.NameReplacementType[name]["Type"] + ",");
+                }
+
+                sb.Append(constraints);
+                sb.Append(");");
+                string Result = sb.ToString();
+
+                return Result;
+
+            }
+            catch (Exception)
+            {
+                return "";
+            }
         }
         public static string InsertSQLStringBuilder(string TableName, string TablePara)
         {

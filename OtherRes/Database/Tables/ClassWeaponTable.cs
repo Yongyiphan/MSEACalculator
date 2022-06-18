@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.Storage;
+using System.Diagnostics;
 
 namespace MSEACalculator.OtherRes.Database.Tables
 {
@@ -19,28 +20,32 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
 
 
-        public string TableConstraints = "PRIMARY KEY (ClassName, WeaponType)";
 
         public ClassWeaponTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
         }
+
         public async void RetrieveData()
         {
+            (List<(string, string)>, string) Result;
+
             switch (TableName)
             {
                 case "ClassMainWeapon":
-                    var Result1 = await GetClassMWeaponCSVAsync(TableConstraints);
-                    CurrentList = Result1.Item1;
-                    TableParameters = Result1.Item2;
+                    Result = await GetClassWeaponCSVAsync("ClassMainWeapon.csv", "PRIMARY KEY (ClassName, Weapon)");
+                    CurrentList = Result.Item1;
+                    TableParameters = Result.Item2;
 
                     break;
                 case "ClassSecWeapon":
-                    var Result2 = await GetClassSWeaponCSVAsync(TableConstraints);
-                    CurrentList = Result2.Item1;
-                    TableParameters = Result2.Item2;
+                    Result = await GetClassWeaponCSVAsync("ClassSecWeapon.csv", "PRIMARY KEY (ClassName, Secondary)");
+                    CurrentList = Result.Item1;
+                    TableParameters = Result.Item2;
+
                     break;
 
             }
+
 
         }
 
@@ -49,40 +54,49 @@ namespace MSEACalculator.OtherRes.Database.Tables
         {
             if (ComFunc.IsOpenConnection(connection))
             {
-                
-                string insertMW = ComFunc.InsertSQLStringBuilder(TableName,TableParameters);
-                using (SqliteCommand insertCMD = new SqliteCommand(insertMW, connection, transaction))
-                {
-                    foreach ((string, string) CN in CurrentList)
-                    {
-                        ErrorCounter++;
-                        insertCMD.Parameters.Clear();
-                        insertCMD.Parameters.AddWithValue("@ClassName", CN.Item1);
-                        insertCMD.Parameters.AddWithValue("@WeaponType", CN.Item2);
 
-                        try
+                string insertMW = ComFunc.InsertSQLStringBuilder(TableName, TableParameters);
+                try
+                {
+                    using (SqliteCommand insertCMD = new SqliteCommand(insertMW, connection, transaction))
+                    {
+                        foreach ((string, string) CN in CurrentList)
                         {
-                            insertCMD.ExecuteNonQuery();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.ToString());
-                            Console.WriteLine(ErrorCounter.ToString());
+                            ErrorCounter++;
+                            insertCMD.Parameters.Clear();
+                            insertCMD.Parameters.AddWithValue("@ClassName", CN.Item1);
+                            insertCMD.Parameters.AddWithValue("@Weapon", CN.Item2);
+                            insertCMD.Parameters.AddWithValue("@Secondary", CN.Item2);
+
+                            try
+                            {
+                                insertCMD.ExecuteNonQuery();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.ToString());
+                                Console.WriteLine(ErrorCounter.ToString());
+                            }
                         }
                     }
+
                 }
+                catch (Exception E)
+                {
+                    Console.WriteLine(E);
+                };
             }
         }
-
-        public static async Task<(List<(string, string)>, string)> GetClassMWeaponCSVAsync(string TableConstraints)
+        public static async Task<(List<(string, string)>, string)> GetClassWeaponCSVAsync(string FileName, string TableConstraints)
         {
             //Dictionary<int, List<string>> CWdict = new Dictionary<int, List<string>>();
             List<(string, string)> CWdict = new List<(string, string)>();
-            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "ClassMainWeapon.csv");
+            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + FileName);
 
             string TableSpec = "";
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
-
+             
+            
             ulong size = stream.Size;
 
             using (var inputStream = stream.GetInputStreamAt(0))
@@ -108,50 +122,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         }
                         var temp = CI.Split(',');
                         CWdict.Add((temp[1], temp[2]));
-
-                        counter++;
-                    }
-                }
-            }
-
-
-            return (CWdict, TableSpec);
-        }
-        public static async Task<(List<(string, string)>, string)> GetClassSWeaponCSVAsync(string TableConstraints)
-        {
-            //Dictionary<int, List<string>> CWdict = new Dictionary<int, List<string>>();
-            List<(string, string)> CWdict = new List<(string, string)>();
-            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + "ClassSecWeapon.csv");
-
-            string TableSpec = "";
-            var stream = await charTable.OpenAsync(FileAccessMode.Read);
-
-            ulong size = stream.Size;
-
-            using (var inputStream = stream.GetInputStreamAt(0))
-            {
-                using (var dataReader = new DataReader(inputStream))
-                {
-                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
-                    string text = dataReader.ReadString(numBytesLoaded);
-
-                    var result = text.Split("\r\n");
-                    int counter = 0;
-                    foreach (string CI in result)
-                    {
-                        if (CI == "")
-                        {
-                            return (CWdict, TableSpec);
-                        }
-                        if (counter == 0)
-                        {
-                            TableSpec = ComFunc.TableSpecStringBuilder(CI, TableConstraints);
-                            counter += 1;
-                            continue;
-                        }
-                        var temp = CI.Split(',');
-                        CWdict.Add((temp[1], temp[2]));
-
+                        
                         counter++;
                     }
                 }
@@ -161,7 +132,6 @@ namespace MSEACalculator.OtherRes.Database.Tables
             return (CWdict, TableSpec);
         }
 
-
-
+        
     }
 }

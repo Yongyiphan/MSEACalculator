@@ -273,7 +273,7 @@ namespace MSEACalculator.OtherRes.Database
         //Generator Function to retrieve desired DB Content
 
         //Armor DB Function
-       
+
         public static Dictionary<string, string> GetEquipSlotDB()
         {
             Dictionary<string, string> equipSlotDict = new Dictionary<string, string>();
@@ -300,8 +300,8 @@ namespace MSEACalculator.OtherRes.Database
             return equipSlotDict;
         }
 
-        
-        
+
+
         public static List<EquipCLS> GetArmorDB()
         {
             List<EquipCLS> equipList = new List<EquipCLS>();
@@ -473,8 +473,6 @@ namespace MSEACalculator.OtherRes.Database
             return weapModel;
         }
 
-
-
         //Secondary DB Function
         public static List<EquipCLS> GetSecondaryDB()
         {
@@ -527,6 +525,183 @@ namespace MSEACalculator.OtherRes.Database
 
             return SecModel;
         }
+
+
+
+
+
+        //Calculation
+
+        public static Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> GetAllPotentialDB()
+        {
+            Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> FinalResult = new Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>>();
+            List<PotentialStatsCLS> UnsortedPotentialList = new List<PotentialStatsCLS>();
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT ROWID, * FROM PotentialData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PotentialStatsCLS pot = new PotentialStatsCLS();
+                            pot.PotID = reader.GetInt32(0);
+                            pot.EquipSlot = reader.GetString(1);
+                            if (!FinalResult.ContainsKey(pot.EquipSlot))
+                            {
+                                FinalResult.Add(pot.EquipSlot, new Dictionary<string, List<PotentialStatsCLS>>());
+                            }
+                            pot.Grade = reader.GetString(2);
+                            if (!FinalResult[pot.EquipSlot].ContainsKey(pot.Grade))
+                            {
+                                FinalResult[pot.EquipSlot].Add(pot.Grade, new List<PotentialStatsCLS>());
+                            }
+                            pot.Prime = reader.GetString(3);
+                            pot.StatType = reader.GetString(4);
+                            pot.StatIncrease = reader.GetString(5);
+                            pot.MinLvl = reader.GetInt32(6);
+                            pot.MaxLvl = reader.GetInt32(7);
+                            pot.StatValue = reader.GetString(8);
+
+                            pot.DisplayStat = pot.StatValue == "0" ? pot.StatIncrease.ToString() : String.Format("{0} +{1}", pot.StatIncrease.TrimEnd('%'), pot.StatValue);
+                            UnsortedPotentialList.Add(pot);
+
+
+
+                            //FinalResult[pot.EquipGrp].Add(pot);
+                        }
+                    }
+                }
+
+
+            }
+
+            foreach (PotentialStatsCLS pot in UnsortedPotentialList)
+            {
+                int potPos = GVar.PotentialGrade.IndexOf(pot.Grade);
+                string nextPot;
+                switch (pot.Grade)
+                {
+                    case "Rare":
+                        FinalResult[pot.EquipSlot][pot.Grade].Add(pot);
+                        if (pot.Prime == "Prime")
+                        {
+                            nextPot = GVar.PotentialGrade[potPos + 1];
+                            FinalResult[pot.EquipSlot][nextPot].Add(pot);
+
+                        }
+                        break;
+
+                    case "Epic":
+                        FinalResult[pot.EquipSlot][pot.Grade].Add(pot);
+                        nextPot = GVar.PotentialGrade[potPos + 1];
+                        FinalResult[pot.EquipSlot][nextPot].Add(pot);
+
+                        break;
+
+                    case "Unique":
+                        FinalResult[pot.EquipSlot][pot.Grade].Add(pot);
+                        nextPot = GVar.PotentialGrade[potPos + 1];
+                        FinalResult[pot.EquipSlot][nextPot].Add(pot);
+                        break;
+
+                    case "Legendary":
+                        FinalResult[pot.EquipSlot][pot.Grade].Add(pot);
+                        break;
+                }
+
+            }
+
+            return FinalResult;
+        }
+        public static Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> GetAllBonusPotentialDB()
+        {
+            Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> FinalResult = new Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>>();
+
+            List<PotentialStatsCLS> UnsortedPotentialList = new List<PotentialStatsCLS>();
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT ROWID, * FROM PotentialBonusData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PotentialStatsCLS pot = new PotentialStatsCLS();
+                            pot.PotID = reader.GetInt32(0);
+                            pot.EquipSlot = reader.GetString(1);
+                            if (!FinalResult.ContainsKey(pot.EquipSlot))
+                            {
+                                FinalResult.Add(pot.EquipSlot, new Dictionary<string, List<PotentialStatsCLS>>());
+                            }
+                            pot.Grade = reader.GetString(2);
+                            if (!FinalResult[pot.EquipSlot].ContainsKey(pot.Grade))
+                            {
+                                FinalResult[pot.EquipSlot].Add(pot.Grade, new List<PotentialStatsCLS>());
+                            }
+                            pot.Prime = reader.GetString(3);
+                            pot.StatType = reader.GetString(4);
+                            pot.StatIncrease = reader.GetString(5);
+                            pot.MinLvl = reader.GetInt32(6);
+                            pot.MaxLvl = reader.GetInt32(7);
+                            pot.StatValue = reader.GetString(8);
+
+                            pot.DisplayStat = pot.StatValue == "0" ? pot.StatIncrease.ToString() : String.Format("{0} +{1}", pot.StatIncrease.TrimEnd('%'), pot.StatValue);
+                            UnsortedPotentialList.Add(pot);
+                        }
+                    }
+                }
+
+
+            }
+            foreach (PotentialStatsCLS pot in UnsortedPotentialList)
+            {
+                int potPos = GVar.PotentialGrade.IndexOf(pot.Grade);
+                string nextPot;
+                switch (pot.Grade)
+                {
+                    case "Rare":
+                        FinalResult[pot.EquipSlot][pot.Grade].Add(pot);
+                        if (pot.Prime == "Prime")
+                        {
+                            nextPot = GVar.PotentialGrade[potPos + 1];
+                            FinalResult[pot.EquipSlot][nextPot].Add(pot);
+
+                        }
+                        break;
+
+                    case "Epic":
+                        FinalResult[pot.EquipSlot][pot.Grade].Add(pot);
+                        nextPot = GVar.PotentialGrade[potPos + 1];
+                        FinalResult[pot.EquipSlot][nextPot].Add(pot);
+
+                        break;
+
+                    case "Unique":
+                        FinalResult[pot.EquipSlot][pot.Grade].Add(pot);
+                        nextPot = GVar.PotentialGrade[potPos + 1];
+                        FinalResult[pot.EquipSlot][nextPot].Add(pot);
+                        break;
+
+                    case "Legendary":
+                        FinalResult[pot.EquipSlot][pot.Grade].Add(pot);
+                        break;
+                }
+            }
+
+
+            return FinalResult;
+        }
+
+
 
     }
 }

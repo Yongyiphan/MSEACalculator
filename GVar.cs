@@ -94,6 +94,32 @@ namespace MSEACalculator
             {"Rank"  , new Dictionary<string, string>() { {"Rename", "Rank" },{"Type", "int"} } },
             {"Attack Speed"  , new Dictionary<string, string>() { {"Rename", "AtkSpd" },{"Type", "int"} } },
             {"Max DF"  , new Dictionary<string, string>() { {"Rename", "MaxDF" },{"Type", "int"} } },
+
+
+
+            {"Slot"  , new Dictionary<string, string>() { {"Rename", "EquipSlot" },{"Type", "string"} } },
+            {"Type"  , new Dictionary<string, string>() { {"Rename", "PotentialGroup" },{"Type", "string"} } },
+            {"Grade"  , new Dictionary<string, string>() { {"Rename", "Grade" },{"Type", "string"} } },
+            {"Prime"  , new Dictionary<string, string>() { {"Rename", "Prime" },{"Type", "string"} } },
+            {"DisplayStat"  , new Dictionary<string, string>() { {"Rename", "DisplayStat" },{"Type", "string"} } },
+            {"Stat"  , new Dictionary<string, string>() { {"Rename", "Stat" },{"Type", "string"} } },
+            {"StatT"  , new Dictionary<string, string>() { {"Rename", "StatType" },{"Type", "string"} } },
+
+            {"MinLvl", new Dictionary<string, string>() { {"Rename", "MinLvl" },{"Type", "int"} } },
+            {"MaxLvl", new Dictionary<string, string>() { {"Rename", "MaxLvl" },{"Type", "int"} } },
+            {"Stat value", new Dictionary<string, string>() { {"Rename", "StatValue" },{"Type", "int"} } },
+            {"Chance", new Dictionary<string, string>() { {"Rename", "Chance" },{"Type", "int"} } },
+            {"Duration", new Dictionary<string, string>() { {"Rename", "Duration" },{"Type", "int"} } },
+            {"Reflect damage", new Dictionary<string, string>() { {"ReflectDmg", "EquipName" },{"Type", "int"} } },
+            {"Tick", new Dictionary<string, string>() { {"Rename", "Tick" },{"Type", "int"} } },
+            
+
+            {"CubeType", new Dictionary<string, string>() { {"Rename", "CubeType" },{"Type", "string"} } },
+            {"Initial", new Dictionary<string, string>() { {"Rename", "Initial" },{"Type", "string"} } },
+            {"In-game cube", new Dictionary<string, string>() { {"Rename", "GameCube" },{"Type", "string"} } },
+            {"Cash cube", new Dictionary<string, string>() { {"Rename", "CashCube" },{"Type", "string"} } }
+           
+
         };
 
         public static string f = "";

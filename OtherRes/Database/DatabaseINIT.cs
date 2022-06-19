@@ -68,12 +68,12 @@ namespace MSEACalculator.OtherRes.Database
             StaticTable.Add(new EquipmentSetEffectsTable("SetEffectAt"));
             StaticTable.Add(new EquipmentSetEffectsTable("SetEffectCul"));
 
-            ////EQUIPMENT SET EFFECT
+            //EQUIPMENT SET EFFECT
 
-            ///////CALCULATIONS/////
+            /////CALCULATIONS/////
 
-            ////SPECIAL IMPLEMENTATION FOR STARFORCE DATA 2 IN 1
-            ////TABLE FOR STARFORCE STATS
+            //SPECIAL IMPLEMENTATION FOR STARFORCE DATA 2 IN 1
+            //TABLE FOR STARFORCE STATS
             //StaticTable.Add(new StarForceTable("StarForceBaseData"));
 
             //StaticTable.Add(new StarForceTable("StarForceAddData"));
@@ -85,8 +85,8 @@ namespace MSEACalculator.OtherRes.Database
             //StaticTable.Add(new SymbolsTable("ArcaneSymbolData"));
 
 
-            //StaticTable.Add(new PotentialTable("PotentialData"));
-            //StaticTable.Add(new PotentialTable("PotentialBonusData"));
+            StaticTable.Add(new PotentialTable("PotentialData"));
+            StaticTable.Add(new PotentialTable("BonusData"));
 
 
             await Task.WhenAll(StaticTable.ParallelForEachAsync(ST => Task.Run(() =>((ITableUpload)ST).RetrieveData())));

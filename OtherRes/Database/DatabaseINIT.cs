@@ -65,6 +65,9 @@ namespace MSEACalculator.OtherRes.Database
                 StaticTable.Add(new EquipmentTable(Names));
             }
 
+            StaticTable.Add(new EquipmentSetEffectsTable("SetEffectAt"));
+            StaticTable.Add(new EquipmentSetEffectsTable("SetEffectCul"));
+
             ////EQUIPMENT SET EFFECT
 
             ///////CALCULATIONS/////

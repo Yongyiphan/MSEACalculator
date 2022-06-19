@@ -17,7 +17,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int STR { get; set; } = 0;
         public int DEX { get; set; } = 0;
         public int INT { get; set; } = 0;
-        public int LUK { get; set; } = 0;       
+        public int LUK { get; set; } = 0;
         public int DEF { get; set; } = 0;
         public int PercDEF { get; set; } = 0;
         public int MaxHP { get; set; } = 0;
@@ -35,7 +35,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int NoUpgrades { get; set; } = 0;
 
         public int MaxDF { get; set; } = 0;
-        
+
         //For Heart
         public int Rank { get; set; } = 0;
         //ADDITIONAL BASE STAT FOR WEAPONS
@@ -43,6 +43,12 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int BD { get; set; } = 0;
         public int ATKSPD { get; set; } = 0;
         public int DMG { get; set; } = 0;
+        public int NDMG { get; set; } = 0;
+        public int CDMG { get; set; } = 0;
+
+        public int AllSkills { get; set; } = 0;
+        public int StatusRes { get; set; } = 0;
+
 
         //FLAME STATS
         public int AllStat { get; set; } = 0;
@@ -59,7 +65,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             {
                 return false;
             }
-            if(obj is EquipStatsCLS)
+            if (obj is EquipStatsCLS)
             {
                 EquipStatsCLS cObj = (EquipStatsCLS)obj;
                 //test.Add(STR ==  cObj.STR ? "true" : "false" );
@@ -81,8 +87,8 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
                 foreach (PropertyInfo prop in GetType().GetProperties())
                 {
-                    
-                    if(prop.PropertyType == typeof(int))
+
+                    if (prop.PropertyType == typeof(int))
                     {
 
                         int GT = Convert.ToInt32(cObj.GetType().GetProperty(prop.Name).GetValue(cObj));
@@ -90,16 +96,16 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
                         test.Add(GT == current ? "true" : "false");
                     }
-                    if(prop.PropertyType == typeof(string))
+                    if (prop.PropertyType == typeof(string))
                     {
                         string GT = cObj.GetType().GetProperty(prop.Name).GetValue(cObj).ToString();
                         string current = prop.GetValue(this).ToString();
 
                         test.Add(GT == current ? "true" : "false");
                     }
-                    
+
                 }
-                
+
             }
             return test.Contains("false") ? false : true;
         }
@@ -113,7 +119,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             return base.GetHashCode();
         }
 
-        
+
         public void AppendJobStat(string ClassType, int s1, int s2, string MainStat = "")
         {
             switch (ClassType)
@@ -135,7 +141,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                     DEX += s2;
                     break;
                 case "Pirate":
-                    if(MainStat == "DEX")
+                    if (MainStat == "DEX")
                     {
                         DEX += s1;
                         STR += s2;
@@ -160,7 +166,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public void ModifyEquipStat(EquipStatsCLS target, string mode)
         {
             var properties = GetType().GetProperties();
-            foreach(PropertyInfo prop in properties)
+            foreach (PropertyInfo prop in properties)
             {
                 try
                 {
@@ -178,7 +184,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                     }
 
                 }
-                catch(Exception) 
+                catch (Exception)
                 {
 
                     string c = prop.GetValue(this).ToString();
@@ -191,14 +197,14 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                     switch (mode)
                     {
                         case "Add":
-                            prop.SetValue(this, String.Format("{0}%",current += next));
+                            prop.SetValue(this, String.Format("{0}%", current += next));
                             break;
                         case "Subtract":
-                            prop.SetValue(this, String.Format("{0}%",current -= next));
+                            prop.SetValue(this, String.Format("{0}%", current -= next));
                             break;
                     }
 
-                    
+
                 }
                 finally
                 {
@@ -210,7 +216,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                         }
                     }
                 }
-               
+
             }
 
 
@@ -225,14 +231,14 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
             Dictionary<string, int> result = new Dictionary<string, int>();
 
-            foreach(PropertyInfo prop in GetType().GetProperties())
+            foreach (PropertyInfo prop in GetType().GetProperties())
             {
 
                 if (HiddenFields.Contains(prop.Name))
                 {
                     continue;
                 }
-                if(prop.PropertyType == typeof(string))
+                if (prop.PropertyType == typeof(string))
                 {
                     string sValue = prop.GetValue(this).ToString();
                     int iValue = sValue == string.Empty ? 0 : Convert.ToInt32(sValue.TrimEnd('%'));
@@ -246,7 +252,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
             return result;
         }
-        
+
         public void DictToProperty(Dictionary<string, int> Record)
         {
             foreach (string key in Record.Keys)
@@ -269,6 +275,6 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             }
 
         }
-        
+
     }
 }

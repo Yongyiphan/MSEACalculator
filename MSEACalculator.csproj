@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="BossRes\BossCLS.cs" />
     <Compile Include="CalculationRes\DisplayStatValue.cs" />
+    <Compile Include="CalculationRes\SetEffectCLS.cs" />
     <Compile Include="CalculationRes\ViewPages\ConversionQMPage.xaml.cs">
       <DependentUpon>ConversionQMPage.xaml</DependentUpon>
     </Compile>

@@ -273,6 +273,35 @@ namespace MSEACalculator.OtherRes.Database
         //Generator Function to retrieve desired DB Content
 
         //Armor DB Function
+       
+        public static Dictionary<string, string> GetEquipSlotDB()
+        {
+            Dictionary<string, string> equipSlotDict = new Dictionary<string, string>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM EquipSlot";
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            equipSlotDict.Add(reader.GetString(0), reader.GetString(1));
+                        }
+
+
+                    }
+                }
+            }
+
+            return equipSlotDict;
+        }
+
+        
+        
         public static List<EquipCLS> GetArmorDB()
         {
             List<EquipCLS> equipList = new List<EquipCLS>();

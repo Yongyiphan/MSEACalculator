@@ -16,7 +16,7 @@ namespace MSEACalculator
 {
     public class ComFunc
     {
-        public static Dictionary<string, string> EquipSlot  = EquipSlotTable.GetEquipSlotDB();
+        public static Dictionary<string, string> EquipSlot  = DBRetrieve.GetEquipSlotDB();
         public static List<string> PotentialGrade = GVar.PotentialGrade;
 
         public static bool IsOpenConnection(SqliteConnection connection)
@@ -30,13 +30,16 @@ namespace MSEACalculator
             {
                 StringBuilder sb = new StringBuilder("(");
 
+                List<string> IgnoreStings = new List<string>() { "Functions", "Knockback" };
                 List<string> SplitComma = ColName.Split(",").ToList();
                 foreach (string name in SplitComma)
                 {
-                    if (String.IsNullOrWhiteSpace(name))
+                    if (String.IsNullOrWhiteSpace(name) || IgnoreStings.Any(s => name.Contains(s)))
                     {
                         continue;
                     }
+                    
+                    
                     sb.Append(GVar.NameReplacementType[name]["Rename"] + " " + GVar.NameReplacementType[name]["Type"] + ",");
                 }
 
@@ -47,8 +50,9 @@ namespace MSEACalculator
                 return Result;
 
             }
-            catch (Exception)
+            catch (Exception E)
             {
+                Console.WriteLine(E);
                 return "";
             }
         }
@@ -608,6 +612,7 @@ namespace MSEACalculator
 
         };
 
+        
         public static string ReturnRingPend(string ESlot)
         {
             try

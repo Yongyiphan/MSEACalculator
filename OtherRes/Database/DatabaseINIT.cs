@@ -50,20 +50,20 @@ namespace MSEACalculator.OtherRes.Database
 
 
 
-            ////////EVENT///////
+            //////EVENT///////
 
-            /////////INVENTORY////////
+            ///////INVENTORY////////
 
-            ////TABLE FOR EQUIP SLOT AND TYPES
+            //TABLE FOR EQUIP SLOT AND TYPES
 
-            //StaticTable.Add(new EquipSlotTable("EquipSlot"));
+            StaticTable.Add(new EquipSlotTable("EquipSlot"));
 
-            ////TABLE FOR ALL EQUIPMENTS
-            //List<string> EquipTableNames = new List<string> { "EquipArmorData", "EquipAccessoriesData", "EquipAndroidData", "EquipMedalData", "EquipWeaponData", "EquipSecondaryData" };
-            //foreach (string Names in EquipTableNames)
-            //{
-            //    StaticTable.Add(new EquipmentTable(Names));
-            //}
+            //TABLE FOR ALL EQUIPMENTS
+            List<string> EquipTableNames = new List<string> { "EquipArmorData", "EquipAccessoriesData", "EquipAndroidData", "EquipMedalData", "EquipWeaponData", "EquipSecondaryData" };
+            foreach (string Names in EquipTableNames)
+            {
+                StaticTable.Add(new EquipmentTable(Names));
+            }
 
             ////EQUIPMENT SET EFFECT
 

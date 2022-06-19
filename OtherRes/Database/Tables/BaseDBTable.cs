@@ -37,6 +37,14 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     {
                         dropCmd.ExecuteNonQuery();
                     };
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                try
+                {
                     // create table if not exist
 
                     string createTable = "CREATE TABLE IF NOT EXISTS " + TableName + TableParameters;
@@ -49,6 +57,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 {
                     Console.WriteLine(ex.Message);
                 }
+
             }
         }
 

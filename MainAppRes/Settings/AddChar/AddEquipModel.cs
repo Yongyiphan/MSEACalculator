@@ -31,7 +31,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         public Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> AllPotDict { get => _AllPotDict; }
         public Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> AllBonusPotDict { get => _AllBonusPotDict; }
 
-        public Dictionary<string, string> EquipSlot { get; set; } = EquipSlotTable.GetEquipSlotDB();
+        public Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
         public List<string> FlameStatsTypes { get; set; } = GVar.BaseStatTypes.Concat(GVar.SpecialStatType).ToList();
 
         public Dictionary<string, ReadOnlyCollection<StarforceCLS>> StarforceStore { get; } = new Dictionary<string, ReadOnlyCollection<StarforceCLS>>

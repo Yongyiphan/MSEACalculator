@@ -26,8 +26,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
             {"Weapon", DBRetrieve.GetWeaponDB().AsReadOnly()},
             {"Secondary",DBRetrieve.GetSecondaryDB().AsReadOnly()}
         };
-        private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllPotDict = PotentialTable.GetAllPotentialDB();
-        private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllBonusPotDict = PotentialTable.GetAllBonusPotentialDB();
+        private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllPotDict = DBRetrieve.GetAllPotentialDB();
+        private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllBonusPotDict = DBRetrieve.GetAllBonusPotentialDB();
         public Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> AllPotDict { get => _AllPotDict; }
         public Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> AllBonusPotDict { get => _AllBonusPotDict; }
 

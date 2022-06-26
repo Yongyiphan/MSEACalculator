@@ -80,13 +80,15 @@ namespace MSEACalculator.OtherRes.Database
 
             //StaticTable.Add(new StarForceTable("StarforceSuperiorData"));
 
-            //////ARCANE SYMBOL
+            ////ARCANE SYMBOL
 
-            //StaticTable.Add(new SymbolsTable("ArcaneSymbolData"));
+            StaticTable.Add(new SymbolsTable("ArcaneSymbolData"));
 
 
             StaticTable.Add(new PotentialTable("PotentialData"));
-            StaticTable.Add(new PotentialTable("BonusData"));
+            //StaticTable.Add(new PotentialTable("PotentialCube"));
+            //StaticTable.Add(new PotentialTable("BonusData"));
+            //StaticTable.Add(new PotentialTable("BonusCube"));
 
 
             await Task.WhenAll(StaticTable.ParallelForEachAsync(ST => Task.Run(() =>((ITableUpload)ST).RetrieveData())));

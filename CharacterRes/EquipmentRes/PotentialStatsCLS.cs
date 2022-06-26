@@ -8,6 +8,8 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 {
     public class PotentialStatsCLS
     {
+
+        //Potential Stats
         
         public int PotID { get; set; } = 0;
 
@@ -22,14 +24,19 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int MaxLvl { get; set; }
         public string StatValue { get; set; }
         
-        public double Chance { get; set; }
+        public int Chance { get; set; }
         public int Duration { get; set; }
         public int ReflectDMG { get; set; }
         public int Tick { get; set; }
 
         public List<string> CubeType { get; set; } = new List<string>();
         
-        
+       
+        //Cube Rates
+        public double Initial { get; set; }
+        public double InGame { get; set; }
+        public double CashCube { get; set; }
+        public double Probability { get; set; }
 
 
         public PotentialStatsCLS()

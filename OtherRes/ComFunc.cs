@@ -10,6 +10,9 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Popups;
 
 namespace MSEACalculator
@@ -24,13 +27,36 @@ namespace MSEACalculator
             return connection.State == ConnectionState.Open ? true : false;
         }
 
-        public static string TableSpecStringBuilder(string ColName, string constraints)
+        public static async Task<List<string>> CSVStringAsync(string Location, string FileName)
+        {
+            StorageFile charTable = await GVar.storageFolder.GetFileAsync(Location + FileName);
+            List<string> CSVAsStringList = new List<string>();
+            var stream = await charTable.OpenAsync(FileAccessMode.Read);
+
+            ulong size = stream.Size;
+            using (var inputStream = stream.GetInputStreamAt(0))
+            {
+                using (var dataReader = new DataReader(inputStream))
+                {
+                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
+                    string text = dataReader.ReadString(numBytesLoaded);
+
+                    CSVAsStringList = text.Split("\r\n").ToList();
+                    
+                }
+            }
+
+            return CSVAsStringList;
+        }
+                        
+
+public static string TableSpecStringBuilder(string ColName, string constraints)
         {
             try
             {
                 StringBuilder sb = new StringBuilder("(");
 
-                List<string> IgnoreStings = new List<string>() { "Functions", "Knockback" };
+                List<string> IgnoreStings = new List<string>() { "Functions", "Knockback","1 in" };
                 List<string> SplitComma = ColName.Split(",").ToList();
                 foreach (string name in SplitComma)
                 {

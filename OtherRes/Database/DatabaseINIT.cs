@@ -87,7 +87,7 @@ namespace MSEACalculator.OtherRes.Database
 
             StaticTable.Add(new PotentialTable("PotentialData"));
             //StaticTable.Add(new PotentialTable("PotentialCube"));
-            //StaticTable.Add(new PotentialTable("BonusData"));
+            StaticTable.Add(new PotentialTable("BonusData"));
             //StaticTable.Add(new PotentialTable("BonusCube"));
 
 

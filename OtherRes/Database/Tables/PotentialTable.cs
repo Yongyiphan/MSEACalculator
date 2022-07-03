@@ -28,7 +28,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
             switch (TableName)
             {
                 case "PotentialData":
-                    Result = await GetPotentialCSVAsync(FileName: "PotentialData.csv", "PRIMARY KEY (EquipSlot, Grade, Prime, DisplayStat, MinLvl, MaxLvl, StatValue, ReflectDMG, CubeType)");
+                    Result = await GetPotentialCSVAsync(FileName: "PotentialData.csv", PotKey);
                     PotList = Result.Item1;
                     TableParameters = Result.Item2;
                     break;
@@ -71,20 +71,20 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.Clear();
                         //insertCMD.Parameters.AddWithValue("@P", potIDc);
                         insertCMD.Parameters.AddWithValue("@EquipSlot", pot.EquipSlot);
-                        insertCMD.Parameters.AddWithValue("@PotentialGroup", pot.Grade);
-                        insertCMD.Parameters.AddWithValue("@Grade", pot.Prime);
-                        insertCMD.Parameters.AddWithValue("@Prime", pot.StatType);
+                        insertCMD.Parameters.AddWithValue("@Grade", pot.Grade);
+                        insertCMD.Parameters.AddWithValue("@Prime", pot.Prime);
                         insertCMD.Parameters.AddWithValue("@DisplayStat", pot.DisplayStat);
-                        insertCMD.Parameters.AddWithValue("@Stat", pot.MinLvl);
+                        insertCMD.Parameters.AddWithValue("@StatType", pot.StatType);
                         insertCMD.Parameters.AddWithValue("@MinLvl", pot.MinLvl);
-                        insertCMD.Parameters.AddWithValue("@MaxLvl", pot.MinLvl);
-                        insertCMD.Parameters.AddWithValue("@StatType", pot.MaxLvl);
+                        insertCMD.Parameters.AddWithValue("@MaxLvl", pot.MaxLvl);
                         insertCMD.Parameters.AddWithValue("@StatValue", pot.StatValue);
                         insertCMD.Parameters.AddWithValue("@Chance", pot.Chance);
-                        insertCMD.Parameters.AddWithValue("@Duration", pot.Duration);
-                        insertCMD.Parameters.AddWithValue("@ReflectDMG", pot.ReflectDMG);
+
+                        //Main Pots Addons
                         insertCMD.Parameters.AddWithValue("@Tick", pot.Tick);
                         insertCMD.Parameters.AddWithValue("@CubeType", String.Join(";", pot.CubeType));
+
+                        //Bonus Pots Addons
                         insertCMD.Parameters.AddWithValue("@Initial", pot.Initial);
                         insertCMD.Parameters.AddWithValue("@GameCube", pot.InGame);
                         insertCMD.Parameters.AddWithValue("@CashCube", pot.CashCube);
@@ -133,6 +133,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     PotentialStatsCLS citem = new PotentialStatsCLS();
                     if (FileName.Contains("Bonus"))
                     {
+                        citem.PotGrp = "Bonus";
                         citem.EquipSlot = temp[1];
                         citem.Grade = temp[2];
                         citem.Prime = temp[3];
@@ -141,13 +142,15 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
                         citem.MinLvl = Convert.ToInt32(temp[6]);
                         citem.MaxLvl = Convert.ToInt32(temp[7]);
-                        citem.Duration = Convert.ToInt32(Convert.ToDouble(temp[8]));
+                        citem.StatValue = temp[8];
+
                         citem.Chance = Convert.ToInt32(temp[9]);
 
                         PotentialList.Add(citem);
                         continue;
 
                     }
+                    citem.PotGrp = "Main";
                     citem.EquipSlot = temp[1];
                     citem.Grade = temp[2];
                     citem.Prime = temp[3];
@@ -158,20 +161,9 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     citem.MaxLvl = Convert.ToInt32(temp[7]);
                     citem.StatValue = temp[8];
                     citem.Chance = Convert.ToInt32(temp[9]);
-                    //citem.Duration = Convert.ToInt32(temp[10]);
-                    citem.Duration = Convert.ToInt32(Convert.ToDouble(temp[10]));
-                    citem.ReflectDMG = Convert.ToInt32(temp[11]);
-                    citem.Tick =  Convert.ToInt32(Convert.ToDouble(temp[12]));
-
-                    if (temp[13].Contains(";"))
-                    {
-
-                    citem.CubeType = temp[13].Split(';').ToList();
-                    }
-                    else
-                    {
-                        citem.CubeType = new List<string>() { "None" };
-                    }
+                    citem.Tick =  Convert.ToInt32(Convert.ToDouble(temp[10]));
+                    string At11 = temp[11];
+                    citem.CubeType = At11.Contains(";") ? At11.Split(';').ToList() : new List<string>() { "None" };
 
 
 

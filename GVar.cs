@@ -107,8 +107,6 @@ namespace MSEACalculator
             {"MaxLvl", new Dictionary<string, string>() { {"Rename", "MaxLvl" },{"Type", "int"} } },
             {"Stat value", new Dictionary<string, string>() { {"Rename", "StatValue" },{"Type", "string"} } },
             {"Chance", new Dictionary<string, string>() { {"Rename", "Chance" },{"Type", "int"} } },
-            {"Duration", new Dictionary<string, string>() { {"Rename", "Duration" },{"Type", "int"} } },
-            {"Reflect damage", new Dictionary<string, string>() { {"Rename", "ReflectDMG" },{"Type", "int"} } },
             {"Tick", new Dictionary<string, string>() { {"Rename", "Tick" },{"Type", "int"} } },
             
 

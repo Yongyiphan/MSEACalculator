@@ -48,29 +48,55 @@ namespace MSEACalculator
 
             return CSVAsStringList;
         }
-                        
 
-public static string TableSpecStringBuilder(string ColName, string constraints)
+
+        public static string TableSpecStringBuilder(string ColName, string constraints)
         {
             try
             {
                 StringBuilder sb = new StringBuilder("(");
 
-                List<string> IgnoreStings = new List<string>() { "Functions", "Knockback","1 in" };
+                List<string> IgnoreStings = new List<string>() { "Functions", "Knockback", "1 in" };
                 List<string> SplitComma = ColName.Split(",").ToList();
+
+                List<string> TPara = new List<string>();
+                List<string> TConstraints = new List<string>();
+
                 foreach (string name in SplitComma)
                 {
                     if (String.IsNullOrWhiteSpace(name) || IgnoreStings.Any(s => name.Contains(s)))
                     {
                         continue;
                     }
-                    
-                    
-                    sb.Append(GVar.NameReplacementType[name]["Rename"] + " " + GVar.NameReplacementType[name]["Type"] + ",");
+                    //sb.Append(GVar.NameReplacementType[name]["Rename"] + " " + GVar.NameReplacementType[name]["Type"] + ",");
+                    TPara.Add(GVar.NameReplacementType[name]["Rename"] + " " + GVar.NameReplacementType[name]["Type"]);
+                    if (constraints == "All")
+                    {
+                        //cb.Append(GVar.NameReplacementType[name]["Rename"]);
+                        //if (name != SplitComma.Last())
+                        //{
+                        //    cb.Append(",");
+                        //}
+                        TConstraints.Add(GVar.NameReplacementType[name]["Rename"]);
+                    }
                 }
 
-                sb.Append(constraints);
+                sb.Append(String.Join(",", TPara));
+                sb.Append(",");
+
+                //Table Constraint Addon
+                if (constraints == "All")
+                {
+                    sb.Append("PRIMARY KEY (");
+                    sb.Append(String.Join(",", TConstraints));
+                    sb.Append(")");
+                }
+                else
+                {
+                    sb.Append(constraints);
+                }
                 sb.Append(");");
+
                 string Result = sb.ToString();
 
                 return Result;

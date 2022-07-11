@@ -16,6 +16,52 @@ namespace MSEACalculator.OtherRes.Database
 
         ///////Retrieving FULL Data from Maplestory.db
 
+        public static Dictionary<string, CharacterCLS> GetAllCharDB()
+        {
+            Dictionary<string, CharacterCLS> charDict = new Dictionary<string, CharacterCLS>();
+
+            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
+            {
+                dbConnection.Open();
+                string getCharCmd = "SELECT " +
+                    "AC.ClassName, AC.ClassType, AC.Faction, AC.MainStat, AC.SecStat, AC.UnionE, AC.UnionET, ClassMainWeapon.WeaponType, ClassSecWeapon.WeaponType " +
+                    "FROM AllCharacterData AS AC " +
+                    "INNER JOIN ClassMainWeapon ON AC.ClassName = ClassMainWeapon.ClassName " +
+                    "INNER JOIN ClassSecWeapon ON AC.ClassName = ClassSecWeapon.ClassName";
+
+                using (SqliteCommand selectCmd = new SqliteCommand(getCharCmd, dbConnection))
+                {
+                    using (SqliteDataReader query = selectCmd.ExecuteReader())
+                    {
+                        while (query.Read())
+                        {
+                            if (charDict.ContainsKey(query.GetString(0)))
+                            {
+                                charDict[query.GetString(0)].MainWeapon.Add(query.GetString(7));
+                                charDict[query.GetString(0)].SecondaryWeapon.Add(query.GetString(8));
+                                continue;
+                            }
+
+                            CharacterCLS tempChar = new CharacterCLS();
+                            tempChar.ClassName = query.GetString(0);
+                            tempChar.ClassType = query.GetString(1);
+                            tempChar.Faction = query.GetString(2);
+                            tempChar.MainStat = query.GetString(3);
+                            tempChar.SecStat = query.GetString(4);
+                            tempChar.UnionEffect = query.GetString(5);
+                            tempChar.UnionEffectType = query.GetString(6);
+
+                            tempChar.MainWeapon = new List<string> { query.GetString(7) };
+                            tempChar.SecondaryWeapon = new List<string> { query.GetString(8) };
+
+                            charDict.Add(query.GetString(0), tempChar);
+                        }
+                    }
+                }
+            }
+            return charDict;
+        }
+
 
 
         public static Dictionary<string, CharacterCLS> GetAllCharTrackDB()

@@ -9,38 +9,39 @@ namespace MSEACalculator.CalculationRes
     public class StarforceCLS
     {
         public int SFLevel { get; set; } = 0;
-        
-        
-        
-        
-        public int VStat { get; set; } = 0; //VISIBLE STAT
-        
+        public int MinLvl { get; set; } = 0;
+        public int MaxLvl { get; set; } = 0;
         public int JobStat { get; set; } = 0; //MAIN + SEC STAT
-
-        public int NonWeapVDef { get; set; } = 0; //NON WEAPON DEF
-        public int OverallVDef { get; set; } = 0; //(OVERALL**) VISIBLE DEF
-
-        public int VDef { get; set; } = 0;
-
+        public int NonWeapVDef { get; set; } = 0; //NON WEAPON VISIBLE DEF
+        public int OverallVDef { get; set; } = 0; //(OVERALL**) VISIBE DEF
         public int CatAMaxHP { get; set; } = 0; //CAT A (GVAR) MAX HP
         public int WeapMaxMP { get; set; } = 0; //WEAPON MAX MP
 
-        //SHOE
-        public int SJump { get; set; } = 0;
-        public int SSpeed { get; set; } = 0;
-
-        //GLOVES
-        public int GloveVATK { get; set; } = 0;
-        public int GloveVMATK { get; set; } = 0;
-
+       
+        
         //WEAPON VISIBLE ATK / MATK
         public int WeapVATK { get; set; } = 0;
         public int WeapVMATK { get; set; } = 0;
 
 
+        //SHOE
+        public int SJump { get; set; } = 0;
+        public int SSpeed { get; set; } = 0;
+
+
+        //GLOVES
+        public int GloveVATK { get; set; } = 0;
+        public int GloveVMATK { get; set; } = 0;
+
+        //VISIBLE STAT
+        public int VStat { get; set; } = 0; 
+
+        public int VDef { get; set; } = 0;
+
         //NON WEAPON VISIBLE ATK / MATK
         public int NonWeapATK { get; set; } = 0;
         public int NonWeapMATK { get; set; } = 0;
+
 
 
         //DEPENDS ON LEVEL RANK

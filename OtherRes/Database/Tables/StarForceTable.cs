@@ -16,6 +16,16 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         public List<StarforceCLS> SFList { get; set; }
 
+        List<string> FileNames = new List<string>()
+        {
+            "NormalEquipSF.csv",
+            "SFSuccessRates.csv",
+            "StarLimit.csv",
+            "SuperiorItemsSF.csv"
+
+        };
+
+        Dictionary<string, Dictionary<(int, int), int>> StarLimit { get; set; } 
         
         private string[] sfTableSpec = { "(" +
                     "SFID int," +
@@ -183,6 +193,37 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         break;
                 }
             }
+        }
+
+
+        //Method for SF
+        
+
+        //Method for Success Rates
+
+        //Method for Star Limits
+        private static async Task<(Dictionary<string, Dictionary<(int, int), int>>, string)> GetStarLimitAsync(string FileName, string TableConstraint)
+        {
+
+            Dictionary<string, Dictionary<(int, int), int>> StarLimit = new Dictionary<string, Dictionary<(int, int), int>>();
+            List<string> result = await ComFunc.CSVStringAsync(GVar.CalculationsPath, "StarLimit.csv");
+            string tableSpec = "";
+            int counter = 0;
+
+            foreach(string sl in result)
+            {
+                if (sl == "")
+                {
+                    return (StarLimit, tableSpec);
+                }
+                if(counter == 0)
+                {
+                    tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.StarforceCN, sl, TableConstraint);
+                }
+            }
+
+
+            return (StarLimit, tableSpec);
         }
 
         public static async Task<List<StarforceCLS>> GetSFCSVAsync()

@@ -50,7 +50,7 @@ namespace MSEACalculator
         }
 
 
-        public static string TableSpecStringBuilder(string ColName, string constraints)
+        public static string TableSpecStringBuilder(Dictionary<string, Dictionary<string, string>> Replacement, string ColName, string constraints)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace MSEACalculator
                         continue;
                     }
                     //sb.Append(GVar.NameReplacementType[name]["Rename"] + " " + GVar.NameReplacementType[name]["Type"] + ",");
-                    TPara.Add(GVar.NameReplacementType[name]["Rename"] + " " + GVar.NameReplacementType[name]["Type"]);
+                    TPara.Add(Replacement[name]["Rename"] + " " + Replacement[name]["Type"]);
                     if (constraints == "All")
                     {
                         //cb.Append(GVar.NameReplacementType[name]["Rename"]);
@@ -77,7 +77,7 @@ namespace MSEACalculator
                         //{
                         //    cb.Append(",");
                         //}
-                        TConstraints.Add(GVar.NameReplacementType[name]["Rename"]);
+                        TConstraints.Add(Replacement[name]["Rename"]);
                     }
                 }
 

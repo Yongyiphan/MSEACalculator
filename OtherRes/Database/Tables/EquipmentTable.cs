@@ -53,35 +53,35 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 switch (TableName)
                 {
                     case "EquipArmorData":
-                        Result = await GetArmorCSVAsync(TableKey: "PRIMARY KEY (EquipSet, ClassType, EquipSlot)");
+                        Result = await GetArmorCSVAsync(FileName: "ArmorData.csv", TableKey: "PRIMARY KEY (EquipSet, ClassType, EquipSlot)");
                         EquipList = Result.Item1;
                         TableParameters = Result.Item2;
                         break;
                     case "EquipAccessoriesData":
-                        Result = await GetAccessoriesCSVAsync(TableKey: "PRIMARY KEY (EquipName, EquipSet, ClassName, EquipSlot)");
+                        Result = await GetAccessoriesCSVAsync(FileName:"AccessoryData.csv", TableKey: "PRIMARY KEY (EquipName, EquipSet, ClassName, EquipSlot)");
                         EquipList = Result.Item1;
                         TableParameters = Result.Item2;
                         break;
 
                     case "EquipAndroidData":
-                        Result = await GetAndroidCSVAsync(TableKey: "PRIMARY KEY (EquipSlot, EquipName)");
+                        Result = await GetAndroidCSVAsync(FileName: "AndroidData.csv", TableKey: "PRIMARY KEY (EquipSlot, EquipName)");
                         EquipList = Result.Item1;
                         TableParameters = Result.Item2;
                         break;
                     case "EquipMedalData":
-                        Result = await GetMedalCSVAsync(TableKey: "PRIMARY KEY (EquipSlot, ClassName, EquipName, EquipSet)");
+                        Result = await GetMedalCSVAsync(FileName: "MedalData.csv", TableKey: "PRIMARY KEY (EquipSlot, ClassName, EquipName, EquipSet)");
                         EquipList = Result.Item1;
                         TableParameters = Result.Item2;
                         break;
 
 
                     case "EquipWeaponData":
-                        Result = await GetWeaponCSVAsync(TableKey: "PRIMARY KEY (EquipSet, WeaponType)");
+                        Result = await GetWeaponCSVAsync(FileName: "WeaponData.csv", TableKey: "PRIMARY KEY (EquipSet, WeaponType)");
                         EquipList = Result.Item1;
                         TableParameters = Result.Item2;
                         break;
                     case "EquipSecondaryData":
-                        Result = await GetSecondaryCSVAsync(TableKey: "PRIMARY KEY (ClassName, EquipName, WeaponType, EquipLevel)");
+                        Result = await GetSecondaryCSVAsync(FileName: "SecondaryData.csv",TableKey: "PRIMARY KEY (ClassName, EquipName, WeaponType, EquipLevel)");
                         EquipList = Result.Item1;
                         TableParameters = Result.Item2;
                         break;
@@ -155,207 +155,163 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
 
         //Method to get Armor Data
-        private static async Task<(List<EquipCLS>, string)> GetArmorCSVAsync(string TableKey)
+        private static async Task<(List<EquipCLS>, string)> GetArmorCSVAsync(string FileName, string TableKey)
         {
             List<EquipCLS> equipList = new List<EquipCLS>();
 
-            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + "ArmorData.csv");
+            List<string> result = await ComFunc.CSVStringAsync(GVar.EquipmentPath, FileName);
             string tableSpec = "";
-            var stream = await charTable.OpenAsync(FileAccessMode.Read);
-
-            ulong size = stream.Size;
-
-            using (var inputStream = stream.GetInputStreamAt(0))
+            int counter = 0;
+            foreach (string equipItem in result)
             {
-                using (var dataReader = new DataReader(inputStream))
+                if (equipItem == "")
                 {
-                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
-                    string text = dataReader.ReadString(numBytesLoaded);
-
-                    var result = text.Split("\r\n");
-                    int counter = 0;
-                    foreach (string equipItem in result)
-                    {
-                        if (equipItem == "")
-                        {
-                            return (equipList, tableSpec);
-                        }
-                        if (counter == 0)
-                        {
-                            tableSpec = ComFunc.TableSpecStringBuilder(equipItem, TableKey);
-                            counter += 1;
-                            continue;
-                        }
-
-
-                        var temp = equipItem.Split(",");
-                        counter += 1;
-                        EquipCLS equip = new EquipCLS();
-
-                        equip.EquipSlot = temp[1];
-                        equip.ClassType = temp[2];
-                        equip.EquipName = temp[3];
-                        equip.EquipSet  = temp[4];
-                        equip.EquipLevel= Convert.ToInt32(temp[5]);
-
-
-                        equip.BaseStats.STR = Convert.ToInt32(temp[6]);
-                        equip.BaseStats.DEX = Convert.ToInt32(temp[7]);
-                        equip.BaseStats.LUK = Convert.ToInt32(temp[8]);
-                        equip.BaseStats.INT = Convert.ToInt32(temp[9]);
-
-                        equip.BaseStats.MaxHP = Convert.ToInt32(temp[10]);
-                        equip.BaseStats.MaxMP = Convert.ToInt32(temp[11]);
-                        equip.BaseStats.DEF = Convert.ToInt32(temp[12]);
-                        equip.BaseStats.ATK = Convert.ToInt32(temp[13]);
-                        equip.BaseStats.MATK = Convert.ToInt32(temp[14]);
-                        equip.BaseStats.IED = Convert.ToInt32(temp[15]);
-                        equip.BaseStats.SPD = Convert.ToInt32(temp[16]);
-                        equip.BaseStats.JUMP = Convert.ToInt32(temp[17]);
-                        equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[18]);
-
-                        equipList.Add(equip);
-
-                    }
+                    return (equipList, tableSpec);
                 }
+                if (counter == 0)
+                {
+                    tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.EquipmentCN, equipItem, TableKey);
+                    counter += 1;
+                    continue;
+                }
+
+
+                var temp = equipItem.Split(",");
+                counter += 1;
+                EquipCLS equip = new EquipCLS();
+
+                equip.EquipSlot = temp[1];
+                equip.ClassType = temp[2];
+                equip.EquipName = temp[3];
+                equip.EquipSet  = temp[4];
+                equip.EquipLevel= Convert.ToInt32(temp[5]);
+
+
+                equip.BaseStats.STR = Convert.ToInt32(temp[6]);
+                equip.BaseStats.DEX = Convert.ToInt32(temp[7]);
+                equip.BaseStats.LUK = Convert.ToInt32(temp[8]);
+                equip.BaseStats.INT = Convert.ToInt32(temp[9]);
+
+                equip.BaseStats.MaxHP = Convert.ToInt32(temp[10]);
+                equip.BaseStats.MaxMP = Convert.ToInt32(temp[11]);
+                equip.BaseStats.DEF = Convert.ToInt32(temp[12]);
+                equip.BaseStats.ATK = Convert.ToInt32(temp[13]);
+                equip.BaseStats.MATK = Convert.ToInt32(temp[14]);
+                equip.BaseStats.IED = Convert.ToInt32(temp[15]);
+                equip.BaseStats.SPD = Convert.ToInt32(temp[16]);
+                equip.BaseStats.JUMP = Convert.ToInt32(temp[17]);
+                equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[18]);
+
+                equipList.Add(equip);
+
             }
             return (equipList, tableSpec);
 
         }
 
         //Method to get Acc Data
-        private async Task<(List<EquipCLS>, string)> GetAccessoriesCSVAsync(string TableKey)
+        private async Task<(List<EquipCLS>, string)> GetAccessoriesCSVAsync(string FileName, string TableKey)
         {
             List<EquipCLS> AccessoriesList = new List<EquipCLS>();
-
-            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + "AccessoryData.csv");
-            string tableSpec = "";
-            var stream = await charTable.OpenAsync(FileAccessMode.Read);
-
-            ulong size = stream.Size;
-
+            List<string> result = await ComFunc.CSVStringAsync(GVar.EquipmentPath, FileName);
             int counter = 0;
+            string tableSpec = "";
             try
             {
-                using (var inputStream = stream.GetInputStreamAt(0))
+                foreach (string accItem in result)
                 {
-                    using (var dataReader = new DataReader(inputStream))
+                    if (accItem == "")
                     {
-                        uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
-                        string text = dataReader.ReadString(numBytesLoaded);
-
-                        var result = text.Split("\r\n");
-                        foreach (string accItem in result)
-                        {
-                            if (accItem == "")
-                            {
-                                return (AccessoriesList, tableSpec);
-                            }
-                            if (counter == 0)
-                            {
-                                tableSpec = ComFunc.TableSpecStringBuilder(accItem, TableKey);
-                                counter += 1;
-                                continue;
-                            }
-
-                            counter += 1;
-                            var temp = accItem.Split(",");
-
-                            EquipCLS equip = new EquipCLS();
-                            equip.EquipSlot = temp[1];
-                            equip.ClassType = temp[2];
-                            equip.EquipName = temp[3];
-                            equip.EquipSet  = temp[4];
-                            equip.Category = temp[5];
-                            equip.EquipLevel = Convert.ToInt32(temp[6]);
-
-                            equip.BaseStats.STR = Convert.ToInt32(temp[7]);
-                            equip.BaseStats.DEX = Convert.ToInt32(temp[8]);
-                            equip.BaseStats.INT = Convert.ToInt32(temp[9]);
-                            equip.BaseStats.LUK = Convert.ToInt32(temp[10]);
-                            equip.BaseStats.AllStat = Convert.ToInt32(temp[11]);
-                            equip.BaseStats.MaxHP = Convert.ToInt32(temp[12]);
-                            equip.BaseStats.MaxMP = Convert.ToInt32(temp[13]);
-                            equip.BaseStats.DEF = Convert.ToInt32(temp[14]);
-                            equip.BaseStats.ATK = Convert.ToInt32(temp[15]);
-                            equip.BaseStats.MATK = Convert.ToInt32(temp[16]);
-                            equip.BaseStats.IED = Convert.ToInt32(temp[17]);
-                            equip.BaseStats.SPD = Convert.ToInt32(temp[18]);
-                            equip.BaseStats.JUMP = Convert.ToInt32(temp[19]);
-                            equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[20]);
-
-                            equip.Rank = Convert.ToInt32(temp[21]);
-
-
-
-                            AccessoriesList.Add(equip);
-
-
-                        }
+                        return (AccessoriesList, tableSpec);
                     }
+                    if (counter == 0)
+                    {
+                        tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.EquipmentCN, accItem, TableKey);
+                        counter += 1;
+                        continue;
+                    }
+
+                    counter += 1;
+                    var temp = accItem.Split(",");
+
+                    EquipCLS equip = new EquipCLS();
+                    equip.EquipSlot = temp[1];
+                    equip.ClassType = temp[2];
+                    equip.EquipName = temp[3];
+                    equip.EquipSet  = temp[4];
+                    equip.Category = temp[5];
+                    equip.EquipLevel = Convert.ToInt32(temp[6]);
+
+                    equip.BaseStats.STR = Convert.ToInt32(temp[7]);
+                    equip.BaseStats.DEX = Convert.ToInt32(temp[8]);
+                    equip.BaseStats.INT = Convert.ToInt32(temp[9]);
+                    equip.BaseStats.LUK = Convert.ToInt32(temp[10]);
+                    equip.BaseStats.AllStat = Convert.ToInt32(temp[11]);
+                    equip.BaseStats.MaxHP = Convert.ToInt32(temp[12]);
+                    equip.BaseStats.MaxMP = Convert.ToInt32(temp[13]);
+                    equip.BaseStats.DEF = Convert.ToInt32(temp[14]);
+                    equip.BaseStats.ATK = Convert.ToInt32(temp[15]);
+                    equip.BaseStats.MATK = Convert.ToInt32(temp[16]);
+                    equip.BaseStats.IED = Convert.ToInt32(temp[17]);
+                    equip.BaseStats.SPD = Convert.ToInt32(temp[18]);
+                    equip.BaseStats.JUMP = Convert.ToInt32(temp[19]);
+                    equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[20]);
+
+                    equip.Rank = Convert.ToInt32(temp[21]);
+
+
+
+                    AccessoriesList.Add(equip);
+
+
                 }
             }
-            catch(Exception E)
+            catch (Exception E)
             {
                 Console.WriteLine(E);
             }
-            
+
 
             return (AccessoriesList, tableSpec);
 
         }
         //Method to get Android Data
 
-        private async Task<(List<EquipCLS>, string)> GetAndroidCSVAsync(string TableKey)
+        private async Task<(List<EquipCLS>, string)> GetAndroidCSVAsync(string FileName, string TableKey)
         {
             List<EquipCLS> AndroiList = new List<EquipCLS>();
 
-            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + "AndroidData.csv");
-
-            string tableSpec = "";
-            var stream = await charTable.OpenAsync(FileAccessMode.Read);
-
-            ulong size = stream.Size;
-
+            List<string> result = await ComFunc.CSVStringAsync(GVar.EquipmentPath, FileName);
             int counter = 0;
+            string tableSpec = "";
             try
             {
-                using (var inputStream = stream.GetInputStreamAt(0))
+                foreach (string accItem in result)
                 {
-                    using (var dataReader = new DataReader(inputStream))
+                    if (accItem == "")
                     {
-                        uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
-                        string text = dataReader.ReadString(numBytesLoaded);
-
-                        var result = text.Split("\r\n");
-                        foreach (string accItem in result)
-                        {
-                            if (accItem == "")
-                            {
-                                return (AndroiList, tableSpec);
-                            }
-                            if (counter == 0)
-                            {
-                                tableSpec = ComFunc.TableSpecStringBuilder(accItem, TableKey);
-                                counter += 1;
-                                continue;
-                            }
-                            counter += 1;
-
-                            var temp = accItem.Split(",");
-
-                            EquipCLS equip = new EquipCLS();
-                            equip.EquipSlot = temp[1];
-                            equip.EquipName = temp[2];
-                            equip.Category = temp[3];
-                            equip.EquipLevel = Convert.ToInt32(temp[4]);
-                            equip.Rank = Convert.ToInt32(temp[5]);
-
-                            AndroiList.Add(equip);
-                        }
-
+                        return (AndroiList, tableSpec);
                     }
+                    if (counter == 0)
+                    {
+                        tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.EquipmentCN, accItem, TableKey);
+                        counter += 1;
+                        continue;
+                    }
+                    counter += 1;
+
+                    var temp = accItem.Split(",");
+
+                    EquipCLS equip = new EquipCLS();
+                    equip.EquipSlot = temp[1];
+                    equip.EquipName = temp[2];
+                    equip.Category = temp[3];
+                    equip.EquipLevel = Convert.ToInt32(temp[4]);
+                    equip.Rank = Convert.ToInt32(temp[5]);
+
+                    AndroiList.Add(equip);
                 }
+
             }
             catch (Exception E)
             {
@@ -367,69 +323,56 @@ namespace MSEACalculator.OtherRes.Database.Tables
         }
 
         //Method to get Medal Data
-        private async Task<(List<EquipCLS>, string)> GetMedalCSVAsync(string TableKey)
+        private async Task<(List<EquipCLS>, string)> GetMedalCSVAsync(string FileName, string TableKey)
         {
             List<EquipCLS> AndroiList = new List<EquipCLS>();
-
-            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + "MedalData.csv");
-            string tableSpec = "";
-            var stream = await charTable.OpenAsync(FileAccessMode.Read);
-
+            List<string> result = await ComFunc.CSVStringAsync(GVar.EquipmentPath, FileName);
             int counter = 0;
-            ulong size = stream.Size;
+            string tableSpec = "";
             try
             {
-                using (var inputStream = stream.GetInputStreamAt(0))
+                foreach (string accItem in result)
                 {
-                    using (var dataReader = new DataReader(inputStream))
+                    if (accItem == "")
                     {
-                        uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
-                        string text = dataReader.ReadString(numBytesLoaded);
-                        var result = text.Split("\r\n");
-                        foreach (string accItem in result)
-                        {
-                            if (accItem == "")
-                            {
-                                return (AndroiList, tableSpec);
-                            }
-                            if (counter == 0)
-                            {
-                                tableSpec = ComFunc.TableSpecStringBuilder(accItem, TableKey);
-                                counter += 1;
-                                continue;
-                            }
-
-                            var temp = accItem.Split(",");
-                            counter +=1;
-
-                            EquipCLS equip = new EquipCLS();
-                            equip.EquipSlot = temp[1];
-                            equip.ClassType = temp[2];
-                            equip.EquipName = temp[3];
-                            equip.EquipSet = temp[4];
-                            equip.Category = temp[5];
-                            equip.EquipLevel = Convert.ToInt32(temp[6]);
-
-                            equip.BaseStats.STR = Convert.ToInt32(temp[7]);
-                            equip.BaseStats.DEX = Convert.ToInt32(temp[8]);
-                            equip.BaseStats.INT = Convert.ToInt32(temp[9]);
-                            equip.BaseStats.LUK = Convert.ToInt32(temp[10]);
-                            equip.BaseStats.AllStat = Convert.ToInt32(temp[11]);
-                            equip.BaseStats.MaxHP = Convert.ToInt32(temp[12]);
-                            equip.BaseStats.MaxMP = Convert.ToInt32(temp[13]);
-                            equip.BaseStats.DEF = Convert.ToInt32(temp[14]);
-                            equip.BaseStats.ATK = Convert.ToInt32(temp[15]);
-                            equip.BaseStats.MATK = Convert.ToInt32(temp[16]);
-                            equip.BaseStats.IED = Convert.ToInt32(temp[17]);
-                            equip.BaseStats.BD = Convert.ToInt32(temp[18]);
-                            equip.BaseStats.SPD = Convert.ToInt32(temp[19]);
-                            equip.BaseStats.JUMP = Convert.ToInt32(temp[20]);
-
-
-
-                            AndroiList.Add(equip);
-                        }
+                        return (AndroiList, tableSpec);
                     }
+                    if (counter == 0)
+                    {
+                        tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.EquipmentCN, accItem, TableKey);
+                        counter += 1;
+                        continue;
+                    }
+
+                    var temp = accItem.Split(",");
+                    counter +=1;
+
+                    EquipCLS equip = new EquipCLS();
+                    equip.EquipSlot = temp[1];
+                    equip.ClassType = temp[2];
+                    equip.EquipName = temp[3];
+                    equip.EquipSet = temp[4];
+                    equip.Category = temp[5];
+                    equip.EquipLevel = Convert.ToInt32(temp[6]);
+
+                    equip.BaseStats.STR = Convert.ToInt32(temp[7]);
+                    equip.BaseStats.DEX = Convert.ToInt32(temp[8]);
+                    equip.BaseStats.INT = Convert.ToInt32(temp[9]);
+                    equip.BaseStats.LUK = Convert.ToInt32(temp[10]);
+                    equip.BaseStats.AllStat = Convert.ToInt32(temp[11]);
+                    equip.BaseStats.MaxHP = Convert.ToInt32(temp[12]);
+                    equip.BaseStats.MaxMP = Convert.ToInt32(temp[13]);
+                    equip.BaseStats.DEF = Convert.ToInt32(temp[14]);
+                    equip.BaseStats.ATK = Convert.ToInt32(temp[15]);
+                    equip.BaseStats.MATK = Convert.ToInt32(temp[16]);
+                    equip.BaseStats.IED = Convert.ToInt32(temp[17]);
+                    equip.BaseStats.BD = Convert.ToInt32(temp[18]);
+                    equip.BaseStats.SPD = Convert.ToInt32(temp[19]);
+                    equip.BaseStats.JUMP = Convert.ToInt32(temp[20]);
+
+
+
+                    AndroiList.Add(equip);
                 }
 
             }
@@ -439,71 +382,56 @@ namespace MSEACalculator.OtherRes.Database.Tables
             }
 
             return (AndroiList, tableSpec);
-         }
+        }
 
         //Method to get Main Weapon Data
-        private static async Task<(List<EquipCLS>, string)> GetWeaponCSVAsync(string TableKey)
+        private static async Task<(List<EquipCLS>, string)> GetWeaponCSVAsync(string FileName, string TableKey)
         {
             List<EquipCLS> WeaponList = new List<EquipCLS>();
-
-            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + "WeaponData.csv");
-
+            List<string> result = await ComFunc.CSVStringAsync(GVar.EquipmentPath, FileName);
             string tableSpec = "";
-            var stream = await charTable.OpenAsync(FileAccessMode.Read);
-
-            ulong size = stream.Size;
-
-            using (var inputStream = stream.GetInputStreamAt(0))
+            int counter = 0;
+            foreach (string weapItem in result)
             {
-                using (var dataReader = new DataReader(inputStream))
+                if (weapItem == "")
                 {
-                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
-                    string text = dataReader.ReadString(numBytesLoaded);
-                    int counter = 0;
-                    var result = text.Split("\r\n");
-                    foreach (string weapItem in result)
-                    {
-                        if (weapItem == "")
-                        {
-                            return (WeaponList, tableSpec);
-                        }
-                        if (counter == 0)
-                        {
-                            tableSpec = ComFunc.TableSpecStringBuilder(weapItem, TableKey);
-                            counter += 1;
-                            continue;
-                        }
-                        var temp = weapItem.Split(",");
-
-                        EquipCLS equip = new EquipCLS();
-
-                        equip.EquipSlot = temp[1];
-                        equip.EquipSet = temp[2];
-                        equip.EquipName = temp[3];
-                        equip.WeaponType = temp[4];
-                        //Ignore Beast Tamer's Weapon
-                        if (equip.WeaponType == "Scepter")
-                        {
-                            continue;
-                        }
-                        equip.EquipLevel = Convert.ToInt32(temp[5]);
-
-                        equip.BaseStats.STR = Convert.ToInt32(temp[6]);
-                        equip.BaseStats.DEX = Convert.ToInt32(temp[7]);
-                        equip.BaseStats.INT = Convert.ToInt32(temp[8]);
-                        equip.BaseStats.LUK = Convert.ToInt32(temp[9]);
-                        equip.BaseStats.MaxHP = Convert.ToInt32(temp[10]);
-                        equip.BaseStats.DEF = Convert.ToInt32(temp[11]);
-                        equip.BaseStats.ATK = Convert.ToInt32(temp[12]);
-                        equip.BaseStats.MATK = Convert.ToInt32(temp[13]);
-                        equip.BaseStats.BD = Convert.ToInt32(temp[15]);
-                        equip.BaseStats.IED = Convert.ToInt32(temp[16]);
-                        equip.BaseStats.SPD = Convert.ToInt32(temp[17]);
-                        equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[19]);
-
-                        WeaponList.Add(equip);
-                    }
+                    return (WeaponList, tableSpec);
                 }
+                if (counter == 0)
+                {
+                    tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.EquipmentCN, weapItem, TableKey);
+                    counter += 1;
+                    continue;
+                }
+                var temp = weapItem.Split(",");
+
+                EquipCLS equip = new EquipCLS();
+
+                equip.EquipSlot = temp[1];
+                equip.EquipSet = temp[2];
+                equip.EquipName = temp[3];
+                equip.WeaponType = temp[4];
+                //Ignore Beast Tamer's Weapon
+                if (equip.WeaponType == "Scepter")
+                {
+                    continue;
+                }
+                equip.EquipLevel = Convert.ToInt32(temp[5]);
+
+                equip.BaseStats.STR = Convert.ToInt32(temp[6]);
+                equip.BaseStats.DEX = Convert.ToInt32(temp[7]);
+                equip.BaseStats.INT = Convert.ToInt32(temp[8]);
+                equip.BaseStats.LUK = Convert.ToInt32(temp[9]);
+                equip.BaseStats.MaxHP = Convert.ToInt32(temp[10]);
+                equip.BaseStats.DEF = Convert.ToInt32(temp[11]);
+                equip.BaseStats.ATK = Convert.ToInt32(temp[12]);
+                equip.BaseStats.MATK = Convert.ToInt32(temp[13]);
+                equip.BaseStats.BD = Convert.ToInt32(temp[15]);
+                equip.BaseStats.IED = Convert.ToInt32(temp[16]);
+                equip.BaseStats.SPD = Convert.ToInt32(temp[17]);
+                equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[19]);
+
+                WeaponList.Add(equip);
             }
             return (WeaponList, tableSpec);
 
@@ -511,68 +439,53 @@ namespace MSEACalculator.OtherRes.Database.Tables
         }
 
         //Method to get Sec Weapon Data
-        public static async Task<(List<EquipCLS>, string)> GetSecondaryCSVAsync(string TableKey)
+        public static async Task<(List<EquipCLS>, string)> GetSecondaryCSVAsync(string FileName, string TableKey)
         {
             List<EquipCLS> WeaponList = new List<EquipCLS>();
-
-            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + "SecondaryData.csv");
+            List<string> result = await ComFunc.CSVStringAsync(GVar.EquipmentPath, FileName);
             string tableSpec = "";
-            var stream = await charTable.OpenAsync(FileAccessMode.Read);
-
-            ulong size = stream.Size;
             int counter = 0;
-
             try
             {
-                using (var inputStream = stream.GetInputStreamAt(0))
+                foreach (string weapItem in result)
                 {
-                    using (var dataReader = new DataReader(inputStream))
+                    if (weapItem == "")
                     {
-                        uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
-                        string text = dataReader.ReadString(numBytesLoaded);
-
-                        var result = text.Split("\r\n");
-                        foreach (string weapItem in result)
-                        {
-                            if (weapItem == "")
-                            {
-                                return (WeaponList, tableSpec);
-                            }
-                            if (counter == 0)
-                            {
-                                tableSpec = ComFunc.TableSpecStringBuilder(weapItem, TableKey);
-                                counter += 1;
-                                continue;
-                            }
-
-                            counter += 1;
-                            var temp = weapItem.Split(",");
-
-                            EquipCLS equip = new EquipCLS();
-
-                            equip.EquipSlot = temp[1];
-                            equip.ClassType = temp[2];
-                            equip.EquipName = temp[3];
-                            equip.WeaponType = temp[4];
-                            equip.EquipLevel = Convert.ToInt32(temp[5]);
-                            equip.BaseStats.STR = Convert.ToInt32(temp[6]);
-                            equip.BaseStats.DEX = Convert.ToInt32(temp[7]);
-                            equip.BaseStats.INT = Convert.ToInt32(temp[8]);
-                            equip.BaseStats.LUK = Convert.ToInt32(temp[9]);
-                            equip.BaseStats.AllStat = Convert.ToInt32(temp[10]);
-                            equip.BaseStats.MaxHP = Convert.ToInt32(temp[11]);
-                            equip.BaseStats.MaxMP = Convert.ToInt32(temp[12]);
-                            equip.BaseStats.DEF = Convert.ToInt32(temp[13]);
-                            equip.BaseStats.ATK = Convert.ToInt32(temp[14]);
-                            equip.BaseStats.MATK = Convert.ToInt32(temp[15]);
-                            equip.BaseStats.ATKSPD = temp[16].Contains('(') ? Convert.ToInt32(temp[16].Split('(').Last().Replace(')', ' ')) : Convert.ToInt32(temp[16]);
-                            equip.BaseStats.MaxDF = Convert.ToInt32(temp[17]);
-
-
-                            WeaponList.Add(equip);
-
-                        }
+                        return (WeaponList, tableSpec);
                     }
+                    if (counter == 0)
+                    {
+                        tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.EquipmentCN, weapItem, TableKey);
+                        counter += 1;
+                        continue;
+                    }
+
+                    counter += 1;
+                    var temp = weapItem.Split(",");
+
+                    EquipCLS equip = new EquipCLS();
+
+                    equip.EquipSlot = temp[1];
+                    equip.ClassType = temp[2];
+                    equip.EquipName = temp[3];
+                    equip.WeaponType = temp[4];
+                    equip.EquipLevel = Convert.ToInt32(temp[5]);
+                    equip.BaseStats.STR = Convert.ToInt32(temp[6]);
+                    equip.BaseStats.DEX = Convert.ToInt32(temp[7]);
+                    equip.BaseStats.INT = Convert.ToInt32(temp[8]);
+                    equip.BaseStats.LUK = Convert.ToInt32(temp[9]);
+                    equip.BaseStats.AllStat = Convert.ToInt32(temp[10]);
+                    equip.BaseStats.MaxHP = Convert.ToInt32(temp[11]);
+                    equip.BaseStats.MaxMP = Convert.ToInt32(temp[12]);
+                    equip.BaseStats.DEF = Convert.ToInt32(temp[13]);
+                    equip.BaseStats.ATK = Convert.ToInt32(temp[14]);
+                    equip.BaseStats.MATK = Convert.ToInt32(temp[15]);
+                    equip.BaseStats.ATKSPD = temp[16].Contains('(') ? Convert.ToInt32(temp[16].Split('(').Last().Replace(')', ' ')) : Convert.ToInt32(temp[16]);
+                    equip.BaseStats.MaxDF = Convert.ToInt32(temp[17]);
+
+
+                    WeaponList.Add(equip);
+
                 }
 
             }
@@ -584,6 +497,6 @@ namespace MSEACalculator.OtherRes.Database.Tables
         }
 
 
-        
+
     }
 }

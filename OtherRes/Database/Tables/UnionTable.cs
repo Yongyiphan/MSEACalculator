@@ -107,7 +107,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         if (counter == 0)
                         {
 
-                            TableSpec = ComFunc.TableSpecStringBuilder(unionItems, TableConstraints);
+                            TableSpec = ComFunc.TableSpecStringBuilder(TableColNames.UnionCN, unionItems, TableConstraints);
                             counter += 1;
                             continue;
                         }

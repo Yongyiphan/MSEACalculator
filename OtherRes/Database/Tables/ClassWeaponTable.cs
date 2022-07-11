@@ -32,13 +32,13 @@ namespace MSEACalculator.OtherRes.Database.Tables
             switch (TableName)
             {
                 case "ClassMainWeapon":
-                    Result = await GetClassWeaponCSVAsync("ClassMainWeapon.csv", "PRIMARY KEY (ClassName, Weapon)");
+                    Result = await GetClassWeaponCSVAsync("ClassMainWeapon.csv", "All");
                     CurrentList = Result.Item1;
                     TableParameters = Result.Item2;
 
                     break;
                 case "ClassSecWeapon":
-                    Result = await GetClassWeaponCSVAsync("ClassSecWeapon.csv", "PRIMARY KEY (ClassName, Secondary)");
+                    Result = await GetClassWeaponCSVAsync("ClassSecWeapon.csv", "All");
                     CurrentList = Result.Item1;
                     TableParameters = Result.Item2;
 
@@ -91,47 +91,34 @@ namespace MSEACalculator.OtherRes.Database.Tables
         {
             //Dictionary<int, List<string>> CWdict = new Dictionary<int, List<string>>();
             List<(string, string)> CWdict = new List<(string, string)>();
-            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.CharacterPath + FileName);
+            List<string> result = await ComFunc.CSVStringAsync(GVar.CharacterPath, FileName);
 
             string TableSpec = "";
-            var stream = await charTable.OpenAsync(FileAccessMode.Read);
-             
-            
-            ulong size = stream.Size;
 
-            using (var inputStream = stream.GetInputStreamAt(0))
+
+            int counter = 0;
+            foreach (string CI in result)
             {
-                using (var dataReader = new DataReader(inputStream))
+                if (CI == "")
                 {
-                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
-                    string text = dataReader.ReadString(numBytesLoaded);
-
-                    var result = text.Split("\r\n");
-                    int counter = 0;
-                    foreach (string CI in result)
-                    {
-                        if (CI == "")
-                        {
-                            return (CWdict, TableSpec);
-                        }
-                        if (counter == 0)
-                        {
-                            TableSpec = ComFunc.TableSpecStringBuilder(CI, TableConstraints);
-                            counter += 1;
-                            continue;
-                        }
-                        var temp = CI.Split(',');
-                        CWdict.Add((temp[1], temp[2]));
-                        
-                        counter++;
-                    }
+                    return (CWdict, TableSpec);
                 }
+                if (counter == 0)
+                {
+                    TableSpec = ComFunc.TableSpecStringBuilder(TableColNames.CharacterCN, CI, TableConstraints);
+                    counter += 1;
+                    continue;
+                }
+                var temp = CI.Split(',');
+                CWdict.Add((temp[1], temp[2]));
+
+                counter++;
             }
 
 
             return (CWdict, TableSpec);
         }
 
-        
+
     }
 }

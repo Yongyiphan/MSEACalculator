@@ -122,7 +122,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     }
                     if (counter == 0)
                     {
-                        tableSpec = ComFunc.TableSpecStringBuilder(equipItem, TableKey);
+                        tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.PotentialCN, equipItem, TableKey);
                         counter += 1;
                         continue;
                     }
@@ -197,7 +197,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     }
                     if (counter == 0)
                     {
-                        tableSpec = ComFunc.TableSpecStringBuilder(equipItem, TableKey);
+                        tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.PotentialCN, equipItem, TableKey);
                         counter += 1;
                         continue;
                     }

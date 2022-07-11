@@ -21,6 +21,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
         public async void RetrieveData()
         {
             (List<SetEffectCLS>, string) Result;
+
             switch (TableName)
             {
                 case "SetEffectAt":
@@ -37,71 +38,58 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         }
 
-        private static async Task<(List<SetEffectCLS>, string)> GetSetEffectCSVAsync(string FileName , string TableKey)
+        private static async Task<(List<SetEffectCLS>, string)> GetSetEffectCSVAsync(string FileName, string TableKey)
         {
             List<SetEffectCLS> CurrentList = new List<SetEffectCLS>();
-            StorageFile charTable = await GVar.storageFolder.GetFileAsync(GVar.EquipmentPath + FileName);
+            List<string> result = await ComFunc.CSVStringAsync(GVar.EquipmentPath, FileName);
             string tableSpec = "";
-            var stream = await charTable.OpenAsync(FileAccessMode.Read);
 
-            ulong size = stream.Size;
-
-            using (var inputStream = stream.GetInputStreamAt(0))
+            int counter = 0;
+            foreach (string setAt in result)
             {
-                using (var dataReader = new DataReader(inputStream))
+                if (setAt == "")
                 {
-                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
-                    string text = dataReader.ReadString(numBytesLoaded);
-
-                    var result = text.Split("\r\n");
-                    int counter = 0;
-                    foreach (string setAt in result)
-                    {
-                        if (setAt == "")
-                        {
-                            return (CurrentList, tableSpec);
-                        }
-                        if (counter == 0)
-                        {
-                            tableSpec = ComFunc.TableSpecStringBuilder(setAt, TableKey);
-                            counter += 1;
-                            continue;
-                        }
-
-                            //Critical Damage,Damage,All Skills, Damage Against Normal Monsters,Abnormal Status Resistance
-
-                        var temp = setAt.Split(",");
-                        counter += 1;
-                        SetEffectCLS equip = new SetEffectCLS();
-                        equip.EquipSet = temp[1];
-                        equip.ClassType = temp[2];
-                        equip.SetAt = Convert.ToInt32(temp[3]);
-
-                        equip.SetEffect.STR = Convert.ToInt32(temp[4]);
-                        equip.SetEffect.DEX = Convert.ToInt32(temp[5]);
-                        equip.SetEffect.INT = Convert.ToInt32(temp[6]);
-                        equip.SetEffect.LUK = Convert.ToInt32(temp[7]);
-                        equip.SetEffect.AllStat = Convert.ToInt32(temp[8]);
-                        equip.SetEffect.MaxHP = Convert.ToInt32(temp[9]);
-                        equip.SetEffect.MaxMP = Convert.ToInt32(temp[10]);
-                        equip.SetEffect.HP = temp[11];
-                        equip.SetEffect.MP = temp[12];
-                        equip.SetEffect.DEF = Convert.ToInt32(temp[13]);
-                        equip.SetEffect.ATK = Convert.ToInt32(temp[14]);
-                        equip.SetEffect.MATK = Convert.ToInt32(temp[15]);
-                        equip.SetEffect.IED = Convert.ToInt32(temp[16]);
-                        equip.SetEffect.BD = Convert.ToInt32(temp[17]);
-                        equip.SetEffect.CDMG = Convert.ToInt32(temp[18]);
-                        equip.SetEffect.DMG = Convert.ToInt32(temp[19]);
-                        equip.SetEffect.AllSkills = temp[20].Contains(" ") ? Convert.ToInt32(temp[20].Split(' ').First()) : Convert.ToInt32(temp[20]);
-                        equip.SetEffect.NDMG = Convert.ToInt32(temp[21]);
-                        equip.SetEffect.StatusRes = Convert.ToInt32(temp[22]);
-
-
-                        CurrentList.Add(equip);
-
-                    }
+                    return (CurrentList, tableSpec);
                 }
+                if (counter == 0)
+                {
+                    tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.SetEffectCN, setAt, TableKey);
+                    counter += 1;
+                    continue;
+                }
+
+                //Critical Damage,Damage,All Skills, Damage Against Normal Monsters,Abnormal Status Resistance
+
+                var temp = setAt.Split(",");
+                counter += 1;
+                SetEffectCLS equip = new SetEffectCLS();
+                equip.EquipSet = temp[1];
+                equip.ClassType = temp[2];
+                equip.SetAt = Convert.ToInt32(temp[3]);
+
+                equip.SetEffect.STR = Convert.ToInt32(temp[4]);
+                equip.SetEffect.DEX = Convert.ToInt32(temp[5]);
+                equip.SetEffect.INT = Convert.ToInt32(temp[6]);
+                equip.SetEffect.LUK = Convert.ToInt32(temp[7]);
+                equip.SetEffect.AllStat = Convert.ToInt32(temp[8]);
+                equip.SetEffect.MaxHP = Convert.ToInt32(temp[9]);
+                equip.SetEffect.MaxMP = Convert.ToInt32(temp[10]);
+                equip.SetEffect.HP = temp[11];
+                equip.SetEffect.MP = temp[12];
+                equip.SetEffect.DEF = Convert.ToInt32(temp[13]);
+                equip.SetEffect.ATK = Convert.ToInt32(temp[14]);
+                equip.SetEffect.MATK = Convert.ToInt32(temp[15]);
+                equip.SetEffect.IED = Convert.ToInt32(temp[16]);
+                equip.SetEffect.BD = Convert.ToInt32(temp[17]);
+                equip.SetEffect.CDMG = Convert.ToInt32(temp[18]);
+                equip.SetEffect.DMG = Convert.ToInt32(temp[19]);
+                equip.SetEffect.AllSkills = temp[20].Contains(" ") ? Convert.ToInt32(temp[20].Split(' ').First()) : Convert.ToInt32(temp[20]);
+                equip.SetEffect.NDMG = Convert.ToInt32(temp[21]);
+                equip.SetEffect.StatusRes = Convert.ToInt32(temp[22]);
+
+
+                CurrentList.Add(equip);
+
             }
             return (CurrentList, tableSpec);
 

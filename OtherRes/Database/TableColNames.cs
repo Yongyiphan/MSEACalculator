@@ -119,6 +119,44 @@ namespace MSEACalculator.OtherRes.Database
         public static Dictionary<string, Dictionary<string, string>> StarforceCN = new Dictionary<string, Dictionary<string, string>>()
         {
 
+            {"SFID", new Dictionary<string, string>() { {"Rename", "SFID" },{"Type", "int"} } },
+
+            {"MinLvl", new Dictionary<string, string>() { {"Rename", "MinLvl" },{"Type", "int"} } },
+            {"MaxLvl", new Dictionary<string, string>() { {"Rename", "MaxLvl" },{"Type", "int"} } },
+            {"Job Stat", new Dictionary<string, string>() { {"Rename", "JobStat" },{"Type", "int"} } },
+            {"Non-Weapon Visible DEF", new Dictionary<string, string>() { {"Rename", "NonWeaponVDEF" },{"Type", "int"} } },
+            {"Overall Visible DEF", new Dictionary<string, string>() { {"Rename", "OverallVDEF" },{"Type", "int"} } },
+            {"Category A Max HP", new Dictionary<string, string>() { {"Rename", "CatAMaxHP" },{"Type", "int"} } },
+            {"Weapon Max MP", new Dictionary<string, string>() { {"Rename", "WeaponMaxMP" },{"Type", "int"} } },
+            {"Weapon Visible ATT", new Dictionary<string, string>() { {"Rename", "WeaponVATK" },{"Type", "int"} } },
+            {"Weapon Visible Magic ATT", new Dictionary<string, string>() { {"Rename", "WeaponVMATK" },{"Type", "int"} } },
+            {"Shoes Speed", new Dictionary<string, string>() { {"Rename", "ShoeSpeed" },{"Type", "int"} } },
+            {"Shoes Jump", new Dictionary<string, string>() { {"Rename", "ShoeJump" },{"Type", "int"} } },
+            {"Gloves Visible ATT", new Dictionary<string, string>() { {"Rename", "GloveVATK" },{"Type", "int"} } },
+            {"Gloves Visible Magic ATT", new Dictionary<string, string>() { {"Rename", "GloveVMATK" },{"Type", "int"} } },
+            {"Visible Stat", new Dictionary<string, string>() { {"Rename", "VStat" },{"Type", "int"} } },
+            {"Non-Weapon Weapon ATT", new Dictionary<string, string>() { {"Rename", "NonWeaponATK" },{"Type", "int"} } },
+            {"Non-Weapon Weapon Magic ATT", new Dictionary<string, string>() { {"Rename", "NonWeaponMATK" },{"Type", "int"} } },
+
+            //Superior Item Addons
+            {"Visible DEF", new Dictionary<string, string>() { {"Rename", "VDEF" },{"Type", "int"} } },
+            {"Visible Stats", new Dictionary<string, string>() { {"Rename", "VStat" },{"Type", "int"} } },
+            {"Visible ATT", new Dictionary<string, string>() { {"Rename", "VATK" },{"Type", "int"} } },
+
+
+            //Success Rates Addons
+
+            {"Title", new Dictionary<string, string>() { {"Rename", "Title" },{"Type", "string"} } },
+
+            {"Attempt", new Dictionary<string, string>() { {"Rename", "Attempt" },{"Type", "int"} } },
+            {"Success", new Dictionary<string, string>() { {"Rename", "Success" },{"Type", "string"} } },
+            {"Maintain", new Dictionary<string, string>() { {"Rename", "Maintain" },{"Type", "string"} } },
+            {"Decrease", new Dictionary<string, string>() { {"Rename", "Decrease" },{"Type", "string"} } },
+            {"Destroy", new Dictionary<string, string>() { {"Rename", "Destroy" },{"Type", "string"} } },
+
+            //Star Limit Addons
+
+            {"Max Stars", new Dictionary<string, string>() { {"Rename", "MaxStars" },{"Type", "string"} } },
         };
 
         public static Dictionary<string, Dictionary<string, string>> UnionCN = new Dictionary<string, Dictionary<string, string>>()
@@ -140,13 +178,6 @@ namespace MSEACalculator.OtherRes.Database
         public static Dictionary<string, Dictionary<string, string>> NameReplacementType = new Dictionary<string, Dictionary<string, string>>()
         {
             //Ignore "Special Function" Col from AndroidData
-            {"WeaponType", new Dictionary<string, string>() { {"Rename", "WeaponType" },{"Type", "string"} } },
-            {"Title", new Dictionary<string, string>() { {"Rename", "Title" },{"Type", "string"} } },
-
-
-
-
-
                     };
 
 

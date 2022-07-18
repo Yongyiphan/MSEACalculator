@@ -36,8 +36,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
 
         public Dictionary<string, ReadOnlyCollection<StarforceCLS>> StarforceStore { get; } = new Dictionary<string, ReadOnlyCollection<StarforceCLS>>
         {
-            {"Basic",StarForceTable.GetAllStarforceDB().AsReadOnly()},
-            {"Superior",StarForceTable.GetAllSuperiorStarforceDB().AsReadOnly()}
+            {"Basic",DBRetrieve.GetAllStarforceDB().AsReadOnly()},
+            {"Superior",DBRetrieve.GetAllSuperiorStarforceDB().AsReadOnly()}
         };
 
 

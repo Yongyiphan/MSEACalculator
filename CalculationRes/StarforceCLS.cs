@@ -53,8 +53,7 @@ namespace MSEACalculator.CalculationRes
         public Dictionary<int, int> WeapVMATKL { get; set; } = new Dictionary<int, int>();
 
 
-
-
+      
         //public int MainStat { get; set; } = 0;
         //public List<int> MainStatL { get; set; } = new List<int>();
         //public int NonWeapDef { get; set; } = 0;

@@ -74,6 +74,8 @@ namespace MSEACalculator.OtherRes.Database
 
             //SPECIAL IMPLEMENTATION FOR STARFORCE DATA 2 IN 1
             //TABLE FOR STARFORCE STATS
+            StaticTable.Add(new StarForceTable("SFLimits"));
+            StaticTable.Add(new StarForceTable("SFSuccessRates"));
             //StaticTable.Add(new StarForceTable("StarForceBaseData"));
 
             //StaticTable.Add(new StarForceTable("StarForceAddData"));

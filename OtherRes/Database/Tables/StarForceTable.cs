@@ -15,6 +15,10 @@ namespace MSEACalculator.OtherRes.Database.Tables
     {
 
         public List<StarforceCLS> SFList { get; set; }
+        public Dictionary<string, Dictionary<(int, int), int>> SFLimits { get; set; }
+
+        public List<StarforceRatesCLS> SFRates { get; set; }
+       
 
         List<string> FileNames = new List<string>()
         {
@@ -79,16 +83,25 @@ namespace MSEACalculator.OtherRes.Database.Tables
         }
         public async void RetrieveData()
         {
+            (List<StarforceCLS>, string) Result;
+
             switch (TableName)
             {
-                case "StarForceBaseData":
-                    SFList = await GetSFCSVAsync();
+                case "SFNormalData":
+
                     break;
-                case "StarForceAddData":
-                    SFList = await GetAddSFCSVAsync();
+                case "SFSuperiorData":
                     break;
-                case "StarforceSuperiorData":
-                    SFList = await GetSuperiorSFCSVAsync();
+                case "SFSuccessRates":
+                    (List<StarforceRatesCLS>, string) Rates = await GetSFSuccessAsync("SFSuccessRates.csv", "PRIMARY KEY (Title, Attempt)");
+                    SFRates = Rates.Item1;
+                    TableParameters = Rates.Item2;
+                    break;
+                    
+                case "SFLimits":
+                    (Dictionary<string, Dictionary<(int, int), int>>, string) Limits = await GetStarLimitAsync("StarLimit.csv", "PRIMARY KEY (Title, MinLvl, MaxLvl)");
+                    SFLimits = Limits.Item1;
+                    TableParameters = Limits.Item2;
                     break;
             }
         }
@@ -98,34 +111,24 @@ namespace MSEACalculator.OtherRes.Database.Tables
         {
             if (ComFunc.IsOpenConnection(connection))
             {
-                switch (TableName)
+                string insertSF = ComFunc.InsertSQLStringBuilder(TableName, TableParameters);
+                int SFID = 0; 
+                using(SqliteCommand insertCMD = new SqliteCommand(insertSF, connection, transaction))
                 {
-                    case "StarForceBaseData":
-                        string insertSF = ComFunc.InsertSQLStringBuilder(TableName, TableParameters);
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertSF, connection, transaction))
-                        {
-                            foreach (StarforceCLS sF in SFList)
+                    switch (TableName)
+                    {
+                        case "SFSuccessRates":
+                            foreach (StarforceRatesCLS Rates in SFRates)
                             {
                                 ErrorCounter++;
                                 insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@SFID", sF.SFLevel);
-                                insertCMD.Parameters.AddWithValue("@JobStat", sF.JobStat);
 
-                                insertCMD.Parameters.AddWithValue("@NonWeapVDef", sF.NonWeapVDef);
-                                insertCMD.Parameters.AddWithValue("@OverallVDef", sF.OverallVDef);
-                                
-                                insertCMD.Parameters.AddWithValue("@CatAMaxHP", sF.CatAMaxHP);
-                                insertCMD.Parameters.AddWithValue("@WeapMaxMP", sF.WeapMaxMP);
-                                
-                                insertCMD.Parameters.AddWithValue("@WeapVATK", sF.WeapVATK);
-                                insertCMD.Parameters.AddWithValue("@WeapVMATK", sF.WeapVMATK);
-                                
-                                insertCMD.Parameters.AddWithValue("@SJump", sF.SJump);
-                                insertCMD.Parameters.AddWithValue("@SSpeed", sF.SSpeed);
-                                
-                                insertCMD.Parameters.AddWithValue("GloveVATK", sF.GloveVATK);
-                                insertCMD.Parameters.AddWithValue("@GloveVMATK", sF.GloveVMATK);
-
+                                insertCMD.Parameters.AddWithValue("@Title", Rates.StarforceType);
+                                insertCMD.Parameters.AddWithValue("@Attempt", Rates.Attempt);
+                                insertCMD.Parameters.AddWithValue("@Success", Rates.Success);
+                                insertCMD.Parameters.AddWithValue("@Maintain", Rates.Maintain);
+                                insertCMD.Parameters.AddWithValue("@Decrease", Rates.Decrease);
+                                insertCMD.Parameters.AddWithValue("@Destroy", Rates.Destroy);
                                 try
                                 {
                                     insertCMD.ExecuteNonQuery();
@@ -135,66 +138,44 @@ namespace MSEACalculator.OtherRes.Database.Tables
                                     Console.WriteLine(ErrorCounter.ToString());
                                     Console.WriteLine(ex.Message);
                                 }
-                            }
-                        }
-                        break;
-                    case "StarForceAddData":
-                        string insertASF = ComFunc.InsertSQLStringBuilder(TableName, TableParameters);
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertASF, connection, transaction))
-                        {
-                            foreach (StarforceCLS sF in SFList)
-                            {   
-                                ErrorCounter++;
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@SFID", sF.SFLevel);
-                                insertCMD.Parameters.AddWithValue("@LevelRank", sF.LevelRank);
-                                insertCMD.Parameters.AddWithValue("@VStat", sF.VStat);
-                                insertCMD.Parameters.AddWithValue("@NonWeapVATK", sF.NonWeapATK);
-                                insertCMD.Parameters.AddWithValue("@NonWeapVMATK", sF.NonWeapMATK);
-                                insertCMD.Parameters.AddWithValue("@WeapVATK", sF.WeapVATK);
-                                insertCMD.Parameters.AddWithValue("@WeapVMATK", sF.WeapVMATK);
 
-                                try
-                                {
-                                    insertCMD.ExecuteNonQuery();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(ErrorCounter.ToString());
-                                    Console.WriteLine(ex.Message);
-                                }
+
                             }
-                        }
-                        break;
-                    case "StarforceSuperiorData":
-                        string insertSSF = ComFunc.InsertSQLStringBuilder(TableName, TableParameters);
-                        using (SqliteCommand insertCMD = new SqliteCommand(insertSSF, connection, transaction))
-                        {
-                            foreach (StarforceCLS sF in SFList)
-                            {   
-                                ErrorCounter++;
-                                insertCMD.Parameters.Clear();
-                                insertCMD.Parameters.AddWithValue("@SFID", sF.SFLevel);
-                                insertCMD.Parameters.AddWithValue("@LevelRank", sF.LevelRank);
-                                insertCMD.Parameters.AddWithValue("@VStat", sF.VStat);
-                                insertCMD.Parameters.AddWithValue("@WeapVAtk", sF.WeapVATK);
-                                insertCMD.Parameters.AddWithValue("@VDef", sF.VDef);
-                            try
+                            break;
+                        case "SFLimits":
+                            foreach (string title in SFLimits.Keys)
+                            {
+                                foreach ((int, int) MinMaxLvl in SFLimits[title].Keys)
                                 {
-                                    insertCMD.ExecuteNonQuery();
+                                    ErrorCounter++;
+                                    insertCMD.Parameters.Clear();
+
+                                    insertCMD.Parameters.AddWithValue("@Title", title);
+                                    insertCMD.Parameters.AddWithValue("@MinLvl", MinMaxLvl.Item1);
+                                    insertCMD.Parameters.AddWithValue("@MaxLvl", MinMaxLvl.Item2);
+                                    insertCMD.Parameters.AddWithValue("@MaxStars", SFLimits[title][MinMaxLvl]);
+
+                                    SFID++;
+                                    try
+                                    {
+                                        insertCMD.ExecuteNonQuery();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ErrorCounter.ToString());
+                                        Console.WriteLine(ex.Message);
+                                    }
+
                                 }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(ErrorCounter.ToString());
-                                    Console.WriteLine(ex.Message);
-                                }
+
                             }
-                        }
-                        break;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
-
 
         //Method for SF
         
@@ -206,24 +187,81 @@ namespace MSEACalculator.OtherRes.Database.Tables
         {
 
             Dictionary<string, Dictionary<(int, int), int>> StarLimit = new Dictionary<string, Dictionary<(int, int), int>>();
-            List<string> result = await ComFunc.CSVStringAsync(GVar.CalculationsPath, "StarLimit.csv");
+            List<string> result = await ComFunc.CSVStringAsync(GVar.CalculationsPath, FileName);
             string tableSpec = "";
             int counter = 0;
 
-            foreach(string sl in result)
+            foreach (string sl in result)
             {
                 if (sl == "")
                 {
                     return (StarLimit, tableSpec);
                 }
-                if(counter == 0)
+                if (counter == 0)
                 {
                     tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.StarforceCN, sl, TableConstraint);
+                    counter++;
+                    continue;
                 }
+                var temp = sl.Split(",");
+                string title = temp[1];
+                (int, int) MinMaxLvl = (Convert.ToInt32(temp[2]), Convert.ToInt32(temp[3]));
+                if (StarLimit.ContainsKey(title) == false)
+                {
+                    StarLimit.Add(title, new Dictionary<(int, int), int>());
+                }
+                if (StarLimit[title].ContainsKey(MinMaxLvl) == false)
+                {
+                    StarLimit[title].Add(MinMaxLvl, default(int));
+                }
+                StarLimit[title][MinMaxLvl] = Convert.ToInt32(temp[4]);
+
+                counter++;
+
             }
 
 
             return (StarLimit, tableSpec);
+        }
+        private static async Task<(List<StarforceRatesCLS>, string)> GetSFSuccessAsync(string FileName, string TableConstraint)
+        {
+
+            List<StarforceRatesCLS> Rates = new List<StarforceRatesCLS>();
+            List<string> result = await ComFunc.CSVStringAsync(GVar.CalculationsPath, FileName);
+            string tableSpec = "";
+            int counter = 0;
+
+            foreach (string sl in result)
+            {
+                if (sl == "")
+                {
+                    return (Rates, tableSpec);
+                }
+                if (counter == 0)
+                {
+                    tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.StarforceCN, sl, TableConstraint);
+                    counter++;
+                    continue;
+                }
+                var temp = sl.Split(",");
+
+                StarforceRatesCLS citem = new StarforceRatesCLS();
+                citem.StarforceType = temp[1];
+
+                citem.Attempt = Convert.ToInt32(temp[2]);
+                citem.Success = Convert.ToInt32(temp[3]);
+                citem.Maintain = Convert.ToDouble(temp[4]);
+                citem.Decrease = Convert.ToDouble(temp[5]);
+                citem.Destroy = Convert.ToDouble(temp[6]);
+
+                Rates.Add(citem);
+
+                counter++;
+
+            }
+
+
+            return (Rates, tableSpec);
         }
 
         public static async Task<List<StarforceCLS>> GetSFCSVAsync()
@@ -366,193 +404,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
             return SFList;
         }
 
-        public static List<StarforceCLS> GetAllStarforceDB()
-        {
-            List<StarforceCLS> result = new List<StarforceCLS>();
-
-            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
-            {
-                dbCon.Open();
-
-                string selectQuery = "SELECT * FROM StarForceBaseData";
-
-                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
-                {
-                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            if (reader.GetInt32(0) == 16)
-                            {
-                                break;
-                            }
-
-                            StarforceCLS SF = new StarforceCLS();
-
-                            SF.SFLevel     =  reader.GetInt32(0);
-                            SF.JobStat     =  reader.GetInt32(1);
-                            SF.NonWeapVDef =  reader.GetInt32(2);
-                            SF.OverallVDef =  reader.GetInt32(3);
-                            SF.CatAMaxHP   =  reader.GetInt32(4);
-                            SF.WeapMaxMP   =  reader.GetInt32(5);
-                            SF.WeapVATK    =  reader.GetInt32(6);
-                            SF.WeapVMATK   =  reader.GetInt32(7);
-                            SF.SJump       =  reader.GetInt32(8);
-                            SF.SSpeed      =  reader.GetInt32(9);
-                            SF.GloveVATK   = reader.GetInt32(10);
-                            SF.GloveVMATK  = reader.GetInt32(11);
-
-                            result.Add(SF);
-                        }
-                    }
-                }
-                string addQuery = "SELECT b.SFID, b.NonWeapVDef, b.OverallVDef, a.LevelRank, a.VStat, a.NonWeapVATK, a.NonWeapVMATK, a.WeapVATK, a.WeapVMATK " +
-                    "FROM StarForceBaseData AS b " +
-                    "INNER JOIN StarForceAddData as a ON " +
-                    "b.SFID = a.SFID";
-
-                using (SqliteCommand selectCMD = new SqliteCommand(addQuery, dbCon))
-                {
-                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
-                    {
-
-                        StarforceCLS SF = null;
-                        bool startNew = false;
-                        bool toAdd = false;
-                        int prevLvl = 0;
-
-                        while (reader.Read())
-                        {
-                            int clvl = reader.GetInt32(0);
-                            if (prevLvl == 0)
-                            {
-                                prevLvl = clvl;
-                                startNew = true;
-                                goto StartNew;
-                            }
-
-                        StartNew:
-                            if (startNew)
-                            {
-                                SF = new StarforceCLS();
-                                SF.SFLevel = clvl;
-                                SF.NonWeapVDef = reader.GetInt32(1);
-                                SF.OverallVDef = reader.GetInt32(2);
-                                startNew = false;
-                            }
-
-
-                            if (prevLvl !=  clvl)
-                            {
-                                prevLvl = clvl;
-                                toAdd = true;
-                                goto ToAdd;
-                            }
-                            else
-                            {
-                                int lvlrank = reader.GetInt32(3);
-                                SF.LevelRank = lvlrank;
-                                SF.VStatL.Add(lvlrank, reader.GetInt32(4));
-                                SF.NonWeapVATKL.Add(lvlrank, reader.GetInt32(5));
-                                SF.NonWeapVMATKL.Add(lvlrank, reader.GetInt32(6));
-                                SF.WeapVATKL.Add(lvlrank, reader.GetInt32(7));
-                                SF.WeapVMATKL.Add(lvlrank, reader.GetInt32(8));
-                            }
-
-                        ToAdd:
-                            if (toAdd)
-                            {
-                                result.Add(SF);
-                                toAdd = false;
-                                startNew = true;
-                                goto StartNew;
-                            }
-                        }
-
-                        result.Add(SF);
-                    }
-                }
-
-
-            }
-
-            return result;
-        }
-        public static List<StarforceCLS> GetAllSuperiorStarforceDB()
-        {
-            List<StarforceCLS> result = new List<StarforceCLS>();
-
-            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
-            {
-                dbCon.Open();
-
-
-                string addQuery = "SELECT * FROM StarforceSuperiorData";
-
-                using (SqliteCommand selectCMD = new SqliteCommand(addQuery, dbCon))
-                {
-                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
-                    {
-
-                        StarforceCLS SF = null;
-                        bool startNew = false;
-                        bool toAdd = false;
-                        int prevLvl = 0;
-
-                        while (reader.Read())
-                        {
-                            int clvl = reader.GetInt32(0);
-                            if (prevLvl == 0)
-                            {
-                                prevLvl = clvl;
-                                startNew = true;
-                                goto StartNew;
-                            }
-
-                        StartNew:
-                            if (startNew)
-                            {
-                                SF = new StarforceCLS();
-                                SF.SFLevel = clvl;
-                                SF.VDef = reader.GetInt32(4);
-                                startNew = false;
-                            }
-
-
-                            if (prevLvl !=  clvl)
-                            {
-                                prevLvl = clvl;
-                                toAdd = true;
-                                goto ToAdd;
-                            }
-                            else
-                            {
-                                int lvlrank = reader.GetInt32(1);
-                                SF.LevelRank = lvlrank;
-                                SF.VStatL.Add(lvlrank, reader.GetInt32(2));
-                                SF.WeapVATKL.Add(lvlrank, reader.GetInt32(3));
-                            }
-                        ToAdd:
-                            if (toAdd)
-                            {
-                                result.Add(SF);
-                                toAdd = false;
-                                startNew = true;
-                                goto StartNew;
-                            }
-                        }
-
-                        result.Add(SF);
-                    }
-                }
-
-
-            }
-
-            return result;
-        }
-
-
+        
 
 
     }

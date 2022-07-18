@@ -747,6 +747,192 @@ namespace MSEACalculator.OtherRes.Database
             return FinalResult;
         }
 
+        public static List<StarforceCLS> GetAllStarforceDB()
+        {
+            List<StarforceCLS> result = new List<StarforceCLS>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM StarForceBaseData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.GetInt32(0) == 16)
+                            {
+                                break;
+                            }
+
+                            StarforceCLS SF = new StarforceCLS();
+
+                            SF.SFLevel     =  reader.GetInt32(0);
+                            SF.JobStat     =  reader.GetInt32(1);
+                            SF.NonWeapVDef =  reader.GetInt32(2);
+                            SF.OverallVDef =  reader.GetInt32(3);
+                            SF.CatAMaxHP   =  reader.GetInt32(4);
+                            SF.WeapMaxMP   =  reader.GetInt32(5);
+                            SF.WeapVATK    =  reader.GetInt32(6);
+                            SF.WeapVMATK   =  reader.GetInt32(7);
+                            SF.SJump       =  reader.GetInt32(8);
+                            SF.SSpeed      =  reader.GetInt32(9);
+                            SF.GloveVATK   = reader.GetInt32(10);
+                            SF.GloveVMATK  = reader.GetInt32(11);
+
+                            result.Add(SF);
+                        }
+                    }
+                }
+                string addQuery = "SELECT b.SFID, b.NonWeapVDef, b.OverallVDef, a.LevelRank, a.VStat, a.NonWeapVATK, a.NonWeapVMATK, a.WeapVATK, a.WeapVMATK " +
+                    "FROM StarForceBaseData AS b " +
+                    "INNER JOIN StarForceAddData as a ON " +
+                    "b.SFID = a.SFID";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(addQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+
+                        StarforceCLS SF = null;
+                        bool startNew = false;
+                        bool toAdd = false;
+                        int prevLvl = 0;
+
+                        while (reader.Read())
+                        {
+                            int clvl = reader.GetInt32(0);
+                            if (prevLvl == 0)
+                            {
+                                prevLvl = clvl;
+                                startNew = true;
+                                goto StartNew;
+                            }
+
+                        StartNew:
+                            if (startNew)
+                            {
+                                SF = new StarforceCLS();
+                                SF.SFLevel = clvl;
+                                SF.NonWeapVDef = reader.GetInt32(1);
+                                SF.OverallVDef = reader.GetInt32(2);
+                                startNew = false;
+                            }
+
+
+                            if (prevLvl !=  clvl)
+                            {
+                                prevLvl = clvl;
+                                toAdd = true;
+                                goto ToAdd;
+                            }
+                            else
+                            {
+                                int lvlrank = reader.GetInt32(3);
+                                SF.LevelRank = lvlrank;
+                                SF.VStatL.Add(lvlrank, reader.GetInt32(4));
+                                SF.NonWeapVATKL.Add(lvlrank, reader.GetInt32(5));
+                                SF.NonWeapVMATKL.Add(lvlrank, reader.GetInt32(6));
+                                SF.WeapVATKL.Add(lvlrank, reader.GetInt32(7));
+                                SF.WeapVMATKL.Add(lvlrank, reader.GetInt32(8));
+                            }
+
+                        ToAdd:
+                            if (toAdd)
+                            {
+                                result.Add(SF);
+                                toAdd = false;
+                                startNew = true;
+                                goto StartNew;
+                            }
+                        }
+
+                        result.Add(SF);
+                    }
+                }
+
+
+            }
+
+            return result;
+        }
+        public static List<StarforceCLS> GetAllSuperiorStarforceDB()
+        {
+            List<StarforceCLS> result = new List<StarforceCLS>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+
+                string addQuery = "SELECT * FROM StarforceSuperiorData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(addQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+
+                        StarforceCLS SF = null;
+                        bool startNew = false;
+                        bool toAdd = false;
+                        int prevLvl = 0;
+
+                        while (reader.Read())
+                        {
+                            int clvl = reader.GetInt32(0);
+                            if (prevLvl == 0)
+                            {
+                                prevLvl = clvl;
+                                startNew = true;
+                                goto StartNew;
+                            }
+
+                        StartNew:
+                            if (startNew)
+                            {
+                                SF = new StarforceCLS();
+                                SF.SFLevel = clvl;
+                                SF.VDef = reader.GetInt32(4);
+                                startNew = false;
+                            }
+
+
+                            if (prevLvl !=  clvl)
+                            {
+                                prevLvl = clvl;
+                                toAdd = true;
+                                goto ToAdd;
+                            }
+                            else
+                            {
+                                int lvlrank = reader.GetInt32(1);
+                                SF.LevelRank = lvlrank;
+                                SF.VStatL.Add(lvlrank, reader.GetInt32(2));
+                                SF.WeapVATKL.Add(lvlrank, reader.GetInt32(3));
+                            }
+                        ToAdd:
+                            if (toAdd)
+                            {
+                                result.Add(SF);
+                                toAdd = false;
+                                startNew = true;
+                                goto StartNew;
+                            }
+                        }
+
+                        result.Add(SF);
+                    }
+                }
+
+
+            }
+
+            return result;
+        }
+
 
 
     }

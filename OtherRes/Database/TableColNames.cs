@@ -26,9 +26,13 @@ namespace MSEACalculator.OtherRes.Database
         {
             {"EquipSlot", new Dictionary<string, string>() { {"Rename", "EquipSlot" },{"Type", "string"} } },
             {"EquipName", new Dictionary<string, string>() { {"Rename", "EquipName" },{"Type", "string"} } },
+            {"WeaponType", new Dictionary<string, string>() { {"Rename", "WeaponType" },{"Type", "string"} } },
+
             {"ClassName", new Dictionary<string, string>() { {"Rename", "ClassName" },{"Type", "string"}} },
-            {"EquipSet", new Dictionary<string, string>() { {"Rename", "EquipSet" },{"Type", "string"} } },
+            {"ClassType", new Dictionary<string, string>() { {"Rename", "ClassType" },{"Type", "string"} } },
+
             {"Category", new Dictionary<string, string>() { {"Rename", "Category" },{"Type", "string"} } },
+            {"EquipSet", new Dictionary<string, string>() { {"Rename", "EquipSet" },{"Type", "string"} } },
             {"EquipLevel", new Dictionary<string, string>() { {"Rename", "EquipLevel" },{"Type", "int"} } },
 
             {"STR", new Dictionary<string, string>() { {"Rename", "STR" },{"Type", "int"} } },
@@ -61,6 +65,32 @@ namespace MSEACalculator.OtherRes.Database
         {
 
             {"EquipSet", new Dictionary<string, string>() { {"Rename", "EquipSet" },{"Type", "string"} } },
+            {"ClassType", new Dictionary<string, string>() { {"Rename", "ClassType" },{"Type", "string"} } },
+            {"Set At", new Dictionary<string, string>() { {"Rename", "SetAt" },{"Type", "string"} } },
+            
+            {"STR", new Dictionary<string, string>() { {"Rename", "STR" },{"Type", "int"} } },
+            {"DEX", new Dictionary<string, string>() { {"Rename", "DEX" },{"Type", "int"} } },
+            {"INT", new Dictionary<string, string>() { {"Rename", "INT" },{"Type", "int"} } },
+            {"LUK", new Dictionary<string, string>() { {"Rename", "LUK" },{"Type", "int"} } },
+
+            {"All Stats", new Dictionary<string, string>() { {"Rename", "AllStats" },{"Type", "int"} } },
+            {"Max HP", new Dictionary<string, string>() { {"Rename", "MaxHP" },{"Type", "int"} } },
+            {"Max MP", new Dictionary<string, string>() { {"Rename", "MaxMP" },{"Type", "int"} } },
+            {"Perc Max HP", new Dictionary<string, string>() { {"Rename", "PercMaxHP" },{"Type", "int"} } },
+            {"Perc Max MP", new Dictionary<string, string>() { {"Rename", "PercMaxMP" },{"Type", "int"} } },
+            {"Defense", new Dictionary<string, string>() { {"Rename", "DEF" },{"Type", "int"} } },
+            {"Weapon Attack", new Dictionary<string, string>() { {"Rename", "WATK" },{"Type", "int"} } },
+            {"Magic Attack", new Dictionary<string, string>() { {"Rename", "MATK" },{"Type", "int"} } },
+            {"Ignored Enemy Defense", new Dictionary<string, string>() { {"Rename", "IED" },{"Type", "int"} } },
+            {"Boss Damage", new Dictionary<string, string>() { {"Rename", "BD" },{"Type", "int"} } },
+            {"Critical Damage", new Dictionary<string, string>() { {"Rename", "CDMG" },{"Type", "int"} } },
+            {"Damage", new Dictionary<string, string>() { {"Rename", "DMG" },{"Type", "int"} } },
+            {"All Skills"  , new Dictionary<string, string>() { {"Rename", "AllSkills" },{"Type", "int"} } },
+            {"Damage Against Normal Monsters"  , new Dictionary<string, string>() { {"Rename", "NDMG" },{"Type", "int"} } },
+            {"Abnormal Status Resistance"  , new Dictionary<string, string>() { {"Rename", "StatusResist" },{"Type", "int"} } },
+
+
+
         };
 
         public static Dictionary<string, Dictionary<string, string>> PotentialCN = new Dictionary<string, Dictionary<string, string>>()
@@ -110,16 +140,10 @@ namespace MSEACalculator.OtherRes.Database
         public static Dictionary<string, Dictionary<string, string>> NameReplacementType = new Dictionary<string, Dictionary<string, string>>()
         {
             //Ignore "Special Function" Col from AndroidData
-            {"Set At", new Dictionary<string, string>() { {"Rename", "SetAt" },{"Type", "string"} } },
             {"WeaponType", new Dictionary<string, string>() { {"Rename", "WeaponType" },{"Type", "string"} } },
             {"Title", new Dictionary<string, string>() { {"Rename", "Title" },{"Type", "string"} } },
 
 
-            {"Critical Damage", new Dictionary<string, string>() { {"Rename", "CDMG" },{"Type", "int"} } },
-            {"Damage", new Dictionary<string, string>() { {"Rename", "DMG" },{"Type", "int"} } },
-            {"All Skills"  , new Dictionary<string, string>() { {"Rename", "AllSkills" },{"Type", "int"} } },
-            {"Damage Against Normal Monsters"  , new Dictionary<string, string>() { {"Rename", "NDMG" },{"Type", "int"} } },
-            {"Abnormal Status Resistance"  , new Dictionary<string, string>() { {"Rename", "StatusResist" },{"Type", "int"} } },
 
 
 

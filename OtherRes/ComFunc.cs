@@ -111,32 +111,28 @@ namespace MSEACalculator
         public static string InsertSQLStringBuilder(string TableName, string TablePara)
         {
             List<string> ToRemove = new List<string>() { "int", "string", "(", ");", "NOT NULL","double", "nvarchar" };
-            StringBuilder SB = new StringBuilder(TablePara);
-            StringBuilder Result = new StringBuilder("INSERT INTO " + TableName + " ( ");
-            foreach(string Type in ToRemove)
+            //StringBuilder SB = new StringBuilder(TablePara);
+            StringBuilder SB = new StringBuilder();
+            List<string> commaSplit = TablePara.Split(",").ToList();
+            List<string> TypeRemoved = new List<string>();
+            foreach(string split in commaSplit)
             {
-                SB.Replace(Type, "");
-            }
-            string[] deliSplit = SB.ToString().Split(",");
-            foreach(string deli in deliSplit)
-            {
-                if (deli.Contains("PRIMARY") || deli.Contains("FOREIGN"))
+                if (split.Contains("PRIMARY") || split.Contains("FOREIGN"))
                 {
                     break;
                 }
-                Result.Append(String.Format("{0},", deli.Trim()));
 
+                string[] NameType = split.Split(" ");
+                TypeRemoved.Add(NameType[0].Replace("(", "")); 
             }
-            Result = new StringBuilder(Result.ToString().TrimEnd(','));
+            
+            StringBuilder Result = new StringBuilder("INSERT INTO " + TableName + " ( ");
+            Result.Append(string.Join(",", TypeRemoved));
             Result.Append(") VALUES ( ");
 
-            foreach (string deli in deliSplit)
+            foreach (string deli in TypeRemoved)
             {
-                if (deli.Contains("PRIMARY") || deli.Contains("FOREIGN"))
-                {
-                    break;
-                }
-                Result.Append(String.Format("@{0},", deli.Trim()));
+                Result.Append(String.Format("@{0},", deli));
 
             }
             Result = new StringBuilder(Result.ToString().TrimEnd(','));

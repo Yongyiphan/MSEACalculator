@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="BossRes\BossCLS.cs" />
     <Compile Include="CalculationRes\DisplayStatValue.cs" />
+    <Compile Include="CalculationRes\HyperStatCLS.cs" />
     <Compile Include="CalculationRes\SetEffectCLS.cs" />
     <Compile Include="CalculationRes\StarforceRatesCLS.cs" />
     <Compile Include="CalculationRes\ViewPages\ConversionQMPage.xaml.cs">
@@ -205,6 +206,7 @@
     <Compile Include="OtherRes\Database\Tables\BossListTable.cs" />
     <Compile Include="OtherRes\Database\Tables\ClassWeaponTable.cs" />
     <Compile Include="OtherRes\Database\Tables\EquipmentSetEffectsTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\HyperStatTable.cs" />
     <Compile Include="ToBeDeleted\EquipAccessoriesTable.cs" />
     <Compile Include="OtherRes\Database\Tables\AllCharacterTable.cs" />
     <Compile Include="ToBeDeleted\EquipArmorTable.cs" />

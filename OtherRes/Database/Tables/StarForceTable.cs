@@ -18,21 +18,13 @@ namespace MSEACalculator.OtherRes.Database.Tables
         public Dictionary<string, Dictionary<(int, int), int>> SFLimits { get; set; }
 
         public List<StarforceRatesCLS> SFRates { get; set; }
+
+
        
 
-        List<string> FileNames = new List<string>()
+        public StarForceTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
-            "NormalEquipSF.csv",
-            "SFSuccessRates.csv",
-            "StarLimit.csv",
-            "SuperiorItemsSF.csv"
-
-        };
-
-        
-                public StarForceTable(string TableName, string TablePara = "") : base(TableName, TablePara)
-        {
-                    }
+        }
         public async void RetrieveData()
         {
             (List<StarforceCLS>, string) Result;
@@ -54,7 +46,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     SFRates = Rates.Item1;
                     TableParameters = Rates.Item2;
                     break;
-                    
+
                 case "SFLimits":
                     (Dictionary<string, Dictionary<(int, int), int>>, string) Limits = await GetStarLimitAsync("StarLimit.csv", "PRIMARY KEY (Title, MinLvl, MaxLvl)");
                     SFLimits = Limits.Item1;
@@ -69,8 +61,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
             if (ComFunc.IsOpenConnection(connection))
             {
                 string insertSF = ComFunc.InsertSQLStringBuilder(TableName, TableParameters);
-                int SFID = 0; 
-                using(SqliteCommand insertCMD = new SqliteCommand(insertSF, connection, transaction))
+                int SFID = 0;
+                using (SqliteCommand insertCMD = new SqliteCommand(insertSF, connection, transaction))
                 {
                     switch (TableName)
                     {
@@ -126,7 +118,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             }
                             break;
                         default:
-                            foreach(StarforceCLS citem in CurrentList)
+                            foreach (StarforceCLS citem in CurrentList)
                             {
                                 ErrorCounter++;
                                 insertCMD.Parameters.Clear();
@@ -156,7 +148,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                                 {
                                     insertCMD.ExecuteNonQuery();
                                 }
-                                catch(Exception E)
+                                catch (Exception E)
                                 {
                                     Console.WriteLine(ErrorCounter.ToString());
                                     Console.WriteLine(E.Message);

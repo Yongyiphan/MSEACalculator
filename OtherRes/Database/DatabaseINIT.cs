@@ -89,6 +89,10 @@ namespace MSEACalculator.OtherRes.Database
             StaticTable.Add(new PotentialTable("PotentialBonusData"));
             StaticTable.Add(new PotentialTable("PotentialBonusCube"));
 
+            StaticTable.Add(new HyperStatTable("HyperStat"));
+            StaticTable.Add(new HyperStatTable("HyperStatCost"));
+            StaticTable.Add(new HyperStatTable("HyperStatDistribution"));
+
 
             await Task.WhenAll(StaticTable.ParallelForEachAsync(ST => Task.Run(() =>((ITableUpload)ST).RetrieveData())));
 

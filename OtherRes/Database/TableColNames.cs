@@ -8,7 +8,7 @@ namespace MSEACalculator.OtherRes.Database
 {
     public class TableColNames
     {
-        
+
         public static Dictionary<string, Dictionary<string, string>> CharacterCN { get; set; } = new Dictionary<string, Dictionary<string, string>>()
         {
             {"ClassName", new Dictionary<string, string>() { {"Rename", "ClassName" },{"Type", "string"}} },
@@ -67,7 +67,7 @@ namespace MSEACalculator.OtherRes.Database
             {"EquipSet", new Dictionary<string, string>() { {"Rename", "EquipSet" },{"Type", "string"} } },
             {"ClassType", new Dictionary<string, string>() { {"Rename", "ClassType" },{"Type", "string"} } },
             {"Set At", new Dictionary<string, string>() { {"Rename", "SetAt" },{"Type", "string"} } },
-            
+
             {"STR", new Dictionary<string, string>() { {"Rename", "STR" },{"Type", "int"} } },
             {"DEX", new Dictionary<string, string>() { {"Rename", "DEX" },{"Type", "int"} } },
             {"INT", new Dictionary<string, string>() { {"Rename", "INT" },{"Type", "int"} } },
@@ -177,13 +177,29 @@ namespace MSEACalculator.OtherRes.Database
             {"SSS", new Dictionary<string, string>() { {"Rename", "SSS" },{"Type", "int"} } },
         };
 
-
-
-
-        public static Dictionary<string, Dictionary<string, string>> NameReplacementType = new Dictionary<string, Dictionary<string, string>>()
+        public static Dictionary<string, Dictionary<string, string>> HyperStatCN = new Dictionary<string, Dictionary<string, string>>()
         {
-            //Ignore "Special Function" Col from AndroidData
-                    };
+            //HyperStat
+            {"StatIncrease", new Dictionary<string, string>() { {"Rename", "Stat" },{"Type", "string"} } },
+            {"Hyper Stat Level", new Dictionary<string, string>() { {"Rename", "HSLevel" },{"Type", "int"} } },
+            {"Effect Increase from previous level", new Dictionary<string, string>() { {"Rename", "StatIncrease" },{"Type", "string"} } },
+            {"Overall Effect", new Dictionary<string, string>() { {"Rename", "TotalStatIncrease" },{"Type", "int"} } },
+
+            //HyperStat Cost
+
+            {"Hyper Stat Next Level", new Dictionary<string, string>() { {"Rename", "HSLevel" },{"Type", "int"} } },
+            {"Level up Cost", new Dictionary<string, string>() { {"Rename", "Cost" },{"Type", "int"} } },
+            {"Total Cost", new Dictionary<string, string>() { {"Rename", "TotalCost" },{"Type", "int"} } },
+
+            //HyperStat Distribution
+            {"Level", new Dictionary<string, string>() { {"Rename", "Level" },{"Type", "int"} } },
+            {"Points Awarded", new Dictionary<string, string>() { {"Rename", "Points" },{"Type", "int"} } },
+            {"Total Points Awarded", new Dictionary<string, string>() { {"Rename", "TotalPoints" },{"Type", "int"} } },
+        };
+
+
+
+
 
 
 

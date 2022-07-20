@@ -14,7 +14,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
     public class StarForceTable : BaseDBTable, ITableUpload
     {
 
-        public List<StarforceCLS> SFList { get; set; }
+        public List<StarforceCLS> CurrentList { get; set; }
         public Dictionary<string, Dictionary<(int, int), int>> SFLimits { get; set; }
 
         public List<StarforceRatesCLS> SFRates { get; set; }
@@ -29,44 +29,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         };
 
-        Dictionary<string, Dictionary<(int, int), int>> StarLimit { get; set; } 
         
-        private string[] sfTableSpec = { "(" +
-                    "SFID int," +
-                    "JobStat int," +
-                    "NonWeapVDef int," +
-                    "OverallVDef int," +
-                    "CatAMaxHP int," +
-                    "WeapMaxMP int," +
-                    "WeapVATK int," +
-                    "WeapVMATK int," +
-                    "SJump int," +
-                    "SSpeed int," +
-                    "GloveVATK int, " +
-                    "GloveVMATK int," +
-                    "PRIMARY KEY (SFID)" +
-                    ");" };
-
-        private string[] addSFstatSpec = { "(" +
-                "SFID int," +
-                "LevelRank int," +
-                "VStat int," +
-                "NonWeapVATK int," +
-                "NonWeapVMATK int," +
-                "WeapVATK int," +
-                "WeapVMATK int," +
-                "PRIMARY KEY (SFID, LevelRank)" +
-                ");" };
-
-        private string[] SuperiorSFSpec = { "(" +
-                    "SFID int," +
-                    "LevelRank int," +
-                    "VStat int," +
-                    "WeapVAtk," +
-                    "VDef," +
-                    "PRIMARY KEY (SFID, LevelRank)" +
-                    ");"};
-        public StarForceTable(string TableName, string TablePara = "") : base(TableName, TablePara)
+                public StarForceTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
                     }
         public async void RetrieveData()
@@ -76,9 +40,14 @@ namespace MSEACalculator.OtherRes.Database.Tables
             switch (TableName)
             {
                 case "SFNormalData":
-
+                    Result = await GetNormalSFAsync("NormalEquipSF.csv", "PRIMARY KEY (SFID, MinLvl, MaxLvl)");
+                    CurrentList = Result.Item1;
+                    TableParameters = Result.Item2;
                     break;
                 case "SFSuperiorData":
+                    Result = await GetSuperiorSFAsync("SuperiorItemsSF.csv", "PRIMARY KEY(SFID, MinLvl, MaxLvl)");
+                    CurrentList = Result.Item1;
+                    TableParameters = Result.Item2;
                     break;
                 case "SFSuccessRates":
                     (List<StarforceRatesCLS>, string) Rates = await GetSFSuccessAsync("SFSuccessRates.csv", "PRIMARY KEY (Title, Attempt)");
@@ -126,8 +95,6 @@ namespace MSEACalculator.OtherRes.Database.Tables
                                     Console.WriteLine(ErrorCounter.ToString());
                                     Console.WriteLine(ex.Message);
                                 }
-
-
                             }
                             break;
                         case "SFLimits":
@@ -159,6 +126,42 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             }
                             break;
                         default:
+                            foreach(StarforceCLS citem in CurrentList)
+                            {
+                                ErrorCounter++;
+                                insertCMD.Parameters.Clear();
+                                insertCMD.Parameters.AddWithValue("@SFID", citem.SFLevel);
+                                insertCMD.Parameters.AddWithValue("@MinLvl", citem.MinLvl);
+                                insertCMD.Parameters.AddWithValue("@MaxLvl", citem.MaxLvl);
+                                insertCMD.Parameters.AddWithValue("@JobStat", citem.JobStat);
+                                insertCMD.Parameters.AddWithValue("@NonWeaponVDEF", citem.NonWeapVDef);
+                                insertCMD.Parameters.AddWithValue("@OverallVDEF", citem.OverallVDef);
+                                insertCMD.Parameters.AddWithValue("@CatAMaxHP", citem.CatAMaxHP);
+                                insertCMD.Parameters.AddWithValue("@WeaponMaxMP", citem.WeapMaxMP);
+                                insertCMD.Parameters.AddWithValue("@WeaponVATK", citem.WeapVATK);
+                                insertCMD.Parameters.AddWithValue("@WeaponVMATK", citem.WeapVMATK);
+                                insertCMD.Parameters.AddWithValue("@ShoeSpeed", citem.SSpeed);
+                                insertCMD.Parameters.AddWithValue("@ShoeJump", citem.SJump);
+                                insertCMD.Parameters.AddWithValue("@GloveVATK", citem.GloveVATK);
+                                insertCMD.Parameters.AddWithValue("@GloveVMATK", citem.GloveVMATK);
+                                insertCMD.Parameters.AddWithValue("@VStat", citem.VStat);
+                                insertCMD.Parameters.AddWithValue("@NonWeaponATK", citem.NonWeapATK);
+                                insertCMD.Parameters.AddWithValue("@NonWeaponMATK", citem.NonWeapMATK);
+
+                                //Superior Addons
+
+                                insertCMD.Parameters.AddWithValue("@VDEF", citem.VDef);
+                                insertCMD.Parameters.AddWithValue("@VATK", citem.VATK);
+                                try
+                                {
+                                    insertCMD.ExecuteNonQuery();
+                                }
+                                catch(Exception E)
+                                {
+                                    Console.WriteLine(ErrorCounter.ToString());
+                                    Console.WriteLine(E.Message);
+                                }
+                            }
                             break;
                     }
                 }
@@ -166,9 +169,98 @@ namespace MSEACalculator.OtherRes.Database.Tables
         }
 
         //Method for SF
-        
+        private static async Task<(List<StarforceCLS>, string)> GetNormalSFAsync(string FileName, string TableConstraint)
+        {
 
-        //Method for Success Rates
+            List<StarforceCLS> SFList = new List<StarforceCLS>();
+            List<string> result = await ComFunc.CSVStringAsync(GVar.CalculationsPath, FileName);
+            string tableSpec = "";
+            int counter = 0;
+
+            foreach (string sl in result)
+            {
+                if (sl == "")
+                {
+                    return (SFList, tableSpec);
+                }
+                if (counter == 0)
+                {
+                    tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.StarforceCN, sl, TableConstraint);
+                    counter++;
+                    continue;
+                }
+                var temp = sl.Split(",");
+                StarforceCLS citem = new StarforceCLS();
+
+                citem.SFLevel =  Convert.ToInt32(temp[1]);
+                citem.MinLvl = Convert.ToInt32(temp[2]);
+                citem.MaxLvl = Convert.ToInt32(temp[3]);
+                citem.JobStat = Convert.ToInt32(temp[4]);
+
+                citem.NonWeapVDef = Convert.ToInt32(temp[5]);
+                citem.OverallVDef = Convert.ToInt32(temp[6]);
+
+                citem.CatAMaxHP = Convert.ToInt32(temp[7]);
+                citem.WeapMaxMP = Convert.ToInt32(temp[8]);
+
+                citem.WeapVATK = Convert.ToInt32(temp[9]);
+                citem.WeapVMATK = Convert.ToInt32(temp[10]);
+
+                citem.SSpeed = Convert.ToInt32(temp[11]);
+                citem.SJump = Convert.ToInt32(temp[12]);
+
+                citem.GloveVATK = Convert.ToInt32(temp[13]);
+                citem.GloveVMATK = Convert.ToInt32(temp[14]);
+
+                citem.VStat = Convert.ToInt32(temp[15]);
+                citem.NonWeapATK = Convert.ToInt32(temp[16]);
+                citem.NonWeapMATK = Convert.ToInt32(temp[17]);
+
+                SFList.Add(citem);
+                counter++;
+            }
+            return (SFList, tableSpec);
+        }
+
+        private static async Task<(List<StarforceCLS>, string)> GetSuperiorSFAsync(string FileName, string TableConstraint)
+        {
+
+            List<StarforceCLS> SFList = new List<StarforceCLS>();
+            List<string> result = await ComFunc.CSVStringAsync(GVar.CalculationsPath, FileName);
+            string tableSpec = "";
+            int counter = 0;
+
+            foreach (string sl in result)
+            {
+                if (sl == "")
+                {
+                    return (SFList, tableSpec);
+                }
+                if (counter == 0)
+                {
+                    tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.StarforceCN, sl, TableConstraint);
+                    counter++;
+                    continue;
+                }
+                var temp = sl.Split(",");
+                StarforceCLS citem = new StarforceCLS();
+
+                citem.SFLevel =  Convert.ToInt32(temp[1]);
+                citem.MinLvl = Convert.ToInt32(temp[2]);
+                citem.MaxLvl = Convert.ToInt32(temp[3]);
+
+                citem.VDef = Convert.ToInt32(temp[4]);
+                citem.VStat = Convert.ToInt32(temp[5]);
+                citem.VATK = Convert.ToInt32(temp[6]);
+
+                SFList.Add(citem);
+                counter++;
+
+
+            }
+            return (SFList, tableSpec);
+        }
+
 
         //Method for Star Limits
         private static async Task<(Dictionary<string, Dictionary<(int, int), int>>, string)> GetStarLimitAsync(string FileName, string TableConstraint)
@@ -211,6 +303,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
             return (StarLimit, tableSpec);
         }
+
+        //Method for Success Rates
         private static async Task<(List<StarforceRatesCLS>, string)> GetSFSuccessAsync(string FileName, string TableConstraint)
         {
 

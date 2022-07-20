@@ -833,11 +833,11 @@ namespace MSEACalculator.OtherRes.Database
                             {
                                 int lvlrank = reader.GetInt32(3);
                                 SF.LevelRank = lvlrank;
-                                SF.VStatL.Add(lvlrank, reader.GetInt32(4));
-                                SF.NonWeapVATKL.Add(lvlrank, reader.GetInt32(5));
-                                SF.NonWeapVMATKL.Add(lvlrank, reader.GetInt32(6));
-                                SF.WeapVATKL.Add(lvlrank, reader.GetInt32(7));
-                                SF.WeapVMATKL.Add(lvlrank, reader.GetInt32(8));
+                                //SF.VStatL.Add(lvlrank, reader.GetInt32(4));
+                                //SF.NonWeapVATKL.Add(lvlrank, reader.GetInt32(5));
+                                //SF.NonWeapVMATKL.Add(lvlrank, reader.GetInt32(6));
+                                //SF.WeapVATKL.Add(lvlrank, reader.GetInt32(7));
+                                //SF.WeapVMATKL.Add(lvlrank, reader.GetInt32(8));
                             }
 
                         ToAdd:
@@ -859,6 +859,7 @@ namespace MSEACalculator.OtherRes.Database
 
             return result;
         }
+
         public static List<StarforceCLS> GetAllSuperiorStarforceDB()
         {
             List<StarforceCLS> result = new List<StarforceCLS>();
@@ -910,8 +911,8 @@ namespace MSEACalculator.OtherRes.Database
                             {
                                 int lvlrank = reader.GetInt32(1);
                                 SF.LevelRank = lvlrank;
-                                SF.VStatL.Add(lvlrank, reader.GetInt32(2));
-                                SF.WeapVATKL.Add(lvlrank, reader.GetInt32(3));
+                                //SF.VStatL.Add(lvlrank, reader.GetInt32(2));
+                                //SF.WeapVATKL.Add(lvlrank, reader.GetInt32(3));
                             }
                         ToAdd:
                             if (toAdd)

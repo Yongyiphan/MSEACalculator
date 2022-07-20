@@ -337,7 +337,7 @@ namespace MSEACalculator.CalculationRes
                                     int cValue = Convert.ToInt32(Result.GetType().GetProperty(stat).GetValue(Result));
                                     if (value > 0)
                                     {
-                                        Result.GetType().GetProperty(stat).SetValue(Result, cValue += current.VStatL[lvlRank]);
+                                        //Result.GetType().GetProperty(stat).SetValue(Result, cValue += current.VStatL[lvlRank]);
                                     }
 
 
@@ -350,19 +350,19 @@ namespace MSEACalculator.CalculationRes
                                     {
                                         Result.DEF += StatBoost(current.NonWeapVDef, Result.DEF);
                                     }
-                                    Result.ATK += current.NonWeapVATKL[lvlRank];
-                                    Result.MATK += current.NonWeapVMATKL[lvlRank];
+                                    //Result.ATK += current.NonWeapVATKL[lvlRank];
+                                    //Result.MATK += current.NonWeapVMATKL[lvlRank];
                                 }
                                 else
                                 {
-                                    if (Result.ATK > 0)
-                                    {
-                                        Result.ATK += current.WeapVATKL[lvlRank];
-                                    }
-                                    if (Result.MATK > 0)
-                                    {
-                                        Result.MATK += current.WeapVMATKL[lvlRank];
-                                    }
+                                    //    if (Result.ATK > 0)
+                                    //    {
+                                    //        Result.ATK += current.WeapVATKL[lvlRank];
+                                    //    }
+                                    //    if (Result.MATK > 0)
+                                    //    {
+                                    //        Result.MATK += current.WeapVMATKL[lvlRank];
+                                    //    }
                                 }
 
 
@@ -381,16 +381,16 @@ namespace MSEACalculator.CalculationRes
                                 int cValue = Convert.ToInt32(Result.GetType().GetProperty(ms).GetValue(Result));
                                 if (cValue > 0) 
                                 {
-                                    Result.GetType().GetProperty(ms).SetValue(Result, cValue + current.VStatL[lvlRank]);
+                                    //Result.GetType().GetProperty(ms).SetValue(Result, cValue + current.VStatL[lvlRank]);
                                 }
                             }
                             if(Result.MATK > 0)
                             {
-                                    Result.MATK += current.WeapVATKL[lvlRank];
+                                    //Result.MATK += current.WeapVATKL[lvlRank];
                             }
                             if (Result.ATK > 0)
                             {
-                                Result.ATK += current.WeapVATKL[lvlRank];
+                                //Result.ATK += current.WeapVATKL[lvlRank];
                             }
                             if(Result.DEF> 0)
                             {

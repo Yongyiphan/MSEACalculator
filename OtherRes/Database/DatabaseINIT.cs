@@ -76,11 +76,8 @@ namespace MSEACalculator.OtherRes.Database
             //TABLE FOR STARFORCE STATS
             StaticTable.Add(new StarForceTable("SFLimits"));
             StaticTable.Add(new StarForceTable("SFSuccessRates"));
-            //StaticTable.Add(new StarForceTable("StarForceBaseData"));
-
-            //StaticTable.Add(new StarForceTable("StarForceAddData"));
-
-            //StaticTable.Add(new StarForceTable("StarforceSuperiorData"));
+            StaticTable.Add(new StarForceTable("SFNormalData"));
+            StaticTable.Add(new StarForceTable("SFSuperiorData"));
 
             ////ARCANE SYMBOL
 

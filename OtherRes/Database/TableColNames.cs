@@ -126,17 +126,22 @@ namespace MSEACalculator.OtherRes.Database
             {"Job Stat", new Dictionary<string, string>() { {"Rename", "JobStat" },{"Type", "int"} } },
             {"Non-Weapon Visible DEF", new Dictionary<string, string>() { {"Rename", "NonWeaponVDEF" },{"Type", "int"} } },
             {"Overall Visible DEF", new Dictionary<string, string>() { {"Rename", "OverallVDEF" },{"Type", "int"} } },
+
             {"Category A Max HP", new Dictionary<string, string>() { {"Rename", "CatAMaxHP" },{"Type", "int"} } },
             {"Weapon Max MP", new Dictionary<string, string>() { {"Rename", "WeaponMaxMP" },{"Type", "int"} } },
+
             {"Weapon Visible ATT", new Dictionary<string, string>() { {"Rename", "WeaponVATK" },{"Type", "int"} } },
             {"Weapon Visible Magic ATT", new Dictionary<string, string>() { {"Rename", "WeaponVMATK" },{"Type", "int"} } },
+
             {"Shoes Speed", new Dictionary<string, string>() { {"Rename", "ShoeSpeed" },{"Type", "int"} } },
             {"Shoes Jump", new Dictionary<string, string>() { {"Rename", "ShoeJump" },{"Type", "int"} } },
+
             {"Gloves Visible ATT", new Dictionary<string, string>() { {"Rename", "GloveVATK" },{"Type", "int"} } },
             {"Gloves Visible Magic ATT", new Dictionary<string, string>() { {"Rename", "GloveVMATK" },{"Type", "int"} } },
+
             {"Visible Stat", new Dictionary<string, string>() { {"Rename", "VStat" },{"Type", "int"} } },
             {"Non-Weapon Weapon ATT", new Dictionary<string, string>() { {"Rename", "NonWeaponATK" },{"Type", "int"} } },
-            {"Non-Weapon Weapon Magic ATT", new Dictionary<string, string>() { {"Rename", "NonWeaponMATK" },{"Type", "int"} } },
+            {"Non-Weapon Magic ATT", new Dictionary<string, string>() { {"Rename", "NonWeaponMATK" },{"Type", "int"} } },
 
             //Superior Item Addons
             {"Visible DEF", new Dictionary<string, string>() { {"Rename", "VDEF" },{"Type", "int"} } },

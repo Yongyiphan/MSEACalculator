@@ -122,7 +122,7 @@ namespace MSEACalculator
                     break;
                 }
 
-                string[] NameType = split.Split(" ");
+                string[] NameType = split.Trim().Split(" ");
                 TypeRemoved.Add(NameType[0].Replace("(", "")); 
             }
             

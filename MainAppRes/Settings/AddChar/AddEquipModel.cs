@@ -21,10 +21,10 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         //Create Factory to generate Dictionary Content
         public IReadOnlyDictionary<string, ReadOnlyCollection<EquipCLS>> AllEquipStore { get; } = new Dictionary<string, ReadOnlyCollection<EquipCLS>>
         {
-            {"Armor", DBRetrieve.GetArmorDB().AsReadOnly() },
-            {"Accessory", DBRetrieve.GetAccessoriesDB().AsReadOnly()},
-            {"Weapon", DBRetrieve.GetWeaponDB().AsReadOnly()},
-            {"Secondary",DBRetrieve.GetSecondaryDB().AsReadOnly()}
+            //{"Armor", DBRetrieve.GetArmorDB().AsReadOnly() },
+            //{"Accessory", DBRetrieve.GetAccessoriesDB().AsReadOnly()},
+            //{"Weapon", DBRetrieve.GetWeaponDB().AsReadOnly()},
+            //{"Secondary",DBRetrieve.GetSecondaryDB().AsReadOnly()}
         };
         private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllPotDict = DBRetrieve.GetAllPotentialDB();
         private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllBonusPotDict = DBRetrieve.GetAllBonusPotentialDB();

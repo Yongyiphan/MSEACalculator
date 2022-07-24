@@ -12,7 +12,7 @@ using Windows.Storage;
 
 namespace MSEACalculator.OtherRes.Database.Tables
 {
-    public class AllCharacterTable : BaseDBTable, ITableUpload
+    public class ClassCharacterTable : BaseDBTable, ITableUpload
     {
         List<CharacterCLS> CharacterList { get; set; }
 
@@ -20,7 +20,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
         private bool HaveTrack = false;
 
                 
-        public AllCharacterTable(string TableName, string TablePara = "") : base(TableName, TablePara)
+        public ClassCharacterTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
         }
 

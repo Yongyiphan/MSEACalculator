@@ -123,8 +123,11 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@DEX", equipItem.BaseStats.DEX);
                         insertCMD.Parameters.AddWithValue("@INT", equipItem.BaseStats.INT);
                         insertCMD.Parameters.AddWithValue("@LUK", equipItem.BaseStats.LUK);
+
                         insertCMD.Parameters.AddWithValue("@MaxHP", equipItem.BaseStats.MaxHP);
                         insertCMD.Parameters.AddWithValue("@MaxMP", equipItem.BaseStats.MaxMP);
+                        insertCMD.Parameters.AddWithValue("@PercMaxHP", equipItem.BaseStats.HP);
+                        insertCMD.Parameters.AddWithValue("@PercMaxMP", equipItem.BaseStats.MP);
                         insertCMD.Parameters.AddWithValue("@MaxDF", equipItem.BaseStats.MaxDF);
                         insertCMD.Parameters.AddWithValue("@DEF", equipItem.BaseStats.DEF);
                         insertCMD.Parameters.AddWithValue("@WATK", equipItem.BaseStats.ATK);
@@ -155,7 +158,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
 
         //Method to get Armor Data
-        private static async Task<(List<EquipCLS>, string)> GetArmorCSVAsync(string FileName, string TableKey)
+        private async Task<(List<EquipCLS>, string)> GetArmorCSVAsync(string FileName, string TableKey)
         {
             List<EquipCLS> equipList = new List<EquipCLS>();
 
@@ -197,7 +200,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 equip.BaseStats.DEF = Convert.ToInt32(temp[12]);
                 equip.BaseStats.ATK = Convert.ToInt32(temp[13]);
                 equip.BaseStats.MATK = Convert.ToInt32(temp[14]);
-                equip.BaseStats.IED = Convert.ToInt32(temp[15]);
+                equip.BaseStats.IED = Convert.ToInt32(temp[15].Trim('%'));
                 equip.BaseStats.SPD = Convert.ToInt32(temp[16]);
                 equip.BaseStats.JUMP = Convert.ToInt32(temp[17]);
                 equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[18]);
@@ -246,16 +249,17 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     equip.BaseStats.DEX = Convert.ToInt32(temp[8]);
                     equip.BaseStats.INT = Convert.ToInt32(temp[9]);
                     equip.BaseStats.LUK = Convert.ToInt32(temp[10]);
-                    equip.BaseStats.AllStat = Convert.ToInt32(temp[11]);
-                    equip.BaseStats.MaxHP = Convert.ToInt32(temp[12]);
-                    equip.BaseStats.MaxMP = Convert.ToInt32(temp[13]);
-                    equip.BaseStats.DEF = Convert.ToInt32(temp[14]);
-                    equip.BaseStats.ATK = Convert.ToInt32(temp[15]);
-                    equip.BaseStats.MATK = Convert.ToInt32(temp[16]);
-                    equip.BaseStats.IED = Convert.ToInt32(temp[17]);
-                    equip.BaseStats.SPD = Convert.ToInt32(temp[18]);
-                    equip.BaseStats.JUMP = Convert.ToInt32(temp[19]);
-                    equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[20]);
+                    equip.BaseStats.MaxHP = Convert.ToInt32(temp[11]);
+                    equip.BaseStats.MaxMP = Convert.ToInt32(temp[12]);
+                    equip.BaseStats.HP = temp[13];
+                    equip.BaseStats.MP = temp[14];
+                    equip.BaseStats.DEF = Convert.ToInt32(temp[15]);
+                    equip.BaseStats.ATK = Convert.ToInt32(temp[16]);
+                    equip.BaseStats.MATK = Convert.ToInt32(temp[17]);
+                    equip.BaseStats.IED = Convert.ToInt32(temp[18]);
+                    equip.BaseStats.SPD = Convert.ToInt32(temp[19]);
+                    equip.BaseStats.JUMP = Convert.ToInt32(temp[20]);
+                    equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[21]);
 
                     equip.Rank = Convert.ToInt32(temp[21]);
 
@@ -284,40 +288,40 @@ namespace MSEACalculator.OtherRes.Database.Tables
             List<string> result = await ComFunc.CSVStringAsync(GVar.EquipmentPath, FileName);
             int counter = 0;
             string tableSpec = "";
-            try
+            foreach (string accItem in result)
             {
-                foreach (string accItem in result)
+                if (accItem == "")
                 {
-                    if (accItem == "")
-                    {
-                        return (AndroiList, tableSpec);
-                    }
-                    if (counter == 0)
-                    {
-                        tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.EquipmentCN, accItem, TableKey);
-                        counter += 1;
-                        continue;
-                    }
+                    return (AndroiList, tableSpec);
+                }
+                if (counter == 0)
+                {
+                    tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.EquipmentCN, accItem, TableKey);
                     counter += 1;
+                    continue;
+                }
+                counter += 1;
 
-                    var temp = accItem.Split(",");
+                var temp = accItem.Split(",");
 
-                    EquipCLS equip = new EquipCLS();
+                EquipCLS equip = new EquipCLS();
+                try
+                {
                     equip.EquipSlot = temp[1];
                     equip.EquipName = temp[2];
                     equip.Category = temp[3];
                     equip.EquipLevel = Convert.ToInt32(temp[4]);
-                    equip.Rank = Convert.ToInt32(temp[5]);
+                                        
+                    equip.Rank = temp[5].Contains(" ") ? Convert.ToInt32(temp[5].Split(' ').Last()) : Convert.ToInt32(temp[5]);
 
                     AndroiList.Add(equip);
                 }
 
+                catch (Exception E)
+                {
+                    Console.WriteLine(E);
+                }
             }
-            catch (Exception E)
-            {
-                Console.WriteLine(E);
-            }
-
 
             return (AndroiList, tableSpec);
         }
@@ -359,16 +363,15 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     equip.BaseStats.DEX = Convert.ToInt32(temp[8]);
                     equip.BaseStats.INT = Convert.ToInt32(temp[9]);
                     equip.BaseStats.LUK = Convert.ToInt32(temp[10]);
-                    equip.BaseStats.AllStat = Convert.ToInt32(temp[11]);
-                    equip.BaseStats.MaxHP = Convert.ToInt32(temp[12]);
-                    equip.BaseStats.MaxMP = Convert.ToInt32(temp[13]);
-                    equip.BaseStats.DEF = Convert.ToInt32(temp[14]);
-                    equip.BaseStats.ATK = Convert.ToInt32(temp[15]);
-                    equip.BaseStats.MATK = Convert.ToInt32(temp[16]);
-                    equip.BaseStats.IED = Convert.ToInt32(temp[17]);
-                    equip.BaseStats.BD = Convert.ToInt32(temp[18]);
-                    equip.BaseStats.SPD = Convert.ToInt32(temp[19]);
-                    equip.BaseStats.JUMP = Convert.ToInt32(temp[20]);
+                    equip.BaseStats.MaxHP = Convert.ToInt32(temp[11]);
+                    equip.BaseStats.MaxMP = Convert.ToInt32(temp[12]);
+                    equip.BaseStats.DEF = Convert.ToInt32(temp[13]);
+                    equip.BaseStats.ATK = Convert.ToInt32(temp[14]);
+                    equip.BaseStats.MATK = Convert.ToInt32(temp[15]);
+                    equip.BaseStats.IED = Convert.ToInt32(temp[16].Trim('%'));
+                    equip.BaseStats.BD = Convert.ToInt32(temp[17].Trim('%'));
+                    equip.BaseStats.SPD = Convert.ToInt32(temp[18]);
+                    equip.BaseStats.JUMP = Convert.ToInt32(temp[19]);
 
 
 
@@ -385,7 +388,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
         }
 
         //Method to get Main Weapon Data
-        private static async Task<(List<EquipCLS>, string)> GetWeaponCSVAsync(string FileName, string TableKey)
+        private async Task<(List<EquipCLS>, string)> GetWeaponCSVAsync(string FileName, string TableKey)
         {
             List<EquipCLS> WeaponList = new List<EquipCLS>();
             List<string> result = await ComFunc.CSVStringAsync(GVar.EquipmentPath, FileName);
@@ -426,8 +429,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 equip.BaseStats.DEF = Convert.ToInt32(temp[11]);
                 equip.BaseStats.ATK = Convert.ToInt32(temp[12]);
                 equip.BaseStats.MATK = Convert.ToInt32(temp[13]);
-                equip.BaseStats.BD = Convert.ToInt32(temp[15]);
-                equip.BaseStats.IED = Convert.ToInt32(temp[16]);
+                equip.BaseStats.BD = Convert.ToInt32(temp[15].Trim('%'));
+                equip.BaseStats.IED = Convert.ToInt32(temp[16].Trim('%'));
                 equip.BaseStats.SPD = Convert.ToInt32(temp[17]);
                 equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[19]);
 
@@ -439,7 +442,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
         }
 
         //Method to get Sec Weapon Data
-        public static async Task<(List<EquipCLS>, string)> GetSecondaryCSVAsync(string FileName, string TableKey)
+        public  async Task<(List<EquipCLS>, string)> GetSecondaryCSVAsync(string FileName, string TableKey)
         {
             List<EquipCLS> WeaponList = new List<EquipCLS>();
             List<string> result = await ComFunc.CSVStringAsync(GVar.EquipmentPath, FileName);

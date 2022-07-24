@@ -24,12 +24,12 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
             switch (TableName)
             {
-                case "SetEffectAt":
+                case "EquipSetEffectAt":
                     Result = await GetSetEffectCSVAsync("EquipSetData.csv", "PRIMARY KEY (EquipSet, ClassType, SetAt)");
                     CurrentList = Result.Item1;
                     TableParameters = Result.Item2;
                     break;
-                case "SetEffectCul":
+                case "EquipSetEffectCul":
                     Result = await GetSetEffectCSVAsync("EquipSetCulData.csv", "PRIMARY KEY (EquipSet, ClassType, SetAt)");
                     CurrentList = Result.Item1;
                     TableParameters = Result.Item2;

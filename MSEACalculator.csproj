@@ -208,7 +208,7 @@
     <Compile Include="OtherRes\Database\Tables\EquipmentSetEffectsTable.cs" />
     <Compile Include="OtherRes\Database\Tables\HyperStatTable.cs" />
     <Compile Include="ToBeDeleted\EquipAccessoriesTable.cs" />
-    <Compile Include="OtherRes\Database\Tables\AllCharacterTable.cs" />
+    <Compile Include="OtherRes\Database\Tables\ClassCharacterTable.cs" />
     <Compile Include="ToBeDeleted\EquipArmorTable.cs" />
     <Compile Include="OtherRes\Database\Tables\BaseDBTable.cs" />
     <Compile Include="ToBeDeleted\EquipMainWeaponTable.cs" />

@@ -23,9 +23,9 @@ namespace MSEACalculator.OtherRes.Database
             using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
             {
                 dbConnection.Open();
-                string getCharCmd = "SELECT " +
-                    "AC.ClassName, AC.ClassType, AC.Faction, AC.MainStat, AC.SecStat, AC.UnionE, AC.UnionET, ClassMainWeapon.WeaponType, ClassSecWeapon.WeaponType " +
-                    "FROM AllCharacterData AS AC " +
+                string getCharCmd =                 
+                    "SELECT AC.ClassName, AC.ClassType, AC.Faction, AC.MainStat, AC.SecStat, AC.UEffect, AC.UEffectType, ClassMainWeapon.Weapon, ClassSecWeapon.Secondary "+
+                    "FROM ClassCharacterData AS AC " +
                     "INNER JOIN ClassMainWeapon ON AC.ClassName = ClassMainWeapon.ClassName " +
                     "INNER JOIN ClassSecWeapon ON AC.ClassName = ClassSecWeapon.ClassName";
 
@@ -35,15 +35,18 @@ namespace MSEACalculator.OtherRes.Database
                     {
                         while (query.Read())
                         {
+                            string ClassName = query.GetString(0);
+                            string MainWeapon = query.GetString(7);
+                            string SecWeapon = query.GetString(8);
                             if (charDict.ContainsKey(query.GetString(0)))
                             {
-                                charDict[query.GetString(0)].MainWeapon.Add(query.GetString(7));
-                                charDict[query.GetString(0)].SecondaryWeapon.Add(query.GetString(8));
+                                charDict[ClassName].MainWeapon.Add(MainWeapon);
+                                charDict[ClassName].SecondaryWeapon.Add(SecWeapon);
                                 continue;
                             }
 
                             CharacterCLS tempChar = new CharacterCLS();
-                            tempChar.ClassName = query.GetString(0);
+                            tempChar.ClassName = ClassName;
                             tempChar.ClassType = query.GetString(1);
                             tempChar.Faction = query.GetString(2);
                             tempChar.MainStat = query.GetString(3);
@@ -51,10 +54,10 @@ namespace MSEACalculator.OtherRes.Database
                             tempChar.UnionEffect = query.GetString(5);
                             tempChar.UnionEffectType = query.GetString(6);
 
-                            tempChar.MainWeapon = new List<string> { query.GetString(7) };
-                            tempChar.SecondaryWeapon = new List<string> { query.GetString(8) };
+                            tempChar.MainWeapon = new List<string> {MainWeapon};
+                            tempChar.SecondaryWeapon = new List<string> { SecWeapon};
 
-                            charDict.Add(query.GetString(0), tempChar);
+                            charDict.Add(ClassName, tempChar);
                         }
                     }
                 }
@@ -364,7 +367,25 @@ namespace MSEACalculator.OtherRes.Database
             return symbolList;
         }
 
+        public static Dictionary<string, List<EquipCLS>> GetEquipmentDB()
+        {
+            Dictionary<string, List<EquipCLS>> EquipList = new Dictionary<string, List<EquipCLS>>();
 
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                string Query = 
+                    "SELECT * FROM EquipAccessoriesData" + ";" +
+                    "SELECT * FROM EquipArmorData";
+                SqliteCommand selectCMD = new SqliteCommand();
+                selectCMD.Connection = dbCon;
+                selectCMD.CommandText = "SELECT * FROM EquipAccessoriesData";
+
+                
+            }
+
+
+            return EquipList;
+        }
         public static Dictionary<string, string> GetEquipSlotDB()
         {
             Dictionary<string, string> equipSlotDict = new Dictionary<string, string>();
@@ -393,9 +414,11 @@ namespace MSEACalculator.OtherRes.Database
 
 
 
-        public static List<EquipCLS> GetArmorDB()
+        public static Dictionary<string, List<EquipCLS>> GetArmorDB()
         {
-            List<EquipCLS> equipList = new List<EquipCLS>();
+            //<EquipSlot, List of Equip>
+            Dictionary<string, List<EquipCLS>> ArmorList = new Dictionary<string, List<EquipCLS>>();
+            int ErrorCounter = 0;
 
             using (SqliteConnection dbCon = new SqliteConnection($"Filename ={GVar.databasePath}"))
             {
@@ -410,43 +433,52 @@ namespace MSEACalculator.OtherRes.Database
 
                         while (result.Read())
                         {
-                            EquipCLS tempEquip = new EquipCLS();
-                            tempEquip.EquipSet = result.GetString(0);
-                            tempEquip.ClassType = result.GetString(1);
-                            tempEquip.EquipSlot = result.GetString(2);
-                            tempEquip.EquipLevel = result.GetInt32(3);
+                            ErrorCounter++;
+                            string EquipSlot = result.GetString(0);
 
-                            tempEquip.BaseStats.STR = result.GetInt32(4);
-                            tempEquip.BaseStats.DEX = result.GetInt32(5);
-                            tempEquip.BaseStats.INT = result.GetInt32(6);
-                            tempEquip.BaseStats.LUK = result.GetInt32(7);
-                            tempEquip.BaseStats.AllStat = result.GetInt32(8);
+                            EquipCLS citem = new EquipCLS();
+                            citem.EquipSlot = EquipSlot;
+                            citem.ClassType = result.GetString(1);
+                            citem.EquipName = result.GetString(2);
+                            citem.EquipSet = result.GetString(3);
+                            citem.EquipLevel = result.GetInt32(4);
 
-                            tempEquip.BaseStats.MaxHP = result.GetInt32(9);
-                            tempEquip.BaseStats.MaxMP = result.GetInt32(10);
-                            tempEquip.BaseStats.DEF = result.GetInt32(11);
-                            tempEquip.BaseStats.ATK = result.GetInt32(12);
-                            tempEquip.BaseStats.MATK = result.GetInt32(13);
+                            citem.BaseStats.STR = result.GetInt32(5);
+                            citem.BaseStats.DEX = result.GetInt32(6);
+                            citem.BaseStats.INT = result.GetInt32(7);
+                            citem.BaseStats.LUK = result.GetInt32(8);
+                            citem.BaseStats.MaxHP = result.GetInt32(9);
+                            citem.BaseStats.MaxMP = result.GetInt32(10);
+                            citem.BaseStats.DEF = result.GetInt32(11);
+                            citem.BaseStats.ATK = result.GetInt32(12);
+                            citem.BaseStats.MATK = result.GetInt32(13);
+                            citem.BaseStats.IED = result.GetInt32(14);
+                            citem.BaseStats.SPD = result.GetInt32(15);
+                            citem.BaseStats.JUMP = result.GetInt32(16);
+                            citem.BaseStats.NoUpgrades = result.GetInt32(17);
 
-                            tempEquip.BaseStats.SPD = result.GetInt32(14);
-                            tempEquip.BaseStats.JUMP = result.GetInt32(15);
-                            tempEquip.BaseStats.IED = result.GetInt32(16);
+                            if (ArmorList.Keys.Contains(EquipSlot))
+                            {
+                                ArmorList[EquipSlot].Add(citem);
+                                continue;
+                            }
+                            ArmorList.Add(EquipSlot, new List<EquipCLS>() { citem });
 
-                            equipList.Add(tempEquip);
+
                         }
                     }
                 }
 
             }
 
-            return equipList;
+            return ArmorList;
         }
 
-
         //Accessory DB Function
-        public static List<EquipCLS> GetAccessoriesDB()
+        public static Dictionary<string, List<EquipCLS>> GetAccessoriesDB()
         {
-            List<EquipCLS> accModel = new List<EquipCLS>();
+
+            Dictionary<string, List<EquipCLS>> AccList = new Dictionary<string, List<EquipCLS>>();
 
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
@@ -460,46 +492,40 @@ namespace MSEACalculator.OtherRes.Database
                     {
                         while (reader.Read())
                         {
-                            EquipCLS equipModel = new EquipCLS();
-                            equipModel.EquipName = reader.GetString(0);
-                            equipModel.EquipSet = reader.GetString(1);
-                            equipModel.ClassType = reader.GetString(2);
-                            equipModel.EquipSlot = reader.GetString(3);
-                            equipModel.EquipLevel = reader.GetInt32(4);
+                            string EquipSlot = reader.GetString(0);
+                            EquipCLS citem = new EquipCLS();
+                            citem.EquipSlot = EquipSlot;
+                            citem.ClassType = reader.GetString(1);
+                            citem.EquipName = reader.GetString(2);
+                            citem.EquipSet = reader.GetString(3);
+                            citem.Category = reader.GetString(4);
+                            citem.EquipLevel = reader.GetInt32(5);
 
-                            equipModel.BaseStats.STR = reader.GetInt32(5);
-                            equipModel.BaseStats.DEX = reader.GetInt32(6);
-                            equipModel.BaseStats.INT = reader.GetInt32(7);
-                            equipModel.BaseStats.LUK = reader.GetInt32(8);
-                            equipModel.BaseStats.AllStat = reader.GetInt32(9);
+                            citem.BaseStats.STR = reader.GetInt32(6);
+                            citem.BaseStats.DEX = reader.GetInt32(7);
+                            citem.BaseStats.INT = reader.GetInt32(8);
+                            citem.BaseStats.LUK = reader.GetInt32(9);
+                            citem.BaseStats.AllStat = reader.GetInt32(10);
+                            citem.BaseStats.MaxHP = reader.GetInt32(11);
+                            citem.BaseStats.MaxMP = reader.GetInt32(12);
+                            citem.BaseStats.HP = reader.GetString(13);
+                            citem.BaseStats.MP = reader.GetString(14);
+                            citem.BaseStats.DEF = reader.GetInt32(15);
+                            citem.BaseStats.ATK = reader.GetInt32(16);
+                            citem.BaseStats.MATK = reader.GetInt32(17);
+                            citem.BaseStats.IED = reader.GetInt32(18);
+                            citem.BaseStats.SPD = reader.GetInt32(19);
+                            citem.BaseStats.JUMP = reader.GetInt32(20);
+                            citem.BaseStats.NoUpgrades = reader.GetInt32(21);
+                            citem.BaseStats.Rank = reader.GetInt32(22);
 
-                            if (reader.GetString(10).Contains('%'))
+                            if (AccList.Keys.Contains(EquipSlot))
                             {
-                                equipModel.BaseStats.HP = reader.GetString(10);
-
+                                AccList[EquipSlot].Add(citem);
+                                continue;
                             }
-                            else
-                            {
-                                equipModel.BaseStats.MaxHP = Convert.ToInt32(reader.GetString(10));
-                            }
+                            AccList.Add(EquipSlot, new List<EquipCLS>() { citem });
 
-                            if (reader.GetString(11).Contains('%'))
-                            {
-                                equipModel.BaseStats.MP = reader.GetString(11);
-                            }
-                            else
-                            {
-                                equipModel.BaseStats.MaxMP = Convert.ToInt32(reader.GetString(11));
-                            }
-                            equipModel.BaseStats.DEF = reader.GetInt32(12);
-                            equipModel.BaseStats.ATK = reader.GetInt32(13);
-                            equipModel.BaseStats.MATK = reader.GetInt32(14);
-
-                            equipModel.BaseStats.SPD = reader.GetInt32(15);
-                            equipModel.BaseStats.JUMP = reader.GetInt32(16);
-                            equipModel.BaseStats.IED = reader.GetInt32(17);
-
-                            accModel.Add(equipModel);
                         }
                     }
                 }
@@ -508,9 +534,70 @@ namespace MSEACalculator.OtherRes.Database
             }
 
 
-
-            return accModel;
+            return AccList;
         }
+
+public static Dictionary<string, List<EquipCLS>> GetMedalDB()
+        {
+            //<EquipSlot, List of Equip>
+            Dictionary<string, List<EquipCLS>> ArmorList = new Dictionary<string, List<EquipCLS>>();
+            int ErrorCounter = 0;
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename ={GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string getArmor = "SELECT * FROM EquipArmorData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(getArmor, dbCon))
+                {
+                    using (SqliteDataReader result = selectCMD.ExecuteReader())
+                    {
+
+                        while (result.Read())
+                        {
+                            ErrorCounter++;
+                            string EquipSlot = result.GetString(0);
+
+                            EquipCLS citem = new EquipCLS();
+                            citem.EquipSlot = EquipSlot;
+                            citem.ClassType = result.GetString(1);
+                            citem.EquipName = result.GetString(2);
+                            citem.EquipSet = result.GetString(3);
+                            citem.EquipLevel = result.GetInt32(4);
+
+                            citem.BaseStats.STR = result.GetInt32(5);
+                            citem.BaseStats.DEX = result.GetInt32(6);
+                            citem.BaseStats.INT = result.GetInt32(7);
+                            citem.BaseStats.LUK = result.GetInt32(8);
+                            citem.BaseStats.MaxHP = result.GetInt32(9);
+                            citem.BaseStats.MaxMP = result.GetInt32(10);
+                            citem.BaseStats.DEF = result.GetInt32(11);
+                            citem.BaseStats.ATK = result.GetInt32(12);
+                            citem.BaseStats.MATK = result.GetInt32(13);
+                            citem.BaseStats.IED = result.GetInt32(14);
+                            citem.BaseStats.SPD = result.GetInt32(15);
+                            citem.BaseStats.JUMP = result.GetInt32(16);
+                            citem.BaseStats.NoUpgrades = result.GetInt32(17);
+
+                            if (ArmorList.Keys.Contains(EquipSlot))
+                            {
+                                ArmorList[EquipSlot].Add(citem);
+                                continue;
+                            }
+                            ArmorList.Add(EquipSlot, new List<EquipCLS>() { citem });
+
+
+                        }
+                    }
+                }
+
+            }
+
+            return ArmorList;
+        }
+
+
         //Weapon DB Function
         public static List<EquipCLS> GetWeaponDB()
         {

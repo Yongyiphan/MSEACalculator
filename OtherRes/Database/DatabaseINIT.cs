@@ -28,7 +28,7 @@ namespace MSEACalculator.OtherRes.Database
 
             //TABLE FOR DEFAULT CHARACTER LIST
             
-            StaticTable.Add(new AllCharacterTable("AllCharacterData"));
+            StaticTable.Add(new ClassCharacterTable("ClassCharacterData"));
 
             //TABLE FOR UNION EFFECTS
 
@@ -65,8 +65,8 @@ namespace MSEACalculator.OtherRes.Database
                 StaticTable.Add(new EquipmentTable(Names));
             }
 
-            StaticTable.Add(new EquipmentSetEffectsTable("SetEffectAt"));
-            StaticTable.Add(new EquipmentSetEffectsTable("SetEffectCul"));
+            StaticTable.Add(new EquipmentSetEffectsTable("EquipSetEffectAt"));
+            StaticTable.Add(new EquipmentSetEffectsTable("EquipSetEffectCul"));
 
             //EQUIPMENT SET EFFECT
 

@@ -10,7 +10,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
     {
         
 
-        public Dictionary<string, CharacterCLS> AllCharDB { get; set; } = DBRetrieve.GetAllCharDB();
+        public Dictionary<string, CharacterCLS> AllCharDB { get; set; } = ClassCharacterTable.GetAllCharDB();
         public Dictionary<string, CharacterCLS> AllCharTrackDB { get; set; }
         public List<CharacterCLS> AllCharList { get; set; } = new List<CharacterCLS>();
 

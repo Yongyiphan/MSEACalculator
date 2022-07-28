@@ -12,7 +12,7 @@ namespace MSEACalculator.CalculationRes
 {
     public class SymbolModel
     {
-        public List<ArcaneSymbolCLS>  ArcaneList { get => DBRetrieve.GetAllArcaneSymbolDB(); }
+        public List<ArcaneSymbolCLS>  ArcaneList { get => SymbolsTable.GetAllArcaneSymbolDB(); }
 
 
         public int MaxArcaneForce { get; set; }

@@ -501,5 +501,247 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
 
 
+        //DB RETRIEVAL
+        public static Dictionary<string, List<EquipCLS>> GetEquipmentDB()
+        {
+            Dictionary<string, List<EquipCLS>> EquipList = new Dictionary<string, List<EquipCLS>>();
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                SqliteCommand selectCMD = new SqliteCommand();
+                selectCMD.Connection = dbCon;
+                selectCMD.CommandText = "SELECT* FROM EquipArmorData; ";
+                using (SqliteDataReader result = selectCMD.ExecuteReader())
+                {
+                    int ErrorCounter = 0;
+                    while (result.Read())
+                    {
+                        ErrorCounter++;
+                        string EquipSlot = result.GetString(0);
+
+                        EquipCLS citem = new EquipCLS();
+                        citem.EquipSlot = EquipSlot;
+                        citem.ClassType = result.GetString(1);
+                        citem.EquipName = result.GetString(2);
+                        citem.EquipSet = result.GetString(3);
+                        citem.EquipLevel = result.GetInt32(4);
+
+                        citem.BaseStats.STR = result.GetInt32(5);
+                        citem.BaseStats.DEX = result.GetInt32(6);
+                        citem.BaseStats.INT = result.GetInt32(7);
+                        citem.BaseStats.LUK = result.GetInt32(8);
+                        citem.BaseStats.MaxHP = result.GetInt32(9);
+                        citem.BaseStats.MaxMP = result.GetInt32(10);
+                        citem.BaseStats.DEF = result.GetInt32(11);
+                        citem.BaseStats.ATK = result.GetInt32(12);
+                        citem.BaseStats.MATK = result.GetInt32(13);
+                        citem.BaseStats.IED = result.GetInt32(14);
+                        citem.BaseStats.SPD = result.GetInt32(15);
+                        citem.BaseStats.JUMP = result.GetInt32(16);
+                        citem.BaseStats.NoUpgrades = result.GetInt32(17);
+
+                        try
+                        {
+                            if (EquipList.ContainsKey(EquipSlot))
+                            {
+                                EquipList[EquipSlot].Add(citem);
+                                continue;
+                            }
+                            EquipList.Add(EquipSlot, new List<EquipCLS>() { citem });
+                        }
+                        catch (Exception E)
+                        {
+                            Console.WriteLine(E.Message);
+                        }
+                    }
+
+                }
+;
+                selectCMD.CommandText = "SELECT* FROM EquipAccessoriesData;";
+                using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string EquipSlot = reader.GetString(0);
+                        EquipCLS citem = new EquipCLS();
+                        citem.EquipSlot = EquipSlot;
+                        citem.ClassType = reader.GetString(1);
+                        citem.EquipName = reader.GetString(2);
+                        citem.EquipSet = reader.GetString(3);
+                        citem.Category = reader.GetString(4);
+                        citem.EquipLevel = reader.GetInt32(5);
+
+                        citem.BaseStats.STR = reader.GetInt32(6);
+                        citem.BaseStats.DEX = reader.GetInt32(7);
+                        citem.BaseStats.INT = reader.GetInt32(8);
+                        citem.BaseStats.LUK = reader.GetInt32(9);
+                        citem.BaseStats.AllStat = reader.GetInt32(10);
+                        citem.BaseStats.MaxHP = reader.GetInt32(11);
+                        citem.BaseStats.MaxMP = reader.GetInt32(12);
+                        citem.BaseStats.HP = reader.GetString(13);
+                        citem.BaseStats.MP = reader.GetString(14);
+                        citem.BaseStats.DEF = reader.GetInt32(15);
+                        citem.BaseStats.ATK = reader.GetInt32(16);
+                        citem.BaseStats.MATK = reader.GetInt32(17);
+                        citem.BaseStats.IED = reader.GetInt32(18);
+                        citem.BaseStats.SPD = reader.GetInt32(19);
+                        citem.BaseStats.JUMP = reader.GetInt32(20);
+                        citem.BaseStats.NoUpgrades = reader.GetInt32(21);
+                        citem.BaseStats.Rank = reader.GetInt32(22);
+
+                        if (EquipList.ContainsKey(EquipSlot))
+                        {
+                            EquipList[EquipSlot].Add(citem);
+                            continue;
+                        }
+                        EquipList.Add(EquipSlot, new List<EquipCLS>() { citem });
+
+                    }
+                }
+                selectCMD.CommandText = "SELECT* FROM EquipMedalData;";
+                using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string EquipSlot = reader.GetString(0);
+                        EquipCLS citem = new EquipCLS();
+                        citem.EquipSlot = EquipSlot;
+                        citem.ClassType = reader.GetString(1);
+                        citem.EquipName = reader.GetString(2);
+                        citem.EquipSet = reader.GetString(3);
+                        citem.Category = reader.GetString(4);
+                        citem.EquipLevel = reader.GetInt32(5);
+
+                        citem.BaseStats.STR = reader.GetInt32(6);
+                        citem.BaseStats.DEX = reader.GetInt32(7);
+                        citem.BaseStats.INT = reader.GetInt32(8);
+                        citem.BaseStats.LUK = reader.GetInt32(9);
+                        citem.BaseStats.MaxHP = reader.GetInt32(10);
+                        citem.BaseStats.MaxMP = reader.GetInt32(11);
+                        citem.BaseStats.DEF = reader.GetInt32(12);
+                        citem.BaseStats.ATK = reader.GetInt32(13);
+                        citem.BaseStats.MATK = reader.GetInt32(14);
+                        citem.BaseStats.IED = reader.GetInt32(15);
+                        citem.BaseStats.BD = reader.GetInt32(16);
+                        citem.BaseStats.SPD = reader.GetInt32(17);
+                        citem.BaseStats.JUMP = reader.GetInt32(18);
+
+                        if (EquipList.ContainsKey(EquipSlot))
+                        {
+                            EquipList[EquipSlot].Add(citem);
+                            continue;
+                        }
+                        EquipList.Add(EquipSlot, new List<EquipCLS>() { citem });
+
+                    }
+                }
+                selectCMD.CommandText = "SELECT* FROM EquipAndroidData;";
+                using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string EquipSlot = reader.GetString(0);
+                        EquipCLS citem = new EquipCLS();
+                        citem.EquipSlot = EquipSlot;
+                        citem.EquipName = reader.GetString(1);
+                        citem.Category = reader.GetString(2);
+                        citem.EquipLevel = reader.GetInt32(3);
+                        citem.Rank = reader.GetInt32(4);
+
+
+                        if (EquipList.ContainsKey(EquipSlot))
+                        {
+                            EquipList[EquipSlot].Add(citem);
+                            continue;
+                        }
+                        EquipList.Add(EquipSlot, new List<EquipCLS>() { citem });
+
+                    }
+                }
+
+                selectCMD.CommandText = "SELECT* FROM EquipSecondaryData;";
+                using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string EquipSlot = reader.GetString(0);
+                        EquipCLS citem = new EquipCLS();
+                        citem.EquipSlot = EquipSlot;
+                        citem.ClassType = reader.GetString(1);
+                        citem.EquipName = reader.GetString(2);
+                        citem.WeaponType = reader.GetString(3);
+                        citem.EquipLevel = reader.GetInt32(4);
+
+                        citem.BaseStats.STR = reader.GetInt32(5);
+                        citem.BaseStats.DEX = reader.GetInt32(6);
+                        citem.BaseStats.INT = reader.GetInt32(7);
+                        citem.BaseStats.LUK = reader.GetInt32(8);
+                        citem.BaseStats.AllStat = reader.GetInt32(9);
+                        citem.BaseStats.MaxHP = reader.GetInt32(10);
+                        citem.BaseStats.MaxMP = reader.GetInt32(11);
+                        citem.BaseStats.DEF = reader.GetInt32(12);
+                        citem.BaseStats.ATK = reader.GetInt32(13);
+                        citem.BaseStats.MATK = reader.GetInt32(14);
+                        citem.BaseStats.ATKSPD = reader.GetInt32(15);
+                        citem.BaseStats.MaxDF = reader.GetInt32(16);
+
+
+                        if (EquipList.ContainsKey(EquipSlot))
+                        {
+                            EquipList[EquipSlot].Add(citem);
+                            continue;
+                        }
+                        EquipList.Add(EquipSlot, new List<EquipCLS>() { citem });
+
+                    }
+                }
+
+                selectCMD.CommandText = "SELECT* FROM EquipWeaponData;";
+                using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string EquipSlot = reader.GetString(0);
+                        EquipCLS citem = new EquipCLS();
+                        citem.EquipSlot = EquipSlot;
+                        citem.EquipSet = reader.GetString(1);
+                        citem.EquipName = reader.GetString(2);
+                        citem.WeaponType = reader.GetString(3);
+                        citem.EquipLevel = reader.GetInt32(4);
+
+                        citem.BaseStats.STR = reader.GetInt32(5);
+                        citem.BaseStats.DEX = reader.GetInt32(6);
+                        citem.BaseStats.INT = reader.GetInt32(7);
+                        citem.BaseStats.LUK = reader.GetInt32(8);
+                        citem.BaseStats.MaxHP = reader.GetInt32(9);
+                        citem.BaseStats.DEF = reader.GetInt32(10);
+                        citem.BaseStats.ATK = reader.GetInt32(11);
+                        citem.BaseStats.MATK = reader.GetInt32(12);
+                        citem.BaseStats.ATKSPD = reader.GetInt32(13);
+                        citem.BaseStats.BD = reader.GetInt32(14);
+                        citem.BaseStats.IED = reader.GetInt32(15);
+                        citem.BaseStats.SPD = reader.GetInt32(16);
+                        citem.BaseStats.NoUpgrades = reader.GetInt32(17);
+
+
+                        if (EquipList.ContainsKey(EquipSlot))
+                        {
+                            EquipList[EquipSlot].Add(citem);
+                            continue;
+                        }
+                        EquipList.Add(EquipSlot, new List<EquipCLS>() { citem });
+
+                    }
+                }
+
+
+            }
+
+
+            return EquipList;
+        }
+       
+
+
     }
 }

@@ -30,14 +30,10 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public int Tick { get; set; }
 
         public List<string> CubeType { get; set; } = new List<string>();
-        
-       
-        //Cube Rates
-        public double Initial { get; set; }
-        public double InGame { get; set; }
-        public double CashCube { get; set; }
-        public double Probability { get; set; }
 
+
+        //Cube Rates
+        public PotentialRatesCLS Rates = new PotentialRatesCLS(); 
 
         public PotentialStatsCLS()
         {

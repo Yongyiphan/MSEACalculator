@@ -19,28 +19,29 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         //private List<EquipCLS> AllSecList { get => DBRetrieve.GetAllSecondaryDB(); }
 
         //Create Factory to generate Dictionary Content
-        public IReadOnlyDictionary<string, ReadOnlyCollection<EquipCLS>> AllEquipStore { get; } = new Dictionary<string, ReadOnlyCollection<EquipCLS>>
-        {
-            //{"Armor", DBRetrieve.GetArmorDB().AsReadOnly() },
-            //{"Accessory", DBRetrieve.GetAccessoriesDB().AsReadOnly()},
-            //{"Weapon", DBRetrieve.GetWeaponDB().AsReadOnly()},
-            //{"Secondary",DBRetrieve.GetSecondaryDB().AsReadOnly()}
-        };
-        private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllPotDict = DBRetrieve.GetAllPotentialDB();
-        private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllBonusPotDict = DBRetrieve.GetAllBonusPotentialDB();
-        public Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> AllPotDict { get => _AllPotDict; }
-        public Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> AllBonusPotDict { get => _AllBonusPotDict; }
+        //public IReadOnlyDictionary<string, ReadOnlyCollection<EquipCLS>> AllEquipStore { get; } = new Dictionary<string, ReadOnlyCollection<EquipCLS>>
+        //{
+        //    //{"Armor", DBRetrieve.GetArmorDB().AsReadOnly() },
+        //    //{"Accessory", DBRetrieve.GetAccessoriesDB().AsReadOnly()},
+        //    //{"Weapon", DBRetrieve.GetWeaponDB().AsReadOnly()},
+        //    //{"Secondary",DBRetrieve.GetSecondaryDB().AsReadOnly()}
+        //};
+        //private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllPotDict = DBRetrieve.GetAllPotentialDB();
+        //private Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> _AllBonusPotDict = DBRetrieve.GetAllBonusPotentialDB();
+        //public Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> AllPotDict { get => _AllPotDict; }
+        //public Dictionary<string, Dictionary<string, List<PotentialStatsCLS>>> AllBonusPotDict { get => _AllBonusPotDict; }
 
-        public Dictionary<string, string> EquipSlot { get; set; } = DBRetrieve.GetEquipSlotDB();
+
+        public Dictionary<string, string> EquipSlot { get; set; } = EquipSlotTable.GetEquipSlotDB();
+        public Dictionary<string, List<EquipCLS>> AllEquipStore { get => EquipmentTable.GetEquipmentDB(); }
+
+
+        public Dictionary<string, Dictionary<string, Dictionary<(string, string), Dictionary<int, PotentialStatsCLS>>>> PotentialStore { get => PotentialTable.NewAllPotentialDB(); } 
         public List<string> FlameStatsTypes { get; set; } = GVar.BaseStatTypes.Concat(GVar.SpecialStatType).ToList();
 
-        public Dictionary<string, ReadOnlyCollection<StarforceCLS>> StarforceStore { get; } = new Dictionary<string, ReadOnlyCollection<StarforceCLS>>
-        {
-            {"Basic",DBRetrieve.GetAllStarforceDB().AsReadOnly()},
-            {"Superior",DBRetrieve.GetAllSuperiorStarforceDB().AsReadOnly()}
-        };
+        public  Dictionary<string, Dictionary<int, StarforceCLS>> StarforceStore { get => StarForceTable.NewGetAllStarforceDB(); }
 
-
+        public 
 
         public List<string> XenonClassType { get; } = new List<string>()
         {

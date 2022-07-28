@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using static MSEACalculator.OtherRes.Database.StructCollections;
 
 namespace MSEACalculator.OtherRes.Database.Tables
 {
@@ -17,10 +18,11 @@ namespace MSEACalculator.OtherRes.Database.Tables
         public List<StarforceCLS> CurrentList { get; set; }
         public Dictionary<string, Dictionary<(int, int), int>> SFLimits { get; set; }
 
-        public List<StarforceRatesCLS> SFRates { get; set; }
+        //public List<StarforceRatesCLS> SFRates { get; set; }
+        public List<SFRates> SFRates { get; set; }
 
 
-       
+
 
         public StarForceTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
@@ -42,7 +44,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     TableParameters = Result.Item2;
                     break;
                 case "SFSuccessRates":
-                    (List<StarforceRatesCLS>, string) Rates = await GetSFSuccessAsync("SFSuccessRates.csv", "PRIMARY KEY (Title, Attempt)");
+                    (List<SFRates>, string) Rates = await GetSFSuccessAsync("SFSuccessRates.csv", "PRIMARY KEY (Title, Attempt)");
                     SFRates = Rates.Item1;
                     TableParameters = Rates.Item2;
                     break;
@@ -67,7 +69,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     switch (TableName)
                     {
                         case "SFSuccessRates":
-                            foreach (StarforceRatesCLS Rates in SFRates)
+                            foreach (SFRates Rates in SFRates)
                             {
                                 ErrorCounter++;
                                 insertCMD.Parameters.Clear();
@@ -253,7 +255,6 @@ namespace MSEACalculator.OtherRes.Database.Tables
             return (SFList, tableSpec);
         }
 
-
         //Method for Star Limits
         private static async Task<(Dictionary<string, Dictionary<(int, int), int>>, string)> GetStarLimitAsync(string FileName, string TableConstraint)
         {
@@ -297,10 +298,10 @@ namespace MSEACalculator.OtherRes.Database.Tables
         }
 
         //Method for Success Rates
-        private static async Task<(List<StarforceRatesCLS>, string)> GetSFSuccessAsync(string FileName, string TableConstraint)
+        private static async Task<(List<SFRates>, string)> GetSFSuccessAsync(string FileName, string TableConstraint)
         {
 
-            List<StarforceRatesCLS> Rates = new List<StarforceRatesCLS>();
+            List<SFRates> Rates = new List<SFRates>();
             List<string> result = await ComFunc.CSVStringAsync(GVar.CalculationsPath, FileName);
             string tableSpec = "";
             int counter = 0;
@@ -319,7 +320,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 }
                 var temp = sl.Split(",");
 
-                StarforceRatesCLS citem = new StarforceRatesCLS();
+                SFRates citem = new SFRates();
                 citem.StarforceType = temp[1];
 
                 citem.Attempt = Convert.ToInt32(temp[2]);
@@ -337,6 +338,177 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
             return (Rates, tableSpec);
         }
+
+
+        //DB Retrieval
+        public static Dictionary<string, Dictionary<int, StarforceCLS>> NewGetAllStarforceDB()
+        {
+            Dictionary<string, Dictionary<int, StarforceCLS>> FinalSFList = new Dictionary<string, Dictionary<int, StarforceCLS>>();
+            Dictionary<int, StarforceCLS> SFList = new Dictionary<int, StarforceCLS>();
+            string NormalQuery = "SELECT * FROM SFNormalData";
+            string SuperiorQuery = "SELECT * FROM SFSuperiorData";
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                using (SqliteCommand selectCMD = new SqliteCommand(NormalQuery, dbCon))
+                {
+                    SFList.Clear();
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while(reader.Read())
+                        {
+                            int SFID = reader.GetInt32(0);
+                            int MinLvl = reader.GetInt32(1);
+                            int MaxLvl = reader.GetInt32(2);
+
+                            StarforceCLS sf = new StarforceCLS();
+                            sf.SFLevel = SFID;
+                            sf.MinLvl = MinLvl;
+                            sf.MaxLvl = MaxLvl;
+                            sf.JobStat = reader.GetInt32(3);
+                            sf.NonWeapVDef = reader.GetInt32(4);
+                            sf.OverallVDef = reader.GetInt32(5);
+                            sf.CatAMaxHP = reader.GetInt32(6);
+                            sf.WeapMaxMP = reader.GetInt32(7);
+
+                            sf.SSpeed = reader.GetInt32(10);
+                            sf.SJump = reader.GetInt32(11);
+                            sf.GloveVATK = reader.GetInt32(12);
+                            sf.GloveVMATK = reader.GetInt32(13);
+
+
+                            if (SFID > 15)
+                            {
+                                (int, int) MinMax = (MinLvl, MaxLvl);
+                                if (SFList.ContainsKey(SFID))
+                                {
+                                    SFList[SFID].WeapVATKL.Add(MinMax, reader.GetInt32(8));
+                                    SFList[SFID].WeapVMATKL.Add(MinMax, reader.GetInt32(9));
+                                    SFList[SFID].VStatL.Add(MinMax, reader.GetInt32(14));
+                                    SFList[SFID].NonWeapVATKL.Add(MinMax, reader.GetInt32(15));
+                                    SFList[SFID].NonWeapVMATKL.Add(MinMax, reader.GetInt32(16));
+                                    continue;
+                                }
+                                sf.WeapVATKL.Add(MinMax, reader.GetInt32(8));
+                                sf.WeapVMATKL.Add(MinMax, reader.GetInt32(9));
+                                sf.VStatL.Add(MinMax, reader.GetInt32(14));
+                                sf.NonWeapVATKL.Add(MinMax, reader.GetInt32(15));
+                                sf.NonWeapVMATKL.Add(MinMax, reader.GetInt32(16));
+                            }
+                            else
+                            {
+                                sf.WeapVATK = reader.GetInt32(8);
+                                sf.WeapVMATK = reader.GetInt32(9);
+                            }
+
+                            SFList.Add(SFID, sf);
+
+                        }
+                        FinalSFList.Add("Normal", SFList);
+                    }
+
+                    selectCMD.CommandText = SuperiorQuery;
+                    SFList.Clear();
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int SFID = reader.GetInt32(0);
+                            StarforceCLS sf = new StarforceCLS();
+                            sf.SFLevel = SFID;
+                            (int, int) MinMax = (reader.GetInt32(1), reader.GetInt32(2));
+                            if (SFList.ContainsKey(SFID))
+                            {
+                                SFList[SFID].VDefL.Add(MinMax, reader.GetInt32(3));
+                                SFList[SFID].VStatL.Add(MinMax, reader.GetInt32(4));
+                                SFList[SFID].WeapVATKL.Add(MinMax, reader.GetInt32(5));
+                                continue;
+                            }
+                            sf.VDefL.Add(MinMax, reader.GetInt32(3));
+                            sf.VStatL.Add(MinMax, reader.GetInt32(4));
+                            sf.WeapVATKL.Add(MinMax, reader.GetInt32(5));
+
+                            SFList.Add(SFID, sf);
+                        }
+                        FinalSFList.Add("Superior", SFList);
+                    }
+                }
+            }
+
+
+
+
+            return FinalSFList;
+        }
+        public static Dictionary<string, Dictionary<int, SFRates>> SFSuccessRatesDB()
+        {
+            Dictionary<string, Dictionary<int, SFRates>> Rates = new Dictionary<string, Dictionary<int, SFRates>>();
+            string RatesQuery = "SELECT * FROM SFSuccessRates";
+            using (SqliteConnection dbCon = new SqliteConnection(GVar.CONN_STRING))
+            {
+                using (SqliteCommand selectCMD = new SqliteCommand(RatesQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string EquipType = reader.GetString(0);
+                            int Attempt = reader.GetInt32(1);
+                            SFRates SFRates = new SFRates();
+                            SFRates.StarforceType = EquipType;
+                            SFRates.Attempt = Attempt;
+                            SFRates.Success = reader.GetInt32(2);
+                            SFRates.Maintain = reader.GetDouble(3);
+                            SFRates.Decrease = reader.GetDouble(4);
+                            SFRates.Destroy = reader.GetDouble(5);
+
+
+                            if (Rates.ContainsKey(EquipType))
+                            {
+                                Rates[EquipType].Add(Attempt, SFRates);
+                            }
+                            Rates.Add(EquipType, new Dictionary<int, SFRates>());
+
+                        }
+                    }
+                }
+            }
+
+            return Rates;
+        }
+        public static Dictionary<string, Dictionary<(int, int), int>> SFLimitsDB()
+        {
+            Dictionary<string, Dictionary<(int, int), int>> Limits = new Dictionary<string, Dictionary<(int, int), int>>();
+
+            string LimitQuery = "SELECT * FROM SFLimits";
+            using (SqliteConnection dbCon = new SqliteConnection(GVar.CONN_STRING))
+            {
+                using (SqliteCommand selectCMD = new SqliteCommand(LimitQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string EquipType = reader.GetString(0);
+                            int MinLvl = reader.GetInt32(1);
+                            int MaxLvl = reader.GetInt32(2);
+                            (int, int) MinMax = (MinLvl, MaxLvl);
+                            int Stars = reader.GetInt32(3);
+
+                            if (Limits.ContainsKey(EquipType))
+                            {
+                                Limits[EquipType].Add(MinMax, Stars);
+                            }
+                            Limits.Add(EquipType, new Dictionary<(int, int), int>());
+
+                        }
+                    }
+                }
+            }
+
+            return Limits;
+        }
+
 
 
     }

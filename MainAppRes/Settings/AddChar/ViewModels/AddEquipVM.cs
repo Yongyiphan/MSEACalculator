@@ -630,7 +630,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                     ScrollRecord = CurrentSEquip.ScrollStats.ToRecord();
                     FlameRecord = CurrentSEquip.FlameStats.ToRecord();
-                    CurrentSEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, CurrentSEquip, AEM.StarforceStore[CurrentStarforceList], CurrentStarforceList);
+                    CurrentSEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, CurrentSEquip, AEM.StarforceStore[CurrentStarforceList].Values.ToList().AsReadOnly(), CurrentStarforceList);
                     UpdateDisplay();
                 }
                 DelEquipmentCMD.RaiseCanExecuteChanged();
@@ -892,7 +892,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 string slotCat = ComFunc.ReturnSetCat(selectedESlot);
                 ArmorSet.Clear();
                 
-                ComFunc.FilterBy(slotCat, SCharacter, selectedESlot, AEM.AllEquipStore[slotCat], XenonEquipType).ForEach(x => ArmorSet.Add(x));
+                ComFunc.FilterBy(slotCat, SCharacter, selectedESlot, AEM.AllEquipStore[slotCat].AsReadOnly(), XenonEquipType).ForEach(x => ArmorSet.Add(x));
                 
                 CurrentEquipList = slotCat;
                 

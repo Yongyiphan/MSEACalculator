@@ -144,5 +144,51 @@ namespace MSEACalculator.OtherRes.Database.Tables
             }
         }
 
+        public static List<ArcaneSymbolCLS> GetAllArcaneSymbolDB()
+        {
+            List<ArcaneSymbolCLS> symbolList = new List<ArcaneSymbolCLS>();
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                dbCon.Open();
+
+                string selectQuery = "SELECT * FROM ArcaneSymbolData";
+
+                using (SqliteCommand selectCMD = new SqliteCommand(selectQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ArcaneSymbolCLS symbol = new ArcaneSymbolCLS();
+                            symbol.Name               =  reader.GetString(0);
+                            symbol.SubMap             =  reader.GetString(1);
+                            symbol.CurrentLevel       =  reader.GetInt32(2);
+                            symbol.CurrentExp         =  reader.GetInt32(3);
+                            symbol.CurrentLimit       =  reader.GetInt32(4);
+                            symbol.BaseSymbolGain     =  reader.GetInt32(5);
+                            symbol.PQName             =  reader.GetString(6);
+                            symbol.PQSymbolsGain      =  reader.GetInt32(7);
+                            symbol.PQGainLimit        =  reader.GetInt32(8);
+                            symbol.SymbolExchangeRate =  reader.GetInt32(9);
+                            symbol.MaxLvl             =  reader.GetInt32(10);
+                            symbol.CostLvlMod         =  reader.GetInt32(11);
+                            symbol.CostMod            =  reader.GetInt32(12);
+                            symbol.MaxExp = CalculationRes.CalForm.CalMaxExp(symbol.MaxLvl);
+                            symbol.Description = "Arcane";
+
+                            symbolList.Add(symbol);
+
+
+                        }
+                    }
+                }
+
+
             }
+
+            return symbolList;
+        }
+
+
+    }
 }

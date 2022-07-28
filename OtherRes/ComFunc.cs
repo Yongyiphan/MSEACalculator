@@ -19,7 +19,7 @@ namespace MSEACalculator
 {
     public class ComFunc
     {
-        public static Dictionary<string, string> EquipSlot  = DBRetrieve.GetEquipSlotDB();
+        public static Dictionary<string, string> EquipSlot  = EquipSlotTable.GetEquipSlotDB();
         public static List<string> PotentialGrade = GVar.PotentialGrade;
 
         public static bool IsOpenConnection(SqliteConnection connection)
@@ -763,7 +763,38 @@ namespace MSEACalculator
             return result;
         }
        
+       
         
+        public static List<(string, string)> ReturnPotGradeKey(int Grade)
+        {
+            List<(string, string)> result = new List<(string, string)>();
+            switch (Grade)
+            {
+                case 0:
+                    result.Add(("Rare", "Non prime"));
+                    result.Add(("Rare", "Prime"));
+                    break;
+
+                case 1:
+                    result.Add(("Rare", "Prime"));
+                    result.Add(("Epic", "Prime"));
+                    break;
+
+                case 2:
+                    result.Add(("Epic", "Prime"));
+                    result.Add(("Unique", "Prime"));
+                    break;
+
+                case 3:
+                    result.Add(("Unique", "Prime"));
+                    result.Add(("Legendary", "Prime"));
+                    break;
+
+            }
+
+
+            return new List<(string, string)>();
+        }
         
 
 

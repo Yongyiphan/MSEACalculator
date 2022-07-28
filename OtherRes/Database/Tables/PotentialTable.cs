@@ -84,10 +84,10 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         insertCMD.Parameters.AddWithValue("@CubeType", String.Join(";", pot.CubeType));
 
                         //Bonus Pots Addons
-                        insertCMD.Parameters.AddWithValue("@Initial", pot.Initial);
-                        insertCMD.Parameters.AddWithValue("@GameCube", pot.InGame);
-                        insertCMD.Parameters.AddWithValue("@CashCube", pot.CashCube);
-                        insertCMD.Parameters.AddWithValue("@Probability", pot.Probability);
+                        insertCMD.Parameters.AddWithValue("@Initial", pot.Rates.Initial);
+                        insertCMD.Parameters.AddWithValue("@GameCube", pot.Rates.GameCube);
+                        insertCMD.Parameters.AddWithValue("@CashCube", pot.Rates.CashCube);
+                        insertCMD.Parameters.AddWithValue("@Probability", pot.Rates.Probability);
                         potIDc++;
                         try
                         {
@@ -177,8 +177,6 @@ namespace MSEACalculator.OtherRes.Database.Tables
             return (PotentialList, tableSpec);
         }
 
-
-
         public static async Task<(List<PotentialStatsCLS>, string)> GetCubeRatesCSVAsync(string FileName, string TableKey)
         {
             List<PotentialStatsCLS> PotentialList = new List<PotentialStatsCLS>();
@@ -219,14 +217,14 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     if (FileName.Contains("Bonus"))
                     {
 
-                        citem.Probability =  Convert.ToDouble(temp[7].Replace('%', ' '));
+                        citem.Rates.Probability =  Convert.ToDouble(temp[7].Replace('%', ' '));
 
                         PotentialList.Add(citem);
                         continue;
                     }
-                    citem.Initial = Convert.ToDouble(temp[7].Replace('%', ' '));
-                    citem.InGame = Convert.ToDouble(temp[8].Replace('%', ' '));
-                    citem.CashCube = Convert.ToDouble(temp[9].Replace('%', ' '));
+                    citem.Rates.Initial = Convert.ToDouble(temp[7].Replace('%', ' '));
+                    citem.Rates.GameCube = Convert.ToDouble(temp[8].Replace('%', ' '));
+                    citem.Rates.CashCube = Convert.ToDouble(temp[9].Replace('%', ' '));
 
 
                     PotentialList.Add(citem);
@@ -241,6 +239,138 @@ namespace MSEACalculator.OtherRes.Database.Tables
             return (PotentialList, tableSpec);
 
         }
+
+
+        public static Dictionary<string, Dictionary<string, Dictionary<(string, string), Dictionary<int, PotentialStatsCLS>>>> NewAllPotentialDB()
+        {
+            Dictionary<string, Dictionary<string, Dictionary<(string, string), Dictionary<int, PotentialStatsCLS>>>> FinalPotList = new Dictionary<string, Dictionary<string, Dictionary<(string, string), Dictionary<int, PotentialStatsCLS>>>>();
+            
+            Dictionary<string, Dictionary<(string, string), Dictionary<int, PotentialStatsCLS>>> PotList = new Dictionary<string, Dictionary<(string, string), Dictionary<int, PotentialStatsCLS>>>();
+
+            string MainQuery = "SELECT " +
+                    "PD.EquipSlot, PD.Grade, PD.Prime, PD.DisplayStat, PD.StatType, PD.MinLvl, PD.MaxLvl, PD.StatValue, PD.Chance, PD.Tick, PD.CubeType, PC.MinLvl, PC.MaxLvl, PC.Initial, PC.GameCube, PC.CashCube" +
+                    "FROM PotentialMainData AS PD "+
+                    "INNER JOIN PotentialBonusData AS PC " +
+                    "ON PD.DisplayStat = PC.DisplayStat " +
+                    "AND PD.EquipSlot = PC.EquipSlot " +
+                    "AND PD.Prime = PC.Prime; ";
+
+            string BonusQuery = "SELECT " +
+                    "PD.EquipSlot, PD.Grade, PD.Prime, PD.DisplayStat, PD.StatType, PD.MinLvl, PD.MaxLvl, PD.StatValue, PD.Chance,PC.MinLvl, PC.MaxLvl, PC.Probability " +
+                    "FROM PotentialBonusData AS PD "+
+                    "INNER JOIN PotentialBonusCube AS PC " +
+                    "ON PD.DisplayStat = PC.DisplayStat " +
+                    "AND PD.EquipSlot = PC.EquipSlot " +
+                    "AND PD.Prime = PC.Prime; ";
+
+
+            using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
+            {
+                using (SqliteCommand selectCMD = new SqliteCommand(MainQuery, dbCon))
+                {
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        PotList.Clear();                        
+                        int counter = 0;
+                        while (reader.Read())
+                        {
+                            //Counter Starts from '1'
+                            counter++;
+                            string EquipSlot = reader.GetString(0);
+                            if (PotList.ContainsKey(EquipSlot) == false)
+                            {
+                                PotList.Add(EquipSlot, new Dictionary<(string, string), Dictionary<int, PotentialStatsCLS>>());
+                            }
+                            string Grade = reader.GetString(1);
+                            string Prime = reader.GetString(2);
+
+                            (string, string) GradePrimePair = (Grade, Prime);
+
+                            if (PotList[EquipSlot].ContainsKey(GradePrimePair) == false)
+                            {
+                                PotList[EquipSlot].Add(GradePrimePair, new Dictionary<int, PotentialStatsCLS>());
+                            }
+
+
+                            PotentialStatsCLS pot = new PotentialStatsCLS();
+                            pot.PotID = counter;
+                            pot.EquipSlot = EquipSlot;
+                            pot.Grade = Grade;
+                            pot.PotGrp = "Main";
+                            pot.DisplayStat = reader.GetString(3);
+                            pot.StatType = reader.GetString(4);
+                            pot.MinLvl = reader.GetInt32(5);
+                            pot.MaxLvl = reader.GetInt32(6);
+                            pot.StatValue = reader.GetString(7);
+                            pot.Chance = reader.GetInt32(8);
+                            pot.Tick = reader.GetInt32(9);
+                            pot.CubeType = reader.GetString(10).Split(';').ToList();
+
+                            pot.Rates.MinLvl = reader.GetInt32(11);
+                            pot.Rates.MaxLvl = reader.GetInt32(12);
+                            pot.Rates.Initial = reader.GetDouble(13);
+                            pot.Rates.GameCube = reader.GetDouble(14);
+                            pot.Rates.CashCube = reader.GetDouble(15);
+
+                            PotList[EquipSlot][GradePrimePair].Add(counter, pot);
+                        }
+                        FinalPotList.Add("Main", PotList);
+
+                    }
+
+                    selectCMD.CommandText = BonusQuery;
+                    using (SqliteDataReader reader = selectCMD.ExecuteReader())
+                    {
+                        PotList.Clear();
+                        int counter = 0;
+                        while (reader.Read())
+                        {
+                            counter++;
+                            string EquipSlot = reader.GetString(0);
+                            if (PotList.ContainsKey(EquipSlot) == false)
+                            {
+                                PotList.Add(EquipSlot, new Dictionary<(string, string), Dictionary<int, PotentialStatsCLS>>());
+                            }
+                            string Grade = reader.GetString(1);
+                            string Prime = reader.GetString(2);
+
+                            (string, string) GradePrimePair = (Grade, Prime);
+
+                            if (PotList[EquipSlot].ContainsKey(GradePrimePair) == false)
+                            {
+                                PotList[EquipSlot].Add(GradePrimePair, new Dictionary<int, PotentialStatsCLS>());
+                            }
+
+
+                            PotentialStatsCLS pot = new PotentialStatsCLS();
+                            pot.PotID = counter;
+                            pot.EquipSlot = EquipSlot;
+                            pot.Grade = Grade;
+                            pot.PotGrp = "Bonus";
+                            pot.DisplayStat = reader.GetString(3);
+                            pot.StatType = reader.GetString(4);
+                            pot.MinLvl = reader.GetInt32(5);
+                            pot.MaxLvl = reader.GetInt32(6);
+                            pot.StatValue = reader.GetString(7);
+                            pot.Chance = reader.GetInt32(8);
+
+                            pot.Rates.MinLvl = reader.GetInt32(9);
+                            pot.Rates.MaxLvl = reader.GetInt32(10);
+                            pot.Rates.Probability = reader.GetDouble(11);
+                            PotList[EquipSlot][GradePrimePair].Add(counter, pot);
+
+                        }
+                        FinalPotList.Add("Bonus", PotList);
+                    }
+                    
+                }
+            }
+
+
+
+            return FinalPotList;
+        }
+        
 
     }
 }

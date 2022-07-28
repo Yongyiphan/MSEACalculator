@@ -19,7 +19,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
         private bool HaveTrack = false;
 
-                
+
         public ClassCharacterTable(string TableName, string TablePara = "") : base(TableName, TablePara)
         {
         }
@@ -30,7 +30,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
             CharacterList = Result.Item1;
             TableParameters = Result.Item2;
-            
+
         }
 
         public void UploadTable(SqliteConnection connection, SqliteTransaction transaction)
@@ -102,8 +102,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     return (characterList, tableSpec);
                 }
                 if (counter == 0)
-                {   
-                    tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.CharacterCN ,characterItem, TableKey);
+                {
+                    tableSpec = ComFunc.TableSpecStringBuilder(TableColNames.CharacterCN, characterItem, TableKey);
                     counter += 1;
                     continue;
                 }
@@ -135,5 +135,54 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 base.InitTable(connection, transaction);
             }
         }
+        public static Dictionary<string, CharacterCLS> GetAllCharDB()
+        {
+            Dictionary<string, CharacterCLS> charDict = new Dictionary<string, CharacterCLS>();
+
+            using (SqliteConnection dbConnection = new SqliteConnection($"Filename ={GVar.databasePath}"))
+            {
+                dbConnection.Open();
+                string getCharCmd =
+                    "SELECT AC.ClassName, AC.ClassType, AC.Faction, AC.MainStat, AC.SecStat, AC.UEffect, AC.UEffectType, ClassMainWeapon.Weapon, ClassSecWeapon.Secondary "+
+                    "FROM ClassCharacterData AS AC " +
+                    "INNER JOIN ClassMainWeapon ON AC.ClassName = ClassMainWeapon.ClassName " +
+                    "INNER JOIN ClassSecWeapon ON AC.ClassName = ClassSecWeapon.ClassName";
+
+                using (SqliteCommand selectCmd = new SqliteCommand(getCharCmd, dbConnection))
+                {
+                    using (SqliteDataReader query = selectCmd.ExecuteReader())
+                    {
+                        while (query.Read())
+                        {
+                            string ClassName = query.GetString(0);
+                            string MainWeapon = query.GetString(7);
+                            string SecWeapon = query.GetString(8);
+                            if (charDict.ContainsKey(query.GetString(0)))
+                            {
+                                charDict[ClassName].MainWeapon.Add(MainWeapon);
+                                charDict[ClassName].SecondaryWeapon.Add(SecWeapon);
+                                continue;
+                            }
+
+                            CharacterCLS tempChar = new CharacterCLS();
+                            tempChar.ClassName = ClassName;
+                            tempChar.ClassType = query.GetString(1);
+                            tempChar.Faction = query.GetString(2);
+                            tempChar.MainStat = query.GetString(3);
+                            tempChar.SecStat = query.GetString(4);
+                            tempChar.UnionEffect = query.GetString(5);
+                            tempChar.UnionEffectType = query.GetString(6);
+
+                            tempChar.MainWeapon = new List<string> { MainWeapon };
+                            tempChar.SecondaryWeapon = new List<string> { SecWeapon };
+
+                            charDict.Add(ClassName, tempChar);
+                        }
+                    }
+                }
+            }
+            return charDict;
+        }
+
     }
 }

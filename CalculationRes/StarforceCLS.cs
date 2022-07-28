@@ -11,6 +11,9 @@ namespace MSEACalculator.CalculationRes
         public int SFLevel { get; set; } = 0;
         public int MinLvl { get; set; } = 0;
         public int MaxLvl { get; set; } = 300;
+
+
+
         public int JobStat { get; set; } = 0; //MAIN + SEC STAT
         public int NonWeapVDef { get; set; } = 0; //NON WEAPON VISIBLE DEF
         public int OverallVDef { get; set; } = 0; //(OVERALL**) VISIBE DEF
@@ -46,6 +49,7 @@ namespace MSEACalculator.CalculationRes
 
         //DEPENDS ON LEVEL RANK
         public int LevelRank { get; set; } = 0;
+        public Dictionary<(int, int), int> VDefL { get; set; } = new Dictionary<(int, int), int>();
         public Dictionary<(int, int), int> VStatL { get; set; } = new Dictionary<(int, int), int>();
         public Dictionary<(int,int), int> NonWeapVATKL { get; set; } = new Dictionary<(int, int), int>();
         public Dictionary<(int,int), int> NonWeapVMATKL { get; set; } = new Dictionary<(int, int), int>();

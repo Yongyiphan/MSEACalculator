@@ -123,7 +123,6 @@
     <Compile Include="CalculationRes\DisplayStatValue.cs" />
     <Compile Include="CalculationRes\HyperStatCLS.cs" />
     <Compile Include="CalculationRes\SetEffectCLS.cs" />
-    <Compile Include="CalculationRes\StarforceRatesCLS.cs" />
     <Compile Include="CalculationRes\ViewPages\ConversionQMPage.xaml.cs">
       <DependentUpon>ConversionQMPage.xaml</DependentUpon>
     </Compile>
@@ -133,6 +132,7 @@
     <Compile Include="CalculationRes\ViewPages\ArcaneQMPage.xaml.cs">
       <DependentUpon>ArcaneQMPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CharacterRes\EquipmentRes\PotentialRatesCLS.cs" />
     <Compile Include="CharacterRes\HyperStat.cs" />
     <Compile Include="CharacterRes\IfXenon.cs" />
     <Compile Include="EventRes\ViewPages\CurrentEventPage.xaml.cs">

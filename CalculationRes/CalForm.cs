@@ -281,7 +281,6 @@ namespace MSEACalculator.CalculationRes
                         }
 
                 }
-                ScrollingModelCLS CurrentScroll = CDict[PercFound];
                 foreach (StatInputValue statvalue in StatPerSlot)
                 {
                     statvalue.Value = TempDict[statvalue.Stat];
@@ -290,13 +289,13 @@ namespace MSEACalculator.CalculationRes
 
 
                 Debug.WriteLine("Is Spell Traced");
-                return (StatPerSlot, String.Format("{0}% Spell Trace Usd", PercFound));
+                return (StatPerSlot, String.Format("{0}% Spell Trace Used", PercFound));
                 
             }
 
             Debug.WriteLine("Not Spell Traced");
 
-            return (StatPerSlot, "Not Spell Traced");
+            return (StatPerSlot, "Not Spell Traced, Stat Per Slot");
 
         }
 

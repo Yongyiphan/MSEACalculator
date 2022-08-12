@@ -13,7 +13,7 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Conversion" Tag="Conversion_Page"/>
                 <NavigationViewItem Content="Arcane Symbol" Tag="ArcaneSym_Page"/>
-                
+                <NavigationViewItem Content="Equip Stat" Tag="EquipStat_Page"/>
             </NavigationView.MenuItems>
 
             <ScrollViewer VerticalScrollBarVisibility="Visible">

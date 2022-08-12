@@ -112,7 +112,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 CharacterCLS tempChar = new CharacterCLS();
                 tempChar.ClassName = temp[1];
                 tempChar.Faction = temp[2];
-                tempChar.ClassType = temp[3];
+                tempChar.ClassType = temp[3] = temp[3] == "Archer" ? "Bowman" : temp[3];
                 tempChar.MainStat = temp[4];
                 tempChar.SecStat = temp[5];
                 tempChar.UnionEffect = temp[6];

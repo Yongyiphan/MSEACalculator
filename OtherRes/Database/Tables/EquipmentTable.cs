@@ -53,7 +53,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 switch (TableName)
                 {
                     case "EquipArmorData":
-                        Result = await GetArmorCSVAsync(FileName: "ArmorData.csv", TableKey: "PRIMARY KEY (EquipSet, ClassType, EquipSlot)");
+                        Result = await GetArmorCSVAsync(FileName: "ArmorData.csv", TableKey: "PRIMARY KEY (EquipSet, ClassType, EquipName, EquipSlot)");
                         EquipList = Result.Item1;
                         TableParameters = Result.Item2;
                         break;
@@ -76,7 +76,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
 
                     case "EquipWeaponData":
-                        Result = await GetWeaponCSVAsync(FileName: "WeaponData.csv", TableKey: "PRIMARY KEY (EquipSet, WeaponType)");
+                        Result = await GetWeaponCSVAsync(FileName: "WeaponData.csv", TableKey: "All");
                         EquipList = Result.Item1;
                         TableParameters = Result.Item2;
                         break;
@@ -205,7 +205,15 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 equip.BaseStats.JUMP = Convert.ToInt32(temp[17]);
                 equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[18]);
 
+                try
+                {
                 equipList.Add(equip);
+
+                }
+                catch (Exception)
+                {
+
+                }
 
             }
             return (equipList, tableSpec);
@@ -256,7 +264,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                     equip.BaseStats.DEF = Convert.ToInt32(temp[15]);
                     equip.BaseStats.ATK = Convert.ToInt32(temp[16]);
                     equip.BaseStats.MATK = Convert.ToInt32(temp[17]);
-                    equip.BaseStats.IED = Convert.ToInt32(temp[18]);
+                    equip.BaseStats.IED = Convert.ToInt32(temp[18].Trim('%'));
                     equip.BaseStats.SPD = Convert.ToInt32(temp[19]);
                     equip.BaseStats.JUMP = Convert.ToInt32(temp[20]);
                     equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[21]);
@@ -429,12 +437,21 @@ namespace MSEACalculator.OtherRes.Database.Tables
                 equip.BaseStats.DEF = Convert.ToInt32(temp[11]);
                 equip.BaseStats.ATK = Convert.ToInt32(temp[12]);
                 equip.BaseStats.MATK = Convert.ToInt32(temp[13]);
+
                 equip.BaseStats.BD = Convert.ToInt32(temp[15].Trim('%'));
                 equip.BaseStats.IED = Convert.ToInt32(temp[16].Trim('%'));
                 equip.BaseStats.SPD = Convert.ToInt32(temp[17]);
                 equip.BaseStats.NoUpgrades = Convert.ToInt32(temp[19]);
 
-                WeaponList.Add(equip);
+                try
+                {
+
+                    WeaponList.Add(equip);
+                }
+                catch (Exception)
+                {
+
+                }
             }
             return (WeaponList, tableSpec);
 
@@ -508,6 +525,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
+                dbCon.Open();
                 SqliteCommand selectCMD = new SqliteCommand();
                 selectCMD.Connection = dbCon;
                 selectCMD.CommandText = "SELECT* FROM EquipArmorData; ";
@@ -575,19 +593,18 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         citem.BaseStats.DEX = reader.GetInt32(7);
                         citem.BaseStats.INT = reader.GetInt32(8);
                         citem.BaseStats.LUK = reader.GetInt32(9);
-                        citem.BaseStats.AllStat = reader.GetInt32(10);
-                        citem.BaseStats.MaxHP = reader.GetInt32(11);
-                        citem.BaseStats.MaxMP = reader.GetInt32(12);
-                        citem.BaseStats.HP = reader.GetString(13);
-                        citem.BaseStats.MP = reader.GetString(14);
-                        citem.BaseStats.DEF = reader.GetInt32(15);
-                        citem.BaseStats.ATK = reader.GetInt32(16);
-                        citem.BaseStats.MATK = reader.GetInt32(17);
-                        citem.BaseStats.IED = reader.GetInt32(18);
-                        citem.BaseStats.SPD = reader.GetInt32(19);
-                        citem.BaseStats.JUMP = reader.GetInt32(20);
-                        citem.BaseStats.NoUpgrades = reader.GetInt32(21);
-                        citem.BaseStats.Rank = reader.GetInt32(22);
+                        citem.BaseStats.MaxHP = reader.GetInt32(10);
+                        citem.BaseStats.MaxMP = reader.GetInt32(11);
+                        citem.BaseStats.HP = reader.GetString(12);
+                        citem.BaseStats.MP = reader.GetString(13);
+                        citem.BaseStats.DEF = reader.GetInt32(14);
+                        citem.BaseStats.ATK = reader.GetInt32(15);
+                        citem.BaseStats.MATK = reader.GetInt32(16);
+                        citem.BaseStats.IED = reader.GetInt32(17);
+                        citem.BaseStats.SPD = reader.GetInt32(18);
+                        citem.BaseStats.JUMP = reader.GetInt32(19);
+                        citem.BaseStats.NoUpgrades = reader.GetInt32(20);
+                        citem.BaseStats.Rank = reader.GetInt32(21);
 
                         if (EquipList.ContainsKey(EquipSlot))
                         {

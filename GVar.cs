@@ -39,9 +39,17 @@ namespace MSEACalculator
         /// STATIC / CONSTANT VARIABLES
         /// </summary>
 
-        
+        public static List<string> ClassType { get; set; } = new List<string>()
+        {
+            "Warrior", "Bowman", "Magician", "Thief", "Pirate"
+        };
 
-       
+
+        public static List<string> SuperiorEquipment { get; set; } = new List<string>()
+        {
+            /*"Elite Heliseum", "Nova",*/ "Tyrant"
+        };
+
 
         //STAR FORCE
         public static List<string> CategoryAEquips { get; set; } = new List<string>
@@ -101,6 +109,7 @@ namespace MSEACalculator
         };
 
         public static List<string> BaseStatTypes { get; set; } = new List<string> {
+            
             "STR","DEX","INT","LUK",
             "MaxHP","MaxMP","DEF","SPD","JUMP",
             "ATK","MATK"

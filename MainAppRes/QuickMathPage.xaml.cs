@@ -42,7 +42,9 @@ namespace MSEACalculator.MainAppRes
                 case "Conversion_Page":
                     QMContent.Navigate(typeof(ConversionQMPage));
                     break;
-
+                case "EquipStat_Page":
+                    QMContent.Navigate(typeof(EquipStatQMPage));
+                    break;
 
             }
         }

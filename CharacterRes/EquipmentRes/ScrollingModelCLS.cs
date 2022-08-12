@@ -10,7 +10,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
     {
 
         public int MainStat { get; set; } = 0;
-        public int HP { get; set; } = 0;
+        public int MaxHP { get; set; } = 0;
         public int DEF { get; set; } = 0;
         public int ATK { get; set; } = 0;
 
@@ -27,7 +27,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
         public List<string> SpellTraceStat { get; set; } = new List<string> { "STR", "DEX", "INT", "LUK", "HP" };
 
-        public List<int> Slots { get; set; } = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+        public List<int> Slots { get; set; } = Enumerable.Range(0, 12).ToList();
 
 
     }

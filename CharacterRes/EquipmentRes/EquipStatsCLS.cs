@@ -154,6 +154,11 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                     break;
                 case "HP":
                     break;
+                case "Xenon":
+                    STR += s1;
+                    DEX += s1;
+                    LUK += s1;
+                    break;
                 case "Any":
                     STR += s1;
                     DEX += s1;
@@ -162,7 +167,57 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                     break;
             }
         }
+        public void SubtractJobStat(string ClassType, int s1, int s2, string MainStat = "")
+        {
+            switch (ClassType)
+            {
+                case "Warrior":
+                    STR -= s1;
+                    DEX -= s2;
+                    break;
+                case "Bowman":
+                    DEX -= s1;
+                    STR -= s2;
+                    break;
+                case "Magician":
+                    INT -= s1;
+                    LUK -= s2;
+                    break;
+                case "Thief":
+                    LUK -= s1;
+                    DEX -= s2;
+                    break;
+                case "Pirate":
+                    if (MainStat == "DEX")
+                    {
+                        DEX -= s1;
+                        STR -= s2;
+                    }
+                    else
+                    {
+                        STR -= s1;
+                        DEX -= s2;
+                    }
+                    break;
+                case "HP":
+                    break;
+                case "Xenon":
+                    STR -= s1;
+                    DEX -= s1;
+                    LUK -= s1;
+                    break;
+                case "Any":
+                    STR -= s1;
+                    DEX -= s1;
+                    INT -= s1;
+                    LUK -= s1;
+                    break;
+            }
+        }
 
+
+
+        //Add/Subtract EquipStat to EquipStat
         public void ModifyEquipStat(EquipStatsCLS target, string mode)
         {
             var properties = GetType().GetProperties();

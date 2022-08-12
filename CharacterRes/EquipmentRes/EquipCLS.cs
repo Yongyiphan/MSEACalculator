@@ -18,6 +18,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
         public string EquipSet { get; set; }
         public string ClassType { get; set; }
         public string WeaponType { get; set; }
+        public string MainStat { get; set; }
 
         //BASE SLOT TYPE
         public string EquipSlot { get; set; }
@@ -114,6 +115,19 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             return (EquipCLS)this.MemberwiseClone();
         }
 
+        public EquipCLS DeepCopy()
+        {
+            EquipCLS copy = (EquipCLS) MemberwiseClone();
+            copy.BaseStats = BaseStats;
+            copy.ScrollStats = ScrollStats;
+            copy.FlameStats = FlameStats;
+            copy.MainPot = MainPot;
+            copy.AddPot = AddPot;
+            copy.StarforceStats = StarforceStats;
+
+            return copy;
+
+        }
 
         public override int GetHashCode()
         {

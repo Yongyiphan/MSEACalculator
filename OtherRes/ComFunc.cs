@@ -293,6 +293,35 @@ namespace MSEACalculator
             return result;
         }
 
+        public static (int, int) ReturnSFRange(List<(int, int)> LvlRange, EquipCLS equip)
+        {
+            if (GVar.EnhanceRestriction["Starforce"].Contains(equip.EquipSlot))
+            {
+                return (0, 0);
+            }
+            foreach( (int, int) key in LvlRange)
+            {
+                if(equip.EquipLevel >= key.Item1 && equip.EquipLevel <= key.Item2)
+                {
+                    return key;
+                }
+            }
+            return (0, 0);
+        }
+
+        public static string ReturnNormalOrSuperiorTitle(string name)
+        {
+            
+            foreach(string Superior in GVar.SuperiorEquipment)
+            {
+                if (name.Contains(Superior))
+                {
+                    return "Superior_Items";
+                }
+            }
+
+            return "Normal_Equips";
+        }
 
         public static async void ErrorDia(string message)
         {
@@ -551,27 +580,27 @@ namespace MSEACalculator
                 {
                     [100] = new ScrollingModelCLS{
                         MainStat = 1,
-                        HP = 5,
+                        MaxHP = 5,
                         DEF =1
                     },
                     [70] = new ScrollingModelCLS{
                         MainStat= 2,
-                        HP = 15,
+                        MaxHP = 15,
                         DEF =2
                     },
-                    [30] = new ScrollingModelCLS{MainStat= 3, HP = 30, DEF =4 }
+                    [30] = new ScrollingModelCLS{MainStat= 3, MaxHP = 30, DEF =4 }
                 },
                 [2] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModelCLS { MainStat = 2, HP = 20, DEF = 4 },
-                    [70] = new ScrollingModelCLS { MainStat = 3, HP = 40, DEF = 4},
-                    [30] = new ScrollingModelCLS { MainStat = 5, HP = 70,DEF = 7}
+                    [100] = new ScrollingModelCLS { MainStat = 2, MaxHP = 20, DEF = 4 },
+                    [70] = new ScrollingModelCLS { MainStat = 3, MaxHP = 40, DEF = 4},
+                    [30] = new ScrollingModelCLS { MainStat = 5, MaxHP = 70,DEF = 7}
                 },
                 [3] = new Dictionary<int, ScrollingModelCLS>
                 {
-                    [100] = new ScrollingModelCLS { MainStat = 3, HP = 30, DEF = 3 },
-                    [70] = new ScrollingModelCLS { MainStat = 4, HP = 70, DEF = 5 },
-                    [30] = new ScrollingModelCLS { MainStat = 7, HP = 120, DEF = 10 }
+                    [100] = new ScrollingModelCLS { MainStat = 3, MaxHP = 30, DEF = 3 },
+                    [70] = new ScrollingModelCLS { MainStat = 4, MaxHP = 70, DEF = 5 },
+                    [30] = new ScrollingModelCLS { MainStat = 7, MaxHP = 120, DEF = 10 }
                 }
             },
             ["Gloves"] = new Dictionary<int, Dictionary<int, ScrollingModelCLS>>
@@ -698,6 +727,22 @@ namespace MSEACalculator
             }
         }
 
+        public static string ReturnMainStat(string ClassType)
+        {
+            switch (ClassType)
+            {
+                case "Warrior":
+                    return "STR";
+                case "Bowman":
+                    return "DEX";
+                case "Magician":
+                    return "INT";
+                case "Thief":
+                    return "LUK";
+                default:
+                    return "None";
+            }
+        }
 
         //RETURN SCROLL TABLE TO FOLLOW
         public static string ReturnScrollCat(string selectedESlot)

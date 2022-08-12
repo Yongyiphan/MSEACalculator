@@ -980,7 +980,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
                 //Retreive base equip stats from list
 
-                EquipCLS NewEquip = ComFunc.FindEquip(AEM.AllEquipStore[CurrentEquipList], SCharacter, currentSSlot, SSetItem, XenonEquipType);
+                EquipCLS NewEquip = ComFunc.FindEquip(AEM.AllEquipStore[SEquipSlot].AsReadOnly(), SCharacter, currentSSlot, SSetItem, XenonEquipType);
 
                 if(NewEquip.ClassType ==  null)
                 {
@@ -993,11 +993,11 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 }
                 NewEquip.EquipListSlot = SEquipSlot;
 
-                CurrentStarforceList = NewEquip.EquipSet == "Tyrant" ? "Superior" : "Basic";
+                CurrentStarforceList = NewEquip.EquipSet == "Tyrant" ? "Superior" : "Normal";
 
                 StarforceLevels.Clear();
                 StarforceLevels.Add(0);
-                AEM.StarforceStore[CurrentStarforceList].Select(x => x.SFLevel).ToList().ForEach(x => StarforceLevels.Add(x));
+                AEM.StarforceStore[CurrentStarforceList].Values.Select(x => x.SFLevel).ToList().ForEach(x => StarforceLevels.Add(x));
 
 
                 CurrentSEquip = NewEquip;
@@ -1075,21 +1075,25 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
                 }
             }
         }
-        
+
         public void RetrievePot(EquipCLS CurrentEquip)
         {
-            int PotType = IsAddPot ? CurrentEquip.APotGrade: CurrentEquip.MPotGrade;
-            Dictionary<string, Dictionary<string,List<PotentialStatsCLS>>> BasePotList = IsAddPot ? AEM.AllBonusPotDict : AEM.AllPotDict;
+            int PotType = IsAddPot ? CurrentEquip.APotGrade : CurrentEquip.MPotGrade;
+            Dictionary<string, Dictionary<(string, string), Dictionary<int, PotentialStatsCLS>>> BasePotList = IsAddPot ? AEM.PotentialStore["Main"] : AEM.PotentialStore["Bonus"];
+            List<(string, string)> PotGrade = ComFunc.ReturnPotGradeKey(PotType);
 
             FirstPotL = new List<PotentialStatsCLS>();
-            foreach (PotentialStatsCLS pot in BasePotList[CurrentEquip.EquipSlot][GVar.PotentialGrade[PotType]])
+            foreach ((string, string) Grade in PotGrade)
             {
-                if (CurrentEquip.EquipLevel > pot.MinLvl && CurrentEquip.EquipLevel < pot.MaxLvl)
+                foreach (PotentialStatsCLS pot in BasePotList[CurrentEquip.EquipSlot][Grade].Values)
                 {
-                    FirstPotL.Add(pot);
+                    if (CurrentEquip.EquipLevel > pot.MinLvl && CurrentEquip.EquipLevel < pot.MaxLvl)
+                    {
+                        FirstPotL.Add(pot);
+                    }
                 }
+                OnPropertyChanged(nameof(FirstPotL));
             }
-            OnPropertyChanged(nameof(FirstPotL));
         }
 
         private void ShowSecondPot()
@@ -1146,7 +1150,7 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar.ViewModels
 
             //selectedEquip.FlameStats = ComFunc.RecordToProperty(FlameRecord);
             selectedEquip.FlameStats.DictToProperty(FlameRecord);
-            selectedEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, selectedEquip, AEM.StarforceStore[CurrentStarforceList], CurrentStarforceList);
+            selectedEquip.StarforceStats  = CalForm.CalStarforceStats(SCharacter, selectedEquip, AEM.StarforceStore[CurrentStarforceList].Values.ToList().AsReadOnly(), CurrentStarforceList);
 
 
             return selectedEquip;

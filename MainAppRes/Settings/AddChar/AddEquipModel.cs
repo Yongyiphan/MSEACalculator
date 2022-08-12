@@ -39,9 +39,8 @@ namespace MSEACalculator.MainAppRes.Settings.AddChar
         public Dictionary<string, Dictionary<string, Dictionary<(string, string), Dictionary<int, PotentialStatsCLS>>>> PotentialStore { get => PotentialTable.NewAllPotentialDB(); } 
         public List<string> FlameStatsTypes { get; set; } = GVar.BaseStatTypes.Concat(GVar.SpecialStatType).ToList();
 
-        public  Dictionary<string, Dictionary<int, StarforceCLS>> StarforceStore { get => StarForceTable.NewGetAllStarforceDB(); }
+        public  Dictionary<string, Dictionary<int, StarforceCLS>> StarforceStore { get => StarForceTable.GetAllStarforceDB(); }
 
-        public 
 
         public List<string> XenonClassType { get; } = new List<string>()
         {

@@ -16,8 +16,6 @@
                 <!--Check if equip is spell traced-->
                 <CheckBox x:Name="chkSpellTrace" Content="Spell Traced?" Style="{StaticResource AddEquipCBX}"
                         IsChecked="{Binding IsSpellTrace, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                
-
                 <!--Show Slots or stat chossing depending on checkbox-->
 
                 <TextBlock Text="Slot" Visibility="{Binding ShoWSlot, Mode=TwoWay}"/>

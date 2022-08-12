@@ -341,18 +341,20 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
 
         //DB Retrieval
-        public static Dictionary<string, Dictionary<int, StarforceCLS>> NewGetAllStarforceDB()
+        public static Dictionary<string, Dictionary<int, StarforceCLS>> GetAllStarforceDB()
         {
             Dictionary<string, Dictionary<int, StarforceCLS>> FinalSFList = new Dictionary<string, Dictionary<int, StarforceCLS>>();
-            Dictionary<int, StarforceCLS> SFList = new Dictionary<int, StarforceCLS>();
+            Dictionary<int, StarforceCLS> NormalSFList = new Dictionary<int, StarforceCLS>();
+            Dictionary<int, StarforceCLS> SuperiorSFList = new Dictionary<int, StarforceCLS>();
+
             string NormalQuery = "SELECT * FROM SFNormalData";
             string SuperiorQuery = "SELECT * FROM SFSuperiorData";
 
             using (SqliteConnection dbCon = new SqliteConnection($"Filename = {GVar.databasePath}"))
             {
+                dbCon.Open();
                 using (SqliteCommand selectCMD = new SqliteCommand(NormalQuery, dbCon))
                 {
-                    SFList.Clear();
                     using (SqliteDataReader reader = selectCMD.ExecuteReader())
                     {
                         while(reader.Read())
@@ -380,13 +382,13 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             if (SFID > 15)
                             {
                                 (int, int) MinMax = (MinLvl, MaxLvl);
-                                if (SFList.ContainsKey(SFID))
+                                if (NormalSFList.ContainsKey(SFID))
                                 {
-                                    SFList[SFID].WeapVATKL.Add(MinMax, reader.GetInt32(8));
-                                    SFList[SFID].WeapVMATKL.Add(MinMax, reader.GetInt32(9));
-                                    SFList[SFID].VStatL.Add(MinMax, reader.GetInt32(14));
-                                    SFList[SFID].NonWeapVATKL.Add(MinMax, reader.GetInt32(15));
-                                    SFList[SFID].NonWeapVMATKL.Add(MinMax, reader.GetInt32(16));
+                                    NormalSFList[SFID].WeapVATKL.Add(MinMax, reader.GetInt32(8));
+                                    NormalSFList[SFID].WeapVMATKL.Add(MinMax, reader.GetInt32(9));
+                                    NormalSFList[SFID].VStatL.Add(MinMax, reader.GetInt32(14));
+                                    NormalSFList[SFID].NonWeapVATKL.Add(MinMax, reader.GetInt32(15));
+                                    NormalSFList[SFID].NonWeapVMATKL.Add(MinMax, reader.GetInt32(16));
                                     continue;
                                 }
                                 sf.WeapVATKL.Add(MinMax, reader.GetInt32(8));
@@ -401,14 +403,13 @@ namespace MSEACalculator.OtherRes.Database.Tables
                                 sf.WeapVMATK = reader.GetInt32(9);
                             }
 
-                            SFList.Add(SFID, sf);
+                            NormalSFList.Add(SFID, sf);
 
                         }
-                        FinalSFList.Add("Normal", SFList);
+                        FinalSFList.Add("Normal_Equips", NormalSFList);
                     }
 
                     selectCMD.CommandText = SuperiorQuery;
-                    SFList.Clear();
                     using (SqliteDataReader reader = selectCMD.ExecuteReader())
                     {
                         while (reader.Read())
@@ -417,20 +418,20 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             StarforceCLS sf = new StarforceCLS();
                             sf.SFLevel = SFID;
                             (int, int) MinMax = (reader.GetInt32(1), reader.GetInt32(2));
-                            if (SFList.ContainsKey(SFID))
+                            if (SuperiorSFList.ContainsKey(SFID))
                             {
-                                SFList[SFID].VDefL.Add(MinMax, reader.GetInt32(3));
-                                SFList[SFID].VStatL.Add(MinMax, reader.GetInt32(4));
-                                SFList[SFID].WeapVATKL.Add(MinMax, reader.GetInt32(5));
+                                SuperiorSFList[SFID].VDefL.Add(MinMax, reader.GetInt32(3));
+                                SuperiorSFList[SFID].VStatL.Add(MinMax, reader.GetInt32(4));
+                                SuperiorSFList[SFID].WeapVATKL.Add(MinMax, reader.GetInt32(5));
                                 continue;
                             }
                             sf.VDefL.Add(MinMax, reader.GetInt32(3));
                             sf.VStatL.Add(MinMax, reader.GetInt32(4));
                             sf.WeapVATKL.Add(MinMax, reader.GetInt32(5));
 
-                            SFList.Add(SFID, sf);
+                            SuperiorSFList.Add(SFID, sf);
                         }
-                        FinalSFList.Add("Superior", SFList);
+                        FinalSFList.Add("Superior_Items", SuperiorSFList);
                     }
                 }
             }
@@ -446,6 +447,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
             string RatesQuery = "SELECT * FROM SFSuccessRates";
             using (SqliteConnection dbCon = new SqliteConnection(GVar.CONN_STRING))
             {
+                dbCon.Open();
                 using (SqliteCommand selectCMD = new SqliteCommand(RatesQuery, dbCon))
                 {
                     using (SqliteDataReader reader = selectCMD.ExecuteReader())
@@ -483,6 +485,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
             string LimitQuery = "SELECT * FROM SFLimits";
             using (SqliteConnection dbCon = new SqliteConnection(GVar.CONN_STRING))
             {
+                dbCon.Open();
                 using (SqliteCommand selectCMD = new SqliteCommand(LimitQuery, dbCon))
                 {
                     using (SqliteDataReader reader = selectCMD.ExecuteReader())
@@ -498,6 +501,7 @@ namespace MSEACalculator.OtherRes.Database.Tables
                             if (Limits.ContainsKey(EquipType))
                             {
                                 Limits[EquipType].Add(MinMax, Stars);
+                                continue;
                             }
                             Limits.Add(EquipType, new Dictionary<(int, int), int>());
 

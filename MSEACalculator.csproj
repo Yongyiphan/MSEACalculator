@@ -120,22 +120,30 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BossRes\BossCLS.cs" />
+    <Compile Include="CalculationRes\CalModels\StarforceSimModel.cs" />
     <Compile Include="CalculationRes\DisplayStatValue.cs" />
-    <Compile Include="CalculationRes\EquipStatModel.cs" />
+    <Compile Include="CalculationRes\CalModels\EquipStatModel.cs" />
     <Compile Include="CalculationRes\HyperStatCLS.cs" />
     <Compile Include="CalculationRes\SetEffectCLS.cs" />
     <Compile Include="CalculationRes\ViewModels\QMEquipStatVM.cs" />
+    <Compile Include="CalculationRes\ViewModels\QMStarforceSimVM.cs" />
     <Compile Include="CalculationRes\ViewPages\ConversionQMPage.xaml.cs">
       <DependentUpon>ConversionQMPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CalculationRes\ViewModels\QMConversionVM.cs" />
-    <Compile Include="CalculationRes\SymbolModel.cs" />
+    <Compile Include="CalculationRes\CalModels\SymbolModel.cs" />
     <Compile Include="CalculationRes\ViewModels\QMArcaneVM.cs" />
     <Compile Include="CalculationRes\ViewPages\ArcaneQMPage.xaml.cs">
       <DependentUpon>ArcaneQMPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CalculationRes\ViewPages\EquipStatQMPage.xaml.cs">
       <DependentUpon>EquipStatQMPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CalculationRes\ViewPages\ExpQMPage.xaml.cs">
+      <DependentUpon>ExpQMPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CalculationRes\ViewPages\StarforceSimQMPage.xaml.cs">
+      <DependentUpon>StarforceSimQMPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CharacterRes\EquipmentRes\PotentialRatesCLS.cs" />
     <Compile Include="CharacterRes\HyperStat.cs" />
@@ -197,7 +205,7 @@
       <DependentUpon>TestingBlankPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CalculationRes\CalForm.cs" />
-    <Compile Include="OtherRes\Database\CustomModifications\SelectListViewWhenElementGotFocusBehavious.cs" />
+    <Compile Include="OtherRes\CustomModifications\SelectListViewWhenElementGotFocusBehavious.cs" />
     <Compile Include="OtherRes\Database\DatabaseINIT.cs" />
     <Compile Include="EventRes\Event.xaml.cs">
       <DependentUpon>Event.xaml</DependentUpon>
@@ -280,6 +288,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CalculationRes\ViewPages\ExpQMPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CalculationRes\ViewPages\StarforceSimQMPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EventRes\ViewPages\CurrentEventPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -354,6 +370,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.13</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
+      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Behaviors">
       <Version>7.1.2</Version>

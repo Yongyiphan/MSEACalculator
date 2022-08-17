@@ -58,6 +58,8 @@ namespace MSEACalculator.CalculationRes.ViewModels
                     break;
                 case "Meso to Maple Points":
                     RateText = "Maple Point/100M";
+                    MMOnText = "In B";
+                    MMOffText = "In Meso";
                     ValueInText = Reverse ? "Maple Points In" : "Meso In";
                     ValueOutText = Reverse ? "Meso Out" : "Maple Points Out";
                     break;
@@ -215,32 +217,15 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         public CustomCommand ConvertCMD { get; set; }
         public CustomCommand ResetCMD { get; set; }
-
-        public CustomCommand TestCMD { get; set; }
         public QMConversionVM()
         {
             ConvertCMD = new CustomCommand(ConvertMoney, CanConvert);
             ResetCMD = new CustomCommand(() => ResetInput());
-
-            TestCMD = new CustomCommand(() => TestVM());
-
             VMInit();
 
             OnPropertyChanged(nameof(ConversionMode));
         }
 
-        private void TestVM()
-        {
-            SelectedMode = "Meso to Maple Points";
-            Rate = "1810";
-            ValueIn = "22183";
-            MesoMod = true;
-            Reverse = true;
-            if (CanConvert())
-            {
-                ConvertMoney();
-            }
-        }
 
         private void VMInit()
         {

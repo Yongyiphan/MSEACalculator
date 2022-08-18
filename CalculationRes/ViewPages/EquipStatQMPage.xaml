@@ -30,7 +30,6 @@
                         <ComboBox x:Name="ClassType" ItemsSource="{Binding ClassFilterList}"
                                   SelectedValue="{Binding ClassFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                        
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Style="{StaticResource SP}">
                         <TextBlock Text="Equip Name:"/>

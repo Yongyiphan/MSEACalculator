@@ -140,6 +140,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                             MainStatList.Remove("All Stat");
                         }
                     }
+                    
 
                     OnPropertyChanged(nameof(MainStatList));
                     OnPropertyChanged(nameof(PercList));
@@ -245,6 +246,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             }
         }
 
+
         public List<EquipCLS> EquipList { get; set; } = new List<EquipCLS>();
 
         private EquipCLS _SEquip;
@@ -289,6 +291,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             set
             {
                 _SSF = value;
+                AddEquipmentCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(SSF));
             }
         }
@@ -576,7 +579,8 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 if (ClassFilter == null || ClassFilter == "None")
                 {
 
-                    EquipList = ESModel.EquipmentStore[SESlot];
+                    EquipList = ESModel.EquipmentStore[SESlot].OrderBy(x => x.EquipName).ToList();
+
                 }
                 //Filter By Class
                 else
@@ -612,6 +616,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                         FilterList.Add("Thief");
                     }
 
+
                     if (SESlot == "Weapon" || SESlot == "Secondary")
                     {
                         foreach (EquipCLS equip in ESModel.EquipmentStore[SESlot])
@@ -626,13 +631,17 @@ namespace MSEACalculator.CalculationRes.ViewModels
                     {
                         foreach (EquipCLS equip in ESModel.EquipmentStore[SESlot])
                         {
-                            if (FilterList.Contains(equip.ClassType) || equip.ClassType == null)
+                            
+                            if (FilterList.Contains(equip.ClassType)   || equip.ClassType == null)
                             {
                                 FilterByClass.Add(equip);
                             }
+
                         }
+
+
                     }
-                    EquipList = FilterByClass;
+                    EquipList = FilterByClass.OrderBy(x => x.EquipName).ToList();
                 }
             }
             OnPropertyChanged(nameof(EquipList));
@@ -668,7 +677,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             Check = SEquip == null ? false : true;
             Conditions.Add(Check);
 
-            Check = SMainStat == "None" || string.IsNullOrEmpty(SMainStat) ? false : true;
+            Check = (SSF > 0 || (IsSpellTrace && Convert.ToInt32(SSlotStat) > 0) ) && (SMainStat == "None" || string.IsNullOrEmpty(SMainStat)) ? false : true;
             Conditions.Add(Check);
 
             Check = false;

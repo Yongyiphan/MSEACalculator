@@ -88,13 +88,13 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         private void ActivateTest()
         {
-            SESlot = "Bottom";
+            SESlot = "Pendant";
             SortByClass = false;
-            ClassFilter = "Bowman";
-            SEquip = EquipList.Find(x => x.EquipName == "Trixter Ranger Pants");
-            SSF = 10;
+            ClassFilter = "Any";
+            SEquip = EquipList.Find(x => x.EquipName == "Dominator Pendant");
+            SSF = 15;
             DisplayType = true;
-            List<int> TestValues = new List<int>() {25,45,0,0,132,480,1,0 };
+            List<int> TestValues = new List<int>() {40,65,40,40,255, 0, 0, 119};
            
             for(int i = 0; i < TestValues.Count; i++)
             {
@@ -567,7 +567,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             SortByClass = false;
             DisplayType = false;
             StatInput.Clear();
-            GVar.MainStats.Concat(new List<string>() { "DEF", "MaxHP", "ATK", "MATK" }).ToList().ForEach(x => StatInput.Add(new StatInputValue() { Stat=x, Value="0" }));
+            GVar.MainStats.Concat(new List<string>() { "MaxHP", "ATK", "MATK", "DEF"}).ToList().ForEach(x => StatInput.Add(new StatInputValue() { Stat=x, Value="0" }));
             MainStatList = GVar.MainStats.Concat(new List<string>() { "HP", "All Stat", "None" }).ToList();
         }
 

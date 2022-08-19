@@ -25,7 +25,6 @@ namespace MSEACalculator.CalculationRes
 
         public Dictionary<string, List<string>> ClassJob { get; set; }= new Dictionary<string, List<string>>() { { "None", new List<string>() }, {"Any", new List<string>() } };
 
-        public List<string> ToDisplayCategory { get; set; } = new List<string>() { "Medal", "Ring"};
 
         public EquipStatModel()
         {

@@ -223,7 +223,9 @@ namespace MSEACalculator.CalculationRes
                 
                 if (ScrollRecord[stat] > 0)
                 {
-                    StatPerSlot.Add(new StatInputValue() { Stat = stat, Value = ((double)ScrollRecord[stat] / SlotCount).ToString() });
+                    double DividedStat = (double)ScrollRecord[stat] / SlotCount;
+                    
+                    StatPerSlot.Add(new StatInputValue() { Stat = stat, Value = DividedStat % 1 == 0 ? DividedStat.ToString("N0") : DividedStat.ToString("N5")});
                     continue;
                 }
                 StatPerSlot.Add(new StatInputValue() { Stat = stat, Value = "0" });
@@ -240,7 +242,11 @@ namespace MSEACalculator.CalculationRes
                 if (GVar.ArmorEquips.Contains(Equip.EquipSlot) && Equip.EquipSlot != "Gloves" && Equip.SlotCount > 3)
                 {
                     string atk = MainStat == "INT" ? "MATK" : "ATK";
-                    TempDict[atk] = (Convert.ToDouble(TempDict[atk]) - 1d/SlotCount).ToString();
+                    double RecAtk = Convert.ToDouble(TempDict[atk]);
+                    double Reset =  Convert.ToDouble((1d/SlotCount).ToString("N5"));
+                    double M = RecAtk - Reset;
+
+                    TempDict[atk] =  (Convert.ToDouble(TempDict[atk]) - Convert.ToDouble((1d/SlotCount).ToString("N5"))).ToString() ;
                 }
                 foreach (KeyValuePair<int, ScrollingModelCLS> kv in CDict)
                 {

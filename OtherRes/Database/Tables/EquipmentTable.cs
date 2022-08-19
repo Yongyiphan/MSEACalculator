@@ -192,8 +192,8 @@ namespace MSEACalculator.OtherRes.Database.Tables
 
                 equip.BaseStats.STR = Convert.ToInt32(temp[6]);
                 equip.BaseStats.DEX = Convert.ToInt32(temp[7]);
-                equip.BaseStats.LUK = Convert.ToInt32(temp[8]);
-                equip.BaseStats.INT = Convert.ToInt32(temp[9]);
+                equip.BaseStats.INT = Convert.ToInt32(temp[8]);
+                equip.BaseStats.LUK = Convert.ToInt32(temp[9]);
 
                 equip.BaseStats.MaxHP = Convert.ToInt32(temp[10]);
                 equip.BaseStats.MaxMP = Convert.ToInt32(temp[11]);

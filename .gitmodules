@@ -1,3 +1,3 @@
-[submodule "OtherRes/ScrapyMSEA"]
-	path = OtherRes/ScrapyMSEA
+[submodule "MseaPythonModule/ScrapyMSEA"]
+	path = MseaPythonModule/ScrapyMSEA
 	url = https://github.com/Yongyiphan/ScrapyMSEA.git

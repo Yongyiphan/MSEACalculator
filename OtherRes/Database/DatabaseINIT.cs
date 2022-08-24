@@ -5,7 +5,11 @@ using MSEACalculator.OtherRes.Interface;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
+
+
 
 
 namespace MSEACalculator.OtherRes.Database
@@ -261,6 +265,23 @@ namespace MSEACalculator.OtherRes.Database
             }
         }
 
+
+        public static async Task ScrapeDataAsync()
+        {
+            //ScriptRuntimeSetup setup = Python.CreateRuntimeSetup(null);
+            //ScriptRuntime runtime = new ScriptRuntime(setup);
+            //ScriptEngine engine = Python.GetEngine(runtime);
+            ////Path to python file
+            ////C:\Users\edgar\Documents\Personal Progamming\MSEACalculator\OtherRes\ScrapyMSEA\scrapysea\CompleteRun.py
+            //ScriptSource source = engine.CreateScriptSourceFromFile("HelloWorld.py");
+            //ScriptScope scope = engine.CreateScope();
+            //engine.GetSysModule().SetVariable("argv", "");
+            //source.Execute(scope);
+            if (ApiInformation.IsApiContractPresent("Windows.ApplicationModel.FullTrustAppContract", 1, 0))
+            {
+                await FullTrustProcessLauncher.LaunchFullTrustProcessForCurrentAppAsync();
+            }
+        }
 
         //public static bool testDBCon()
         //{

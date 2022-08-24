@@ -11,6 +11,8 @@ namespace MSEACalculator.MainAppRes.Settings
         public CustomCommand resetDBTableCMD { get; private set; }
         public CustomCommand resetDBBlankCMD { get; private set; }
 
+        public CustomCommand ScrapeDataCMD { get; set; }
+
         private string timeElapsed;
 
         public string TimeElapsed
@@ -25,9 +27,28 @@ namespace MSEACalculator.MainAppRes.Settings
         {
             resetDBTableCMD = new CustomCommand(resetDBTable, () => { return true; });
             resetDBBlankCMD = new CustomCommand(resetDBBlank, () => { return true; });
+            ScrapeDataCMD = new CustomCommand(scrapeData, () => { return true; });
 
         }
 
+        private void scrapeData()
+        {
+           
+            var timer = new Stopwatch();
+            timer.Start();
+            var scrapeData = DatabaseINIT.ScrapeDataAsync();
+            timer.Stop();
+
+            TimeSpan timeTaken = timer.Elapsed;
+
+            //timelapsed.Text = "Time Taken: " + timeTaken.ToString(@"m\:ss\.fff");
+
+            TimeElapsed = String.Format("Completed at {0}", timeTaken.ToString(@"m\:ss\.fff"));
+
+            //TimeElapsed = test.ToString();
+
+            //TimeElapsed = testDB.ToString();
+        }
 
         private void resetDBTable()
         {

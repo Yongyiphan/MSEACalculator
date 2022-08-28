@@ -56,7 +56,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
     <NoWarn>$(NoWarn);NU1702</NoWarn>
-    <EntryPointProjectUniqueName>..\MSEACalculator\MSEACalculator.csproj</EntryPointProjectUniqueName>
+    <EntryPointProjectUniqueName>..\MseaPythonModule\MseaPythonModule.csproj</EntryPointProjectUniqueName>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -77,7 +77,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MSEACalculator\MSEACalculator.csproj" />
+    <ProjectReference Include="..\CalculatorModule\MSEACalculator.csproj" />
     <ProjectReference Include="..\MseaPythonModule\MseaPythonModule.csproj" />
   </ItemGroup>
 </Project>

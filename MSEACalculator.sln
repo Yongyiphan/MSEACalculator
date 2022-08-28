@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSEACalculator", "MSEACalculator.csproj", "{161C87EA-AE9D-479E-B3CE-92327D5A8DE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSEACalculator", "CalculatorModule\MSEACalculator.csproj", "{161C87EA-AE9D-479E-B3CE-92327D5A8DE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MseaPythonModule", "..\MseaPythonModule\MseaPythonModule.csproj", "{94056179-7D43-45DB-9256-6F294FD4DAEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MseaPythonModule", "MseaPythonModule\MseaPythonModule.csproj", "{94056179-7D43-45DB-9256-6F294FD4DAEB}"
 EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "MseaWAP", "..\MseaWAP\MseaWAP.wapproj", "{7CA6F413-F13C-4744-A5BA-23B0886BBE73}"
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "MseaWAP", "MseaWAP\MseaWAP.wapproj", "{7CA6F413-F13C-4744-A5BA-23B0886BBE73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,9 +23,9 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{161C87EA-AE9D-479E-B3CE-92327D5A8DE7}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{161C87EA-AE9D-479E-B3CE-92327D5A8DE7}.Debug|Any CPU.Build.0 = Debug|x64
-		{161C87EA-AE9D-479E-B3CE-92327D5A8DE7}.Debug|Any CPU.Deploy.0 = Debug|x64
+		{161C87EA-AE9D-479E-B3CE-92327D5A8DE7}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{161C87EA-AE9D-479E-B3CE-92327D5A8DE7}.Debug|Any CPU.Build.0 = Debug|x86
+		{161C87EA-AE9D-479E-B3CE-92327D5A8DE7}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{161C87EA-AE9D-479E-B3CE-92327D5A8DE7}.Debug|ARM.ActiveCfg = Debug|ARM
 		{161C87EA-AE9D-479E-B3CE-92327D5A8DE7}.Debug|ARM.Build.0 = Debug|ARM
 		{161C87EA-AE9D-479E-B3CE-92327D5A8DE7}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -71,9 +71,9 @@ Global
 		{94056179-7D43-45DB-9256-6F294FD4DAEB}.Release|x64.Build.0 = Release|Any CPU
 		{94056179-7D43-45DB-9256-6F294FD4DAEB}.Release|x86.ActiveCfg = Release|Any CPU
 		{94056179-7D43-45DB-9256-6F294FD4DAEB}.Release|x86.Build.0 = Release|Any CPU
-		{7CA6F413-F13C-4744-A5BA-23B0886BBE73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CA6F413-F13C-4744-A5BA-23B0886BBE73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7CA6F413-F13C-4744-A5BA-23B0886BBE73}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{7CA6F413-F13C-4744-A5BA-23B0886BBE73}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{7CA6F413-F13C-4744-A5BA-23B0886BBE73}.Debug|Any CPU.Build.0 = Debug|x86
+		{7CA6F413-F13C-4744-A5BA-23B0886BBE73}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{7CA6F413-F13C-4744-A5BA-23B0886BBE73}.Debug|ARM.ActiveCfg = Debug|ARM
 		{7CA6F413-F13C-4744-A5BA-23B0886BBE73}.Debug|ARM.Build.0 = Debug|ARM
 		{7CA6F413-F13C-4744-A5BA-23B0886BBE73}.Debug|ARM.Deploy.0 = Debug|ARM

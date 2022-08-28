@@ -29,8 +29,12 @@ namespace MSEACalculator
 
         public static async Task<List<string>> CSVStringAsync(string Location, string FileName)
         {
-            StorageFile charTable = await GVar.storageFolder.GetFileAsync(Location + FileName);
             List<string> CSVAsStringList = new List<string>();
+            string FilePath = ApplicationData.Current.LocalFolder.Path + Location + FileName;
+            try
+            {
+
+            StorageFile charTable = await GVar.storageFolder.GetFileAsync(FilePath);
             var stream = await charTable.OpenAsync(FileAccessMode.Read);
 
             ulong size = stream.Size;
@@ -44,6 +48,12 @@ namespace MSEACalculator
                     CSVAsStringList = text.Split("\r\n").ToList();
                     
                 }
+            }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());   
+                Console.WriteLine(FilePath);
             }
 
             return CSVAsStringList;

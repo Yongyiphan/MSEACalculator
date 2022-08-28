@@ -44,7 +44,7 @@ namespace MseaPythonModule
                         InitVenv.StartInfo.RedirectStandardInput = true;
                         InitVenv.StartInfo.RedirectStandardError = true;
                         InitVenv.StartInfo.UseShellExecute = false;
-                        InitVenv.StartInfo.CreateNoWindow = false;
+                        InitVenv.StartInfo.CreateNoWindow = true;
 
                         InitVenv.Start();
                        

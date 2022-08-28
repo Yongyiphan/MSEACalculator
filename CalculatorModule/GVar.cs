@@ -31,7 +31,7 @@ namespace MSEACalculator
 
         public const string CharacterPath = @"\DefaultData\CharacterData\";
         public const string EquipmentPath = @"\DefaultData\EquipmentData\";
-        public const string CalculationsPath = @"\DefaultData\CalculationsData\";
+        public const string CalculationsPath = @"\DefaultData\CalculationData\";
         public static string CONN_STRING { get; set; } = $"Filename = {databasePath}";
 
 

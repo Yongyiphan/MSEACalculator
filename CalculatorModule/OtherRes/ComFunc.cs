@@ -30,7 +30,7 @@ namespace MSEACalculator
         public static async Task<List<string>> CSVStringAsync(string Location, string FileName)
         {
             List<string> CSVAsStringList = new List<string>();
-            string FilePath = ApplicationData.Current.LocalFolder.Path + Location + FileName;
+            string FilePath =  Location + FileName;
             try
             {
 

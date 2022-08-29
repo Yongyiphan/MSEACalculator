@@ -1,7 +1,4 @@
-﻿using IronPython.Compiler.Ast;
-using IronPython.Hosting;
-using Microsoft.Scripting.Hosting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Diagnostics;

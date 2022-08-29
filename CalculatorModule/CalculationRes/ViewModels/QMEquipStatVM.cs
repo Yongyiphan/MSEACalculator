@@ -676,15 +676,22 @@ namespace MSEACalculator.CalculationRes.ViewModels
             bool Check = false;
             Check = SEquip == null ? false : true;
             Conditions.Add(Check);
-
-            Check = (SSF > 0 || (IsSpellTrace && Convert.ToInt32(SSlotStat) > 0) ) && (SMainStat == "None" || string.IsNullOrEmpty(SMainStat)) ? false : true;
+            bool MainStatEmpty = (SMainStat == "None"  || string.IsNullOrEmpty(SMainStat)) ? true : false;
+            if (SSF > 0)
+            {
+                Check = MainStatEmpty ? false : true;
+            }
             Conditions.Add(Check);
-
+            //Equip !=  null
+            //if Starforce == 0 dont need check
+            //if spell traced
+            // => if slot == 0 -> Reset Slot Perc, Dont check mainstat
+            //if not spell traced -> no need check
             Check = false;
             if (IsSpellTrace)
             {
                 int SlotCount = Convert.ToInt32(SSlotStat);
-                if (SlotCount > 0 && SPercIndex != -1)
+                if (SlotCount > 0 && SPercIndex != -1 && !MainStatEmpty)
                 {
                     Check = true;
                 }

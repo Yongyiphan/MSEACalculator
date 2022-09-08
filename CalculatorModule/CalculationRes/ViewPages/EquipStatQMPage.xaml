@@ -49,6 +49,7 @@
                             <TextBlock Text="{Binding SlotStatText}"/>
                             <ComboBox x:Name="SlotOrStat"
                                       ItemsSource="{Binding SlotOrStatList}"
+                                      SelectedIndex="{Binding SSSIndex , Mode=TwoWay}"
                                       SelectedItem="{Binding SSlotStat, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                             <!--Display Scroll Perc-->
                             <TextBlock Text="Main Stat"/>

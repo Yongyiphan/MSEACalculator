@@ -93,12 +93,16 @@ namespace MSEACalculator.CalculationRes.ViewModels
             ClassFilter = "Any";
             SEquip = EquipList.Find(x => x.EquipName == "Dominator Pendant");
             SSF = 15;
-            DisplayType = true;
-            List<int> TestValues = new List<int>() {40,65,40,40,255, 0, 0, 119};
-           
-            for(int i = 0; i < TestValues.Count; i++)
+            DisplayType = false;
+            //List<int> TestValues = new List<int>() {40,65,40,40,255, 0, 0, 119};
+
+            //for(int i = 0; i < TestValues.Count; i++)
+            //{
+            //    StatInput.ElementAt(i).Value = TestValues[i].ToString();
+            //}
+            if (CanAddEquip())
             {
-                StatInput.ElementAt(i).Value = TestValues[i].ToString();
+                AddEquip();
             }
             
         }
@@ -339,7 +343,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
         public string SlotStatText { get; set; } = "Slot";
         public List<string> SlotOrStatList { get; set; }
 
-
         private string _SSlotStat;
         public string SSlotStat
         {
@@ -354,6 +357,17 @@ namespace MSEACalculator.CalculationRes.ViewModels
                 AddEquipmentCMD.RaiseCanExecuteChanged();
                 CalScrollCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(SSlotStat));
+            }
+        }
+
+        private int _SSSIndex;
+        public int SSSIndex
+        {
+            get => _SSSIndex;
+            set
+            {
+                _SSSIndex = value;
+                OnPropertyChanged(nameof(SSSIndex));
             }
         }
 
@@ -569,6 +583,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             StatInput.Clear();
             GVar.MainStats.Concat(new List<string>() { "MaxHP", "ATK", "MATK", "DEF"}).ToList().ForEach(x => StatInput.Add(new StatInputValue() { Stat=x, Value="0" }));
             MainStatList = GVar.MainStats.Concat(new List<string>() { "HP", "All Stat", "None" }).ToList();
+            IsSpellTrace = true;
         }
 
         public void FilterEquipName()

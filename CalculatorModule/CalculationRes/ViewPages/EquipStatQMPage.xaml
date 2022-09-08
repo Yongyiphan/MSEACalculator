@@ -45,23 +45,29 @@
                             <!--Check if equip is spell traced-->
                             <CheckBox x:Name="chkSpellTrace" Content="Spell Traced?" Style="{StaticResource AddEquipCBX}" 
                                       IsChecked="{Binding IsSpellTrace, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            <!--Show Slots or stat chossing depending on checkbox-->
-                            <TextBlock Text="{Binding SlotStatText}"/>
-                            <ComboBox x:Name="SlotOrStat"
-                                      ItemsSource="{Binding SlotOrStatList}"
-                                      SelectedIndex="{Binding SSSIndex , Mode=TwoWay}"
-                                      SelectedItem="{Binding SSlotStat, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
-                            <!--Display Scroll Perc-->
+                            
                             <TextBlock Text="Main Stat"/>
                             <ComboBox Name="MainStatList" ItemsSource="{Binding MainStatList, Mode=TwoWay}"
                                   SelectedIndex="{Binding MSIndex, Mode=TwoWay}"
                                   SelectedItem="{Binding SMainStat, Mode=TwoWay}"/>
+                            <!--Show Slots or stat chossing depending on checkbox-->
+                            <TextBlock Text="Slots" Visibility="{Binding ShowSlot}"/>
+                            <ComboBox Visibility="{Binding ShowSlot}"
+                                      ItemsSource="{Binding UpgradeSlots, Mode=TwoWay}"
+                                      SelectedItem="{Binding SSlot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                             <TextBlock Text="Perc:" Visibility="{Binding ShowSlot}"/>
                             <ComboBox x:Name="Perc" Visibility="{Binding ShowSlot}"
                                       ItemsSource="{Binding PercList}" 
                                       SelectedIndex="{Binding SPercIndex, Mode=TwoWay}"
                                       SelectedItem="{Binding SPerc, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                            <TextBlock Text="Stat" Visibility="{Binding ShowStatValue}"/>
+                            <ComboBox x:Name="SlotOrStat" Visibility="{Binding ShowStatValue}"
+                                      ItemsSource="{Binding StatList}"
+                                      SelectedItem="{Binding SStat, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                            <!--Display Scroll Perc-->
+
                             <!--Input Custom Scroll Value-->
                             <TextBlock Text="Value:" Visibility="{Binding ShowStatValue}"/>
                             <TextBox Text="{Binding ScrollValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Visibility="{Binding ShowStatValue}"/>

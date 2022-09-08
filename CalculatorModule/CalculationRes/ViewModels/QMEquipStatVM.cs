@@ -88,23 +88,38 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         private void ActivateTest()
         {
-            SESlot = "Pendant";
-            SortByClass = false;
-            ClassFilter = "Any";
-            SEquip = EquipList.Find(x => x.EquipName == "Dominator Pendant");
-            SSF = 15;
-            DisplayType = false;
-            //List<int> TestValues = new List<int>() {40,65,40,40,255, 0, 0, 119};
+            //SESlot = "Pendant";
+            //SortByClass = false;
+            //ClassFilter = "Any";
+            //SEquip = EquipList.Find(x => x.EquipName == "Dominator Pendant");
+            //SSF = 15;
+            //DisplayType = false;
+            //SSlot = 4;
+            //SMainStat = "DEX";
+            //SPerc = "100%";
+            ////List<int> TestValues = new List<int>() {40,65,40,40,255, 0, 0, 119};
 
-            //for(int i = 0; i < TestValues.Count; i++)
+            ////for(int i = 0; i < TestValues.Count; i++)
+            ////{
+            ////    StatInput.ElementAt(i).Value = TestValues[i].ToString();
+            ////}
+            //if (CanAddEquip())
             //{
-            //    StatInput.ElementAt(i).Value = TestValues[i].ToString();
+            //    AddEquip();
             //}
-            if (CanAddEquip())
+            SortByClass = false;
+            int counter = 0;
+            foreach(string slot in EquipSlotList)
             {
-                AddEquip();
+                foreach(string C in ClassFilterList)
+                {
+                    foreach(EquipCLS sequip in EquipList)
+                    {
+                        
+                    }
+                }
             }
-            
+            Console.WriteLine(string.Format("Tests Ran {0}", counter));
         }
 
         public List<string> EquipSlotList { get; set; } = new List<string>();
@@ -270,14 +285,14 @@ namespace MSEACalculator.CalculationRes.ViewModels
                     UpgradeSlots.Clear();
                     if (SEquip.BaseStats.NoUpgrades >0)
                     {
-                        Enumerable.Range(0, SEquip.BaseStats.NoUpgrades + 3).ToList().ForEach(x => UpgradeSlots.Add(x.ToString()));
+                        Enumerable.Range(0, SEquip.BaseStats.NoUpgrades + 3).ToList().ForEach(x => UpgradeSlots.Add(x));
                     }
                     else
                     {
-                        UpgradeSlots.Add("0");
+                        UpgradeSlots.Add(0);
                     }
 
-                                    }
+                }
                 //END OFF HERE, CONTINUE WITH DISCARDED CITEMSELECT IF SEQUIP CHANGES
 
                 AddEquipmentCMD.RaiseCanExecuteChanged();
@@ -302,7 +317,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         public Dictionary<string, int> ScrollRecord { get; set; } = new Dictionary<string, int>();
 
-        public List<string> UpgradeSlots { get; set; } = new List<string>();
+        public ObservableCollection<int> UpgradeSlots { get; set; } = new ObservableCollection<int>();
 
         private bool _IsSpellTrace = true;
         public bool IsSpellTrace
@@ -314,62 +329,53 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
                 if (DisplayType)
                 {
-                    SlotStatText = "Slot";
-                    SlotOrStatList = UpgradeSlots;
                     ShowSlot = Visibility.Collapsed;
                     ShowStatValue = Visibility.Collapsed;
 
-                    OnPropertyChanged(nameof(SlotStatText));
-                    OnPropertyChanged(nameof(SlotOrStatList));
+                    OnPropertyChanged(nameof(StatList));
                 }
                 else
                 {
-                    SlotStatText = IsSpellTrace ? "Slot" : "Stat";
-                    SSlotStat = null;
-                    SlotOrStatList = IsSpellTrace ? UpgradeSlots : GVar.BaseStatTypes;
-
                     ShowSlot = IsSpellTrace ? Visibility.Visible : Visibility.Collapsed;
                     ShowStatValue = IsSpellTrace ? Visibility.Collapsed : Visibility.Visible;
-                    OnPropertyChanged(nameof(SlotStatText));
-                    OnPropertyChanged(nameof(SlotOrStatList));
                 }
-               
 
                 AddEquipmentCMD.RaiseCanExecuteChanged();
                 OnPropertyChanged(nameof(IsSpellTrace));
             }
         }
 
-        public string SlotStatText { get; set; } = "Slot";
-        public List<string> SlotOrStatList { get; set; }
+        public ObservableCollection<string> StatList { get; set; } = new ObservableCollection<string>();
 
-        private string _SSlotStat;
-        public string SSlotStat
+        private int _SSlot;
+        public int SSlot
         {
-            get => _SSlotStat;
+            get => _SSlot;
             set
             {
-                _SSlotStat = value;
-                if (IsSpellTrace && (value == "0" || string.IsNullOrEmpty(value)))
+                _SSlot=value;
+
+                if (IsSpellTrace && value == 0)
                 {
                     SPercIndex = -1;
                 }
                 AddEquipmentCMD.RaiseCanExecuteChanged();
                 CalScrollCMD.RaiseCanExecuteChanged();
-                OnPropertyChanged(nameof(SSlotStat));
+                OnPropertyChanged(nameof(SSlot));
             }
         }
 
-        private int _SSSIndex;
-        public int SSSIndex
+        private string _SStat;
+        public string SStat
         {
-            get => _SSSIndex;
+            get => _SStat;
             set
             {
-                _SSSIndex = value;
-                OnPropertyChanged(nameof(SSSIndex));
+                _SStat = value;
+                OnPropertyChanged(nameof(SStat));
             }
         }
+
 
         //Spell Trace Percentage Selection
         #region
@@ -382,7 +388,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             set
             {
                 _SPerc = value;
-                if (IsSpellTrace && (SSlotStat == "0" || string.IsNullOrEmpty(SSlotStat)))
+                if (IsSpellTrace && SSlot == 0)
                 {
                     SPercIndex = -1;
                 }
@@ -535,7 +541,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
                     if (value.IsSpellTraced && value.SlotCount > 0)
                     {
                         IsSpellTrace = value.IsSpellTraced;
-                        SSlotStat = value.SlotCount.ToString();
+                        SSlot = value.SlotCount;
                         SPerc = string.Format("{0}%", value.SpellTracePerc);
                     }
                     ScrollRecord = value.ScrollStats.ToRecord();
@@ -580,6 +586,8 @@ namespace MSEACalculator.CalculationRes.ViewModels
             EquipSlotList = ESModel.EquipmentStore.Keys.ToList();
             SortByClass = false;
             DisplayType = false;
+            StatList.Clear();
+            GVar.BaseStatTypes.ForEach(x => StatList.Add(x));
             StatInput.Clear();
             GVar.MainStats.Concat(new List<string>() { "MaxHP", "ATK", "MATK", "DEF"}).ToList().ForEach(x => StatInput.Add(new StatInputValue() { Stat=x, Value="0" }));
             MainStatList = GVar.MainStats.Concat(new List<string>() { "HP", "All Stat", "None" }).ToList();
@@ -674,13 +682,13 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         private void AddScrollRecord()
         {
-            if (ScrollRecord.ContainsKey(SSlotStat))
+            if (ScrollRecord.ContainsKey(SStat))
             {
-                ScrollRecord[SSlotStat] =  Convert.ToInt32(ScrollValue);
+                ScrollRecord[SStat] =  Convert.ToInt32(ScrollValue);
             }
             else
             {
-                ScrollRecord.Add(SSlotStat, Convert.ToInt32(ScrollValue));
+                ScrollRecord.Add(SStat, Convert.ToInt32(ScrollValue));
             }
         }
 
@@ -705,12 +713,11 @@ namespace MSEACalculator.CalculationRes.ViewModels
             Check = false;
             if (IsSpellTrace)
             {
-                int SlotCount = Convert.ToInt32(SSlotStat);
-                if (SlotCount > 0 && SPercIndex != -1 && !MainStatEmpty)
+                if (SSlot > 0 && SPercIndex != -1 && !MainStatEmpty)
                 {
                     Check = true;
                 }
-                if (string.IsNullOrEmpty(SSlotStat) || SlotCount == 0)
+                if (SSlot == 0)
                 {
                     Check = true;
                 }
@@ -735,10 +742,9 @@ namespace MSEACalculator.CalculationRes.ViewModels
             //Calculate Scroll Stats
             if (IsSpellTrace)
             {
-                int SlotCount = Convert.ToInt32(SSlotStat);
-                CurrentEquip.SlotCount = SlotCount;
+                CurrentEquip.SlotCount = SSlot;
                 CurrentEquip.IsSpellTraced = IsSpellTrace;
-                if (SlotCount > 0)
+                if (SSlot > 0)
                 {
 
                     CurrentEquip.SpellTracePerc = Convert.ToInt32(SPerc.Trim('%'));
@@ -830,7 +836,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             Conditions.Add(Check);
             
             //Cannot be Empty, If Spell traced, slot cannot be 0
-            Check = string.IsNullOrEmpty(SSlotStat) || (IsSpellTrace && Convert.ToInt32(SSlotStat) == 0) ? false : true;
+            Check = IsSpellTrace && SSlot == 0 ? false : true;
             Conditions.Add(Check);
 
             return Conditions.Contains(false) ? false : true;
@@ -843,7 +849,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
             CurrentEquip = SEquip.DeepCopy();
             CurrentEquip.IsSpellTraced = IsSpellTrace;
-            CurrentEquip.SlotCount = Convert.ToInt32(SSlotStat);
+            CurrentEquip.SlotCount = SSlot;
 
             EquipStatsCLS CurrentTotal = CurrentEquip.BaseStats.ShallowCopy();
             EquipStatsCLS BlueStat = new EquipStatsCLS();
@@ -892,7 +898,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
             SMainStat = null;
             SEquip = null;
 
-            SSlotStat = null;
+            SStat = null;
             SPercIndex = -1;
 
         }

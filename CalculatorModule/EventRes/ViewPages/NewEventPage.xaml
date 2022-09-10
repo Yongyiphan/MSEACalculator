@@ -1,0 +1,75 @@
+﻿<Page
+    x:Class="MSEACalculator.EventRes.ViewPages.NewEventPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MSEACalculator.EventRes.ViewPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Name="NewEvent" Grid.Row="0">
+            <!--Event Duration-->
+            <StackPanel Grid.Column="1">
+                <StackPanel.Resources>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Margin" Value="5"/>
+                    </Style>
+                </StackPanel.Resources>
+                <!--<Grid x:Name="EventDuration" Margin="0,20,0,0">
+                    -->
+                <!---Starting Coordinates -->
+                <!--0-->
+                <!--
+                    <TextBlock Text="Start Date" Height="20" Width="70" HorizontalAlignment="Left" Margin="20,0,0,0"></TextBlock>
+                    -->
+                <!--90-->
+                <!--
+                    <CalendarDatePicker Name="startDatePicker" Height="30" Width="130" Margin="100,0,0,0" VerticalAlignment="Center" DateChanged="startDatePicker_DateChanged"/>
+                    -->
+                <!--230-->
+                <!--
+                    <TextBlock Text="End Date" Height="20" Width="70" HorizontalAlignment="Left" Margin="240,0,0,0"></TextBlock>
+                    -->
+                <!--300-->
+                <!--
+                    <CalendarDatePicker Name="endDatePicker" Height="30" Width="130" Margin="310,0,0,0" VerticalAlignment="Top" DateChanged="endDatePicker_DateChanged"/>
+                    -->
+                <!--440-->
+                <!--
+                    <TextBlock Text="Days Left:" Height="20" Width="70" HorizontalAlignment="Left" Margin="450,0,0,0"></TextBlock>
+                    -->
+                <!--520-->
+                <!--
+                    <TextBlock x:Name="DaysLeft" Height="20" Width="50" HorizontalAlignment="Left" Margin="520,0,0,0"/>
+                    <Button x:Name="updateEventRecords" Content="Update" Click="updateEventRecords_Click" HorizontalAlignment="Right" Margin="0,0,50,0"></Button>
+                </Grid>-->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Event Name: "/>
+                    <TextBox/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <TextBlock Text="Start Date: "/>
+                    <CalendarDatePicker Name="startDatePicker"/>
+                    <TextBlock Text="End Date: "/>
+                    <CalendarDatePicker Name="endDatePicker"/>
+                    <TextBlock/>
+                </StackPanel>
+
+
+                <!--Calculate Weekday-->
+                <!--Calculate Weekends-->
+                <!--Calculate Available / Commitment Dates-->
+            </StackPanel>
+
+        </Grid>
+        <Grid Name="DisplayEventRecord" Grid.Row="1">
+
+        </Grid>
+    </Grid>
+</Page>

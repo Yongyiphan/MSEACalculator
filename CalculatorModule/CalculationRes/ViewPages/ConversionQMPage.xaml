@@ -1,0 +1,127 @@
+﻿<Page
+    x:Class="MSEACalculator.CalculationRes.ViewPages.ConversionQMPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:control="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="TextBox">
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="Margin" Value="5 0"/>
+                    </Style>
+                    <Style TargetType="ComboBox">
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="Margin" Value="5 0"/>
+                    </Style>
+                </Grid.Resources>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Conversion Types: "/>
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                    <ComboBox ItemsSource="{Binding ConversionMode, Mode=TwoWay}"
+                              SelectedItem="{Binding SelectedMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ToggleSwitch OnContent="Reverse On:" OffContent="Reverse Off:" 
+                                  IsOn="{Binding Reverse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FlowDirection="RightToLeft"/>
+                </StackPanel>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding RateText, Mode=TwoWay}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Rate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding ValueInText, Mode=TwoWay}"/>
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                    <TextBox  Text="{Binding ValueIn, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                    <ToggleSwitch FlowDirection="LeftToRight" Width="150" 
+                        OnContent="{Binding MMOnText, Mode=TwoWay}" OffContent="{Binding MMOffText, Mode=TwoWay}"  
+                        IsOn="{Binding MesoMod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding ValueOutText, Mode=TwoWay}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ValueOut, Mode=TwoWay}" IsReadOnly="True"/>
+                
+                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2" Margin="0 10">
+                    <Button Content="Calculate" Command="{Binding ConvertCMD, Mode=TwoWay}"/>
+                    <!--<Button Content="Test Btn" Command="{Binding TestCMD, Mode=TwoWay}"/>-->
+                </StackPanel> 
+            </Grid>
+            <Grid Grid.Row="1">
+                
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
+    
+     <!--<StackPanel Spacing="5">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Conversion from"/>
+                <ComboBox ItemsSource="{Binding ConversionMode, Mode=TwoWay}"
+                          SelectedIndex="{Binding DefaultMode, Mode=TwoWay}"
+                          SelectedItem="{Binding CMode, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <TextBlock Text="Meso Rate/B:"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <TextBox HorizontalAlignment="Left"
+                             ToolTipService.ToolTip="Decimal values are allowed."
+                             Text="{Binding MesoRate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <TextBlock Text="Money In:"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBox Text="{Binding MoneyIn, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                 Width="110"/>
+                        <TextBlock Text="{Binding CMode, Mode=TwoWay}"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Convert" Command="{Binding ConvertCMD, Mode=TwoWay}"/>
+                <Button Content="Reset" Command="{Binding ResetCMD, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="SGD:" 
+                           FontSize="15"/>
+                <TextBlock Text="{Binding MoneyOutSGD, Mode=TwoWay}"
+                           FontSize="15"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Meso:"
+                           FontSize="15"/>
+                <TextBlock Text="{Binding MoneyOutMeso, Mode=TwoWay}"
+                           FontSize="15"/>
+            </StackPanel>
+        </StackPanel>-->
+    

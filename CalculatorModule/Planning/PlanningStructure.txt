@@ -1,0 +1,51 @@
+EquipMent Stat Simulator
+Fields
+EquipSlot
+]> ClassFilter = "None", MainStat = "None" 
+-> FilterEquipName()
+
+SortByClass ]> ClassFilter
+
+ClassFilter (Class Name/Type)
+]> SMainStat = SortByClass ? ClassFilter.ClassType : ReturnMainStat
+-> FilterEquipName()
+
+
+MainStat -> Updates Add Condition
+
+EquipName
+-> GenerateStarforce()
+
+Starforce
+
+SpellTrace
+-> Slot
+-> Perc
+=> Stat
+=> Stat Value
+
+Can Add()
+-> EquipSlot != null
+-> EquipName != null
+-> MainStat != None | null
+
+
+Scroll Calculation
+Get Equip BaseStats
+bluestat = scroll + starforce
+bluestat - starforce = scroll
+
+if sf > 0:
+-> calculate sf stats
+-> blue stat - sf = final stat to divide
+else
+-> blue stat = final stat to divide
+
+Result
+- Perc%
+- Stats per slot
+
+
+
+
+

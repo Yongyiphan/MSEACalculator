@@ -1,0 +1,202 @@
+﻿<Page
+    x:Class="MSEACalculator.CalculationRes.ViewPages.EquipStatQMPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MSEACalculator.CalculationRes.ViewPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:CustomMod="using:MSEACalculator.OtherRes.Database.CustomModifications"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" RowSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Style="{StaticResource SP}">
+                    <TextBlock Text="Equip Slot:"/>
+                    <ComboBox x:Name="EquipSlot" ItemsSource="{Binding EquipSlotList}" 
+                                  SelectedValue="{Binding SESlot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ToggleSwitch OnContent="Class Name" OffContent="Class Type" FlowDirection="RightToLeft"
+                                      IsOn="{Binding SortByClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="{Binding ClassFilterText, Mode=TwoWay}"/>
+                    <ComboBox x:Name="ClassType" ItemsSource="{Binding ClassFilterList}"
+                                  SelectedValue="{Binding ClassFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Style="{StaticResource SP}">
+                    <TextBlock Text="Equip Name:"/>
+                    <ComboBox x:Name="EquipName" ItemsSource="{Binding EquipList, Mode=TwoWay}" DisplayMemberPath="EquipName"
+                                  SelectedItem="{Binding SEquip, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Text="Starforce: "/>
+                    <ComboBox x:Name="Starforce" ItemsSource="{Binding StarforceRange}"
+                                  SelectedItem="{Binding SSF, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                </StackPanel>
+                <!--SCROLLING RECORDS-->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Style="{StaticResource SP}">
+                    <!--Check if equip is spell traced-->
+                    <CheckBox x:Name="chkSpellTrace" Content="Spell Traced?" Style="{StaticResource AddEquipCBX}" 
+                                      IsChecked="{Binding IsSpellTrace, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                    <TextBlock Text="Main Stat"/>
+                    <ComboBox Name="MainStatList" ItemsSource="{Binding MainStatList, Mode=TwoWay}"
+                                  SelectedIndex="{Binding MSIndex, Mode=TwoWay}"
+                                  SelectedItem="{Binding SMainStat, Mode=TwoWay}"/>
+                    <!--Show Slots or stat chossing depending on checkbox-->
+                    <TextBlock Text="Slots" Visibility="{Binding ShowSlot}"/>
+                    <ComboBox Visibility="{Binding ShowSlot}"
+                                      ItemsSource="{Binding UpgradeSlots, Mode=TwoWay}"
+                                      SelectedItem="{Binding SSlot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Perc:" Visibility="{Binding ShowSlot}"/>
+                    <ComboBox x:Name="Perc" Visibility="{Binding ShowSlot}"
+                                      ItemsSource="{Binding PercList}" 
+                                      SelectedIndex="{Binding SPercIndex, Mode=TwoWay}"
+                                      SelectedItem="{Binding SPerc, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                    <TextBlock Text="Stat" Visibility="{Binding ShowStatValue}"/>
+                    <ComboBox x:Name="SlotOrStat" Visibility="{Binding ShowStatValue}"
+                                      ItemsSource="{Binding StatList}"
+                                      SelectedItem="{Binding SStat, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                    <!--Display Scroll Perc-->
+
+                    <!--Input Custom Scroll Value-->
+                    <TextBlock Text="Value:" Visibility="{Binding ShowStatValue}"/>
+                    <TextBox Text="{Binding ScrollValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Visibility="{Binding ShowStatValue}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Bottom">
+
+                    <Button Visibility="{Binding DisplaySimEquip, Mode=TwoWay}" x:Name="AddBtn" Content="{Binding AddUpdateBtnText, Mode=TwoWay}" Command="{Binding AddEquipmentCMD, Mode=TwoWay}"/>
+                    <Button Visibility="{Binding DisplaySimEquip, Mode=TwoWay}" x:Name="DelBtn" Content="Del Equip" Command="{Binding DelEquipmentCMD, Mode=TwoWay}"/>
+                    <Button Visibility="{Binding DisplaySimEquip, Mode=TwoWay}" x:Name="ClearBtn" Content="Clear Record" Command="{Binding ClearEquipmentCMD, Mode=TwoWay}"/>
+
+                    <Button Visibility="{Binding DisplayScrollCal, Mode=TwoWay}" x:Name="ScrollCalBtn" Content="Cal Scroll" Command="{Binding CalScrollCMD, Mode=TwoWay}"/>
+
+                    <!--<Button Name="TestButton" Content="Test Button" Command="{Binding TestBtn, Mode=TwoWay}"/>-->
+                </StackPanel>
+                    <ToggleSwitch Grid.Row="4" OnContent="Find Scroll Perc" OffContent="Simulate Scroll and SF" FlowDirection="RightToLeft" Margin="10 0"
+                                      IsOn="{Binding DisplayType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" >
+                    <StackPanel>
+                        <TextBlock Text="Fill with equip's Blue Stat"/>
+
+                        <ListView x:Name="StatInput" ItemsSource="{Binding StatInput, Mode=TwoWay}" Visibility="{Binding DisplayScrollCal, Mode=TwoWay}"
+                              SelectedItem="{Binding ScrollStatInput, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Stat, Mode=TwoWay}" Width="50"/>
+                                        <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                                            <Interactivity:Interaction.Behaviors>
+                                                <CustomMod:SelectListViewWhenElementGotFocusBehavious ListView="{Binding ElementName=StatInput}"/>
+                                            </Interactivity:Interaction.Behaviors>
+                                        </TextBox>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <StackPanel Visibility="{Binding DisplayScrollCal, Mode=TwoWay}">
+                                                <ContentControl x:Name="ScrollCalResult">
+                            <ContentControl.Template>
+                                <ControlTemplate>
+                                    <StackPanel>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding PercResult, Mode=TwoWay}"/>
+                                            <ListView x:Name="StatInput" ItemsSource="{Binding ScrollCalResult, Mode=TwoWay}">
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Stat, Mode=TwoWay}" Width="50"/>
+                                                            <TextBox Text="{Binding Value, Mode=TwoWay}" IsReadOnly="True"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </ContentControl.Template>
+                        </ContentControl>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                    <ScrollViewer VerticalScrollBarVisibility="Visible" Visibility="{Binding DisplaySimEquip, Mode=TwoWay}">
+                    <!--<ScrollViewer VerticalScrollBarVisibility="Visible" Visibility="Collapsed">-->
+                        <SplitView IsPaneOpen="True" OpenPaneLength="200" DisplayMode="Inline">
+                            <SplitView.Pane>
+                                <Grid>
+                                    <ListView SelectionMode="Single"
+                                          ItemsSource="{Binding CItemList, Mode=TwoWay}"
+                                          DisplayMemberPath="EquipName"
+                                          IsSynchronizedWithCurrentItem="{Binding SyncCI, Mode=TwoWay}"
+                                          SelectedItem="{Binding CItemSelect, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                </Grid>
+                            </SplitView.Pane>
+                            <SplitView.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <StackPanel Orientation="Vertical" >
+                                            <TextBlock Foreground="Black">
+                                        Stat: Base
+                                        <Span Foreground="DarkTurquoise">Scroll</Span>
+                                        <Span Foreground="Orange">SF</Span>
+                                            </TextBlock>
+                                            <ListView ItemsSource="{Binding TotalRecordDisplay, Mode=TwoWay}">
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Key}"/>
+                                                            <TextBlock Text="{Binding Value.DTotalStat}"/>
+                                                            <TextBlock Text="("/>
+                                                            <TextBlock Text="{Binding Value.DBaseStat}"/>
+                                                            <TextBlock Text="{Binding Value.DScrollStat}" Foreground="DarkTurquoise"
+                                                               Visibility="{Binding Converter={StaticResource HideIfZero},Path=Value.ScrollStat}"/>
+                                                            <TextBlock Text="{Binding Value.DStarforceStat}" Foreground="Orange"
+                                                               Visibility="{Binding Converter={StaticResource HideIfZero},Path=Value.StarforceStat}"/>
+                                                            <TextBlock Text=")"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </SplitView.Content>
+                        </SplitView>
+                    </ScrollViewer>
+
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

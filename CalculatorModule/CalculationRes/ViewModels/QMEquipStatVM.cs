@@ -73,7 +73,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
         public EquipCLS CurrentEquip { get; set; }
 
-        public CustomCommand TestBtn { get; private set; }
+        //public CustomCommand TestBtn { get; private set; }
         public QMEquipStatVM()
         {
 
@@ -83,47 +83,15 @@ namespace MSEACalculator.CalculationRes.ViewModels
             CalScrollCMD = new CustomCommand(CalScroll, CanCalScroll);
             VMInit();
 
-            TestBtn = new CustomCommand(ActivateTest);
+            //TestBtn = new CustomCommand(ActivateTest);
         }
 
-        private void ActivateTest()
-        {
-            //SESlot = "Pendant";
-            //SortByClass = false;
-            //ClassFilter = "Any";
-            //SEquip = EquipList.Find(x => x.EquipName == "Dominator Pendant");
-            //SSF = 15;
-            //DisplayType = false;
-            //SSlot = 4;
-            //SMainStat = "DEX";
-            //SPerc = "100%";
-            ////List<int> TestValues = new List<int>() {40,65,40,40,255, 0, 0, 119};
+        //private void ActivateTest()
+        //{
+        //}
 
-            ////for(int i = 0; i < TestValues.Count; i++)
-            ////{
-            ////    StatInput.ElementAt(i).Value = TestValues[i].ToString();
-            ////}
-            //if (CanAddEquip())
-            //{
-            //    AddEquip();
-            //}
-            SortByClass = false;
-            int counter = 0;
-            foreach(string slot in EquipSlotList)
-            {
-                foreach(string C in ClassFilterList)
-                {
-                    foreach(EquipCLS sequip in EquipList)
-                    {
-                        
-                    }
-                }
-            }
-            Console.WriteLine(string.Format("Tests Ran {0}", counter));
-        }
-
-        public List<string> EquipSlotList { get; set; } = new List<string>();
-
+        public List<string> EquipSlotList { get; set; }
+        
         private string _SEquipSlot;
         public string SESlot
         {
@@ -202,7 +170,7 @@ namespace MSEACalculator.CalculationRes.ViewModels
         }
 
         public string ClassFilterText { get; set; } = "Class Type: ";
-        public List<string> ClassFilterList { get; set; } = new List<string>();
+        public List<string> ClassFilterList { get; set; }
 
         private string _ClassFilter = "None";
         public string ClassFilter
@@ -900,7 +868,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
 
             SStat = null;
             SPercIndex = -1;
-
         }
         private void GatherDisplay()
         {
@@ -930,10 +897,6 @@ namespace MSEACalculator.CalculationRes.ViewModels
             TotalRecordDisplay = ToDisplay;
 
         }
-
-
-
-
 
     }
 }

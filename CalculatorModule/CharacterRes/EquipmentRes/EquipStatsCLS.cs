@@ -60,7 +60,8 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
         public override bool Equals(object obj)
         {
-            List<string> test = new List<string>();
+
+            List<bool> CheckCondition = new List<bool>();
             if (obj == null)
             {
                 return false;
@@ -68,22 +69,6 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
             if (obj is EquipStatsCLS)
             {
                 EquipStatsCLS cObj = (EquipStatsCLS)obj;
-                //test.Add(STR ==  cObj.STR ? "true" : "false" );
-                //test.Add(DEX ==  cObj.DEX ? "true" : "false" );
-                //test.Add(INT ==  cObj.INT ? "true" : "false" );
-                //test.Add(LUK ==  cObj.LUK ? "true" : "false" );
-                //test.Add(ATK ==  cObj.ATK ? "true" : "false" );
-                //test.Add(MATK ==  cObj.MATK ? "true" : "false");
-                //test.Add(DEF ==  cObj.DEF ? "true" : "false" );
-
-                //test.Add(PercATK ==  cObj.PercATK ? "true" : "false" );
-                //test.Add(PercMATK ==  cObj.PercMATK ? "true" : "false" );
-                //test.Add(PercDEF ==  cObj.PercDEF ? "true" : "false" );
-                //test.Add(MaxHP ==  cObj.MaxHP ? "true" : "false" );
-                //test.Add(MaxMP ==  cObj.MaxMP ? "true" : "false" );
-                //test.Add(SPD ==  cObj.SPD ? "true" : "false" );
-                //test.Add(JUMP ==  cObj.JUMP ? "true" : "false" );
-                //test.Add(AllStat ==  cObj.AllStat ? "true" : "false" );
 
                 foreach (PropertyInfo prop in GetType().GetProperties())
                 {
@@ -94,20 +79,20 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                         int GT = Convert.ToInt32(cObj.GetType().GetProperty(prop.Name).GetValue(cObj));
                         int current = Convert.ToInt32(prop.GetValue(this));
 
-                        test.Add(GT == current ? "true" : "false");
+                        CheckCondition.Add(GT == current ? true : false);
                     }
                     if (prop.PropertyType == typeof(string))
                     {
                         string GT = cObj.GetType().GetProperty(prop.Name).GetValue(cObj).ToString();
                         string current = prop.GetValue(this).ToString();
 
-                        test.Add(GT == current ? "true" : "false");
+                        CheckCondition.Add(GT == current ? true : false);
                     }
 
                 }
 
             }
-            return test.Contains("false") ? false : true;
+            return CheckCondition.Contains(false) ? false : true;
         }
 
         public EquipStatsCLS ShallowCopy()

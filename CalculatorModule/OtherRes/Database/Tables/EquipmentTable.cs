@@ -3,6 +3,7 @@ using MSEACalculator.CharacterRes.EquipmentRes;
 using MSEACalculator.OtherRes.Interface;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -558,23 +559,16 @@ namespace MSEACalculator.OtherRes.Database.Tables
                         citem.BaseStats.JUMP = result.GetInt32(16);
                         citem.BaseStats.NoUpgrades = result.GetInt32(17);
 
-                        try
+                        if (EquipList.ContainsKey(EquipSlot))
                         {
-                            if (EquipList.ContainsKey(EquipSlot))
-                            {
-                                EquipList[EquipSlot].Add(citem);
-                                continue;
-                            }
-                            EquipList.Add(EquipSlot, new List<EquipCLS>() { citem });
+                            EquipList[EquipSlot].Add(citem);
+                            continue;
                         }
-                        catch (Exception E)
-                        {
-                            Console.WriteLine(E.Message);
-                        }
+                        EquipList.Add(EquipSlot, new List<EquipCLS>() { citem });
                     }
 
                 }
-;
+
                 selectCMD.CommandText = "SELECT* FROM EquipAccessoriesData;";
                 using (SqliteDataReader reader = selectCMD.ExecuteReader())
                 {

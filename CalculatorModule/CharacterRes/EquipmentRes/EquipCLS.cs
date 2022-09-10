@@ -65,7 +65,7 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
 
         public override bool Equals(object obj)
         {
-            List<string> test = new List<string>();
+            List<bool> CheckCondition = new List<bool>();
             if (obj == null)
             {
                 return false;
@@ -87,27 +87,27 @@ namespace MSEACalculator.CharacterRes.EquipmentRes
                         if(cValue == null || nValue == null)
                         {
 
-                            test.Add(nValue == cValue ? "true" : "false");
+                            CheckCondition.Add(nValue == cValue ? true : false);
                         }
                         else
                         {
-                            test.Add(nValue.Equals(cValue) ? "true" : "false");
+                            CheckCondition.Add(nValue.Equals(cValue) ? true : false);
                         }
 
                     }
 
-                    test.Add(ScrollStats.Equals(cObj.ScrollStats) ? "true" : "false");
-                    test.Add(FlameStats.Equals(cObj.FlameStats) ? "true" : "false");
+                    CheckCondition.Add(ScrollStats.Equals(cObj.ScrollStats) ? true : false);
+                    CheckCondition.Add(FlameStats.Equals(cObj.FlameStats) ? true : false);
 
                     //test.Add(new HashSet<PotentialStats>(MainPot).Equals(new HashSet<PotentialStats>(((EquipModel)obj).MainPot)) ? "true" : "false");
-                    test.Add(MainPot.Values.ToList().Select(x => x.PotID).ToList().SequenceEqual(cObj.MainPot.Values.ToList().Select(x => x.PotID).ToList()) ? "true" : "false");
-                    test.Add(AddPot.Values.ToList().Select(x => x.PotID).ToList().SequenceEqual(cObj.AddPot.Values.ToList().Select(x => x.PotID).ToList()) ? "true" : "false");
+                    CheckCondition.Add(MainPot.Values.ToList().Select(x => x.PotID).ToList().SequenceEqual(cObj.MainPot.Values.ToList().Select(x => x.PotID).ToList()) ? true : false);
+                    CheckCondition.Add(AddPot.Values.ToList().Select(x => x.PotID).ToList().SequenceEqual(cObj.AddPot.Values.ToList().Select(x => x.PotID).ToList()) ? true : false);
 
 
                 }
             }
 
-            return test.Contains("false") ? false : true;
+            return CheckCondition.Contains(false) ? false : true;
         }
 
         public EquipCLS ShallowCopy()
